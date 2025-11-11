@@ -1,0 +1,12 @@
+{
+  "name": "altakleos",
+  "owner": {
+    "name": "AltaKleos Platform Team",
+    "email": "admin@altakleos.com"
+  },
+  "metadata": {
+    "description": "Internal AltaKleos Claude Code plugins and tools",
+    "version": "1.0.0"
+  },
+  "plugins": []
+}
