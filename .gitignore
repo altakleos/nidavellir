@@ -16,6 +16,9 @@ Thumbs.db
 .project
 .settings/
 
+# Claude Code settings (local only, not shared)
+.claude/settings.local.json
+
 # Logs
 *.log
 logs/
