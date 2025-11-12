@@ -2,7 +2,7 @@
   "name": "altakleos",
   "owner": {
     "name": "AltaKleos Platform Team",
-    "email": "admin@altakleos.com"
+    "email": "hello@altakleos.com"
   },
   "metadata": {
     "description": "Internal AltaKleos Claude Code plugins and tools",
@@ -13,10 +13,10 @@
       "name": "quickstart",
       "source": "./plugins/quickstart",
       "description": "Intelligent skill factory that creates precisely optimized skills through deep contextual understanding and adaptive intelligence. Creates one or more skills based on your unique business needs.",
-      "version": "2.0.0",
+      "version": "1.0.0",
       "author": {
         "name": "AltaKleos Platform Team",
-        "email": "admin@altakleos.com"
+        "email": "hello@altakleos.com"
       },
       "category": "development",
       "keywords": ["skill-creation", "factory", "generator", "quickstart", "adaptive", "intelligent"],
