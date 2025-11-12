@@ -1,4 +1,4 @@
-# Sample Prompts for QuickStart
+# Sample Prompts for QuickStart 2.0
 
 ## Quick Start
 
@@ -8,7 +8,9 @@ The simplest way to begin:
 /create-skill
 ```
 
-Then just have a natural conversation about what you need.
+Then just have a natural conversation about what you need. QuickStart will automatically determine whether to create a skill, agent, suite, or hybrid solution based on your requirements.
+
+**Don't worry about choosing!** Just describe your needs and I'll figure out the best type of extension for you.
 
 ## Specific Use Cases
 
@@ -89,6 +91,94 @@ This shows:
 - Professional output needed
 - Excel replacement need
 
+### Use Case 6: Agent - Code Formatter (Auto-Invocation)
+
+```
+/create-skill
+
+I want something that automatically formats my code whenever I make changes. Should work across all my projects - Python, JavaScript, whatever. Just keep my code clean without me having to think about it.
+```
+
+**Why Agent:** Generic task, reusable across projects, auto-triggered
+**QuickStart will create:** Agent with auto-invocation, tool restrictions for safety
+
+This indicates:
+- Reusable across all projects
+- Auto-invocation desired ("automatically")
+- Generic operation (formatting is standard)
+- No project-specific logic needed
+
+### Use Case 7: Agent Suite - Development Workflow
+
+```
+/create-skill
+
+I need a complete development workflow: first analyze requirements and create technical specs, then build the frontend and backend in parallel, run comprehensive tests, and finally do a code review. Everything should be automated and coordinated.
+```
+
+**Why Suite:** Multiple distinct operations, parallel + sequential execution
+**QuickStart will create:** Coordinated suite of 5 agents with safety enforcement
+
+This reveals:
+- Multiple distinct roles (analyst, developers, tester, reviewer)
+- Sequential phases (analyze → develop → test → review)
+- Parallel opportunities (frontend + backend)
+- Coordination needed between agents
+- Quality operations must be sequential (safety-critical)
+
+### Use Case 8: Hybrid - Project Management with Automations
+
+```
+/create-skill
+
+Help me manage our custom project workflow. When I finish a feature, I want it to automatically format the code, run our test suite, and generate a commit message based on the changes. But I also need to track project context, milestones, and team assignments manually.
+```
+
+**Why Hybrid:** Custom orchestration + generic automations
+**QuickStart will create:** Skill (orchestrator) + 3 agents (specialists)
+
+This shows:
+- Custom workflow needs (skill for orchestration)
+- Generic automations (agents for format/test/commit)
+- Mix of automated and manual operations
+- Context management (project state, team info)
+- Reusable utilities (format, test, commit)
+
+### Use Case 9: Agent - Test Runner (On-Demand)
+
+```
+/create-skill
+
+I want to run my comprehensive test suite whenever I ask. Should run all unit tests, integration tests, check coverage, and give me a detailed report. Reusable across any project I work on.
+```
+
+**Why Agent:** Generic task, reusable, on-demand invocation
+**QuickStart will create:** Quality agent with sequential execution (safety-critical)
+
+This indicates:
+- On-demand invocation (not auto-triggered)
+- Quality operation (testing)
+- Reusable across projects
+- Must be sequential (CRITICAL safety rule)
+
+### Use Case 10: Agent Suite - Security Audit Pipeline
+
+```
+/create-skill
+
+Security audit workflow: scan dependencies for vulnerabilities, analyze code for security issues, check configuration files for exposed secrets, and generate a comprehensive security report. Everything should run sequentially because each step builds on the previous results.
+```
+
+**Why Suite:** Multiple security operations, sequential execution
+**QuickStart will create:** Pipeline of 4 agents with sequential coordination
+
+This reveals:
+- Multiple security operations
+- Sequential dependencies (each step uses previous results)
+- Quality/security focus (must be sequential for safety)
+- Coordinated workflow with handoffs
+- Comprehensive reporting at the end
+
 ## Different Interaction Styles
 
 ### Conversational Style
@@ -140,6 +230,48 @@ I prefer modular architecture - separate skills for each major function so diffe
 
 Start simple but design it to grow. We're in MVP stage now but will need enterprise features within 6 months.
 ```
+
+## Requesting Specific Extension Types
+
+### Requesting an Agent
+
+```
+/create-skill
+
+Create an agent that automatically runs prettier on my code whenever I save files. Should be reusable across all my JavaScript projects.
+```
+
+**Keywords that signal agent:** "automatically", "whenever", "reusable", generic task name
+
+### Requesting an Agent Suite
+
+```
+/create-skill
+
+I need a coordinated suite for deployment: first run tests, then build the application, then push to staging, and finally deploy to production. Each step depends on the previous one succeeding.
+```
+
+**Keywords that signal suite:** "coordinated", "first...then...", multiple distinct operations, "each step"
+
+### Requesting a Hybrid Solution
+
+```
+/create-skill
+
+Help me orchestrate our release process. The overall workflow is custom to our team, but I want to use standard agents for code formatting, testing, and documentation generation.
+```
+
+**Keywords that signal hybrid:** "orchestrate", "custom workflow" + "standard operations", "coordinate"
+
+### Letting QuickStart Decide (Recommended)
+
+```
+/create-skill
+
+Every week I need to analyze our customer data, identify trends, create visualizations, and send a report to stakeholders. Currently doing this manually and it takes forever.
+```
+
+**No explicit type mentioned** - QuickStart will analyze and recommend the best approach with transparent reasoning.
 
 ## Specifying Constraints
 
@@ -215,7 +347,7 @@ Working perfectly! Now can we add automated email notifications when certain thr
 
 ## Tips for Best Results
 
-1. **Be specific about your context** - The more I understand your situation, the better the skill
+1. **Be specific about your context** - The more I understand your situation, the better the extension
 
 2. **Share real examples** - "Our data looks like this..." helps me create accurate solutions
 
@@ -225,16 +357,51 @@ Working perfectly! Now can we add automated email notifications when certain thr
 
 5. **Don't worry about technical details** - I'll figure out the implementation based on your needs
 
+6. **Trust QuickStart's recommendation** - I'll show you transparent reasoning for skill vs agent vs suite vs hybrid
+
+7. **Use trigger words naturally** - "Automatically", "whenever", "reusable" help me understand auto-invocation needs
+
+8. **Mention coordination needs** - "First...then...", "in parallel", "coordinate" help me understand workflow patterns
+
 ## What Not to Say
 
 ### Too Vague
 ❌ "I need a skill for my business"
+✓ Better: "I need to automate weekly customer reports for my 10-person marketing agency"
 
 ### Too Technical Without Context
 ❌ "Build a REST API with JWT auth and GraphQL subscriptions"
+✓ Better: "I need secure user authentication for my SaaS app with 1000 users"
 
 ### Missing Critical Information
-❌ "Make a report generator" (What kind of reports? For whom? From what data?)
+❌ "Make a report generator"
+✓ Better: "Generate weekly sales reports from our CRM for executive team, must be PDF format"
+
+### Assuming Extension Type Without Reasoning
+❌ "Create an agent" (without explaining why agent is needed)
+✓ Better: "Automatically format code across all my projects" (signals agent naturally)
+
+## Extension Type Examples at a Glance
+
+**→ Skill (Custom, Context-Heavy)**
+- "Our unique sprint planning process..."
+- "Custom business rules for our industry..."
+- "Help me manage [project-specific workflow]..."
+
+**→ Agent (Generic, Reusable, Auto-Invoke)**
+- "Automatically format code when I save..."
+- "Run tests whenever I make changes..."
+- "Generate commit messages from diffs..."
+
+**→ Suite (Multiple Roles, Coordinated)**
+- "First plan, then build frontend and backend, then test, then review..."
+- "Coordinated security audit: scan → analyze → report..."
+- "Development pipeline with multiple specialists..."
+
+**→ Hybrid (Custom Orchestration + Generic Automation)**
+- "Manage our custom workflow and automatically format/test/document..."
+- "Orchestrate our release process with standard quality checks..."
+- "Project coordinator that delegates to reusable specialists..."
 
 ## The Best Prompt
 
@@ -250,4 +417,10 @@ Here's what I need: [ideal outcome]
 Here are my constraints: [limitations if any]
 ```
 
-Remember: I'm not just generating from templates - I'm understanding your unique situation and creating something specifically for you. The more context you provide, the better the result!
+**QuickStart 2.0 will:**
+1. Analyze your needs across multiple dimensions
+2. Determine the optimal extension type (skill/agent/suite/hybrid)
+3. Show you transparent reasoning with confidence score
+4. Create exactly what you need with full validation
+
+Remember: I'm not just generating from templates - I'm understanding your unique situation and creating something specifically for you. Whether that's a skill, agent, suite, or hybrid doesn't matter - what matters is that it solves your problem perfectly. The more context you provide, the better the result!

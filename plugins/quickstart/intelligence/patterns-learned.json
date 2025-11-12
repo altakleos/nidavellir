@@ -1,0 +1,153 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2024-11-12",
+  "description": "Learned patterns from successful extension creations. This file evolves as QuickStart learns from user interactions.",
+  "patterns": [
+    {
+      "id": "code-formatter-agent-001",
+      "domain": "development",
+      "pattern_type": "agent",
+      "discovery_signals": [
+        "format code",
+        "prettier",
+        "black",
+        "code style",
+        "auto format"
+      ],
+      "successful_uses": 0,
+      "average_satisfaction": 0,
+      "typical_configuration": {
+        "type": "agent",
+        "function": "implementation",
+        "tools": ["Read", "Write", "Edit"],
+        "execution": "parallel",
+        "auto_invoke": true
+      },
+      "learned_optimizations": [
+        "Include project-specific style configuration",
+        "Preserve existing formatting preferences",
+        "Handle multiple languages if detected"
+      ]
+    },
+    {
+      "id": "test-runner-agent-001",
+      "domain": "quality",
+      "pattern_type": "agent",
+      "discovery_signals": [
+        "run tests",
+        "execute tests",
+        "test suite",
+        "automated testing"
+      ],
+      "successful_uses": 0,
+      "average_satisfaction": 0,
+      "typical_configuration": {
+        "type": "agent",
+        "function": "quality",
+        "tools": ["Read", "Write", "Bash", "Grep"],
+        "execution": "sequential",
+        "auto_invoke": false
+      },
+      "learned_optimizations": [
+        "Detect test framework automatically",
+        "Run fast tests first for quick feedback",
+        "Provide clear failure diagnostics"
+      ]
+    },
+    {
+      "id": "data-pipeline-skill-001",
+      "domain": "data",
+      "pattern_type": "skill",
+      "discovery_signals": [
+        "ETL",
+        "data processing",
+        "transform data",
+        "data workflow"
+      ],
+      "successful_uses": 0,
+      "average_satisfaction": 0,
+      "typical_configuration": {
+        "type": "skill",
+        "complexity": "intermediate",
+        "includes_python": true
+      },
+      "learned_optimizations": [
+        "Add data quality checks at each stage",
+        "Include incremental processing for large datasets",
+        "Generate data lineage documentation"
+      ]
+    }
+  ],
+  "anti_patterns": [
+    {
+      "id": "parallel-quality-agents",
+      "severity": "critical",
+      "description": "Running quality agents in parallel causes system crashes",
+      "detection": "Multiple quality agents without sequential enforcement",
+      "prevention": "Always mark quality agents as execution: sequential",
+      "occurrences": 0
+    },
+    {
+      "id": "bash-in-parallel",
+      "severity": "high",
+      "description": "Bash access in parallel agents can cause race conditions",
+      "detection": "Non-strategic agent with Bash tool and parallel execution",
+      "prevention": "Restrict Bash to strategic agents for parallel, or use coordinated execution",
+      "occurrences": 0
+    }
+  ],
+  "domain_insights": {
+    "web_development": {
+      "common_needs": ["linting", "formatting", "testing", "bundling", "deployment"],
+      "typical_stack": ["React", "Node.js", "TypeScript", "Next.js"],
+      "preferred_structure": "agent_suite",
+      "key_patterns": [
+        "Separate formatter and linter agents",
+        "Build agent for bundling",
+        "Test runner for unit/integration tests"
+      ]
+    },
+    "data_science": {
+      "common_needs": ["data cleaning", "analysis", "visualization", "model training"],
+      "typical_stack": ["Python", "Pandas", "NumPy", "Jupyter", "scikit-learn"],
+      "preferred_structure": "skill",
+      "key_patterns": [
+        "Heavy context for data understanding",
+        "Custom workflows per analysis",
+        "Python scripts for computations"
+      ]
+    },
+    "devops": {
+      "common_needs": ["CI/CD", "deployment", "monitoring", "infrastructure"],
+      "typical_stack": ["Docker", "Kubernetes", "GitHub Actions", "Terraform"],
+      "preferred_structure": "agent_suite",
+      "key_patterns": [
+        "Build agent (coordinated)",
+        "Test agent (sequential)",
+        "Deploy agent (sequential)",
+        "Monitor agent (parallel)"
+      ]
+    },
+    "finance": {
+      "common_needs": ["reporting", "compliance", "analysis", "audit trails"],
+      "typical_stack": ["Python", "Excel", "SQL", "APIs"],
+      "preferred_structure": "skill",
+      "key_patterns": [
+        "High precision required (Decimal not float)",
+        "Audit trail generation",
+        "Compliance validation",
+        "Error handling critical"
+      ]
+    }
+  },
+  "learning_metadata": {
+    "total_extensions_created": 0,
+    "skills_created": 0,
+    "agents_created": 0,
+    "suites_created": 0,
+    "hybrids_created": 0,
+    "average_confidence_score": 0,
+    "user_override_rate": 0,
+    "last_pattern_added": null
+  }
+}
