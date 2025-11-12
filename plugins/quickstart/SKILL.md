@@ -1,7 +1,7 @@
 ---
 name: quickstart
 description: I create precisely optimized Claude Code extensions (skills, agents, suites, or hybrid solutions) through deep contextual understanding and adaptive intelligence
-version: 1.1.0
+version: 1.1.1
 author: AltaKleos Platform Team
 keywords: ["skill-creation", "agent-creation", "factory", "generator", "quickstart", "adaptive", "intelligent", "orchestrator"]
 ---
