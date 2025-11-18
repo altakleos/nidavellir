@@ -1,20 +1,34 @@
 # AltaKleos Claude Code Marketplace
 
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+![Validation](https://github.com/altakleos/claude-code-marketplace/workflows/Validate%20Marketplace/badge.svg)
+
 Private marketplace for internal AltaKleos development tools and Claude Code plugins.
+
+## Quick Links
+
+- [Installation](#for-users-installing-plugins)
+- [Contributing](CONTRIBUTING.md)
+- [Security Policy](SECURITY.md)
+- [Available Plugins](#available-plugins)
 
 ## Repository Structure
 
-This repository uses **git worktrees** for parallel branch development:
+This repository contains the AltaKleos Claude Code plugin marketplace:
 
 ```
-claude-plugins/
-├── .git/              # Bare repository (git history)
-├── main/              # Worktree: production marketplace
-├── develop/           # Worktree: staging/development
-└── feature-*/         # Worktrees: feature branches
+claude-code-marketplace/
+├── .claude-plugin/        # Marketplace configuration
+│   └── marketplace.json   # Plugin registry
+├── .github/               # GitHub templates and workflows
+├── plugins/               # Plugin directory
+│   └── example-plugin/    # Example plugin
+├── schemas/               # JSON validation schemas
+├── scripts/               # Validation and utility scripts
+├── CONTRIBUTING.md        # Contribution guidelines
+├── SECURITY.md           # Security policy
+└── README.md             # This file
 ```
-
-Each directory is an independent working tree, all sharing the same git history. This allows you to work on multiple branches simultaneously without switching contexts.
 
 ## For Users: Installing Plugins
 
@@ -72,113 +86,92 @@ Add to your project's `.claude/settings.json`:
 
 When team members trust the project folder, plugins install automatically.
 
+## Available Plugins
+
+### example-plugin
+
+Example plugin demonstrating Claude Code plugin structure and best practices.
+
+- **Version**: 1.0.0
+- **Category**: Productivity
+- **Installation**: `/plugin install example-plugin@altakleos`
+
+[View Plugin Documentation](plugins/example-plugin/README.md)
+
 ## For Contributors: Developing Plugins
 
 ### Initial Setup
 
 ```bash
 # Clone the repository
-cd ~/workspace/platform
-git clone git@github.com:altakleos/claude-code-marketplace.git claude-plugins
-cd claude-plugins
+git clone git@github.com:altakleos/claude-code-marketplace.git
+cd claude-code-marketplace
 
-# Add develop worktree (if not exists)
-git worktree add develop origin/develop
-
-# List all worktrees
-git worktree list
+# Create a feature branch
+git checkout -b feature/your-plugin-name
 ```
 
-### Working with Worktrees
+### Development Workflow
 
-#### Create a Feature Branch Worktree
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
-```bash
-# From claude-plugins/ directory
-git worktree add feature-new-plugin -b feature-new-plugin
+Quick overview:
 
-# Work in the new worktree
-cd feature-new-plugin
-# Make changes, test, commit
-git add .
-git commit -m "Add new plugin"
-git push -u origin feature-new-plugin
-```
-
-#### Switch Between Worktrees
-
-```bash
-# Work on production
-cd ~/workspace/platform/claude-plugins/main
-
-# Switch to development
-cd ~/workspace/platform/claude-plugins/develop
-
-# Switch to feature
-cd ~/workspace/platform/claude-plugins/feature-new-plugin
-```
-
-#### Remove a Worktree
-
-```bash
-# From claude-plugins/ directory
-git worktree remove feature-new-plugin
-
-# Or force remove if needed
-git worktree remove --force feature-new-plugin
-```
-
-### Git Worktree Quick Reference
-
-```bash
-# List all worktrees
-git worktree list
-
-# Add new worktree from existing branch
-git worktree add <path> <existing-branch>
-
-# Add new worktree with new branch
-git worktree add <path> -b <new-branch>
-
-# Remove worktree
-git worktree remove <path>
-
-# Prune stale worktrees
-git worktree prune
-
-# Move worktree
-git worktree move <old-path> <new-path>
-```
+1. Create plugin in `plugins/your-plugin-name/`
+2. Add entry to `.claude-plugin/marketplace.json`
+3. Test locally
+4. Submit pull request
 
 ## Adding New Plugins
 
 ### 1. Create Plugin Structure
 
 ```bash
-# In your worktree (e.g., develop/ or feature-*)
+# Create plugin directory
 cd plugins
 mkdir my-new-plugin
 cd my-new-plugin
 
-# Create plugin.json (optional if using marketplace entry)
+# Create plugin.json
 cat > plugin.json << 'EOF'
 {
   "name": "my-new-plugin",
   "version": "1.0.0",
-  "description": "Description of what the plugin does",
+  "description": "Description of what the plugin does (10-500 chars)",
   "author": {
     "name": "Your Name",
     "email": "your.email@altakleos.com"
-  }
+  },
+  "keywords": ["keyword1", "keyword2"],
+  "category": "productivity",
+  "license": "MIT"
 }
 EOF
 
+# Create README.md
+cat > README.md << 'EOF'
+# My New Plugin
+
+Brief description of the plugin.
+
+## Installation
+
+\`\`\`bash
+/plugin install my-new-plugin@altakleos
+\`\`\`
+
+## Usage
+
+Describe how to use the plugin.
+EOF
+
 # Add plugin files (commands, skills, etc.)
+mkdir -p .claude/commands .claude/skills
 ```
 
 ### 2. Add to Marketplace
 
-Edit `.claude-plugin/marketplace.json`:
+Edit `.claude-plugin/marketplace.json` to add your plugin:
 
 ```json
 {
@@ -202,19 +195,28 @@ Edit `.claude-plugin/marketplace.json`:
 ### 3. Test Locally
 
 ```bash
+# Return to repository root
+cd /path/to/claude-code-marketplace
+
+# Run validation
+npm run validate
+
 # Add local marketplace for testing
-/plugin marketplace add ~/workspace/platform/claude-plugins/develop
+/plugin marketplace add /path/to/claude-code-marketplace
 
 # Install and test your plugin
 /plugin install my-new-plugin@altakleos
+
+# Test all commands and features
 ```
 
 ### 4. Commit and Push
 
 ```bash
-git add .
-git commit -m "Add my-new-plugin to marketplace"
-git push
+git add plugins/my-new-plugin
+git add .claude-plugin/marketplace.json
+git commit -m "feat: Add my-new-plugin to marketplace"
+git push -u origin feature/your-plugin-name
 ```
 
 ### 5. Create Pull Request
@@ -226,61 +228,23 @@ gh pr create --title "Add my-new-plugin" --body "Description of the plugin and w
 # Or create PR on GitHub web interface
 ```
 
-## Workflow Patterns
+## Validation
 
-### Pattern 1: Quick Fix (Hotfix)
-
-```bash
-# Create hotfix worktree from main
-git worktree add hotfix-urgent main
-
-# Make fix
-cd hotfix-urgent
-# ... fix the issue ...
-git add .
-git commit -m "Fix critical marketplace loading bug"
-git push -u origin hotfix-urgent
-
-# Create PR, merge, then clean up
-cd ..
-git worktree remove hotfix-urgent
-```
-
-### Pattern 2: Feature Development
+Validate your changes before submitting:
 
 ```bash
-# Create feature worktree
-git worktree add feature-auth-plugin -b feature-auth-plugin
+# Run validation script
+npm run validate
 
-# Develop over time
-cd feature-auth-plugin
-# ... multiple commits ...
-
-# When ready, create PR
-gh pr create
-
-# After merge, clean up
-cd ..
-git worktree remove feature-auth-plugin
+# Or directly
+./scripts/validate.sh
 ```
 
-### Pattern 3: Parallel Development
-
-```bash
-# Work on multiple features simultaneously
-git worktree add feature-a -b feature-a
-git worktree add feature-b -b feature-b
-
-# Terminal 1
-cd feature-a
-# ... work on feature A ...
-
-# Terminal 2
-cd feature-b
-# ... work on feature B ...
-
-# Each has independent working state!
-```
+This checks:
+- JSON syntax validity
+- Schema compliance
+- Required files presence
+- Version consistency
 
 ## Troubleshooting
 
@@ -296,9 +260,8 @@ gh auth status
 # Or test SSH
 ssh -T git@github.com
 
-# Test manual clone
-git clone git@github.com:altakleos/claude-code-marketplace.git /tmp/test
-rm -rf /tmp/test
+# Verify repository access
+git ls-remote git@github.com:altakleos/claude-code-marketplace.git
 ```
 
 ### Marketplace Not Loading
@@ -310,40 +273,68 @@ rm -rf /tmp/test
 # Verify marketplace structure
 cat .claude-plugin/marketplace.json
 
-# Validate JSON syntax
-claude plugin validate .
+# Validate marketplace
+npm run validate
 
-# Test local marketplace
-/plugin marketplace add ~/workspace/platform/claude-plugins/main
+# Test local marketplace (adjust path)
+/plugin marketplace add /path/to/claude-code-marketplace
 /plugin marketplace list
 ```
 
-### Worktree Issues
+### Validation Failures
 
-**Error**: "fatal: 'path' is already checked out"
+**Error**: Schema validation fails
 
-**Solution**: Can't have the same branch checked out in multiple worktrees. Either:
-- Use different branches for each worktree
-- Remove the old worktree first: `git worktree remove <path>`
+**Solution**:
+```bash
+# Run validation to see specific errors
+npm run validate
+
+# Check JSON syntax
+jq . .claude-plugin/marketplace.json
+jq . plugins/*/plugin.json
+```
+
+### Plugin Installation Fails
+
+**Error**: Can't install plugin from marketplace
+
+**Solution**:
+```bash
+# Verify plugin exists in marketplace.json
+jq '.plugins[] | select(.name=="plugin-name")' .claude-plugin/marketplace.json
+
+# Check plugin directory exists
+ls -la plugins/plugin-name/
+
+# Verify plugin.json is valid
+jq . plugins/plugin-name/plugin.json
+```
 
 ## Best Practices
 
-1. **Use descriptive branch names**: `feature-auth-helper`, `fix-marketplace-bug`, `docs-update-readme`
+1. **Use descriptive branch names**: `feature/auth-helper`, `fix/marketplace-bug`, `docs/update-readme`
 2. **Keep main stable**: Only merge tested, reviewed code
-3. **Use develop for integration**: Merge features to develop first, then to main
-4. **Clean up old worktrees**: Remove feature worktrees after merging PRs
-5. **Document plugins**: Add clear descriptions and usage examples
-6. **Test locally first**: Always test plugins in your local marketplace before pushing
+3. **Document plugins**: Add clear descriptions and usage examples in README.md
+4. **Test locally first**: Always validate and test plugins before pushing
+5. **Follow semver**: Use semantic versioning for plugin releases
+6. **Security first**: Never commit secrets, API keys, or sensitive data
+7. **Validate before commit**: Run `npm run validate` before every commit
 
 ## Resources
 
-- [Claude Code Plugins Documentation](https://docs.anthropic.com/en/docs/claude-code/plugins)
-- [Git Worktree Documentation](https://git-scm.com/docs/git-worktree)
-- [Claude Code Plugin Marketplaces](https://docs.anthropic.com/en/docs/claude-code/plugin-marketplaces)
+- [Claude Code Plugins Documentation](https://docs.claude.com/en/docs/claude-code/plugins)
+- [Claude Code Plugin Marketplaces](https://docs.claude.com/en/docs/claude-code/plugin-marketplaces)
+- [Contributing Guidelines](CONTRIBUTING.md)
+- [Security Policy](SECURITY.md)
 
 ## Support
 
 For questions or issues:
 - Email: admin@altakleos.com
-- GitHub Issues: Create an issue in this repository
+- GitHub Issues: [Create an issue](https://github.com/altakleos/claude-code-marketplace/issues)
 - Internal Documentation: See AltaKleos Vault
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

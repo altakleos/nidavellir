@@ -1,0 +1,95 @@
+name: Validate Marketplace
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate Plugins and Marketplace
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Validate marketplace structure
+        run: |
+          chmod +x scripts/validate.sh
+          ./scripts/validate.sh
+
+      - name: Check for sensitive files
+        run: |
+          echo "Checking for sensitive files..."
+          if find . -name "*.key" -o -name "*.pem" -o -name "*.p12" -o -name ".env" | grep -q .; then
+            echo "Error: Sensitive files detected!"
+            exit 1
+          fi
+          echo "No sensitive files found."
+
+      - name: Validate JSON syntax
+        run: |
+          echo "Validating all JSON files..."
+          find . -name "*.json" -type f ! -path "*/node_modules/*" -exec jq empty {} \;
+          echo "All JSON files are valid."
+
+      - name: Check file permissions
+        run: |
+          echo "Checking file permissions..."
+          if find plugins -name "*.sh" -type f ! -perm -u+x | grep -q .; then
+            echo "Warning: Some shell scripts may need execute permissions"
+          fi
+
+      - name: Verify plugin structure
+        run: |
+          echo "Verifying plugin directory structure..."
+          for plugin_dir in plugins/*/; do
+            plugin_name=$(basename "$plugin_dir")
+            if [[ ! -f "$plugin_dir/plugin.json" ]]; then
+              echo "Error: Missing plugin.json in $plugin_name"
+              exit 1
+            fi
+            if [[ ! -f "$plugin_dir/README.md" ]]; then
+              echo "Warning: Missing README.md in $plugin_name"
+            fi
+          done
+          echo "Plugin structure verification complete."
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run secret detection
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+          extra_args: --only-verified
+
+  lint-markdown:
+    name: Lint Markdown
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Lint markdown files
+        uses: articulate/actions-markdownlint@v1
+        with:
+          config: .markdownlint.json
+          ignore: node_modules
+        continue-on-error: true
