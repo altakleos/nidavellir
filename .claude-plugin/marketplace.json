@@ -6,7 +6,21 @@
   },
   "metadata": {
     "description": "Internal AltaKleos Claude Code plugins and tools",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "repository": "https://github.com/altakleos/claude-code-marketplace"
   },
-  "plugins": []
+  "plugins": [
+    {
+      "name": "example-plugin",
+      "source": "./plugins/example-plugin",
+      "description": "Example plugin demonstrating Claude Code plugin structure and best practices",
+      "version": "1.0.0",
+      "author": {
+        "name": "AltaKleos Platform Team",
+        "email": "admin@altakleos.com"
+      },
+      "category": "productivity",
+      "keywords": ["example", "demo", "tutorial"]
+    }
+  ]
 }

@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/altakleos/claude-code-marketplace/schemas/plugin.schema.json",
+  "title": "Claude Code Plugin Schema",
+  "description": "Schema for validating plugin.json files in Claude Code plugins",
+  "type": "object",
+  "required": ["name", "version", "description", "author"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Plugin name (lowercase, hyphens allowed)",
+      "pattern": "^[a-z0-9-]+$",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version (e.g., 1.0.0)",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9.-]+)?(\\+[a-zA-Z0-9.-]+)?$"
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief description of what the plugin does",
+      "minLength": 10,
+      "maxLength": 500
+    },
+    "author": {
+      "type": "object",
+      "required": ["name", "email"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "keywords": {
+      "type": "array",
+      "description": "Keywords for searching and categorization",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "maxItems": 20
+    },
+    "category": {
+      "type": "string",
+      "description": "Plugin category",
+      "enum": [
+        "productivity",
+        "development",
+        "testing",
+        "documentation",
+        "security",
+        "ai-assistance",
+        "utilities",
+        "integration",
+        "other"
+      ]
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX license identifier"
+    },
+    "homepage": {
+      "type": "string",
+      "format": "uri"
+    },
+    "repository": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["git", "svn"]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "description": "Other plugins this plugin depends on",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}
