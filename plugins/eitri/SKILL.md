@@ -1,7 +1,7 @@
 ---
 name: eitri
 description: I create precisely optimized Claude Code extensions (skills, agents, suites, hooks, MCP servers, or hybrid solutions) through deep contextual understanding and adaptive intelligence
-version: 1.7.0
+version: 1.8.0
 allowed-tools:
   - Read
   - Glob
@@ -468,6 +468,7 @@ You're not filling out forms or choosing from templates. You're collaborating wi
 | `/forge:feedback` | Provide feedback to improve recommendations |
 | `/forge:publish` | Publish extensions to marketplaces |
 | `/forge:export` | Export to Agent Skills standard for cross-platform use |
+| `/forge:test` | Test extensions in sandbox before deployment |
 
 ### Command Details
 
@@ -533,6 +534,22 @@ Learning data stored locally:
 /forge:export --format=copilot  # Optimized for GitHub Copilot
 /forge:export --dry-run      # Preview export
 ```
+
+**Testing** - Sandbox testing before deployment:
+```
+/forge:test ./my-agent                          # Test with interactive scenario
+/forge:test ./my-agent --scenario="code review" # Test with specific scenario
+/forge:test ./my-suite --trace                  # Show execution trace
+/forge:test ./my-hook --dry-run                 # Preview without execution
+```
+
+Test modes:
+- **Single Extension**: Test skills, agents, hooks individually
+- **Suite Simulation**: Validate multi-agent coordination
+- **Hybrid Solution**: Test skill-agent orchestration
+- **Hook Testing**: Simulate event handling
+
+Mock tool environment (default) ensures safe testing without file modifications.
 
 ## Advanced Features
 

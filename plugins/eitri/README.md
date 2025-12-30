@@ -44,6 +44,7 @@ Eitri creates six types of Claude Code extensions:
 | `/forge:feedback` | Provide feedback to improve recommendations |
 | `/forge:publish` | Publish extensions to marketplaces |
 | `/forge:export` | Export to Agent Skills standard for cross-platform use |
+| `/forge:test` | Test extensions in sandbox before deployment |
 
 ## Documentation
 
@@ -52,7 +53,7 @@ Eitri creates six types of Claude Code extensions:
 
 ## Version
 
-1.7.0
+1.8.0
 
 ## Author
 

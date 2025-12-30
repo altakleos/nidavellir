@@ -92,7 +92,7 @@ When team members trust the project folder, plugins install automatically.
 
 Intelligent extension forge that creates precisely optimized Claude Code extensions through deep contextual understanding and adaptive intelligence. Named after the legendary Norse dwarf smith who forged Thor's hammer Mjolnir.
 
-- **Version**: 1.7.0
+- **Version**: 1.8.0
 - **Category**: Development
 - **Installation**: `/plugin install eitri@altakleos`
 
@@ -108,6 +108,7 @@ Intelligent extension forge that creates precisely optimized Claude Code extensi
 | `/forge:feedback` | Provide feedback to improve recommendations |
 | `/forge:publish` | Publish extensions to marketplaces |
 | `/forge:export` | Export to Agent Skills standard for cross-platform use |
+| `/forge:test` | Test extensions in sandbox before deployment |
 
 **Creates:** Skills, Agents, Agent Suites, Hybrid Solutions, Hooks, MCP Servers
 
