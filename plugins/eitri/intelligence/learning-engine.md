@@ -77,21 +77,77 @@ The learning engine:
 
 ```json
 {
+  "id": "fb-20251230-001",
   "timestamp": "2025-01-30T14:30:00Z",
   "type": "success|issue|override|suggest",
-  "extension_name": "code-reviewer",
-  "extension_type": "agent",
+  "extension": {
+    "name": "code-reviewer",
+    "path": "./plugins/code-reviewer/SKILL.md",
+    "type": "agent",
+    "version": "1.0.0",
+    "prompt_hash": "sha256:a3f8c2d1..."
+  },
   "context": {
     "domain": "development",
     "complexity": "simple",
     "reusability": "high",
     "coupling": "low"
   },
+  "content": {
+    "description": "Missed SQL injection vulnerability",
+    "severity": "high",
+    "context": {
+      "file_analyzed": "src/api/users.py",
+      "expected": "Should flag string concatenation in SQL",
+      "actual": "No warning generated"
+    }
+  },
   "details": {
     "success": true,
     "satisfaction": 0.9
+  },
+  "lifecycle": {
+    "status": "pending",
+    "applied_in_version": null,
+    "applied_at": null,
+    "verified": null,
+    "verified_at": null,
+    "resolution_notes": null
   }
 }
+```
+
+### Feedback Lifecycle States
+
+```
+                                    ┌─────────────┐
+                                    │ in_progress │ (optimization running)
+                                    └──────┬──────┘
+                                           │
+┌─────────┐    /forge:improve    ┌─────────▼─┐    user confirms    ┌──────────┐
+│ pending │ ──────────────────→ │  applied  │ ─────────────────→ │ verified │
+└─────────┘                      └───────────┘                     └──────────┘
+     │                                │
+     │  user marks won't-fix          │  improvement didn't work
+     ▼                                ▼
+┌──────────┐                    ┌──────────┐
+│ rejected │                    │ reopened │ → back to pending
+└──────────┘                    └──────────┘
+     │
+     ├── deferred (address later)
+     └── duplicate (already covered by another feedback)
+```
+
+| Status | Description |
+|--------|-------------|
+| `pending` | New feedback, awaiting optimization |
+| `in_progress` | Currently being processed by `/forge:improve` |
+| `applied` | Prompt updated, awaiting user verification |
+| `verified` | User confirmed the fix works |
+| `rejected` | Won't fix (with reason in `resolution_notes`) |
+| `deferred` | Will address in future version |
+| `duplicate` | Already covered by another feedback item |
+| `reopened` | Fix didn't work, needs re-evaluation |
 ```
 
 ### Weight Adjustments

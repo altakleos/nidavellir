@@ -25,6 +25,10 @@ Provide feedback on Eitri-generated extensions to improve recommendation accurac
 | `--stats` | Show learning statistics | `/forge:feedback --stats` |
 | `--reset` | Reset personal learning data | `/forge:feedback --reset` |
 | `--export` | Export learning data | `/forge:feedback --export` |
+| `--pending` | Show pending feedback awaiting optimization | `/forge:feedback --pending` |
+| `--verify=<id>` | Verify that applied feedback fixed the issue | `/forge:feedback --verify=fb-001` |
+| `--reopen=<id>` | Reopen feedback if the fix didn't work | `/forge:feedback --reopen=fb-001` |
+| `--reject=<id>` | Mark feedback as won't-fix with reason | `/forge:feedback --reject=fb-001` |
 
 ## Feedback Types
 
@@ -89,6 +93,118 @@ You can suggest:
 - Documentation improvements
 
 **Effect:** Adds to suggestion queue for future consideration.
+
+## Feedback Lifecycle Management
+
+Feedback entries have lifecycle states that track their journey from creation to resolution.
+
+### View Pending Feedback
+
+See all feedback awaiting optimization:
+
+```
+/forge:feedback --pending
+
+Pending Feedback
+════════════════════════════════════════════
+
+code-reviewer (3 items):
+  [fb-001] HIGH: Missed SQL injection (2025-12-28)
+  [fb-002] MED:  False positive on sanitized input (2025-12-29)
+  [fb-003] LOW:  Verbose output for clean files (2025-12-30)
+
+test-runner (1 item):
+  [fb-004] MED:  Doesn't detect async test failures (2025-12-29)
+
+Total: 4 pending items across 2 extensions
+
+Tip: Run /forge:improve ./plugins/code-reviewer to apply improvements
+```
+
+Filter by extension:
+
+```
+/forge:feedback --pending --extension=code-reviewer
+```
+
+### Verify Applied Improvements
+
+After `/forge:improve` applies feedback, verify the fix works:
+
+```
+/forge:feedback --verify=fb-001
+
+Verifying: fb-001
+Extension: code-reviewer
+Issue: Missed SQL injection vulnerability
+Applied in: v1.2.0 (2025-12-30)
+
+Does the improvement address this issue? [y/n]: y
+
+✓ Feedback fb-001 marked as verified
+```
+
+**Effect:** Confirms the optimization worked, improving confidence in future similar improvements.
+
+### Reopen Failed Improvements
+
+If an applied improvement didn't actually fix the issue:
+
+```
+/forge:feedback --reopen=fb-001
+
+Reopening: fb-001
+Extension: code-reviewer
+Issue: Missed SQL injection vulnerability
+Applied in: v1.2.0 (2025-12-30)
+
+Why didn't the fix work? (optional): Still missing edge case with prepared statements
+
+✓ Feedback fb-001 reopened (status: pending)
+
+The issue will be addressed in the next optimization run.
+```
+
+**Effect:** Returns feedback to pending status with additional context for the next optimization attempt.
+
+### Reject Feedback
+
+Mark feedback as won't-fix:
+
+```
+/forge:feedback --reject=fb-003
+
+Rejecting: fb-003
+Extension: code-reviewer
+Issue: Verbose output for clean files
+
+Rejection reason:
+  1. won't-fix - Not aligned with extension goals
+  2. duplicate - Already covered by another feedback
+  3. deferred - Will address in future version
+  4. invalid - Feedback is incorrect or not applicable
+
+Select reason [1-4]: 1
+
+Additional notes (optional): Verbose output is intentional for audit purposes
+
+✓ Feedback fb-003 rejected (reason: won't-fix)
+```
+
+**Effect:** Removes feedback from the pending queue with documented reasoning.
+
+### Lifecycle States
+
+| State | Description |
+|-------|-------------|
+| `pending` | New feedback, awaiting optimization |
+| `in_progress` | Currently being processed by `/forge:improve` |
+| `applied` | Prompt updated, awaiting verification |
+| `verified` | User confirmed the fix works |
+| `rejected` | Won't fix (with reason) |
+| `deferred` | Will address in future version |
+| `duplicate` | Already covered by another feedback |
+| `reopened` | Fix didn't work, back to pending |
 
 ## Learning Statistics
 
@@ -359,6 +475,7 @@ Confidence: 82%
 | Command | Purpose |
 |---------|---------|
 | `/forge` | Create extensions (collects implicit feedback) |
+| `/forge:improve` | Apply feedback to improve extension prompts |
 | `/forge:validate` | Validate extensions |
 | `/forge:upgrade` | Upgrade extensions |
 | `/forge:browse` | Browse templates |

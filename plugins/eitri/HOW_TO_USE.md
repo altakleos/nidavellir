@@ -24,6 +24,7 @@ Eitri now creates **six types** of Claude Code extensions:
 | `/forge:template` | Quick-start from pre-built templates |
 | `/forge:browse` | Discover templates from local filesystem |
 | `/forge:feedback` | Provide feedback to improve recommendations |
+| `/forge:improve` | Optimize extension prompts based on feedback |
 | `/forge:publish` | Publish extensions to marketplaces |
 | `/forge:export` | Export to Agent Skills standard for cross-platform use |
 | `/forge:test` | Test extensions in sandbox before deployment |
@@ -783,6 +784,166 @@ Skill: Workflow coordinator (makes decisions)
 ├─> Agent: Worker 2 (executes tasks)
 └─> Agent: Quality checker (validates results)
 ```
+
+## Prompt Optimization & Self-Improvement
+
+Eitri includes a feedback-driven optimization system that improves extension prompts based on collected feedback. This system works on any extension—including Eitri itself.
+
+### The Improvement Workflow
+
+```
+1. Use extension → 2. Report issues → 3. Optimize → 4. Verify
+```
+
+#### Step 1: Provide Feedback
+
+When an extension doesn't work as expected:
+
+```
+/forge:feedback --issue --extension=code-reviewer
+
+Describe: Missed SQL injection in string concatenation
+Expected: Should flag query building with + operator
+Actual: No warning generated
+Severity: high
+```
+
+#### Step 2: View Pending Feedback
+
+Check accumulated feedback:
+
+```
+/forge:feedback --pending
+
+Pending Feedback
+════════════════════════════════════════════
+
+code-reviewer (3 items):
+  [fb-001] HIGH: Missed SQL injection (2025-12-28)
+  [fb-002] MED:  False positive on sanitized input (2025-12-29)
+  [fb-003] LOW:  Verbose output for clean files (2025-12-30)
+```
+
+#### Step 3: Optimize the Extension
+
+Apply feedback to improve the prompt:
+
+```
+/forge:improve ./plugins/code-reviewer
+
+Step 1: Load Extension
+────────────────────────────────────────────
+Loading: ./plugins/code-reviewer/SKILL.md
+Current version: 1.1.0
+
+Step 2: Gather Pending Feedback
+────────────────────────────────────────────
+Found 3 pending feedback items
+
+Step 3: LLM Analysis
+────────────────────────────────────────────
+Identified improvements:
+  1. Add SQL injection pattern: string concatenation in queries
+  2. Reduce false positives: check for sanitization calls
+  3. Suppress verbose output: add summary mode
+
+Confidence: 87%
+
+Step 4: Proposed Changes
+────────────────────────────────────────────
+[Shows diff of proposed changes]
+
+Step 5: Confirmation
+────────────────────────────────────────────
+Apply these changes? [y/n/edit]: y
+
+✓ Changes applied (version 1.1.0 → 1.2.0)
+```
+
+#### Step 4: Verify Improvements
+
+Confirm the fix works:
+
+```
+/forge:feedback --verify=fb-001
+
+Does the improvement address this issue? [y/n]: y
+
+✓ Feedback fb-001 marked as verified
+```
+
+### Self-Improvement (Eitri on Eitri)
+
+The same system improves Eitri itself:
+
+```
+/forge:improve ./plugins/eitri
+
+Detected: Eitri self-improvement
+Components with pending feedback:
+  1. generators/skill-generator.md (2 items)
+  2. core/decision-framework.md (1 item)
+
+Select component to improve [1/2/all]:
+```
+
+Eitri routes feedback to the appropriate component:
+- "Generated skill too verbose" → `generators/skill-generator.md`
+- "Wrong type recommended" → `core/decision-framework.md`
+- "MCP missing auth" → `generators/mcp-generator.md`
+
+### Version History & Rollback
+
+Every optimization creates a new version:
+
+```
+/forge:improve ./plugins/code-reviewer --history
+
+Version 1.2.0 (current)
+  Created: 2025-12-30
+  Source: optimization
+  Summary: Added SQL injection detection
+
+Version 1.1.0
+  Created: 2025-12-15
+  Source: optimization
+  Summary: Improved XSS detection
+
+Version 1.0.0
+  Created: 2025-12-01
+  Source: generated
+```
+
+Rollback if needed:
+
+```
+/forge:improve ./plugins/code-reviewer --rollback
+```
+
+### Team Collaboration
+
+Optimization history syncs via git:
+- Version manifests are tracked in `.claude/eitri/optimization/versions/`
+- Archived prompts are tracked in `.claude/eitri/optimization/prompts/`
+- Personal feedback stays local in `~/.claude/eitri/learning/`
+
+When team members optimize the same extension, the LLM merges feedback:
+
+```
+/forge:improve ./my-agent --merge
+```
+
+### Related Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/forge:feedback --issue` | Report extension issues |
+| `/forge:feedback --pending` | View pending feedback |
+| `/forge:feedback --verify` | Verify applied improvements |
+| `/forge:feedback --reopen` | Reopen if fix didn't work |
+| `/forge:improve` | Apply feedback to improve prompts |
+| `/forge:improve --history` | View optimization history |
+| `/forge:improve --rollback` | Revert to previous version |
 
 ## Integration with AltaKleos Marketplace
 
