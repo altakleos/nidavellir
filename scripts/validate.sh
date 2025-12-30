@@ -93,8 +93,9 @@ validate_plugin_schema() {
         ERRORS=$((ERRORS + 1))
     fi
 
-    # Check for README.md
-    if [[ ! -f "$plugin_dir/README.md" ]]; then
+    # Check for README.md (in plugin root, not .claude-plugin/)
+    local plugin_root=$(dirname "$plugin_dir")
+    if [[ ! -f "$plugin_root/README.md" ]]; then
         echo -e "${YELLOW}  ⚠ Missing README.md${NC}"
         WARNINGS=$((WARNINGS + 1))
     fi
