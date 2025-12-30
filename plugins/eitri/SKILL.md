@@ -1,7 +1,7 @@
 ---
 name: eitri
 description: I create precisely optimized Claude Code extensions (skills, agents, suites, hooks, MCP servers, or hybrid solutions) through deep contextual understanding and adaptive intelligence
-version: 1.8.0
+version: 1.9.0
 allowed-tools:
   - Read
   - Glob
@@ -469,6 +469,7 @@ You're not filling out forms or choosing from templates. You're collaborating wi
 | `/forge:publish` | Publish extensions to marketplaces |
 | `/forge:export` | Export to Agent Skills standard for cross-platform use |
 | `/forge:test` | Test extensions in sandbox before deployment |
+| `/forge:diagram` | Visualize extension architecture with Mermaid diagrams |
 
 ### Command Details
 
@@ -550,6 +551,22 @@ Test modes:
 - **Hook Testing**: Simulate event handling
 
 Mock tool environment (default) ensures safe testing without file modifications.
+
+**Diagrams** - Visualize architecture:
+```
+/forge:diagram ./my-suite                    # Architecture diagram
+/forge:diagram ./my-suite --show=dataflow    # Data flow visualization
+/forge:diagram ./my-suite --show=timeline    # Execution timeline
+/forge:diagram ./my-suite --format=ascii     # ASCII art for terminal
+```
+
+Diagram types:
+- **Architecture**: Agent relationships and coordination patterns
+- **Data Flow**: How data moves between agents
+- **Dependencies**: Tool and resource requirements
+- **Timeline**: Execution sequence and timing
+
+Formats: Mermaid (default), ASCII, Markdown with embedded diagrams.
 
 ## Advanced Features
 
