@@ -6,7 +6,7 @@ description: Domain-specific knowledge and patterns for various industries and t
 
 # Domain Intelligence - Industry & Technology Expertise
 
-This module provides domain-specific knowledge that helps QuickStart create contextually appropriate extensions for different industries and technology ecosystems.
+This module provides domain-specific knowledge that helps Eitri create contextually appropriate extensions for different industries and technology ecosystems.
 
 ## Healthcare Domain
 
@@ -123,4 +123,4 @@ This module provides domain-specific knowledge that helps QuickStart create cont
 - Jupyter
 - Visualization (Matplotlib, Seaborn)
 
-This intelligence informs context-appropriate generation across all QuickStart modules.
+This intelligence informs context-appropriate generation across all Eitri modules.

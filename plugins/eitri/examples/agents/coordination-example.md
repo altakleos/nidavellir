@@ -1,12 +1,15 @@
 ---
 name: workflow-orchestrator
 description: Coordinates multi-agent workflows by managing task dependencies, monitoring progress, and handling failures. Routes work to appropriate specialist agents.
-tools: Read, Write, Grep
+allowed-tools:
+  - Read
+  - Write
+  - Grep
 model: opus
 color: purple
 field: coordination
 expertise: expert
-execution_pattern: orchestrator
+execution_pattern: coordinated
 process_load_estimate: "10-15"
 ---
 

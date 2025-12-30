@@ -436,6 +436,25 @@ my-new-agent/
 └── test_scenarios.md       # Test cases for validation
 ```
 
+## Failure Handling
+
+Define clear failure boundaries and recovery strategies:
+
+**Validation Failures:**
+- If frontmatter validation fails, provide specific error and guidance
+- If tool configuration is invalid, suggest corrections
+- If execution pattern conflicts with function type, warn and correct
+
+**Generation Failures:**
+- If description optimization fails, use simple format
+- If tool calibration fails, default to minimal tools
+- If context is insufficient, request additional information
+
+**Recovery Strategies:**
+- Allow partial agent generation with warnings
+- Provide rollback guidance for failed integrations
+- Document known limitations and workarounds
+
 ## Learning and Improvement
 
 Track successful agent patterns:
@@ -452,6 +471,15 @@ agent_pattern = {
 ```
 
 Feed this back to pattern learning system for continuous improvement.
+
+## Related Modules
+
+- **Decision Framework**: See `core/decision-framework.md` for type selection logic
+- **Validation**: See `core/validation-framework.md` for validation rules
+- **Other Generators**:
+  - Skills: `generators/skill-generator.md`
+  - Suites: `generators/suite-coordinator.md`
+  - Hybrids: `generators/hybrid-architect.md`
 
 ## Success Criteria
 

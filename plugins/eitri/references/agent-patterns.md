@@ -6,7 +6,7 @@ description: Agent creation patterns, safety guidelines, and best practices
 
 # Agent Patterns - Reference Guide
 
-Comprehensive guide to agent patterns that QuickStart uses and adapts contextually.
+Comprehensive guide to agent patterns that Eitri uses and adapts contextually.
 
 ## Agent Concept
 
@@ -46,7 +46,7 @@ Use agents when you need:
 **Quality (Testing & Validation):**
 - Full tools for thorough checking
 - Tools: Read, Write, Edit, Bash, Grep, Glob
-- Execution: SEQUENTIAL ONLY (CRITICAL)
+- Execution: Sequential (recommended for stability)
 - Process load: 12-18 processes
 - Examples: Test runner, code reviewer, security auditor
 
@@ -59,19 +59,19 @@ Use agents when you need:
 
 ## Safety Framework
 
-### Critical Safety Rule: Sequential Quality Agents
+### Safety Guideline: Sequential Quality Agents
 
-Quality agents MUST be sequential:
+Quality agents should run sequentially for system stability:
 ```yaml
-# CORRECT
+# Recommended
 name: test-runner
 function: quality
 execution_pattern: sequential
 
-# WRONG - System crashes
+# Not recommended - may cause instability
 name: test-runner
 function: quality
-execution_pattern: parallel  # NEVER!
+execution_pattern: parallel  # Avoid for quality agents
 ```
 
 ### Tool Access Safety
@@ -244,4 +244,4 @@ Agents should:
 - Document breaking changes
 - Provide migration guides
 
-This reference guides QuickStart's agent generation with context-appropriate adaptations.
+This reference guides Eitri's agent generation with context-appropriate adaptations.

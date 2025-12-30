@@ -1,7 +1,13 @@
 ---
 name: feature-developer
 description: Implements new features based on technical specifications. Writes clean, tested code following project standards and best practices.
-tools: Read, Write, Edit, Bash, Grep, Glob
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Bash
+  - Grep
+  - Glob
 model: sonnet
 color: green
 field: development

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Simple skill packager - creates clean ZIP files for skill distribution.
-The intelligence is in what QuickStart creates, not how it's packaged.
+The intelligence is in what Eitri creates, not how it's packaged.
 
 Usage:
     python package_skill.py <skill_path>
@@ -153,7 +153,7 @@ def package_skill(skill_path, output_dir=None):
 def main():
     """Main entry point for command-line usage."""
     if len(sys.argv) < 2:
-        print("QuickStart Skill Packager")
+        print("Eitri Skill Packager")
         print("\nUsage:")
         print("  python package_skill.py <skill_path>")
         print("  python package_skill.py <skill_path> <output_dir>")

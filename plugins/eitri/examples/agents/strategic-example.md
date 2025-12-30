@@ -1,7 +1,10 @@
 ---
 name: technical-requirements-analyst
 description: Analyzes project requirements and creates detailed technical specifications when planning new features. Researches technical approaches and documents architecture decisions.
-tools: Read, Write, Grep
+allowed-tools:
+  - Read
+  - Write
+  - Grep
 model: opus
 color: blue
 field: architecture

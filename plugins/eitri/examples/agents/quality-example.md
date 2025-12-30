@@ -1,7 +1,11 @@
 ---
 name: comprehensive-test-runner
 description: Automated test execution specialist that runs comprehensive test suites whenever code changes. Executes unit, integration, and e2e tests with detailed reporting.
-tools: Read, Write, Bash, Grep
+allowed-tools:
+  - Read
+  - Write
+  - Bash
+  - Grep
 model: sonnet
 color: red
 field: testing
@@ -60,8 +64,8 @@ Provide clear, actionable output:
 - If environment issue: Suggest configuration fixes
 
 ## Safety Considerations
-⚠️ CRITICAL: This is a quality agent and must NEVER run in parallel with other quality agents.
-Sequential execution is mandatory to prevent system crashes.
+This is a quality agent and should run sequentially, not in parallel with other quality agents.
+Sequential execution helps maintain system stability.
 
 ## Integration Points
 - Runs after: implementation agents complete

@@ -71,6 +71,42 @@ allowed-tools:
 ---
 ```
 
+### 6. Agent Frontmatter Fields (Eitri-Specific)
+
+The Eitri plugin uses additional frontmatter fields for agent examples and generation.
+These are **internal to Eitri** and not part of the official Claude Code spec:
+
+| Field | Values | Purpose |
+|-------|--------|---------|
+| `model` | `sonnet`, `opus`, `haiku` | Recommended model for this agent |
+| `color` | `blue`, `green`, `red`, `purple` | Visual categorization (blue=strategic, green=implementation, red=quality, purple=coordination) |
+| `field` | domain string | Domain area (e.g., `development`, `testing`, `architecture`) |
+| `expertise` | `beginner`, `intermediate`, `expert` | User technical level adaptation |
+| `execution_pattern` | `parallel`, `coordinated`, `sequential` | How this agent should be executed |
+| `process_load_estimate` | string range (e.g., `"12-18"`) | Estimated process count |
+| `max_concurrent` | number | Maximum concurrent instances |
+
+**Example Eitri agent frontmatter:**
+```yaml
+---
+name: code-reviewer
+description: Reviews code for bugs and best practices when modifications are made
+allowed-tools:
+  - Read
+  - Grep
+  - Glob
+model: sonnet
+color: red
+field: quality
+expertise: intermediate
+execution_pattern: sequential
+process_load_estimate: "12-18"
+---
+```
+
+**Note:** These fields are used by Eitri for agent generation guidance.
+The official Claude Code fields (`name`, `description`, `version`, `allowed-tools`, etc.) take precedence.
+
 ## Common Operations
 
 ### Creating a New Plugin

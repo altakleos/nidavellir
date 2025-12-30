@@ -340,6 +340,41 @@ Support refinement through conversation:
 → Update skill coherently
 → Maintain existing patterns
 
+## Failure Handling
+
+Define clear failure boundaries and recovery strategies:
+
+**Validation Failures:**
+- If frontmatter validation fails, provide specific error and guidance
+- If complexity analysis fails, ask clarifying questions
+- If pattern matching fails, default to simpler patterns
+
+**Generation Failures:**
+- If code generation fails, provide partial result with explanation
+- If integration points are unclear, document assumptions
+- If context is insufficient, request additional information
+
+**Recovery Strategies:**
+- Allow incremental generation (partial skills)
+- Provide rollback guidance for failed integrations
+- Document known limitations and workarounds
+
+## Version Management
+
+Start with version 1.0.0 for new skills:
+- Patch (1.0.1): Bug fixes, minor improvements
+- Minor (1.1.0): New features, backward compatible
+- Major (2.0.0): Breaking changes
+
+## Related Modules
+
+- **Decision Framework**: See `core/decision-framework.md` for type selection logic
+- **Validation**: See `core/validation-framework.md` for validation rules
+- **Other Generators**:
+  - Agents: `generators/agent-generator.md`
+  - Suites: `generators/suite-coordinator.md`
+  - Hybrids: `generators/hybrid-architect.md`
+
 ## Success Criteria
 
 A successful skill:

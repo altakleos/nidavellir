@@ -6,7 +6,7 @@ description: Framework for deciding between skills, agents, suites, and hybrid s
 
 # Agent vs Skill Decision Framework
 
-Comprehensive decision framework that guides QuickStart's extension type recommendations.
+Comprehensive decision framework that guides Eitri's extension type recommendations.
 
 ## Core Decision Dimensions
 
@@ -166,7 +166,7 @@ Comprehensive decision framework that guides QuickStart's extension type recomme
 
 ## Scoring Algorithm
 
-QuickStart calculates scores across dimensions:
+Eitri calculates scores across dimensions:
 
 ```python
 scores = {
@@ -236,4 +236,4 @@ When dimensions conflict:
 2. Add: Central orchestrator skill
 3. Integrate: Hybrid coordination
 
-This framework guides QuickStart's intelligent recommendations with transparency and context-awareness.
+This framework guides Eitri's intelligent recommendations with transparency and context-awareness.

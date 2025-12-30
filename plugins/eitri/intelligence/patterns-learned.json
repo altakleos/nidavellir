@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "last_updated": "2024-11-12",
-  "description": "Learned patterns from successful extension creations. This file evolves as QuickStart learns from user interactions.",
+  "description": "Learned patterns from successful extension creations. This file evolves as Eitri learns from user interactions.",
   "patterns": [
     {
       "id": "code-formatter-agent-001",

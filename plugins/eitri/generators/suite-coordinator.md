@@ -111,7 +111,7 @@ Coordinator manages subordinate agents:
 
 ## Suite Generation Process
 
-### Step 1: Component Analysis
+### Phase 1: Component Analysis
 
 Analyze the components needed:
 
@@ -133,7 +133,7 @@ def analyze_components(requirements, discovery_context):
     return components
 ```
 
-### Step 2: Relationship Mapping
+### Phase 2: Relationship Mapping
 
 Map relationships between components:
 
@@ -167,7 +167,7 @@ def map_relationships(components):
     return relationships
 ```
 
-### Step 3: Pattern Selection
+### Phase 3: Pattern Selection
 
 Choose optimal architecture pattern:
 
@@ -185,7 +185,7 @@ def select_pattern(components, relationships):
         return "custom"
 ```
 
-### Step 4: Execution Strategy
+### Phase 4: Execution Strategy
 
 Define execution order and concurrency:
 
@@ -221,7 +221,7 @@ def plan_execution(components, pattern, relationships):
     return execution_plan
 ```
 
-### Step 5: Safety Validation
+### Phase 5: Safety Validation
 
 Ensure suite is safe to execute:
 
@@ -238,12 +238,12 @@ def validate_suite_safety(suite):
     errors = []
     warnings = []
 
-    # Check for parallel quality agents (CRITICAL)
+    # Check for parallel quality agents (important for stability)
     quality_agents = [a for a in suite.agents if a.function == "quality"]
     for phase in suite.execution_plan.phases:
         parallel_quality = [a for a in phase.parallel_agents if a in quality_agents]
         if len(parallel_quality) > 1:
-            errors.append("CRITICAL: Multiple quality agents in parallel")
+            errors.append("Multiple quality agents should not run in parallel for stability")
 
     # Check concurrency limits
     for phase in suite.execution_plan.phases:
@@ -258,7 +258,7 @@ def validate_suite_safety(suite):
     return errors, warnings
 ```
 
-### Step 6: Suite Configuration Generation
+### Phase 6: Suite Configuration Generation
 
 Create suite configuration file:
 
@@ -354,7 +354,7 @@ suite:
       enforcement: warning
 ```
 
-### Step 7: Suite Documentation
+### Phase 7: Suite Documentation
 
 Generate comprehensive suite documentation:
 
@@ -457,7 +457,7 @@ This suite can grow by:
 - Adding monitoring agent for production
 ```
 
-### Step 8: Individual Agent Generation
+### Phase 8: Individual Agent Generation
 
 For each agent in the suite, generate using agent-generator:
 
@@ -502,6 +502,41 @@ my-suite/
     ├── usage-guide.md      # How to use the suite
     └── troubleshooting.md  # Common issues
 ```
+
+## Failure Handling
+
+Define clear failure boundaries and recovery strategies:
+
+**Validation Failures:**
+- If component analysis fails, break down requirements further
+- If relationship mapping conflicts, prioritize safety over performance
+- If pattern selection is ambiguous, default to pipeline pattern
+
+**Generation Failures:**
+- If agent generation fails, provide partial suite with warnings
+- If coordination rules conflict, simplify to sequential execution
+- If safety validation fails, refuse to generate and explain why
+
+**Recovery Strategies:**
+- Allow partial suite execution (working agents only)
+- Provide graceful degradation paths
+- Document known limitations and workarounds
+
+## Version Management
+
+Start with version 1.0.0 for new suites:
+- Patch (1.0.1): Bug fixes, minor improvements
+- Minor (1.1.0): New agents, backward compatible coordination
+- Major (2.0.0): Breaking changes to coordination or data flow
+
+## Related Modules
+
+- **Decision Framework**: See `core/decision-framework.md` for type selection logic
+- **Validation**: See `core/validation-framework.md` for validation rules
+- **Other Generators**:
+  - Skills: `generators/skill-generator.md`
+  - Agents: `generators/agent-generator.md`
+  - Hybrids: `generators/hybrid-architect.md`
 
 ## Success Criteria
 

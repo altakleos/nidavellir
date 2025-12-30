@@ -92,7 +92,7 @@ Phase 3: [Skill: Core Workflow]
 
 ## Hybrid Generation Process
 
-### Step 1: Boundary Analysis
+### Phase 1: Boundary Analysis
 
 Determine what should be skill vs agents:
 
@@ -139,7 +139,7 @@ def should_be_agent(component):
     )
 ```
 
-### Step 2: Integration Strategy
+### Phase 2: Integration Strategy
 
 Define how skill and agents communicate:
 
@@ -177,7 +177,7 @@ I coordinate multiple agents:
 5. Present final output
 ```
 
-### Step 3: Skill Generation
+### Phase 3: Skill Generation
 
 Use skill-generator for the orchestrator component:
 
@@ -202,7 +202,7 @@ def generate_orchestrator_skill(boundaries, discovery_context):
 - State management
 - Integration coordination
 
-### Step 4: Agent Generation
+### Phase 4: Agent Generation
 
 Use agent-generator for specialist components:
 
@@ -230,7 +230,7 @@ def generate_specialist_agents(boundaries, discovery_context):
     return agents
 ```
 
-### Step 5: Integration Documentation
+### Phase 5: Integration Documentation
 
 Create clear documentation on how components work together:
 
@@ -299,7 +299,7 @@ This hybrid solution can evolve:
 - Scale agents independently
 ```
 
-### Step 6: Shared Data Strategy
+### Phase 6: Shared Data Strategy
 
 Define how data flows between components:
 
@@ -354,7 +354,7 @@ When tests need to run:
 4. Present results to user
 ```
 
-### Step 7: Failure Handling
+### Phase 7: Failure Handling
 
 Define failure boundaries and recovery:
 
@@ -392,7 +392,7 @@ If an agent fails:
 - Use previous message template
 ```
 
-### Step 8: Performance Optimization
+### Phase 8: Performance Optimization
 
 Optimize hybrid solution performance:
 
@@ -495,6 +495,22 @@ Benefits:
 - Skill focuses on orchestration
 - Cleaner separation of concerns
 ```
+
+## Version Management
+
+Start with version 1.0.0 for new hybrid solutions:
+- Patch (1.0.1): Bug fixes, minor improvements
+- Minor (1.1.0): New agents or skill enhancements, backward compatible
+- Major (2.0.0): Breaking changes to integration contracts
+
+## Related Modules
+
+- **Decision Framework**: See `core/decision-framework.md` for type selection logic
+- **Validation**: See `core/validation-framework.md` for validation rules
+- **Other Generators**:
+  - Skills: `generators/skill-generator.md`
+  - Agents: `generators/agent-generator.md`
+  - Suites: `generators/suite-coordinator.md`
 
 ## Success Criteria
 

@@ -1,15 +1,15 @@
 ---
 name: forge
-description: Launch Eitri to intelligently create one or more skills through natural conversation
+description: Launch Eitri to intelligently create Claude Code extensions (skills, agents, suites, or hybrids) through natural conversation
 ---
 
 # Forge Command
 
-This command launches Eitri - your intelligent skill creation assistant.
+This command launches Eitri - your intelligent extension creation assistant.
 
 ## What Happens
 
-When you type `/forge`, I'll start a conversation to understand your unique needs and create the perfect skill(s) for you.
+When you type `/forge`, I'll start a conversation to understand your unique needs and create the perfect extension(s) for you - whether that's a skill, agent, suite, or hybrid solution.
 
 ## The Process
 
@@ -59,9 +59,9 @@ Me: I understand the pain of manual inventory management. Let me learn more abou
 
 ## The Eitri Promise
 
-Every skill I create is:
+Every extension I create is:
 - **Unique** - Built specifically for your situation
-- **Appropriate** - Right complexity for your needs
+- **Appropriate** - Right type and complexity for your needs
 - **Practical** - Solves your actual problem
 - **Quality** - Meets high standards contextually
 
