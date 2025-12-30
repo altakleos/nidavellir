@@ -40,6 +40,7 @@ Eitri creates six types of Claude Code extensions:
 | `/forge:install` | Install extensions to Claude Code environment |
 | `/forge:upgrade` | Upgrade existing extensions with new features |
 | `/forge:template` | Quick-start from pre-built templates |
+| `/forge:browse` | Discover templates from local filesystem |
 | `/forge:publish` | Publish extensions to marketplaces |
 | `/forge:export` | Export to Agent Skills standard for cross-platform use |
 
@@ -50,7 +51,7 @@ Eitri creates six types of Claude Code extensions:
 
 ## Version
 
-1.5.0
+1.6.0
 
 ## Author
 

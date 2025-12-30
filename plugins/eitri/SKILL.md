@@ -1,7 +1,7 @@
 ---
 name: eitri
 description: I create precisely optimized Claude Code extensions (skills, agents, suites, hooks, MCP servers, or hybrid solutions) through deep contextual understanding and adaptive intelligence
-version: 1.5.0
+version: 1.6.0
 allowed-tools:
   - Read
   - Glob
@@ -464,6 +464,7 @@ You're not filling out forms or choosing from templates. You're collaborating wi
 | `/forge:install` | Install extensions to Claude Code environment |
 | `/forge:upgrade` | Upgrade existing extensions with new features |
 | `/forge:template` | Quick-start from pre-built templates |
+| `/forge:browse` | Discover templates from local filesystem |
 | `/forge:publish` | Publish extensions to marketplaces |
 | `/forge:export` | Export to Agent Skills standard for cross-platform use |
 
@@ -485,6 +486,20 @@ You're not filling out forms or choosing from templates. You're collaborating wi
 /forge:template code-reviewer
 /forge:template test-generator --framework pytest
 ```
+
+**Browsing** - Discover available templates:
+```
+/forge:browse                         # Show all templates
+/forge:browse --category=agents       # Filter by category
+/forge:browse --location=user         # Show user templates only
+/forge:browse --search=review         # Search by name/description
+/forge:browse --details               # Show full template details
+```
+
+Template sources (local filesystem only):
+- Built-in: `plugins/eitri/templates/`
+- User: `~/.claude/eitri/templates/`
+- Project: `.claude/eitri/templates/`
 
 **Upgrades** - Improve existing extensions:
 ```

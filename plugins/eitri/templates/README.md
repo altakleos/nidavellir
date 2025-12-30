@@ -25,7 +25,20 @@ Pre-built templates for quick extension creation.
 
 ## Usage
 
-Use templates via the `/forge:template` command:
+### Browse Available Templates
+
+Use `/forge:browse` to discover templates:
+
+```
+/forge:browse                    # Show all templates
+/forge:browse --category=agents  # Filter by category
+/forge:browse --search=review    # Search by name/description
+/forge:browse --details          # Show full details
+```
+
+### Create From Template
+
+Use `/forge:template` to create from a template:
 
 ```
 /forge:template code-reviewer
