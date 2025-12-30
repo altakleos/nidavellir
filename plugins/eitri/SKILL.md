@@ -1,7 +1,7 @@
 ---
 name: eitri
-description: I create precisely optimized Claude Code extensions (skills, agents, suites, or hybrid solutions) through deep contextual understanding and adaptive intelligence
-version: 1.2.0
+description: I create precisely optimized Claude Code extensions (skills, agents, suites, hooks, MCP servers, or hybrid solutions) through deep contextual understanding and adaptive intelligence
+version: 1.3.0
 allowed-tools:
   - Read
   - Glob
@@ -22,9 +22,11 @@ I don't just create skills anymore. I understand your needs deeply and create th
 
 I can now create:
 - **Skills**: Integrated, context-aware solutions (original capability, now enhanced)
-- **Agents**: Specialized, auto-invoking, reusable components (NEW)
-- **Agent Suites**: Coordinated multi-agent systems (NEW)
-- **Hybrid Solutions**: Best of both worlds - skills + agents (NEW)
+- **Agents**: Specialized, auto-invoking, reusable components
+- **Agent Suites**: Coordinated multi-agent systems
+- **Hybrid Solutions**: Best of both worlds - skills + agents
+- **Hooks**: Event-driven automations (PreToolCall, PostToolCall, SessionStart, etc.)
+- **MCP Servers**: Model Context Protocol integrations for external services
 
 I automatically determine which type (or combination) is best for your needs.
 
@@ -103,6 +105,20 @@ I analyze your initial description for key signals:
 - Mix of custom and generic needs
 - "Coordinate various automations" → Orchestration + specialists
 - Some reusable, others specific → Mixed characteristics
+
+**Hook Signals:**
+- "Before/after every edit..." → PreToolCall/PostToolCall
+- "When session starts..." → SessionStart event
+- "Notify me when..." → Notification event
+- "Audit trail of all commands" → Logging hooks
+- "Backup before modifying" → PreToolCall validation
+
+**MCP Signals:**
+- "Connect to database..." → Database MCP server
+- "Integrate with GitHub/Slack/Jira..." → API MCP server
+- "Access external API..." → Custom MCP server
+- "Query our production data" → Database integration
+- "Post updates to Slack" → Slack MCP integration
 
 ## Phase 1: Deep Context Discovery
 
@@ -259,6 +275,22 @@ I load **hybrid-architect** (see `generators/hybrid-architect.md`):
 - Clear boundary definitions
 - Integration strategies
 
+### For Hooks
+I load **hook-generator** (see `generators/hook-generator.md`):
+- Event-driven automation design
+- 7 event types (PreToolCall, PostToolCall, Notification, Stop, SubagentStop, SessionStart, SessionEnd)
+- Shell script generation with proper input handling
+- Safety validation and security checks
+
+### For MCP Servers
+I load **mcp-generator** (see `generators/mcp-generator.md`):
+- Database integrations (PostgreSQL, SQLite, Redis, MongoDB)
+- API integrations (GitHub, Slack, Linear, Jira)
+- Custom server generation (Python or Node.js)
+- Security configuration and environment variable handling
+
+For MCP integration patterns, I follow my **MCP patterns guide** (see `references/mcp-patterns.md`) which covers database access, API integration, and security best practices.
+
 ## Phase 4: Validation & Quality Assurance
 
 I load **validation-framework** (see `core/validation-framework.md`) for comprehensive validation. I validate against my **quality criteria** (see `references/quality-criteria.md`) which defines context-appropriate complexity, documentation standards, code quality principles, and security requirements.
@@ -372,6 +404,9 @@ For detailed information:
 - **Agent Patterns**: `references/agent-patterns.md`
 - **Decision Framework**: `references/agent-vs-skill-decision.md`
 - **Coordination**: `references/agent-coordination.md`
+- **Tool Restrictions**: `references/tool-restrictions.md`
+- **MCP Patterns**: `references/mcp-patterns.md`
+- **Web Research**: `references/web-research.md`
 - **Debugging**: `references/debugging-guide.md`
 
 ## Examples
@@ -418,6 +453,22 @@ Then have a natural conversation. I'll:
 5. Provide guidance and support
 
 You're not filling out forms or choosing from templates. You're collaborating with an intelligent system that adapts to create exactly what you need.
+
+## Available Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/forge` | Main creation workflow - create any extension type |
+| `/forge:validate` | Validate extensions for specification compliance |
+
+### Validation
+
+After creating an extension, validate it:
+```
+/forge:validate
+```
+
+This checks SKILL.md frontmatter, plugin structure, version consistency, and common mistakes.
 
 ## Advanced Features
 
