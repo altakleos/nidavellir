@@ -470,6 +470,7 @@ You're not filling out forms or choosing from templates. You're collaborating wi
 | `/forge:export` | Export to Agent Skills standard for cross-platform use |
 | `/forge:test` | Test extensions in sandbox before deployment |
 | `/forge:diagram` | Visualize extension architecture with Mermaid diagrams |
+| `/forge:improve` | Optimize extension prompts based on feedback |
 
 ## Advanced Features
 

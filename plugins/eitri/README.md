@@ -46,6 +46,35 @@ Eitri creates six types of Claude Code extensions:
 | `/forge:export` | Export to Agent Skills standard for cross-platform use |
 | `/forge:test` | Test extensions in sandbox before deployment |
 | `/forge:diagram` | Visualize extension architecture with Mermaid diagrams |
+| `/forge:improve` | Optimize extension prompts based on feedback |
+
+## Supported Industries
+
+Eitri adapts to domain-specific requirements:
+
+| Industry | Considerations |
+|----------|----------------|
+| Healthcare | HIPAA compliance, audit trails, PHI protection |
+| Finance | SOX compliance, precision calculations, audit logging |
+| E-commerce | Inventory, payments, customer data handling |
+| DevOps | CI/CD pipelines, infrastructure automation |
+| Education | FERPA considerations, student data protection |
+
+## Troubleshooting
+
+### Agent Not Auto-Invoking
+- Check description clarity: "when X" should be explicit
+- Verify trigger condition is met
+- Check agent naming (no conflicts)
+
+### Quality Agent Safety Warnings
+Quality agents (test, review, validation) MUST run sequentially.
+This is enforced automatically for system stability.
+
+### Suite Coordination Issues
+- Check phase configuration
+- Verify max_concurrent settings
+- Ensure quality agents are sequential
 
 ## Documentation
 
