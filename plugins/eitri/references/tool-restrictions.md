@@ -209,3 +209,87 @@ If `allowed-tools` is omitted, the skill doesn't restrict tools - Claude can use
 - Skills where restricting tools would reduce effectiveness
 
 However, for focused, specialized agents, explicit tool restrictions improve safety and predictability.
+
+## Web Research Tools
+
+Web research tools enable extensions to access external information. Use these thoughtfully.
+
+### WebFetch
+
+| Aspect | Details |
+|--------|---------|
+| Purpose | Fetch content from known URLs |
+| Risk Level | Low |
+| Best For | Official documentation, known API docs, GitHub repos |
+
+**Recommended for:**
+- Official documentation sites (e.g., `code.claude.com`)
+- Known API documentation (Stripe, AWS, Twilio, etc.)
+- GitHub repositories for examples
+
+**Security considerations:**
+- Only fetch from trusted, known domains
+- Handle timeouts gracefully (network issues happen)
+- Validate that response content is expected format
+
+**Example use cases:**
+- Fetching latest Claude Code SKILL.md specification
+- Getting API documentation for services mentioned by user
+- Retrieving example code from official repositories
+
+### WebSearch
+
+| Aspect | Details |
+|--------|---------|
+| Purpose | Search the web for information |
+| Risk Level | Medium |
+| Best For | Domain research, current regulations, unfamiliar fields |
+
+**Recommended for:**
+- Domain research (accounting, legal, medical, real estate, etc.)
+- Current regulations and compliance requirements
+- Industry best practices and terminology
+- Time-sensitive information (current year tax rules, etc.)
+
+**Security considerations:**
+- Include current year in time-sensitive searches
+- Prefer authoritative sources (government, professional associations)
+- Verify critical information from multiple sources
+- Be skeptical of unofficial or outdated sources
+
+**Example use cases:**
+- Researching 2025 tax preparation requirements
+- Understanding GAAP accounting standards
+- Finding medical billing compliance requirements
+- Learning real estate transaction workflows
+
+### Web Research Configuration Examples
+
+**Research-only agent:**
+```yaml
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - WebFetch
+  - WebSearch
+```
+
+**Documentation validator:**
+```yaml
+allowed-tools:
+  - Read
+  - WebFetch
+```
+
+**Domain research skill:**
+```yaml
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Write
+  - WebSearch
+```
+
+See `references/web-research.md` for detailed guidance on when to use each tool.

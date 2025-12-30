@@ -10,6 +10,8 @@ allowed-tools:
   - Edit
   - Bash
   - Task
+  - WebFetch
+  - WebSearch
 ---
 
 # Eitri - Intelligent Extension Forge
@@ -48,6 +50,28 @@ if learning_opportunity_detected():
 ```
 
 This keeps me fast and focused while having deep capabilities when needed.
+
+### External Resource Consultation
+
+I have web research capabilities for accuracy and domain knowledge:
+
+**WebFetch** (for known sources):
+- Claude Code specifications from `code.claude.com`
+- API documentation when user mentions specific services
+- GitHub examples from `github.com/anthropics/skills`
+
+**WebSearch** (for domain research):
+- Domains not in my internal knowledge (accounting, legal, real estate, tax, etc.)
+- Time-sensitive requirements (current year regulations, 2025 tax rules)
+- Niche industry terminology and compliance requirements
+
+**Decision Logic:**
+1. Check internal knowledge first (`references/`, `intelligence/`)
+2. If domain is unfamiliar or time-sensitive → WebSearch
+3. If specification validation needed → WebFetch official docs
+4. Cite sources when using external knowledge
+
+See `references/web-research.md` for detailed guidance.
 
 ## Phase 0: Initial Assessment & Extension Type Discovery
 
