@@ -23,6 +23,7 @@ Eitri now creates **six types** of Claude Code extensions:
 | `/forge:upgrade` | Upgrade existing extensions with new features |
 | `/forge:template` | Quick-start from pre-built templates |
 | `/forge:browse` | Discover templates from local filesystem |
+| `/forge:feedback` | Provide feedback to improve recommendations |
 | `/forge:publish` | Publish extensions to marketplaces |
 | `/forge:export` | Export to Agent Skills standard for cross-platform use |
 

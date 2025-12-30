@@ -217,18 +217,77 @@ Shall I proceed with skill creation?
 
 ## Learning from Decisions
 
-I track decision outcomes (with permission) to improve:
+I track decision outcomes (with permission) to improve recommendations over time. See `intelligence/learning-engine.md` for full details.
+
+### Integration with Learning Engine
+
+```python
+# When making a recommendation
+def get_personalized_recommendation(discovery_result):
+    # Load learning engine
+    learning = LearningEngine()
+
+    # Get personalized weights (base + user adjustments)
+    weights = learning.get_effective_weights()
+
+    # Calculate scores with personalized weights
+    scores = calculate_scores(discovery_result, weights)
+
+    # Check for matching override patterns
+    pattern = learning.find_matching_pattern(discovery_result)
+    if pattern and pattern["confidence"] > 0.8:
+        scores = apply_pattern_boost(scores, pattern)
+
+    return {
+        "type": max(scores, key=scores.get),
+        "scores": scores,
+        "personalized": learning.has_adjustments()
+    }
+```
+
+### Decision Outcome Tracking
 
 ```python
 decision_outcome = {
     "recommendation": "agent",
     "user_choice": "skill",
     "reasoning": "User preferred tighter integration",
-    "satisfaction": 0.92,  # Collected later
-    "context_hash": "...",
+    "satisfaction": 0.92,  # Collected via /forge:feedback
+    "context": {
+        "coupling": "high",
+        "reusability": "medium",
+        "domain": "development"
+    },
     "learn_from": True
 }
 ```
+
+### Personalized Display
+
+When personalization is active, show indicator:
+
+```
+Extension Type Analysis:
+┌─────────────────────────────────────────┐
+│ Factor              │ Skill │ Agent │
+├─────────────────────┼───────┼───────┤
+│ Reusability         │   2   │   7*  │ ← *Adjusted
+│ Coupling level      │  12*  │   4   │ ← *Adjusted
+├─────────────────────┼───────┼───────┤
+│ TOTAL              │  28   │  24   │
+└─────────────────────────────────────────┘
+
+Recommendation: Skill
+Confidence: 82%
+[📊 Personalized based on your feedback]
+```
+
+### Feedback Collection Points
+
+1. **Implicit:** When user accepts/overrides recommendation
+2. **Explicit:** Via `/forge:feedback` command
+3. **Success:** Extension created and used successfully
+4. **Issue:** Problems reported with extension
 
 This feeds into the pattern learning system to improve future recommendations.
 

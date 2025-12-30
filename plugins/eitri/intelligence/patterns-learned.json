@@ -146,8 +146,56 @@
     "agents_created": 0,
     "suites_created": 0,
     "hybrids_created": 0,
+    "hooks_created": 0,
+    "mcp_created": 0,
     "average_confidence_score": 0,
     "user_override_rate": 0,
     "last_pattern_added": null
+  },
+  "user_learning": {
+    "description": "User-specific learning data stored in ~/.claude/eitri/learning/",
+    "profile_schema": {
+      "version": "1.0.0",
+      "statistics": {
+        "sessions": 0,
+        "extensions_created": 0,
+        "feedback_provided": 0,
+        "recommendations_accepted": 0,
+        "overrides_recorded": 0
+      },
+      "type_distribution": {
+        "skills": 0,
+        "agents": 0,
+        "suites": 0,
+        "hybrids": 0,
+        "hooks": 0,
+        "mcp": 0
+      },
+      "domain_experience": {},
+      "preferences": {
+        "default_complexity": "intermediate",
+        "prefer_agents_for_reusable": true,
+        "prefer_skills_for_custom": true
+      }
+    },
+    "weight_adjustments_schema": {
+      "version": "1.0.0",
+      "base_weights": {
+        "reusability": 8,
+        "invocation_pattern": 9,
+        "coupling": 10,
+        "context_dependency": 9,
+        "tool_safety": 8,
+        "multiple_roles": 9,
+        "complexity": 6
+      },
+      "adjustments": {},
+      "max_adjustment_percent": 30
+    },
+    "feedback_types": ["success", "issue", "override", "suggest"],
+    "storage_locations": {
+      "user": "~/.claude/eitri/learning/",
+      "project": ".claude/eitri/learning/"
+    }
   }
 }
