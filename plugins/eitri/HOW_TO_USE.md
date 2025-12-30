@@ -2,14 +2,29 @@
 
 ## What's New in Eitri
 
-Eitri now creates **four types** of Claude Code extensions:
+Eitri now creates **six types** of Claude Code extensions:
 
 - **Skills**: Integrated, context-aware solutions (original capability, now enhanced)
 - **Agents**: Specialized, auto-invoking, reusable components with separate context windows
 - **Agent Suites**: Coordinated multi-agent systems for complex workflows
 - **Hybrid Solutions**: Skills that orchestrate agents for best-of-both-worlds
+- **Hooks**: Event-driven automations (PreToolCall, PostToolCall, SessionStart, etc.)
+- **MCP Servers**: Model Context Protocol integrations for external services
 
 **Don't worry about choosing!** Eitri automatically determines the best type for your needs through conversation. You still just type `/forge` and I figure out what you actually need.
+
+## Available Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/forge` | Main creation workflow - create any extension type |
+| `/forge:validate` | Validate extensions for specification compliance |
+| `/forge:install` | Install extensions to Claude Code environment |
+| `/forge:upgrade` | Upgrade existing extensions with new features |
+| `/forge:template` | Quick-start from pre-built templates |
+| `/forge:browse` | Discover templates from local filesystem |
+| `/forge:publish` | Publish extensions to marketplaces |
+| `/forge:export` | Export to Agent Skills standard for cross-platform use |
 
 ## Quick Start (2 minutes)
 
@@ -173,6 +188,18 @@ I analyze your description for signals:
 - Mix of custom and generic needs
 - "Coordinate various automations" → Orchestration + specialists
 - Some reusable, others specific
+
+**Hook Signals:**
+- "Before/after every edit..." → PreToolCall/PostToolCall
+- "When session starts..." → SessionStart event
+- "Notify me when..." → Notification event
+- "Audit trail of all commands" → Logging hooks
+
+**MCP Signals:**
+- "Connect to database..." → Database MCP server
+- "Integrate with GitHub/Slack/Jira..." → API MCP server
+- "Access external API..." → Custom MCP server
+- "Query our production data" → Database integration
 
 ### Decision Transparency
 
