@@ -53,9 +53,13 @@ jobs:
           echo "Verifying plugin directory structure..."
           for plugin_dir in plugins/*/; do
             plugin_name=$(basename "$plugin_dir")
-            if [[ ! -f "$plugin_dir/plugin.json" ]]; then
-              echo "Error: Missing plugin.json in $plugin_name"
+            # Check for plugin.json in .claude-plugin/ (standard location)
+            if [[ ! -f "$plugin_dir/.claude-plugin/plugin.json" ]]; then
+              echo "Error: Missing .claude-plugin/plugin.json in $plugin_name"
               exit 1
+            fi
+            if [[ ! -f "$plugin_dir/SKILL.md" ]]; then
+              echo "Warning: Missing SKILL.md in $plugin_name"
             fi
             if [[ ! -f "$plugin_dir/README.md" ]]; then
               echo "Warning: Missing README.md in $plugin_name"

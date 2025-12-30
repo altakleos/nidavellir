@@ -94,6 +94,38 @@
       "additionalProperties": {
         "type": "string"
       }
+    },
+    "components": {
+      "type": "object",
+      "description": "Plugin component paths for discovery by Claude Code",
+      "properties": {
+        "commands": {
+          "type": "array",
+          "description": "Paths to slash command files or directories",
+          "items": { "type": "string" }
+        },
+        "agents": {
+          "type": "array",
+          "description": "Paths to agent files or directories",
+          "items": { "type": "string" }
+        },
+        "skills": {
+          "type": "array",
+          "description": "Paths to skill files (SKILL.md)",
+          "items": { "type": "string" }
+        },
+        "hooks": {
+          "type": "array",
+          "description": "Paths to hook configuration files or directories",
+          "items": { "type": "string" }
+        },
+        "mcpServers": {
+          "type": "array",
+          "description": "Paths to MCP server configuration files",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false

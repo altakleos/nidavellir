@@ -35,32 +35,40 @@
       "default": false
     },
     "allowed-tools": {
-      "type": "array",
-      "description": "Tools Claude can use when this skill is active (optional)",
-      "items": {
-        "type": "string",
-        "enum": [
-          "Read",
-          "Write",
-          "Edit",
-          "Glob",
-          "Grep",
-          "Bash",
-          "Task",
-          "WebFetch",
-          "WebSearch",
-          "NotebookEdit",
-          "NotebookRead",
-          "AskUserQuestion",
-          "TodoWrite",
-          "Skill",
-          "EnterPlanMode",
-          "ExitPlanMode",
-          "KillShell",
-          "TaskOutput"
-        ]
-      },
-      "uniqueItems": true
+      "description": "Tools Claude can use when this skill is active (optional). Can be array or comma-separated string.",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Read",
+              "Write",
+              "Edit",
+              "Glob",
+              "Grep",
+              "Bash",
+              "Task",
+              "WebFetch",
+              "WebSearch",
+              "NotebookEdit",
+              "NotebookRead",
+              "AskUserQuestion",
+              "TodoWrite",
+              "Skill",
+              "EnterPlanMode",
+              "ExitPlanMode",
+              "KillShell",
+              "TaskOutput"
+            ]
+          },
+          "uniqueItems": true
+        },
+        {
+          "type": "string",
+          "description": "Comma-separated list of tool names (e.g., 'Bash, Read, Write')"
+        }
+      ]
     }
   },
   "additionalProperties": false

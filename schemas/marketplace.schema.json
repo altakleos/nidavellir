@@ -112,6 +112,18 @@
             "items": {
               "type": "string"
             }
+          },
+          "tags": {
+            "type": "array",
+            "description": "Marketplace-specific tags for discovery",
+            "items": {
+              "type": "string"
+            }
+          },
+          "strict": {
+            "type": "boolean",
+            "description": "When false (default), plugin.json is authoritative. When true, marketplace entry overrides plugin.json",
+            "default": false
           }
         }
       }
