@@ -5,8 +5,9 @@
     "email": "hello@altakleos.com"
   },
   "metadata": {
-    "description": "Internal AltaKleos Claude Code plugins and tools",
-    "version": "1.1.1"
+    "description": "AltaKleos Claude Code plugins and tools",
+    "version": "1.2.0",
+    "repository": "https://github.com/altakleos/claude-code-marketplace"
   },
   "plugins": [
     {
@@ -19,8 +20,7 @@
         "email": "hello@altakleos.com"
       },
       "category": "development",
-      "keywords": ["skill-creation", "factory", "generator", "quickstart", "adaptive", "intelligent"],
-      "strict": false
+      "keywords": ["skill-creation", "factory", "generator", "quickstart", "adaptive", "intelligent"]
     }
   ]
 }

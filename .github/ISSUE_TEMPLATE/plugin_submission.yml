@@ -1,0 +1,128 @@
+name: Plugin Submission
+description: Submit a new plugin to the marketplace
+title: "[PLUGIN] "
+labels: ["plugin-submission", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Plugin Submission Checklist
+
+        Before submitting, ensure you've completed all requirements in CONTRIBUTING.md
+
+  - type: input
+    id: plugin-name
+    attributes:
+      label: Plugin Name
+      description: The name of your plugin (lowercase, hyphens only)
+      placeholder: "e.g., my-awesome-plugin"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Initial version (should be 1.0.0 for new plugins)
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Plugin Description
+      description: Brief description (10-500 characters)
+      placeholder: "This plugin helps users..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Select the most appropriate category
+      options:
+        - productivity
+        - development
+        - testing
+        - documentation
+        - security
+        - ai-assistance
+        - utilities
+        - integration
+        - other
+    validations:
+      required: true
+
+  - type: input
+    id: keywords
+    attributes:
+      label: Keywords
+      description: Comma-separated keywords for discoverability
+      placeholder: "keyword1, keyword2, keyword3"
+    validations:
+      required: true
+
+  - type: textarea
+    id: features
+    attributes:
+      label: Key Features
+      description: List the main features and capabilities
+      placeholder: |
+        - Feature 1
+        - Feature 2
+        - Feature 3
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Submission Checklist
+      description: Please confirm you've completed all requirements
+      options:
+        - label: Plugin follows the required directory structure
+          required: true
+        - label: plugin.json validates against the schema
+          required: true
+        - label: README.md is complete with installation and usage instructions
+          required: true
+        - label: All commands and skills have been tested locally
+          required: true
+        - label: No sensitive information (API keys, secrets) is included
+          required: true
+        - label: Plugin has been added to .claude-plugin/marketplace.json
+          required: true
+        - label: I have read and followed CONTRIBUTING.md
+          required: true
+
+  - type: dropdown
+    id: testing
+    attributes:
+      label: Testing Status
+      description: How thoroughly have you tested this plugin?
+      options:
+        - Extensively tested in multiple scenarios
+        - Tested basic functionality
+        - Limited testing
+        - Not tested
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: External Dependencies
+      description: List any external tools, APIs, or services this plugin requires
+      placeholder: "e.g., Requires GitHub CLI (gh), needs API key for service X"
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Notes
+      description: Any other information reviewers should know
+    validations:
+      required: false
