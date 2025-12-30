@@ -20,7 +20,7 @@ Launch Eitri and describe what you need. Through natural conversation, Eitri det
 
 ## Extension Types
 
-Eitri creates four types of Claude Code extensions:
+Eitri creates six types of Claude Code extensions:
 
 | Type | Best For |
 |------|----------|
@@ -28,6 +28,20 @@ Eitri creates four types of Claude Code extensions:
 | **Agents** | Specialized, auto-invoking, reusable components |
 | **Agent Suites** | Coordinated multi-agent systems |
 | **Hybrid** | Skills orchestrating agents |
+| **Hooks** | Event-driven automations |
+| **MCP Servers** | External service integrations |
+
+## Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/forge` | Launch intelligent extension creation workflow |
+| `/forge:validate` | Validate extensions for specification compliance |
+| `/forge:install` | Install extensions to Claude Code environment |
+| `/forge:upgrade` | Upgrade existing extensions with new features |
+| `/forge:template` | Quick-start from pre-built templates |
+| `/forge:publish` | Publish extensions to marketplaces |
+| `/forge:export` | Export to Agent Skills standard for cross-platform use |
 
 ## Documentation
 
@@ -36,7 +50,7 @@ Eitri creates four types of Claude Code extensions:
 
 ## Version
 
-1.2.0
+1.5.0
 
 ## Author
 

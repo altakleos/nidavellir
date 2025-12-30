@@ -1,7 +1,7 @@
 ---
 name: eitri
 description: I create precisely optimized Claude Code extensions (skills, agents, suites, hooks, MCP servers, or hybrid solutions) through deep contextual understanding and adaptive intelligence
-version: 1.4.0
+version: 1.5.0
 allowed-tools:
   - Read
   - Glob
@@ -465,6 +465,7 @@ You're not filling out forms or choosing from templates. You're collaborating wi
 | `/forge:upgrade` | Upgrade existing extensions with new features |
 | `/forge:template` | Quick-start from pre-built templates |
 | `/forge:publish` | Publish extensions to marketplaces |
+| `/forge:export` | Export to Agent Skills standard for cross-platform use |
 
 ### Command Details
 
@@ -495,6 +496,13 @@ You're not filling out forms or choosing from templates. You're collaborating wi
 ```
 /forge:publish --dry-run     # Preview
 /forge:publish               # Submit to marketplace
+```
+
+**Exporting** - Cross-platform compatibility:
+```
+/forge:export                # Export to .github/skills/
+/forge:export --format=copilot  # Optimized for GitHub Copilot
+/forge:export --dry-run      # Preview export
 ```
 
 ## Advanced Features

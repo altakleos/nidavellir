@@ -92,10 +92,22 @@ When team members trust the project folder, plugins install automatically.
 
 Intelligent extension forge that creates precisely optimized Claude Code extensions through deep contextual understanding and adaptive intelligence. Named after the legendary Norse dwarf smith who forged Thor's hammer Mjolnir.
 
-- **Version**: 1.1.1
+- **Version**: 1.5.0
 - **Category**: Development
 - **Installation**: `/plugin install eitri@altakleos`
-- **Command**: `/forge` - Launch the intelligent extension creation workflow
+
+**Commands:**
+| Command | Purpose |
+|---------|---------|
+| `/forge` | Launch intelligent extension creation workflow |
+| `/forge:validate` | Validate extensions for specification compliance |
+| `/forge:install` | Install extensions to Claude Code environment |
+| `/forge:upgrade` | Upgrade existing extensions with new features |
+| `/forge:template` | Quick-start from pre-built templates |
+| `/forge:publish` | Publish extensions to marketplaces |
+| `/forge:export` | Export to Agent Skills standard for cross-platform use |
+
+**Creates:** Skills, Agents, Agent Suites, Hybrid Solutions, Hooks, MCP Servers
 
 [View Plugin Documentation](plugins/eitri/HOW_TO_USE.md)
 
