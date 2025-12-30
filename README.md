@@ -119,7 +119,7 @@ Intelligent extension forge that creates precisely optimized Claude Code extensi
 
 **Creates:** Skills, Agents, Agent Suites, Hybrid Solutions, Hooks, MCP Servers
 
-[View Plugin Documentation](plugins/eitri/HOW_TO_USE.md)
+[View Plugin Documentation](plugins/eitri/README.md)
 
 ## For Contributors: Developing Plugins
 

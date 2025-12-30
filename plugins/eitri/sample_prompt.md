@@ -1,6 +1,6 @@
 # Sample Prompts for Eitri
 
-> For comprehensive usage guide, see [HOW_TO_USE.md](HOW_TO_USE.md)
+> For quick start and commands, see [README.md](README.md)
 
 ## Quick Start
 

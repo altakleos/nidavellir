@@ -1,90 +1,133 @@
-# Eitri
+# ⚒️ Eitri
 
-Intelligent extension forge that creates precisely optimized Claude Code extensions through deep contextual understanding and adaptive intelligence.
+> **Stop writing prompts. Start forging extensions.**
+
+Eitri is an intelligent Claude Code extension forge that creates precisely optimized skills, agents, and automation through natural conversation.
 
 Named after the legendary Norse dwarf smith who forged Thor's hammer Mjolnir.
 
-## Installation
+---
 
+## ⚡ Quick Start
+
+**Install:**
 ```bash
 /plugin install eitri@altakleos
 ```
 
-## Usage
-
+**Create your first extension:**
 ```
 /forge
 ```
 
-Launch Eitri and describe what you need. Through natural conversation, Eitri determines the optimal extension type and creates it for you.
+That's it. Describe what you need, and Eitri handles the rest.
 
-## Extension Types
+---
 
-Eitri creates six types of Claude Code extensions:
+## 🎯 What You Can Create
 
-| Type | Best For |
-|------|----------|
-| **Skills** | Integrated, context-aware solutions |
-| **Agents** | Specialized, auto-invoking, reusable components |
-| **Agent Suites** | Coordinated multi-agent systems |
-| **Hybrid** | Skills orchestrating agents |
-| **Hooks** | Event-driven automations |
-| **MCP Servers** | External service integrations |
+| Type | What It Does | Example Use Case |
+|------|--------------|------------------|
+| **Skills** | Context-aware workflows | Custom sprint planning for your team |
+| **Agents** | Auto-invoking automations | Format code on every save |
+| **Agent Suites** | Coordinated pipelines | Plan → Build → Test → Review |
+| **Hybrids** | Orchestrated specialists | Project manager + auto-formatters |
+| **Hooks** | Event-driven triggers | Validate before every commit |
+| **MCP Servers** | External integrations | Query your production database |
 
-## Commands
+---
+
+## 🧠 How Eitri Thinks
+
+Just describe what you need. Eitri detects patterns:
+
+| You Say | Eitri Creates |
+|---------|---------------|
+| "Automatically format when..." | Agent |
+| "Our custom workflow..." | Skill |
+| "Plan, then build, then test..." | Agent Suite |
+| "Before every edit..." | Hook |
+| "Connect to our database..." | MCP Server |
+
+Don't worry about choosing—Eitri recommends, you approve.
+
+---
+
+## 📦 Commands
 
 | Command | Purpose |
 |---------|---------|
-| `/forge` | Launch intelligent extension creation workflow |
-| `/forge:validate` | Validate extensions for specification compliance |
-| `/forge:install` | Install extensions to Claude Code environment |
-| `/forge:upgrade` | Upgrade existing extensions with new features |
-| `/forge:template` | Quick-start from pre-built templates |
-| `/forge:browse` | Discover templates from local filesystem |
-| `/forge:feedback` | Provide feedback to improve recommendations |
-| `/forge:publish` | Publish extensions to marketplaces |
-| `/forge:export` | Export to Agent Skills standard for cross-platform use |
-| `/forge:test` | Test extensions in sandbox before deployment |
-| `/forge:diagram` | Visualize extension architecture with Mermaid diagrams |
-| `/forge:improve` | Optimize extension prompts based on feedback |
+| `/forge` | Create any extension type |
+| `/forge:template` | Start from pre-built templates |
+| `/forge:validate` | Check specification compliance |
+| `/forge:test` | Sandbox testing before deployment |
+| `/forge:feedback` | Report issues for improvement |
+| `/forge:improve` | Apply feedback to optimize prompts |
+| `/forge:diagram` | Visualize architecture |
 
-## Supported Industries
+<details>
+<summary>More commands...</summary>
 
-Eitri adapts to domain-specific requirements:
+| Command | Purpose |
+|---------|---------|
+| `/forge:install` | Install to Claude Code |
+| `/forge:upgrade` | Add features to existing |
+| `/forge:browse` | Discover local templates |
+| `/forge:publish` | Publish to marketplaces |
+| `/forge:export` | Export to Agent Skills standard |
 
-| Industry | Considerations |
-|----------|----------------|
-| Healthcare | HIPAA compliance, audit trails, PHI protection |
-| Finance | SOX compliance, precision calculations, audit logging |
-| E-commerce | Inventory, payments, customer data handling |
-| DevOps | CI/CD pipelines, infrastructure automation |
-| Education | FERPA considerations, student data protection |
+</details>
 
-## Troubleshooting
+---
 
-### Agent Not Auto-Invoking
+## 🏢 Industry-Aware
+
+Eitri adapts to your domain:
+
+- **Healthcare** → HIPAA compliance, audit trails, PHI protection
+- **Finance** → SOX compliance, precision calculations
+- **E-commerce** → Inventory, payments, customer data
+- **DevOps** → CI/CD pipelines, infrastructure automation
+- **Education** → FERPA considerations, student data
+
+---
+
+## 🔧 Troubleshooting
+
+<details>
+<summary>Agent not auto-invoking?</summary>
+
 - Check description clarity: "when X" should be explicit
 - Verify trigger condition is met
 - Check agent naming (no conflicts)
 
-### Quality Agent Safety Warnings
-Quality agents (test, review, validation) MUST run sequentially.
-This is enforced automatically for system stability.
+</details>
 
-### Suite Coordination Issues
+<details>
+<summary>Quality agent safety warnings?</summary>
+
+Quality agents (test, review, validation) MUST run sequentially.
+This is enforced for system stability.
+
+</details>
+
+<details>
+<summary>Suite coordination issues?</summary>
+
 - Check phase configuration
 - Verify max_concurrent settings
 - Ensure quality agents are sequential
 
-## Documentation
+</details>
 
-- [HOW_TO_USE.md](HOW_TO_USE.md) - Complete usage guide
-- [sample_prompt.md](sample_prompt.md) - Copy-paste example prompts
+---
 
-## Version
+## 📚 Documentation
 
-1.9.0
+For detailed command documentation, see the `commands/` directory.
 
-## Author
+- [sample_prompt.md](sample_prompt.md) — Copy-paste example prompts
 
-AltaKleos Platform Team (hello@altakleos.com)
+---
+
+**Version:** 1.9.0 | **License:** MIT | **Author:** [AltaKleos](mailto:hello@altakleos.com)
