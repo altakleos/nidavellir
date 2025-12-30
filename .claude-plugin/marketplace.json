@@ -11,8 +11,8 @@
   },
   "plugins": [
     {
-      "name": "quickstart",
-      "source": "./plugins/quickstart",
+      "name": "eitri",
+      "source": "./plugins/eitri",
       "description": "Intelligent skill factory that creates precisely optimized skills through deep contextual understanding and adaptive intelligence. Creates one or more skills based on your unique business needs.",
       "version": "1.1.1",
       "author": {
@@ -20,7 +20,7 @@
         "email": "hello@altakleos.com"
       },
       "category": "development",
-      "keywords": ["skill-creation", "factory", "generator", "quickstart", "adaptive", "intelligent"]
+      "keywords": ["skill-creation", "factory", "generator", "forge", "adaptive", "intelligent"]
     }
   ]
 }

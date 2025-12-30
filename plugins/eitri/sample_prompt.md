@@ -1,14 +1,14 @@
-# Sample Prompts for QuickStart 2.0
+# Sample Prompts for Eitri
 
 ## Quick Start
 
 The simplest way to begin:
 
 ```
-/create-skill
+/forge
 ```
 
-Then just have a natural conversation about what you need. QuickStart will automatically determine whether to create a skill, agent, suite, or hybrid solution based on your requirements.
+Then just have a natural conversation about what you need. Eitri will automatically determine whether to create a skill, agent, suite, or hybrid solution based on your requirements.
 
 **Don't worry about choosing!** Just describe your needs and I'll figure out the best type of extension for you.
 
@@ -17,7 +17,7 @@ Then just have a natural conversation about what you need. QuickStart will autom
 ### Use Case 1: Small Business Automation
 
 ```
-/create-skill
+/forge
 
 I run a small marketing agency with 5 people. We spend way too much time creating client reports every week - pulling data from Google Analytics, social media platforms, and our project management tool. We need something to automate this but we're not very technical.
 ```
@@ -32,7 +32,7 @@ This gives me context about:
 ### Use Case 2: Enterprise Integration
 
 ```
-/create-skill
+/forge
 
 We're the data team at a Fortune 500 retailer. Need to build a skill that integrates our inventory management system with our e-commerce platform, handles about 50,000 SKUs, updates in real-time, and needs to comply with SOC 2 requirements. We have a technical team that can handle complex implementations.
 ```
@@ -48,7 +48,7 @@ This tells me:
 ### Use Case 3: Startup Growth
 
 ```
-/create-skill
+/forge
 
 I'm a solo founder of a SaaS startup. Right now I manually calculate MRR, churn, and other metrics every month for investor updates. Takes me half a day. I need to automate this and make it look professional. Using Stripe for payments and Mixpanel for analytics.
 ```
@@ -63,7 +63,7 @@ This indicates:
 ### Use Case 4: Healthcare Compliance
 
 ```
-/create-skill
+/forge
 
 I work at a medical clinic. We need to track patient appointment no-shows and send follow-up reminders, but everything needs to be HIPAA compliant. We have about 200 patients per week. Our staff isn't technical but they're good at following procedures.
 ```
@@ -79,7 +79,7 @@ This reveals:
 ### Use Case 5: Financial Analysis
 
 ```
-/create-skill
+/forge
 
 I'm a financial advisor managing portfolios for high net worth clients. Need to analyze portfolio performance, rebalancing opportunities, and tax implications. Must be extremely accurate and create professional reports. Currently using Excel but it's getting unwieldy.
 ```
@@ -94,13 +94,13 @@ This shows:
 ### Use Case 6: Agent - Code Formatter (Auto-Invocation)
 
 ```
-/create-skill
+/forge
 
 I want something that automatically formats my code whenever I make changes. Should work across all my projects - Python, JavaScript, whatever. Just keep my code clean without me having to think about it.
 ```
 
 **Why Agent:** Generic task, reusable across projects, auto-triggered
-**QuickStart will create:** Agent with auto-invocation, tool restrictions for safety
+**Eitri will create:** Agent with auto-invocation, tool restrictions for safety
 
 This indicates:
 - Reusable across all projects
@@ -111,13 +111,13 @@ This indicates:
 ### Use Case 7: Agent Suite - Development Workflow
 
 ```
-/create-skill
+/forge
 
 I need a complete development workflow: first analyze requirements and create technical specs, then build the frontend and backend in parallel, run comprehensive tests, and finally do a code review. Everything should be automated and coordinated.
 ```
 
 **Why Suite:** Multiple distinct operations, parallel + sequential execution
-**QuickStart will create:** Coordinated suite of 5 agents with safety enforcement
+**Eitri will create:** Coordinated suite of 5 agents with safety enforcement
 
 This reveals:
 - Multiple distinct roles (analyst, developers, tester, reviewer)
@@ -129,13 +129,13 @@ This reveals:
 ### Use Case 8: Hybrid - Project Management with Automations
 
 ```
-/create-skill
+/forge
 
 Help me manage our custom project workflow. When I finish a feature, I want it to automatically format the code, run our test suite, and generate a commit message based on the changes. But I also need to track project context, milestones, and team assignments manually.
 ```
 
 **Why Hybrid:** Custom orchestration + generic automations
-**QuickStart will create:** Skill (orchestrator) + 3 agents (specialists)
+**Eitri will create:** Skill (orchestrator) + 3 agents (specialists)
 
 This shows:
 - Custom workflow needs (skill for orchestration)
@@ -147,13 +147,13 @@ This shows:
 ### Use Case 9: Agent - Test Runner (On-Demand)
 
 ```
-/create-skill
+/forge
 
 I want to run my comprehensive test suite whenever I ask. Should run all unit tests, integration tests, check coverage, and give me a detailed report. Reusable across any project I work on.
 ```
 
 **Why Agent:** Generic task, reusable, on-demand invocation
-**QuickStart will create:** Quality agent with sequential execution (safety-critical)
+**Eitri will create:** Quality agent with sequential execution (safety-critical)
 
 This indicates:
 - On-demand invocation (not auto-triggered)
@@ -164,13 +164,13 @@ This indicates:
 ### Use Case 10: Agent Suite - Security Audit Pipeline
 
 ```
-/create-skill
+/forge
 
 Security audit workflow: scan dependencies for vulnerabilities, analyze code for security issues, check configuration files for exposed secrets, and generate a comprehensive security report. Everything should run sequentially because each step builds on the previous results.
 ```
 
 **Why Suite:** Multiple security operations, sequential execution
-**QuickStart will create:** Pipeline of 4 agents with sequential coordination
+**Eitri will create:** Pipeline of 4 agents with sequential coordination
 
 This reveals:
 - Multiple security operations
@@ -184,7 +184,7 @@ This reveals:
 ### Conversational Style
 
 ```
-/create-skill
+/forge
 
 Hey, I need help with something. We're drowning in customer support tickets and I think there's got to be a better way to handle the common questions automatically. What can you do for me?
 ```
@@ -192,7 +192,7 @@ Hey, I need help with something. We're drowning in customer support tickets and 
 ### Technical Style
 
 ```
-/create-skill
+/forge
 
 Need a skill for ETL pipeline: PostgreSQL -> transformation layer with business logic -> export to S3 in parquet format. Daily runs, incremental updates, full snapshot weekly. Handle ~10GB daily volume. Include data quality checks and alerting on failures.
 ```
@@ -200,7 +200,7 @@ Need a skill for ETL pipeline: PostgreSQL -> transformation layer with business 
 ### Business-Focused Style
 
 ```
-/create-skill
+/forge
 
 Our customer churn rate is killing us. We need to identify at-risk customers before they leave. We have purchase history, support tickets, and engagement metrics. Want predictive analytics and actionable recommendations for our customer success team.
 ```
@@ -210,7 +210,7 @@ Our customer churn rate is killing us. We need to identify at-risk customers bef
 ### Single Comprehensive Skill
 
 ```
-/create-skill
+/forge
 
 I want everything in one skill - data collection, processing, and reporting. Keep it simple, I don't want to manage multiple components.
 ```
@@ -218,7 +218,7 @@ I want everything in one skill - data collection, processing, and reporting. Kee
 ### Modular Suite
 
 ```
-/create-skill
+/forge
 
 I prefer modular architecture - separate skills for each major function so different teams can use what they need. We're planning to scale this across the organization.
 ```
@@ -226,7 +226,7 @@ I prefer modular architecture - separate skills for each major function so diffe
 ### Evolutionary Design
 
 ```
-/create-skill
+/forge
 
 Start simple but design it to grow. We're in MVP stage now but will need enterprise features within 6 months.
 ```
@@ -236,7 +236,7 @@ Start simple but design it to grow. We're in MVP stage now but will need enterpr
 ### Requesting an Agent
 
 ```
-/create-skill
+/forge
 
 Create an agent that automatically runs prettier on my code whenever I save files. Should be reusable across all my JavaScript projects.
 ```
@@ -246,7 +246,7 @@ Create an agent that automatically runs prettier on my code whenever I save file
 ### Requesting an Agent Suite
 
 ```
-/create-skill
+/forge
 
 I need a coordinated suite for deployment: first run tests, then build the application, then push to staging, and finally deploy to production. Each step depends on the previous one succeeding.
 ```
@@ -256,29 +256,29 @@ I need a coordinated suite for deployment: first run tests, then build the appli
 ### Requesting a Hybrid Solution
 
 ```
-/create-skill
+/forge
 
 Help me orchestrate our release process. The overall workflow is custom to our team, but I want to use standard agents for code formatting, testing, and documentation generation.
 ```
 
 **Keywords that signal hybrid:** "orchestrate", "custom workflow" + "standard operations", "coordinate"
 
-### Letting QuickStart Decide (Recommended)
+### Letting Eitri Decide (Recommended)
 
 ```
-/create-skill
+/forge
 
 Every week I need to analyze our customer data, identify trends, create visualizations, and send a report to stakeholders. Currently doing this manually and it takes forever.
 ```
 
-**No explicit type mentioned** - QuickStart will analyze and recommend the best approach with transparent reasoning.
+**No explicit type mentioned** - Eitri will analyze and recommend the best approach with transparent reasoning.
 
 ## Specifying Constraints
 
 ### Time Constraint
 
 ```
-/create-skill
+/forge
 
 I need something working by end of day. Doesn't have to be perfect, just functional. We can improve it later.
 ```
@@ -286,7 +286,7 @@ I need something working by end of day. Doesn't have to be perfect, just functio
 ### Technical Constraint
 
 ```
-/create-skill
+/forge
 
 Our IT department requires everything to run on-premise, no cloud services. Also needs to work with our existing Active Directory for authentication.
 ```
@@ -294,7 +294,7 @@ Our IT department requires everything to run on-premise, no cloud services. Also
 ### Budget Constraint
 
 ```
-/create-skill
+/forge
 
 We're bootstrapped so need to use free tools only. No paid APIs or services. Open source is fine.
 ```
@@ -304,7 +304,7 @@ We're bootstrapped so need to use free tools only. No paid APIs or services. Ope
 ### Industry-Specific
 
 ```
-/create-skill
+/forge
 
 I work in pharmaceutical manufacturing. Need GMP compliance, 21 CFR Part 11 electronic signatures, and full audit trails. This is for batch record review and release.
 ```
@@ -312,7 +312,7 @@ I work in pharmaceutical manufacturing. Need GMP compliance, 21 CFR Part 11 elec
 ### Multi-Language Support
 
 ```
-/create-skill
+/forge
 
 Our team is global - need the skill to work in English, Spanish, and Mandarin. Especially the user-facing documentation and error messages.
 ```
@@ -320,7 +320,7 @@ Our team is global - need the skill to work in English, Spanish, and Mandarin. E
 ### Integration-Heavy
 
 ```
-/create-skill
+/forge
 
 This needs to integrate with Salesforce, Slack, Jira, and our custom ERP system. Should sync bidirectionally and handle conflicts gracefully.
 ```
@@ -357,7 +357,7 @@ Working perfectly! Now can we add automated email notifications when certain thr
 
 5. **Don't worry about technical details** - I'll figure out the implementation based on your needs
 
-6. **Trust QuickStart's recommendation** - I'll show you transparent reasoning for skill vs agent vs suite vs hybrid
+6. **Trust Eitri's recommendation** - I'll show you transparent reasoning for skill vs agent vs suite vs hybrid
 
 7. **Use trigger words naturally** - "Automatically", "whenever", "reusable" help me understand auto-invocation needs
 
@@ -408,7 +408,7 @@ Working perfectly! Now can we add automated email notifications when certain thr
 The best prompt is honest and conversational:
 
 ```
-/create-skill
+/forge
 
 Here's my situation: [describe your context]
 Here's my problem: [what you're trying to solve]
@@ -417,7 +417,7 @@ Here's what I need: [ideal outcome]
 Here are my constraints: [limitations if any]
 ```
 
-**QuickStart 2.0 will:**
+**Eitri 2.0 will:**
 1. Analyze your needs across multiple dimensions
 2. Determine the optimal extension type (skill/agent/suite/hybrid)
 3. Show you transparent reasoning with confidence score

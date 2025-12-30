@@ -1,28 +1,28 @@
-# QuickStart 2.0 - Complete Usage Guide
+# Eitri - Complete Usage Guide
 
 ## What's New in Version 2.0
 
-QuickStart now creates **four types** of Claude Code extensions:
+Eitri now creates **four types** of Claude Code extensions:
 
 - **Skills**: Integrated, context-aware solutions (original capability, now enhanced)
 - **Agents**: Specialized, auto-invoking, reusable components with separate context windows
 - **Agent Suites**: Coordinated multi-agent systems for complex workflows
 - **Hybrid Solutions**: Skills that orchestrate agents for best-of-both-worlds
 
-**Don't worry about choosing!** QuickStart automatically determines the best type for your needs through conversation. You still just type `/create-skill` and I figure out what you actually need.
+**Don't worry about choosing!** Eitri automatically determines the best type for your needs through conversation. You still just type `/forge` and I figure out what you actually need.
 
 ## Quick Start (2 minutes)
 
-Simply type `/create-skill` and have a natural conversation with me. I'll understand your needs and create the perfect extension(s) - whether that's a skill, agent, suite, or hybrid.
+Simply type `/forge` and have a natural conversation with me. I'll understand your needs and create the perfect extension(s) - whether that's a skill, agent, suite, or hybrid.
 
 ```
-You: /create-skill
+You: /forge
 
-QuickStart: Tell me about what you're trying to accomplish - not just the task, but the context around it. What's your business or work environment like?
+Eitri: Tell me about what you're trying to accomplish - not just the task, but the context around it. What's your business or work environment like?
 
 You: I run a small consulting firm and need to automate our weekly client reports. We pull data from various sources and it takes hours every Friday.
 
-QuickStart: I understand the pain of manual report generation. Let me learn more about your specific situation...
+Eitri: I understand the pain of manual report generation. Let me learn more about your specific situation...
 
 [Conversation continues naturally]
 ```
@@ -50,7 +50,7 @@ While we talk, I'm analyzing:
 
 ### Skills vs Agents vs Suites vs Hybrids
 
-QuickStart automatically determines which type(s) to create based on your needs. Here's how I think about it:
+Eitri automatically determines which type(s) to create based on your needs. Here's how I think about it:
 
 #### Skills (Integrated Solutions)
 
@@ -63,10 +63,10 @@ QuickStart automatically determines which type(s) to create based on your needs.
 **Example Scenarios:**
 ```
 You: "I need help managing our custom sprint planning process"
-→ QuickStart creates: Skill (custom workflow, your specific process)
+→ Eitri creates: Skill (custom workflow, your specific process)
 
 You: "Build a tool for our compliance reporting workflow"
-→ QuickStart creates: Skill (business-specific, context-heavy)
+→ Eitri creates: Skill (business-specific, context-heavy)
 ```
 
 **Characteristics:**
@@ -86,13 +86,13 @@ You: "Build a tool for our compliance reporting workflow"
 **Example Scenarios:**
 ```
 You: "Automatically format code when I make changes"
-→ QuickStart creates: Agent (reusable, auto-invoke, standard task)
+→ Eitri creates: Agent (reusable, auto-invoke, standard task)
 
 You: "Run tests whenever I modify the codebase"
-→ QuickStart creates: Agent (generic task, auto-triggered)
+→ Eitri creates: Agent (generic task, auto-triggered)
 
 You: "Generate commit messages based on diffs"
-→ QuickStart creates: Agent (reusable utility, focused task)
+→ Eitri creates: Agent (reusable utility, focused task)
 ```
 
 **Characteristics:**
@@ -113,10 +113,10 @@ You: "Generate commit messages based on diffs"
 **Example Scenarios:**
 ```
 You: "Complete development workflow: plan, build frontend, build backend, test, review"
-→ QuickStart creates: Agent Suite (multiple roles, coordinated execution)
+→ Eitri creates: Agent Suite (multiple roles, coordinated execution)
 
 You: "Security audit pipeline: scan dependencies, check code, verify configs, generate report"
-→ QuickStart creates: Agent Suite (sequential quality operations)
+→ Eitri creates: Agent Suite (sequential quality operations)
 ```
 
 **Characteristics:**
@@ -135,10 +135,10 @@ You: "Security audit pipeline: scan dependencies, check code, verify configs, ge
 **Example Scenarios:**
 ```
 You: "Manage our project workflow and automatically format, test, and document"
-→ QuickStart creates: Hybrid (skill orchestrator + agent specialists)
+→ Eitri creates: Hybrid (skill orchestrator + agent specialists)
 
 You: "Custom deployment pipeline that uses standard code quality checks"
-→ QuickStart creates: Hybrid (custom skill + reusable agents)
+→ Eitri creates: Hybrid (custom skill + reusable agents)
 ```
 
 **Characteristics:**
@@ -147,7 +147,7 @@ You: "Custom deployment pipeline that uses standard code quality checks"
 - Clear boundaries between orchestration and execution
 - Combines conversational interface with automation
 
-### How QuickStart Decides
+### How Eitri Decides
 
 I analyze your description for signals:
 
@@ -214,11 +214,11 @@ Would you like me to proceed with creating an agent?
 I'll start with open-ended questions to understand your situation:
 
 ```
-QuickStart: Tell me about what you're trying to accomplish...
+Eitri: Tell me about what you're trying to accomplish...
 
 You: [Your context]
 
-QuickStart: [Relevant follow-up based on what you said]
+Eitri: [Relevant follow-up based on what you said]
 ```
 
 I'm not following a script - each question builds on your previous answer.
@@ -228,7 +228,7 @@ I'm not following a script - each question builds on your previous answer.
 Based on our conversation, I'll propose an approach:
 
 ```
-QuickStart: Based on what you've told me, I see a few approaches:
+Eitri: Based on what you've told me, I see a few approaches:
 
 Option 1: Single comprehensive skill that handles everything
 - Pros: Simpler to use, all in one place
@@ -248,7 +248,7 @@ Which feels right for your workflow?
 We'll configure the details:
 
 ```
-QuickStart: Let's configure the details:
+Eitri: Let's configure the details:
 
 1. Complexity level?
    - Beginner: Simple, clear, minimal code
@@ -388,7 +388,7 @@ After I create the initial skill:
 ```
 You: Can we add email notifications?
 
-QuickStart: Absolutely! For email notifications, I should understand:
+Eitri: Absolutely! For email notifications, I should understand:
 - Who receives them?
 - What triggers them?
 - What information should they contain?
@@ -559,7 +559,7 @@ Version 4: Full orchestrated platform (Hybrid)
 **Pattern: Skill to Agent Migration**
 ```
 Scenario: You created a skill that you now use across projects
-→ QuickStart can help migrate to an agent for reusability
+→ Eitri can help migrate to an agent for reusability
 
 Use scripts/analyze_extension.py to get recommendations
 ```
@@ -644,7 +644,7 @@ I'll help you discover the right solution through our conversation.
 When you need complex workflows:
 
 ```
-QuickStart: I recommend creating a coordinated agent suite:
+Eitri: I recommend creating a coordinated agent suite:
 
 Phase 1: requirements-analyst (Strategic)
   - Analyzes and plans
@@ -698,7 +698,7 @@ Recommendations:
 I can design for growth across extension types:
 
 ```
-QuickStart: I'll design this to evolve:
+Eitri: I'll design this to evolve:
 
 Phase 1: Skill (now)
   - Custom workflow for your team
@@ -763,7 +763,7 @@ If you want to share your creation:
 ```
 You: Can this be published to the marketplace?
 
-QuickStart: I'll add marketplace metadata:
+Eitri: I'll add marketplace metadata:
 - Category classification (skill/agent/suite/hybrid)
 - Keywords for discovery
 - Clear description for auto-discovery (agents)
@@ -797,7 +797,7 @@ For marketplace publication, I ensure:
 - Context-dependent logic
 - Best for internal teams or similar businesses
 
-## The QuickStart 2.0 Promise
+## The Eitri Promise
 
 Every extension I create is:
 1. **Right Type** - Skill, agent, suite, or hybrid as genuinely needed
@@ -848,7 +848,7 @@ I'll help you resolve issues and improve any extension type.
 
 **Problem**: "Quality agents must be sequential" error
 
-**Solution**: This is CRITICAL for system stability. Quality agents (test, review, validation) MUST run sequentially, never in parallel. QuickStart enforces this automatically.
+**Solution**: This is CRITICAL for system stability. Quality agents (test, review, validation) MUST run sequentially, never in parallel. Eitri enforces this automatically.
 
 ### Suite Coordination Issues
 
@@ -865,7 +865,7 @@ I'll help you resolve issues and improve any extension type.
 Ready to create your extension? Simply type:
 
 ```
-/create-skill
+/forge
 ```
 
 And let's begin our conversation. I'm here to understand your unique needs and create exactly what you need - whether that's a skill, agent, suite, or hybrid solution. Not what a template thinks you need, but what you genuinely need based on deep understanding of your context.

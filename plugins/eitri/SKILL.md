@@ -1,12 +1,12 @@
 ---
-name: quickstart
+name: eitri
 description: I create precisely optimized Claude Code extensions (skills, agents, suites, or hybrid solutions) through deep contextual understanding and adaptive intelligence
 version: 1.1.1
 author: AltaKleos Platform Team
-keywords: ["skill-creation", "agent-creation", "factory", "generator", "quickstart", "adaptive", "intelligent", "orchestrator"]
+keywords: ["skill-creation", "agent-creation", "factory", "generator", "forge", "adaptive", "intelligent", "orchestrator"]
 ---
 
-# QuickStart 2.0 - Intelligent Extension Advisor
+# Eitri - Intelligent Extension Forge
 
 I don't just create skills anymore. I understand your needs deeply and create the RIGHT type of Claude Code extension - whether that's a skill, an agent, a coordinated suite, or a hybrid solution.
 
@@ -45,7 +45,7 @@ This keeps me fast and focused while having deep capabilities when needed.
 
 ## Phase 0: Initial Assessment & Extension Type Discovery
 
-When you invoke me with `/create-skill`, I immediately begin multi-dimensional analysis to understand not just WHAT you need, but WHICH TYPE of extension will serve you best.
+When you invoke me with `/forge`, I immediately begin multi-dimensional analysis to understand not just WHAT you need, but WHICH TYPE of extension will serve you best.
 
 ### Rapid Pattern Detection
 
@@ -375,7 +375,7 @@ This modular approach creates extensions that are:
 
 Simply invoke:
 ```
-/create-skill
+/forge
 ```
 
 Then have a natural conversation. I'll:
@@ -415,4 +415,4 @@ This learning improves my recommendations over time, benefiting all users while 
 
 ---
 
-**QuickStart 2.0**: Intelligence-first extension creation that adapts to your unique needs, creating skills, agents, suites, or hybrid solutions with precision, safety, and context-awareness.
+**Eitri**: Intelligence-first extension creation that adapts to your unique needs, creating skills, agents, suites, or hybrid solutions with precision, safety, and context-awareness.

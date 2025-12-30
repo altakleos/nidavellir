@@ -60,12 +60,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin testing framework
 - Documentation improvements
 
+## [1.3.0] - 2025-12-30
+
+### Changed
+
+- **Renamed plugin**: `quickstart` → `eitri` (named after the legendary Norse dwarf smith who forged Mjolnir)
+- **Renamed command**: `/create-skill` → `/forge`
+- Installation command: `/plugin install eitri@altakleos`
+- Updated all documentation and references
+
+### Why the Rename
+
+- "quickstart" was too generic and commonly used
+- "eitri" is unique, memorable, and carries mythological weight
+- The forge metaphor perfectly captures what the plugin does: crafting powerful tools
+- `/forge` is a natural verb command that flows well in usage
+
 ## [1.2.0] - 2025-12-29
 
 ### Added
 
-- **QuickStart 2.0 Plugin** - Intelligent skill factory for creating Claude Code extensions
-  - Command: `/create-skill` - Launch the intelligent skill creation workflow
+- **Eitri Plugin** (originally QuickStart 2.0) - Intelligent extension forge for creating Claude Code extensions
+  - Command: `/forge` - Launch the intelligent extension creation workflow
   - Four extension types: Skills, Agents, Agent Suites, and Hybrids
   - Multi-dimensional context discovery engine
   - Domain-specific intelligence (Healthcare, Finance, E-commerce, SaaS, DevOps)

@@ -1,15 +1,15 @@
 ---
-name: create-skill
-description: Launch QuickStart to intelligently create one or more skills through natural conversation
+name: forge
+description: Launch Eitri to intelligently create one or more skills through natural conversation
 ---
 
-# Create Skill Command
+# Forge Command
 
-This command launches QuickStart - your intelligent skill creation assistant.
+This command launches Eitri - your intelligent skill creation assistant.
 
 ## What Happens
 
-When you type `/create-skill`, I'll start a conversation to understand your unique needs and create the perfect skill(s) for you.
+When you type `/forge`, I'll start a conversation to understand your unique needs and create the perfect skill(s) for you.
 
 ## The Process
 
@@ -23,7 +23,7 @@ When you type `/create-skill`, I'll start a conversation to understand your uniq
 
 Simply type:
 ```
-/create-skill
+/forge
 ```
 
 Then engage in a natural conversation. I'll guide you through everything.
@@ -39,7 +39,7 @@ I don't use rigid templates. Instead, I:
 ## Example Interaction
 
 ```
-You: /create-skill
+You: /forge
 
 Me: Tell me about what you're trying to accomplish - not just the task, but the context around it. What's your business or work environment like?
 
@@ -57,7 +57,7 @@ Me: I understand the pain of manual inventory management. Let me learn more abou
 - Don't worry about technical details - I'll figure those out
 - Feel free to ask questions or request changes
 
-## The QuickStart Promise
+## The Eitri Promise
 
 Every skill I create is:
 - **Unique** - Built specifically for your situation
@@ -65,4 +65,4 @@ Every skill I create is:
 - **Practical** - Solves your actual problem
 - **Quality** - Meets high standards contextually
 
-Ready? Just type `/create-skill` and let's begin!
+Ready? Just type `/forge` and let's begin!

@@ -22,7 +22,7 @@ plugins/
 │   └── marketplace.json   # Plugin registry
 ├── .github/               # GitHub templates and workflows
 ├── plugins/               # Plugin directory
-│   └── quickstart/        # Intelligent skill factory plugin
+│   └── eitri/             # Intelligent skill forge plugin
 ├── schemas/               # JSON validation schemas
 ├── scripts/               # Validation and utility scripts
 ├── CONTRIBUTING.md        # Contribution guidelines
@@ -88,16 +88,16 @@ When team members trust the project folder, plugins install automatically.
 
 ## Available Plugins
 
-### quickstart
+### eitri
 
-Intelligent skill factory that creates precisely optimized Claude Code extensions through deep contextual understanding and adaptive intelligence.
+Intelligent extension forge that creates precisely optimized Claude Code extensions through deep contextual understanding and adaptive intelligence. Named after the legendary Norse dwarf smith who forged Thor's hammer Mjolnir.
 
 - **Version**: 1.1.1
 - **Category**: Development
-- **Installation**: `/plugin install quickstart@altakleos`
-- **Command**: `/create-skill` - Launch the intelligent skill creation workflow
+- **Installation**: `/plugin install eitri@altakleos`
+- **Command**: `/forge` - Launch the intelligent extension creation workflow
 
-[View Plugin Documentation](plugins/quickstart/HOW_TO_USE.md)
+[View Plugin Documentation](plugins/eitri/HOW_TO_USE.md)
 
 ## For Contributors: Developing Plugins
 
