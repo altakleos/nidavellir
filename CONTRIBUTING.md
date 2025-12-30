@@ -69,18 +69,21 @@ Every plugin must follow this structure:
 
 ```
 plugins/your-plugin-name/
-├── plugin.json          # Required: Plugin metadata
+├── .claude-plugin/
+│   └── plugin.json      # Required: Plugin metadata
+├── commands/            # Optional: Slash commands (at root, NOT in .claude-plugin/)
+│   └── *.md
+├── skills/              # Optional: Skills (at root)
+│   └── *.md
 ├── README.md            # Required: Documentation
-└── .claude/
-    ├── commands/        # Optional: Slash commands
-    │   └── *.md
-    └── skills/          # Optional: Skills
-        └── *.md
+└── SKILL.md             # Optional: Main skill file
 ```
 
-### Plugin Metadata (plugin.json)
+**CRITICAL**: Commands must be at plugin root level (`commands/`), not inside `.claude-plugin/commands/`.
 
-Your `plugin.json` must validate against `/schemas/plugin.schema.json`:
+### Plugin Metadata (.claude-plugin/plugin.json)
+
+Your `.claude-plugin/plugin.json` must validate against `/schemas/plugin.schema.json`:
 
 ```json
 {

@@ -17,7 +17,10 @@ Private marketplace for internal AltaKleos development tools and Claude Code plu
 This repository contains the AltaKleos Claude Code plugin marketplace:
 
 ```
-plugins/
+.
+├── .claude/               # Claude Code configuration
+│   ├── policies/          # Project policies
+│   └── skills/            # Local skills (plugin-packager)
 ├── .claude-plugin/        # Marketplace configuration
 │   └── marketplace.json   # Plugin registry
 ├── .github/               # GitHub templates and workflows
@@ -25,9 +28,11 @@ plugins/
 │   └── eitri/             # Intelligent skill forge plugin
 ├── schemas/               # JSON validation schemas
 ├── scripts/               # Validation and utility scripts
+├── AGENTS.md              # Claude Code project instructions
+├── CHANGELOG.md           # Version history
 ├── CONTRIBUTING.md        # Contribution guidelines
-├── SECURITY.md           # Security policy
-└── README.md             # This file
+├── SECURITY.md            # Security policy
+└── README.md              # This file
 ```
 
 ## For Users: Installing Plugins
@@ -110,6 +115,7 @@ Intelligent extension forge that creates precisely optimized Claude Code extensi
 | `/forge:export` | Export to Agent Skills standard for cross-platform use |
 | `/forge:test` | Test extensions in sandbox before deployment |
 | `/forge:diagram` | Visualize extension architecture with Mermaid diagrams |
+| `/forge:improve` | Optimize extension prompts based on feedback |
 
 **Creates:** Skills, Agents, Agent Suites, Hybrid Solutions, Hooks, MCP Servers
 

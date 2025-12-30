@@ -52,13 +52,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Troubleshooting guide
 - Validation procedures
 
-## [Unreleased]
+## [Eitri 1.9.0] - 2025-12-30
 
-### Planned
+### Added
 
-- Enhanced validation scripts
-- Plugin testing framework
-- Documentation improvements
+- **New Commands:**
+  - `/forge:feedback` - Provide feedback to improve recommendations with learning system
+  - `/forge:test` - Test extensions in sandbox environment before deployment
+  - `/forge:diagram` - Visualize extension architecture with Mermaid diagrams
+  - `/forge:improve` - Optimize extension prompts based on collected feedback
+  - `/forge:browse` - Discover templates from local filesystem
+  - `/forge:export` - Export to Agent Skills standard for cross-platform compatibility
+  - `/forge:install` - Install extensions to Claude Code environment
+  - `/forge:upgrade` - Upgrade existing extensions with new features
+  - `/forge:template` - Quick-start from pre-built templates
+  - `/forge:publish` - Publish extensions to marketplaces
+  - `/forge:validate` - Validate extensions for specification compliance
+
+- **New Extension Types:**
+  - Hooks - Event-driven automations (PreToolCall, PostToolCall, SessionStart, etc.)
+  - MCP Servers - Model Context Protocol integrations for external services
+
+- **Intelligence Features:**
+  - Self-improving prompt optimization system
+  - Feedback lifecycle management (pending → applied → verified)
+  - Local learning data storage (user and project level)
+  - Web research capabilities for domain knowledge
+
+- **New Generators:**
+  - `hook-generator.md` - Event-driven automation design
+  - `mcp-generator.md` - MCP server generation (databases, APIs)
+
+- **New References:**
+  - `mcp-patterns.md` - MCP integration patterns
+  - `web-research.md` - External resource consultation guide
+
+### Changed
+
+- SKILL.md reduced from 601 to 504 lines (removed redundant command examples)
+- HOW_TO_USE.md updated with comprehensive command documentation
 
 ## [Eitri 1.2.0] - 2025-12-30
 
