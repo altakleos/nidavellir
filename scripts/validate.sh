@@ -113,6 +113,91 @@ validate_plugin_schema() {
     echo -e "${GREEN}  ✓ $file validated${NC}"
 }
 
+# Function to validate SKILL.md frontmatter
+validate_skill_md() {
+    local file=$1
+    local plugin_name=$(basename "$(dirname "$file")")
+
+    echo "  Checking $file..."
+
+    # Check if file exists
+    if [[ ! -f "$file" ]]; then
+        return 0
+    fi
+
+    # Extract frontmatter (between first two --- lines)
+    local frontmatter=""
+    local in_frontmatter=false
+    local line_num=0
+    while IFS= read -r line; do
+        line_num=$((line_num + 1))
+        if [[ "$line" == "---" ]]; then
+            if [[ "$in_frontmatter" == false ]]; then
+                if [[ $line_num -eq 1 ]]; then
+                    in_frontmatter=true
+                fi
+            else
+                break
+            fi
+        elif [[ "$in_frontmatter" == true ]]; then
+            frontmatter+="$line"$'\n'
+        fi
+    done < "$file"
+
+    if [[ -z "$frontmatter" ]]; then
+        echo -e "${YELLOW}  ⚠ No frontmatter found in SKILL.md${NC}"
+        WARNINGS=$((WARNINGS + 1))
+        return 0
+    fi
+
+    # Check for required fields
+    if ! echo "$frontmatter" | grep -q "^name:"; then
+        echo -e "${RED}  ✗ Missing required field: name${NC}"
+        ERRORS=$((ERRORS + 1))
+    fi
+
+    if ! echo "$frontmatter" | grep -q "^description:"; then
+        echo -e "${RED}  ✗ Missing required field: description${NC}"
+        ERRORS=$((ERRORS + 1))
+    fi
+
+    # Check name format and length (max 64 chars)
+    local name=$(echo "$frontmatter" | grep "^name:" | sed 's/^name: *//')
+    if [[ -n "$name" ]]; then
+        if ! [[ "$name" =~ ^[a-z0-9-]+$ ]]; then
+            echo -e "${RED}  ✗ Invalid name format: $name (use lowercase, numbers, hyphens only)${NC}"
+            ERRORS=$((ERRORS + 1))
+        fi
+        if [[ ${#name} -gt 64 ]]; then
+            echo -e "${RED}  ✗ Name too long: ${#name} chars (max 64)${NC}"
+            ERRORS=$((ERRORS + 1))
+        fi
+    fi
+
+    # Check description length (max 1024 chars)
+    local description=$(echo "$frontmatter" | grep "^description:" | sed 's/^description: *//')
+    if [[ -n "$description" ]]; then
+        if [[ ${#description} -gt 1024 ]]; then
+            echo -e "${RED}  ✗ Description too long: ${#description} chars (max 1024)${NC}"
+            ERRORS=$((ERRORS + 1))
+        fi
+    fi
+
+    # Check for non-standard fields (warn only)
+    local official_fields="name description version disable-model-invocation mode allowed-tools"
+    while IFS= read -r line; do
+        if [[ "$line" =~ ^([a-z-]+): ]]; then
+            local field="${BASH_REMATCH[1]}"
+            if [[ ! " $official_fields " =~ " $field " ]]; then
+                echo -e "${YELLOW}  ⚠ Non-standard frontmatter field: $field${NC}"
+                WARNINGS=$((WARNINGS + 1))
+            fi
+        fi
+    done <<< "$frontmatter"
+
+    echo -e "${GREEN}  ✓ SKILL.md validated${NC}"
+}
+
 # Validate marketplace.json
 echo "1. Validating marketplace.json"
 echo "-------------------------------------"
@@ -156,8 +241,27 @@ fi
 
 echo ""
 
+# Validate SKILL.md files
+echo "3. Validating SKILL.md files"
+echo "-------------------------------------"
+
+SKILL_COUNT=0
+if [[ -d "plugins" ]]; then
+    while IFS= read -r -d '' skill_file; do
+        SKILL_COUNT=$((SKILL_COUNT + 1))
+        validate_skill_md "$skill_file"
+    done < <(find plugins -name "SKILL.md" -type f -print0)
+
+    if [[ $SKILL_COUNT -eq 0 ]]; then
+        echo -e "${YELLOW}⚠ No SKILL.md files found${NC}"
+        WARNINGS=$((WARNINGS + 1))
+    fi
+fi
+
+echo ""
+
 # Cross-validate marketplace.json with actual plugins
-echo "3. Cross-validating marketplace entries"
+echo "4. Cross-validating marketplace entries"
 echo "-------------------------------------"
 
 if [[ -f "$MARKETPLACE_FILE" ]]; then

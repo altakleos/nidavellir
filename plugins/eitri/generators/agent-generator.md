@@ -38,7 +38,7 @@ Based on discovery context, determine agent characteristics:
 **Execution Pattern Selection:**
 - Read-only + Lightweight → Parallel safe
 - Writes + Moderate complexity → Coordinated (2-3 max)
-- Quality/Testing operations → Sequential only (CRITICAL)
+- Quality/Testing operations → Sequential only (for stability)
 - Orchestration → Varies based on coordination needs
 
 **Process Load Estimation:**
@@ -216,9 +216,9 @@ def calibrate_tools(needs, function_type, execution_pattern):
 
     # Apply safety restrictions
     if function_type == "quality":
-        # Quality agents get full tools but MUST be sequential
+        # Quality agents get full tools but should be sequential
         if execution_pattern != "sequential":
-            error("Quality agents MUST be sequential")
+            error("Quality agents should be sequential for stability")
 
     if execution_pattern == "parallel":
         # Remove dangerous tools for parallel execution
@@ -233,32 +233,34 @@ def calibrate_tools(needs, function_type, execution_pattern):
 
 Ensure safe execution patterns:
 
-**Critical Safety Rules:**
+**Safety Guidelines:**
 
-1. **Quality Agents MUST Be Sequential**
+1. **Quality Agents Run Sequentially**
+   Quality agents should run sequentially to maintain system stability.
    ```yaml
-   # CORRECT
+   # Recommended pattern
    name: test-runner
    color: red
    execution_pattern: sequential
 
-   # WRONG - Will cause system crashes
+   # Avoid - can cause instability
    name: test-runner
    color: red
-   execution_pattern: parallel  # NEVER!
+   execution_pattern: parallel
    ```
 
 2. **Parallel Agents Should Be Lightweight**
+   Parallel agents work best with read-only tools.
    ```yaml
-   # CORRECT
+   # Safe pattern
    name: code-analyzer
    tools: Read, Grep
    execution_pattern: parallel
 
-   # RISKY
+   # Use with caution
    name: code-modifier
    tools: Read, Edit, Bash
-   execution_pattern: parallel  # Risky!
+   execution_pattern: parallel
    ```
 
 3. **Maximum Concurrency Limits**
@@ -266,6 +268,22 @@ Ensure safe execution patterns:
    - Implementation (coordinated): 3 max concurrent
    - Quality (sequential): 1 only
    - Coordination: Varies
+
+4. **Parallel Tool Calling Optimization**
+   For Claude 4.5 compatibility, include guidance for efficient parallel operations:
+   ```markdown
+   ## Tool Calling Efficiency
+
+   If you intend to call multiple tools and there are no dependencies
+   between the tool calls, make all of the independent calls in parallel.
+
+   Examples:
+   - Reading multiple files → call Read for all files in parallel
+   - Searching multiple patterns → call Grep for all patterns in parallel
+   - Analyzing multiple directories → call Glob for all patterns in parallel
+
+   Only call tools sequentially when outputs depend on previous results.
+   ```
 
 ### Phase 7: Examples and Documentation
 
@@ -350,10 +368,10 @@ Rather than rigid categories, I adapt characteristics to context:
 
 **Quality-Like Agent:**
 - Full tool access for thorough checks
-- MUST be sequential execution
+- Sequential execution recommended
 - Testing, review, validation focus
 - Higher process load acceptable
-- NEVER run in parallel with other quality agents
+- Avoid running in parallel with other quality agents
 
 **Coordination-Like Agent:**
 - Lightweight tool access

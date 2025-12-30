@@ -153,6 +153,33 @@ Skills should:
 - Include clear activation criteria
 - Be documented in the plugin README
 
+### Claude 4.5 Compatibility
+
+When writing skill content, follow these best practices for Claude 4.5 (Opus and Sonnet) compatibility:
+
+**Avoid aggressive language:**
+- Instead of `CRITICAL: You MUST...`, use `Use this when...`
+- Instead of `NEVER do X`, use `Avoid doing X because...`
+- Instead of `ALWAYS check Y`, use `Check Y to ensure...`
+
+**Provide context for instructions:**
+- Bad: `Format code before saving`
+- Good: `Format code before saving to maintain consistent style across the project`
+
+**Optimize for parallel tool calling:**
+Include guidance in complex skills:
+```markdown
+If you intend to call multiple tools and there are no dependencies
+between the tool calls, make all of the independent calls in parallel.
+```
+
+**Use official SKILL.md frontmatter only:**
+- Required: `name`, `description`
+- Optional: `version`, `disable-model-invocation`, `mode`, `allowed-tools`
+- Do NOT use: `author`, `keywords` (put these in plugin.json instead)
+
+See `AGENTS.md` for detailed SKILL.md frontmatter rules.
+
 ### Testing Your Plugin
 
 Before submitting:

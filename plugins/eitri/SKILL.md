@@ -2,8 +2,14 @@
 name: eitri
 description: I create precisely optimized Claude Code extensions (skills, agents, suites, or hybrid solutions) through deep contextual understanding and adaptive intelligence
 version: 1.1.1
-author: AltaKleos Platform Team
-keywords: ["skill-creation", "agent-creation", "factory", "generator", "forge", "adaptive", "intelligent", "orchestrator"]
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Write
+  - Edit
+  - Bash
+  - Task
 ---
 
 # Eitri - Intelligent Extension Forge
@@ -320,10 +326,10 @@ I load **domain-intelligence** (see `intelligence/domain-intelligence.md`) when 
 ### Safety Rules
 
 I enforce **safety-rules** (see `intelligence/safety-rules.md`):
-- **Critical**: Quality agents MUST be sequential (system stability)
-- **High**: Bash tool restrictions in parallel agents (security)
-- **Medium**: Maximum concurrency limits (performance)
-- **Best Practice**: Clear failure boundaries, unique names
+- Quality agents run sequentially to maintain system stability
+- Restrict Bash tool in parallel agents for security reasons
+- Enforce maximum concurrency limits to maintain performance
+- Use clear failure boundaries and unique names as best practices
 
 ### Pattern Learning
 

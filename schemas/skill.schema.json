@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/altakleos/plugins/schemas/skill.schema.json",
+  "title": "Claude Code SKILL.md Frontmatter Schema",
+  "description": "Schema for validating SKILL.md frontmatter in Claude Code skills (based on official specification)",
+  "type": "object",
+  "required": ["name", "description"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Skill name (lowercase, numbers, hyphens only)",
+      "pattern": "^[a-z0-9-]+$",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief description of what the skill does",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version for tracking (optional)",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9.-]+)?(\\+[a-zA-Z0-9.-]+)?$"
+    },
+    "disable-model-invocation": {
+      "type": "boolean",
+      "description": "When true, skill can only be invoked manually via /skill-name (optional)",
+      "default": false
+    },
+    "mode": {
+      "type": "boolean",
+      "description": "When true, skill appears in Mode Commands section (optional)",
+      "default": false
+    },
+    "allowed-tools": {
+      "type": "array",
+      "description": "Tools Claude can use when this skill is active (optional)",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Read",
+          "Write",
+          "Edit",
+          "Glob",
+          "Grep",
+          "Bash",
+          "Task",
+          "WebFetch",
+          "WebSearch",
+          "NotebookEdit",
+          "AskUserQuestion",
+          "TodoWrite"
+        ]
+      },
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false
+}

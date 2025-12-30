@@ -38,6 +38,39 @@ With `strict: false` in marketplace.json:
 - Component specs belong in `plugin.json` only
 - Do not duplicate specs in marketplace entry
 
+### 5. SKILL.md Frontmatter Compliance
+
+Use only official frontmatter fields (per Claude Code specification):
+
+**Required:**
+- `name` - max 64 chars, lowercase/numbers/hyphens only
+- `description` - max 1024 chars
+
+**Optional:**
+- `version` - semantic versioning (e.g., `1.0.0`)
+- `disable-model-invocation` - boolean, prevents auto-invocation
+- `mode` - boolean, marks as mode command
+- `allowed-tools` - array of tool names to restrict access
+
+**Do NOT use in SKILL.md frontmatter:**
+- `author` - put in `plugin.json` instead
+- `keywords` - put in `plugin.json` instead
+- Custom fields not in official spec
+
+Example compliant frontmatter:
+```yaml
+---
+name: my-skill
+description: A brief description of what this skill does
+version: 1.0.0
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Write
+---
+```
+
 ## Common Operations
 
 ### Creating a New Plugin
@@ -70,6 +103,7 @@ Sync across all 3 locations:
 |---------|------|
 | Marketplace registry | `.claude-plugin/marketplace.json` |
 | Plugin schema | `schemas/plugin.schema.json` |
+| Skill schema | `schemas/skill.schema.json` |
 | Marketplace schema | `schemas/marketplace.schema.json` |
 | Validation script | `scripts/validate.sh` |
 | Eitri plugin | `plugins/eitri/` |
@@ -98,6 +132,7 @@ This checks:
 - Schema compliance
 - Version consistency
 - Required files presence
+- SKILL.md frontmatter compliance
 
 ## Documentation References
 
