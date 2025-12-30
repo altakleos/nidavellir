@@ -1,6 +1,6 @@
 # Eitri - Complete Usage Guide
 
-## What's New in Version 2.0
+## What's New in Eitri
 
 Eitri now creates **four types** of Claude Code extensions:
 
