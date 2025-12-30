@@ -1,7 +1,7 @@
 ---
 name: eitri
 description: I create precisely optimized Claude Code extensions (skills, agents, suites, hooks, MCP servers, or hybrid solutions) through deep contextual understanding and adaptive intelligence
-version: 1.3.0
+version: 1.4.0
 allowed-tools:
   - Read
   - Glob
@@ -416,6 +416,7 @@ Learn from real examples:
 - **Suites**: `examples/agent-suites/` (development workflow)
 - **Hybrids**: `examples/hybrid-solutions/` (project management)
 - **Skills**: `examples/simple-skill/`, `examples/complex-skill/`
+- **Templates**: `templates/` (code-reviewer, test-generator, hooks, MCP)
 
 ## My Promise Remains
 
@@ -460,15 +461,41 @@ You're not filling out forms or choosing from templates. You're collaborating wi
 |---------|---------|
 | `/forge` | Main creation workflow - create any extension type |
 | `/forge:validate` | Validate extensions for specification compliance |
+| `/forge:install` | Install extensions to Claude Code environment |
+| `/forge:upgrade` | Upgrade existing extensions with new features |
+| `/forge:template` | Quick-start from pre-built templates |
+| `/forge:publish` | Publish extensions to marketplaces |
 
-### Validation
+### Command Details
 
-After creating an extension, validate it:
+**Validation** - Check before using:
 ```
 /forge:validate
 ```
 
-This checks SKILL.md frontmatter, plugin structure, version consistency, and common mistakes.
+**Installation** - Deploy your extension:
+```
+/forge:install           # Install to project
+/forge:install --global  # Install user-wide
+```
+
+**Templates** - Quick starts:
+```
+/forge:template code-reviewer
+/forge:template test-generator --framework pytest
+```
+
+**Upgrades** - Improve existing extensions:
+```
+/forge:upgrade --analyze     # See opportunities
+/forge:upgrade --modernize   # Apply best practices
+```
+
+**Publishing** - Share with others:
+```
+/forge:publish --dry-run     # Preview
+/forge:publish               # Submit to marketplace
+```
 
 ## Advanced Features
 
