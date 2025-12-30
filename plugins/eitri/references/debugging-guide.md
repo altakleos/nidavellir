@@ -98,7 +98,7 @@ Comprehensive guide to debugging different types of Claude Code extensions.
 - Review synchronization points
 
 **Issue: Parallel execution crashes**
-- Check for parallel quality agents (CRITICAL)
+- Check for parallel quality agents (important)
 - Verify concurrency limits respected
 - Review total process load
 

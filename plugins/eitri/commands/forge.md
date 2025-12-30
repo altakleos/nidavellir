@@ -14,10 +14,10 @@ When you type `/forge`, I'll start a conversation to understand your unique need
 ## The Process
 
 1. **Context Discovery** - I'll ask about your business, team, and needs
-2. **Architecture Design** - I'll suggest the optimal skill structure
+2. **Architecture Design** - I'll suggest the optimal extension structure
 3. **Configuration** - We'll fine-tune the details together
 4. **Creation** - I'll generate everything you need
-5. **Delivery** - You'll receive complete, ready-to-use skill(s)
+5. **Delivery** - You'll receive complete, ready-to-use extension(s)
 
 ## How to Invoke
 

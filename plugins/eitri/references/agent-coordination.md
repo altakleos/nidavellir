@@ -132,10 +132,10 @@ execution_plan:
 
 ## Safety in Coordination
 
-### Critical Rule: Quality Agents Sequential
-NEVER run quality agents in parallel:
+### Important Rule: Quality Agents Sequential
+Avoid running quality agents in parallel:
 ```yaml
-# WRONG - Will crash
+# Avoid - can cause instability
 parallel_agents:
   - test-runner  # quality
   - code-reviewer  # quality
@@ -253,7 +253,7 @@ suite:
 
     - phase: quality
       agents: [test-runner, code-reviewer]
-      execution: sequential  # CRITICAL
+      execution: sequential  # Important for stability
 
   data_flow:
     - from: product-planner.requirements

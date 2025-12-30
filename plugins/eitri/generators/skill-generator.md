@@ -375,6 +375,26 @@ Start with version 1.0.0 for new skills:
   - Suites: `generators/suite-coordinator.md`
   - Hybrids: `generators/hybrid-architect.md`
 
+## Tool Calling Efficiency
+
+For Claude 4.5 compatibility, skills should include guidance for efficient parallel operations:
+
+```markdown
+## Parallel Tool Usage
+
+If you intend to call multiple tools and there are no dependencies
+between the tool calls, make all of the independent calls in parallel.
+
+Examples:
+- Reading multiple files → call Read for all files in parallel
+- Searching multiple patterns → call Grep for all patterns in parallel
+- Analyzing multiple directories → call Glob for all patterns in parallel
+
+Only call tools sequentially when outputs depend on previous results.
+```
+
+This optimization guidance helps skills leverage Claude 4.5's parallel tool calling capabilities.
+
 ## Success Criteria
 
 A successful skill:
