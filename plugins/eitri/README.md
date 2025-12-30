@@ -31,11 +31,12 @@ Eitri creates four types of Claude Code extensions:
 
 ## Documentation
 
-See [HOW_TO_USE.md](HOW_TO_USE.md) for complete usage guide.
+- [HOW_TO_USE.md](HOW_TO_USE.md) - Complete usage guide
+- [sample_prompt.md](sample_prompt.md) - Copy-paste example prompts
 
 ## Version
 
-1.1.1
+1.2.0
 
 ## Author
 

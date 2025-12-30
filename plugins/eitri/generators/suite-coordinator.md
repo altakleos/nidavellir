@@ -457,7 +457,11 @@ This suite can grow by:
 - Adding monitoring agent for production
 ```
 
-### Phase 8: Individual Agent Generation
+### Phase 8: Pattern Application
+
+I apply relevant coordination patterns from `references/patterns.md` including orchestration and workflow automation patterns that help structure suite architecture consistently.
+
+### Phase 9: Individual Agent Generation
 
 For each agent in the suite, generate using agent-generator:
 

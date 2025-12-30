@@ -6,6 +6,8 @@ description: Multi-stage validation for safety, correctness, and quality
 
 # Validation Framework - Safety & Quality Assurance
 
+I validate extensions against context-appropriate standards from `references/quality-criteria.md`, which defines documentation quality levels, code quality principles, and security requirements for different contexts (startup, SMB, enterprise, regulated).
+
 ## Three-Stage Validation
 
 This framework validates extensions at three critical points:

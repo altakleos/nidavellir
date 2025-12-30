@@ -1,6 +1,6 @@
 {
   "name": "eitri",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Intelligent skill factory that creates precisely optimized Claude Code extensions (skills, agents, suites, or hybrid solutions) through deep contextual understanding and adaptive intelligence",
   "author": {
     "name": "AltaKleos Platform Team",

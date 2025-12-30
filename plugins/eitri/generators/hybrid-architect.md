@@ -299,7 +299,11 @@ This hybrid solution can evolve:
 - Scale agents independently
 ```
 
-### Phase 6: Shared Data Strategy
+### Phase 6: Pattern Application
+
+I apply relevant patterns from `references/patterns.md` including orchestration, integration, and workflow patterns that help structure hybrid solutions consistently.
+
+### Phase 7: Shared Data Strategy
 
 Define how data flows between components:
 

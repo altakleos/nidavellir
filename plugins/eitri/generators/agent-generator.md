@@ -186,7 +186,7 @@ You are invoked when: [Specific trigger conditions]
 
 ### Phase 5: Tool Access Implementation
 
-Configure tool access with safety awareness:
+Configure tool access with safety awareness. For detailed guidance on safe tool configuration, I follow the guidelines in `references/tool-restrictions.md`, which defines risk levels per tool, recommended configurations by agent type, and execution pattern safety rules.
 
 **Tool Calibration Algorithm:**
 
@@ -454,6 +454,10 @@ Define clear failure boundaries and recovery strategies:
 - Allow partial agent generation with warnings
 - Provide rollback guidance for failed integrations
 - Document known limitations and workarounds
+
+## Pattern Application
+
+I apply relevant patterns from `references/patterns.md` based on the agent's purpose, including data transformation, analysis, and integration patterns that help structure agent capabilities consistently.
 
 ## Learning and Improvement
 

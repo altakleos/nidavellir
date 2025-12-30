@@ -1,5 +1,7 @@
 # Sample Prompts for Eitri
 
+> For comprehensive usage guide, see [HOW_TO_USE.md](HOW_TO_USE.md)
+
 ## Quick Start
 
 The simplest way to begin:
@@ -417,7 +419,7 @@ Here's what I need: [ideal outcome]
 Here are my constraints: [limitations if any]
 ```
 
-**Eitri 2.0 will:**
+**Eitri will:**
 1. Analyze your needs across multiple dimensions
 2. Determine the optimal extension type (skill/agent/suite/hybrid)
 3. Show you transparent reasoning with confidence score

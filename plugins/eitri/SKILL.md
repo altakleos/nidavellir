@@ -1,7 +1,7 @@
 ---
 name: eitri
 description: I create precisely optimized Claude Code extensions (skills, agents, suites, or hybrid solutions) through deep contextual understanding and adaptive intelligence
-version: 1.1.1
+version: 1.2.0
 allowed-tools:
   - Read
   - Glob
@@ -82,7 +82,7 @@ I analyze your initial description for key signals:
 
 ## Phase 1: Deep Context Discovery
 
-I engage my **discovery-engine** module (see `core/discovery-engine.md`) to understand:
+I engage my **discovery-engine** module (see `core/discovery-engine.md`) to understand your needs through systematic analysis. For comprehensive context understanding, I apply my **context dimensions framework** (see `references/context-dimensions.md`) which covers business maturity, technical sophistication, regulatory environment, team structure, data characteristics, and industry patterns.
 
 ### Multi-Dimensional Analysis
 
@@ -200,7 +200,7 @@ I also note your preference to improve future recommendations.
 
 ## Phase 3: Targeted Generation
 
-Based on the decision, I load the appropriate generator:
+Based on the decision, I load the appropriate generator. All generators apply my **core patterns knowledge** (see `references/patterns.md`) which includes data transformation patterns, API integration patterns, report generation patterns, and workflow automation patterns.
 
 ### For Skills
 I load **skill-generator** (see `generators/skill-generator.md`):
@@ -217,6 +217,8 @@ I load **agent-generator** (see `generators/agent-generator.md`):
 - Execution pattern optimization (parallel/coordinated/sequential)
 - Process load awareness and estimation
 - MCP tool integration when available
+
+For safe tool configuration, I follow my **tool restrictions guide** (see `references/tool-restrictions.md`) which defines risk levels per tool, recommended configurations, and execution pattern safety rules.
 
 ### For Suites
 I load **suite-coordinator** (see `generators/suite-coordinator.md`):
@@ -235,7 +237,7 @@ I load **hybrid-architect** (see `generators/hybrid-architect.md`):
 
 ## Phase 4: Validation & Quality Assurance
 
-I load **validation-framework** (see `core/validation-framework.md`) for comprehensive validation:
+I load **validation-framework** (see `core/validation-framework.md`) for comprehensive validation. I validate against my **quality criteria** (see `references/quality-criteria.md`) which defines context-appropriate complexity, documentation standards, code quality principles, and security requirements.
 
 ### Pre-Generation Validation
 - Check for conflicts with existing extensions
@@ -398,16 +400,18 @@ You're not filling out forms or choosing from templates. You're collaborating wi
 ### Migration Support
 
 Use `scripts/analyze_extension.py` to:
-- Analyze existing skills/agents
-- Get recommendations for optimization
-- Migrate between types when beneficial
+- Analyze existing skills/agents and detect their type
+- Calculate reusability scores and suggest improvements
+- Get recommendations for optimization or migration paths
+- Identify missing documentation and orphaned files
 
 ### Testing and Validation
 
-Use provided scripts to:
-- Validate agents: `scripts/validate_agent.py`
-- Test suites: Test coordination and safety
-- Verify integration: Ensure everything works together
+Use `scripts/validate_extension.py` to:
+- Validate SKILL.md frontmatter against schema
+- Check for common anti-patterns
+- Verify file structure and references
+- Ensure compliance with Claude Code specification
 
 ### Continuous Learning
 

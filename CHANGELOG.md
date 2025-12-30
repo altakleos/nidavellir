@@ -60,6 +60,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin testing framework
 - Documentation improvements
 
+## [Eitri 1.2.0] - 2025-12-30
+
+### Added
+
+- Reference loading for previously orphaned documentation files:
+  - `references/context-dimensions.md` - Context understanding framework (578 lines)
+  - `references/patterns.md` - Core generation patterns (420 lines)
+  - `references/quality-criteria.md` - Quality validation standards (431 lines)
+  - `references/tool-restrictions.md` - Agent safety configuration (212 lines)
+- New utility script: `scripts/validate_extension.py` - Validates extension structure and SKILL.md compliance
+- New utility script: `scripts/analyze_extension.py` - Analyzes extensions and recommends improvements
+- Cross-references between documentation files (sample_prompt.md ↔ HOW_TO_USE.md, README.md)
+
+### Fixed
+
+- Removed broken script references in SKILL.md (analyze_extension.py, validate_agent.py)
+- Connected 4 orphaned high-value reference files (1,641 lines of intelligence) to the skill
+- Fixed "Eitri 2.0" reference in sample_prompt.md to match actual version
+
+### Changed
+
+- Enhanced discovery-engine.md with context-dimensions.md reference
+- Enhanced all 4 generators with patterns.md reference
+- Enhanced agent-generator.md with tool-restrictions.md reference
+- Enhanced validation-framework.md with quality-criteria.md reference
+- Updated SKILL.md Advanced Features section with accurate script descriptions
+
 ## [1.3.0] - 2025-12-30
 
 ### Changed

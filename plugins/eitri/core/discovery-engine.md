@@ -8,6 +8,8 @@ description: Shared discovery intelligence for understanding user needs
 
 ## Multi-Dimensional Analysis Framework
 
+For systematic context understanding, I apply the comprehensive framework from `references/context-dimensions.md`, which analyzes needs across 10 dimensions including business maturity, technical sophistication, regulatory environment, and team structure.
+
 ### Surface Layer Analysis
 I extract explicit requirements through natural conversation:
 - Stated goals and outcomes

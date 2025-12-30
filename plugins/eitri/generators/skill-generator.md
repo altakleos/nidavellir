@@ -236,7 +236,7 @@ Apply appropriate emphasis based on context:
 
 ## Pattern Application
 
-Learn from and apply relevant patterns from the pattern library:
+I apply relevant patterns from `references/patterns.md`, which includes data transformation, API integration, report generation, workflow automation, and orchestration patterns. Each pattern provides a structured approach for common use cases:
 
 **Data Transformation Pattern:**
 - Input validation
