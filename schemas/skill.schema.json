@@ -50,8 +50,14 @@
           "WebFetch",
           "WebSearch",
           "NotebookEdit",
+          "NotebookRead",
           "AskUserQuestion",
-          "TodoWrite"
+          "TodoWrite",
+          "Skill",
+          "EnterPlanMode",
+          "ExitPlanMode",
+          "KillShell",
+          "TaskOutput"
         ]
       },
       "uniqueItems": true

@@ -183,14 +183,14 @@ validate_skill_md() {
         fi
     fi
 
-    # Check for non-standard fields (warn only)
+    # Check for non-standard fields (strict - additionalProperties: false per schema)
     local official_fields="name description version disable-model-invocation mode allowed-tools"
     while IFS= read -r line; do
         if [[ "$line" =~ ^([a-z-]+): ]]; then
             local field="${BASH_REMATCH[1]}"
             if [[ ! " $official_fields " =~ " $field " ]]; then
-                echo -e "${YELLOW}  ⚠ Non-standard frontmatter field: $field${NC}"
-                WARNINGS=$((WARNINGS + 1))
+                echo -e "${RED}  ✗ Non-standard frontmatter field: $field (not in official Claude Code spec)${NC}"
+                ERRORS=$((ERRORS + 1))
             fi
         fi
     done <<< "$frontmatter"

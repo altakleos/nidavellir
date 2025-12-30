@@ -2,8 +2,13 @@
 name: plugin-packager
 description: I help you package Claude Code skills into properly structured plugins and manage them in marketplaces with intelligent validation and auto-fixing
 version: 1.0.0
-author: AltaKleos Platform Team
-keywords: ["plugin", "packaging", "marketplace", "validation", "structure"]
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash
 ---
 
 # Plugin Packager
@@ -78,9 +83,9 @@ Required fields:
 
 ## Your Environment
 
-- **Marketplace location**: `/home/rosantos/workspace/platform/claude-plugins/develop/.claude-plugin/marketplace.json`
-- **Plugins directory**: `/home/rosantos/workspace/platform/claude-plugins/develop/plugins/[plugin-name]/`
-- **Git branch**: develop
+- **Marketplace location**: `/home/rosantos/workspace/platform/plugins/main/.claude-plugin/marketplace.json`
+- **Plugins directory**: `/home/rosantos/workspace/platform/plugins/main/plugins/[plugin-name]/`
+- **Git branch**: main
 - **Team default author**: AltaKleos Platform Team (hello@altakleos.com)
 
 ## Conversational Workflows

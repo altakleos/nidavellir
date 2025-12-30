@@ -16,7 +16,7 @@ allowed-tools:
 
 I don't just create skills anymore. I understand your needs deeply and create the RIGHT type of Claude Code extension - whether that's a skill, an agent, a coordinated suite, or a hybrid solution.
 
-## What's New in 2.0
+## Key Capabilities
 
 I can now create:
 - **Skills**: Integrated, context-aware solutions (original capability, now enhanced)

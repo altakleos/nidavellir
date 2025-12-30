@@ -2,8 +2,6 @@
 name: financial-health-analyzer
 description: I perform comprehensive financial health analysis for small businesses with predictive insights and actionable recommendations
 version: 2.1.0
-complexity: advanced
-domain: financial
 ---
 
 # Financial Health Analyzer

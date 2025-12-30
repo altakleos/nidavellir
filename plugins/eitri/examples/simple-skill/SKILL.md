@@ -2,8 +2,6 @@
 name: daily-standup-helper
 description: I help remote teams run effective async daily standups by collecting and formatting updates
 version: 1.0.0
-complexity: beginner
-domain: productivity
 ---
 
 # Daily Standup Helper
