@@ -214,10 +214,11 @@ WebFetch, WebSearch, NotebookEdit, AskUserQuestion, TodoWrite
   "name": "plugin-name",      // Required
   "version": "1.0.0",         // Required
   "description": "...",       // Required
-  "author": {},               // Recommended
-  "components": {}            // Recommended
+  "author": {}                // Recommended
 }
 ```
+
+Note: Component paths (`commands`, `agents`, `skills`, `hooks`, `mcpServers`) are optional top-level fields. Claude Code auto-discovers from default directories if not specified.
 
 ## Common Issues and Fixes
 

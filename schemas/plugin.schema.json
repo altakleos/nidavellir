@@ -95,37 +95,54 @@
         "type": "string"
       }
     },
-    "components": {
-      "type": "object",
-      "description": "Plugin component paths for discovery by Claude Code",
-      "properties": {
-        "commands": {
-          "type": "array",
-          "description": "Paths to slash command files or directories",
-          "items": { "type": "string" }
-        },
-        "agents": {
-          "type": "array",
-          "description": "Paths to agent files or directories",
-          "items": { "type": "string" }
-        },
-        "skills": {
-          "type": "array",
-          "description": "Paths to skill files (SKILL.md)",
-          "items": { "type": "string" }
-        },
-        "hooks": {
-          "type": "array",
-          "description": "Paths to hook configuration files or directories",
-          "items": { "type": "string" }
-        },
-        "mcpServers": {
-          "type": "array",
-          "description": "Paths to MCP server configuration files",
-          "items": { "type": "string" }
-        }
-      },
-      "additionalProperties": false
+    "commands": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Paths to slash command files or directories (auto-discovered from commands/ if not specified)"
+    },
+    "agents": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Paths to agent files or directories (auto-discovered from agents/ if not specified)"
+    },
+    "skills": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Paths to skill directories containing SKILL.md (auto-discovered from skills/ if not specified)"
+    },
+    "hooks": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "object" }
+      ],
+      "description": "Path to hooks config file or inline hooks configuration"
+    },
+    "mcpServers": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "object" }
+      ],
+      "description": "Path to MCP servers config file or inline MCP configuration"
+    },
+    "outputStyles": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Paths to output style configuration files"
+    },
+    "lspServers": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "object" }
+      ],
+      "description": "Path to LSP servers config file or inline LSP configuration"
     }
   },
   "additionalProperties": false

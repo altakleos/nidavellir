@@ -475,10 +475,8 @@ Add MCP servers to plugin.json:
 {
   "name": "my-plugin",
   "version": "1.0.0",
-  "components": {
-    "skills": ["SKILL.md"],
-    "mcpServers": [".mcp.json"]
-  }
+  "skills": ["SKILL.md"],
+  "mcpServers": ".mcp.json"
 }
 ```
 
