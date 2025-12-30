@@ -1,5 +1,5 @@
 {
-  "name": "claude-code-marketplace",
+  "name": "plugins",
   "version": "1.0.0",
   "description": "AltaKleos Claude Code Marketplace - Internal development tools and plugins",
   "private": true,
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/altakleos/claude-code-marketplace.git"
+    "url": "git+https://github.com/altakleos/plugins.git"
   },
   "keywords": [
     "claude-code",
@@ -20,7 +20,7 @@
   "author": "AltaKleos Platform Team <hello@altakleos.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/altakleos/claude-code-marketplace/issues"
+    "url": "https://github.com/altakleos/plugins/issues"
   },
-  "homepage": "https://github.com/altakleos/claude-code-marketplace#readme"
+  "homepage": "https://github.com/altakleos/plugins#readme"
 }

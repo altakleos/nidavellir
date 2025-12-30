@@ -33,8 +33,8 @@ By participating in this project, you agree to:
 
 1. Clone the repository:
    ```bash
-   git clone git@github.com:altakleos/claude-code-marketplace.git
-   cd claude-code-marketplace
+   git clone git@github.com:altakleos/plugins.git
+   cd plugins
    ```
 
 2. Create a feature branch:
@@ -164,7 +164,7 @@ Before submitting:
 
 2. **Test Locally**:
    ```bash
-   /plugin marketplace add /path/to/claude-code-marketplace
+   /plugin marketplace add /path/to/plugins
    /plugin install your-plugin-name@altakleos
    ```
 

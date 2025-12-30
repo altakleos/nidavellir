@@ -1,7 +1,7 @@
 # AltaKleos Claude Code Marketplace
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-![Validation](https://github.com/altakleos/claude-code-marketplace/workflows/Validate%20Marketplace/badge.svg)
+![Validation](https://github.com/altakleos/plugins/workflows/Validate%20Marketplace/badge.svg)
 
 Private marketplace for internal AltaKleos development tools and Claude Code plugins.
 
@@ -17,7 +17,7 @@ Private marketplace for internal AltaKleos development tools and Claude Code plu
 This repository contains the AltaKleos Claude Code plugin marketplace:
 
 ```
-claude-code-marketplace/
+plugins/
 ├── .claude-plugin/        # Marketplace configuration
 │   └── marketplace.json   # Plugin registry
 ├── .github/               # GitHub templates and workflows
@@ -48,7 +48,7 @@ gh auth login
 
 ```bash
 # Add the AltaKleos marketplace
-/plugin marketplace add altakleos/claude-code-marketplace
+/plugin marketplace add altakleos/plugins
 
 # Verify it's added
 /plugin marketplace list
@@ -74,7 +74,7 @@ Add to your project's `.claude/settings.json`:
     "altakleos": {
       "source": {
         "source": "github",
-        "repo": "altakleos/claude-code-marketplace"
+        "repo": "altakleos/plugins"
       }
     }
   },
@@ -105,8 +105,8 @@ Intelligent skill factory that creates precisely optimized Claude Code extension
 
 ```bash
 # Clone the repository
-git clone git@github.com:altakleos/claude-code-marketplace.git
-cd claude-code-marketplace
+git clone git@github.com:altakleos/plugins.git
+cd plugins
 
 # Create a feature branch
 git checkout -b feature/your-plugin-name
@@ -200,13 +200,13 @@ Edit `.claude-plugin/marketplace.json` to add your plugin:
 
 ```bash
 # Return to repository root
-cd /path/to/claude-code-marketplace
+cd /path/to/plugins
 
 # Run validation
 npm run validate
 
 # Add local marketplace for testing
-/plugin marketplace add /path/to/claude-code-marketplace
+/plugin marketplace add /path/to/plugins
 
 # Install and test your plugin
 /plugin install my-new-plugin@altakleos
@@ -265,7 +265,7 @@ gh auth status
 ssh -T git@github.com
 
 # Verify repository access
-git ls-remote git@github.com:altakleos/claude-code-marketplace.git
+git ls-remote git@github.com:altakleos/plugins.git
 ```
 
 ### Marketplace Not Loading
@@ -281,7 +281,7 @@ cat .claude-plugin/marketplace.json
 npm run validate
 
 # Test local marketplace (adjust path)
-/plugin marketplace add /path/to/claude-code-marketplace
+/plugin marketplace add /path/to/plugins
 /plugin marketplace list
 ```
 
@@ -336,7 +336,7 @@ jq . plugins/plugin-name/plugin.json
 
 For questions or issues:
 - Email: hello@altakleos.com
-- GitHub Issues: [Create an issue](https://github.com/altakleos/claude-code-marketplace/issues)
+- GitHub Issues: [Create an issue](https://github.com/altakleos/plugins/issues)
 - Internal Documentation: See AltaKleos Vault
 
 ## License
