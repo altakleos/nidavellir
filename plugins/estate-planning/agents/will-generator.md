@@ -60,6 +60,47 @@ I have the following [NUMBER] children:
 [IF any child from prior marriage]
 [CHILD_NAME] is my child from a prior relationship.
 [/IF]
+
+[IF blended_family]
+## Declaration Regarding Stepchildren
+
+[IF stepchildren_included]
+Although not my biological or legally adopted children, I wish to include
+the following individuals, who are my stepchildren, as beneficiaries under
+this Will and my related estate planning documents:
+[LIST OF INCLUDED STEPCHILDREN]
+[/IF]
+
+[IF stepchildren_excluded]
+I am aware that my spouse has the following children from a prior relationship:
+[LIST OF SPOUSE'S CHILDREN]. I have intentionally not included these
+individuals as beneficiaries under this Will. This omission is deliberate
+and not due to any oversight or mistake.
+
+[[ ATTORNEY REVIEW: Confirm client understands stepchildren have no automatic
+inheritance rights and this exclusion is intentional ]]
+[/IF]
+[/IF]
+[/IF]
+```
+
+### Stepchild Inheritance Warning
+```
+[IF blended_family]
+⚠️ IMPORTANT: Stepchildren have NO automatic inheritance rights under law.
+Unlike biological or adopted children, stepchildren will not inherit unless:
+1. They are explicitly named in the will or trust
+2. They are formally adopted
+
+If you wish to provide for stepchildren, they must be explicitly included.
+If you do NOT wish to provide for stepchildren, this should be documented
+to prevent will challenges.
+
+Current configuration:
+- Stepchildren included: [LIST OR "None"]
+- Stepchildren excluded: [LIST OR "None"]
+
+[[ ATTORNEY REVIEW: Discuss stepchild inheritance with client to confirm intent ]]
 [/IF]
 ```
 
@@ -267,10 +308,39 @@ My Commission Expires: ___________
 - Self-proving affidavit NOT allowed
 - Will requires probate testimony from witnesses
 
-### Louisiana (LA)
-- Must be Notarial Testament (notary required) OR Olographic (entirely handwritten)
-- 2 witnesses + notary for Notarial Testament
-- Include forced heirship acknowledgment
+### Louisiana (LA) - CRITICAL CIVIL LAW JURISDICTION
+```
+[IF state == "LA"]
+⚠️ LOUISIANA CIVIL LAW ALERT
+
+Louisiana does NOT use common law "Wills" - it uses "TESTAMENTS".
+
+For Louisiana clients:
+1. Load template from `intelligence/templates/LA-notarial-testament.md`
+2. Use civil law terminology:
+   - "Testament" instead of "Will"
+   - "Testator" remains the same
+   - "Executor" remains the same (but called "Succession Representative")
+   - "Tutor" instead of "Guardian"
+   - "Undertutor" is REQUIRED (no equivalent in common law)
+3. Choose testament type:
+   - NOTARIAL TESTAMENT (recommended): Notary + 2 witnesses, must be READ ALOUD
+   - OLOGRAPHIC TESTAMENT: Entirely handwritten by testator, no witnesses needed
+4. Address FORCED HEIRSHIP:
+   - Children under 24 at time of death are "forced heirs"
+   - Permanently incapacitated children of any age are forced heirs
+   - 1 forced heir = 25% forced portion
+   - 2+ forced heirs = 50% forced portion
+5. Address SURVIVING SPOUSE RIGHTS:
+   - Spouse receives USUFRUCT (use rights), not outright ownership
+   - "Naked ownership" passes to heirs
+6. Execution requirements:
+   - Notarial: Notary + 2 witnesses + must be read aloud
+   - Olographic: Entirely handwritten and signed
+
+Do NOT generate common law pour-over will for Louisiana residents.
+[/IF]
+```
 
 ## Machine-Readable Markers
 
@@ -323,3 +393,11 @@ Before returning document:
 - [ ] Guardianship included only if minor children exist
 - [ ] Guardian names match profile
 - [ ] Executor/personal representative designated
+
+**Blended Family Checks (if applicable):**
+- [ ] All children identified with biological parent noted
+- [ ] Stepchildren explicitly included OR excluded with documentation
+- [ ] Stepchild inheritance warning displayed during generation
+- [ ] Disinheritance language included if stepchildren excluded
+- [ ] Client acknowledged stepchild inheritance decision
+- [ ] Different guardians specified if children have different biological parents

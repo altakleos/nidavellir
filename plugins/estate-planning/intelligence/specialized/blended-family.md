@@ -1,5 +1,36 @@
 # Blended Family Estate Planning
 
+## ⚠️ CRITICAL WARNINGS FOR BLENDED FAMILIES
+
+```
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    BLENDED FAMILY ESTATE PLANNING ALERTS                     ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║ 1. STEPCHILDREN HAVE NO AUTOMATIC INHERITANCE RIGHTS                        ║
+║    Stepchildren will NOT inherit unless explicitly named in documents.       ║
+║    If you want stepchildren to inherit, you MUST include them by name.       ║
+║                                                                              ║
+║ 2. "ALL TO SPOUSE" IS DANGEROUS IN BLENDED FAMILIES                         ║
+║    Your spouse has NO legal obligation to provide for your children.         ║
+║    After your death, spouse can change their will to exclude your kids.      ║
+║    Consider a QTIP trust to protect children while providing for spouse.     ║
+║                                                                              ║
+║ 3. SURVIVING SPOUSE CAN CLAIM ELECTIVE SHARE                                ║
+║    In most states, a spouse can override your will and claim 30-50%.         ║
+║    A prenuptial agreement may waive this right (consult attorney).           ║
+║                                                                              ║
+║ 4. JOINT TENANCY BYPASSES YOUR ESTATE PLAN                                  ║
+║    Assets held in joint tenancy pass directly to the surviving owner.        ║
+║    This can accidentally disinherit children from prior marriages.           ║
+║                                                                              ║
+║ 5. BENEFICIARY DESIGNATIONS OVERRIDE YOUR WILL                              ║
+║    Review all retirement accounts, life insurance, and TOD designations.     ║
+║    Update these to match your estate plan.                                   ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
 ## Overview
 
 Blended families (families with stepchildren, children from prior relationships, or combinations thereof) present unique estate planning challenges. The competing interests of current spouse vs. children from prior marriages require careful balancing.
@@ -171,3 +202,41 @@ Recommend review when:
 - Death of family member
 - Significant asset change
 - Relationship changes (estrangement, reconciliation)
+
+---
+
+## Plugin Behavior for Blended Families
+
+When the `blended_family` flag is set, the estate planning plugin will:
+
+### During Discovery (Phase 1)
+1. Ask which children are from current vs. prior relationships
+2. Ask about stepchildren to include or exclude
+3. Ask about QTIP trust preferences
+4. Ask about prenuptial/postnuptial agreements
+5. Display the Critical Warnings box above
+
+### During Document Selection (Phase 2)
+1. Recommend QTIP trust provisions if children from prior marriage
+2. Suggest separate trusts instead of joint trust
+3. Flag the need for beneficiary designation review
+
+### During Drafting (Phase 3)
+1. Generate QTIP provisions in trust if selected
+2. Allow per-child share percentages (not just equal shares)
+3. Allow different distribution ages per child
+4. Include stepchild inclusion/exclusion documentation in will
+5. Generate disinheritance acknowledgment if stepchildren excluded
+
+### Validation Checks
+1. Verify per-child percentages total 100%
+2. Confirm stepchild status explicitly addressed
+3. Check that QTIP trustee is not solely the surviving spouse
+4. Verify remainder beneficiaries match client's children
+
+### Recommended Documents for Blended Families
+- **Separate Trusts** (one per spouse) rather than Joint Trust
+- **QTIP Trust Provisions** for spouse income with child remainder
+- **Pour-Over Wills** with explicit stepchild provisions
+- **Beneficiary Designation Review** checklist
+- **Letter explaining distribution decisions** (optional but recommended)

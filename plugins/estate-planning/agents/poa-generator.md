@@ -308,6 +308,33 @@ ________________________________
 
 ## State-Specific Variations
 
+### Louisiana (CRITICAL - Civil Law Jurisdiction)
+```
+[IF state == "LA"]
+⚠️ LOUISIANA CIVIL LAW ALERT
+
+Louisiana does NOT use "Power of Attorney" - it uses "MANDATE" (Procuration).
+
+For Louisiana clients:
+1. Load template from `intelligence/templates/LA-mandate.md`
+2. Use civil law terminology:
+   - "Mandate" instead of "Power of Attorney"
+   - "Mandatary" instead of "Agent" or "Attorney-in-Fact"
+   - "Principal" remains the same
+3. Include durability clause explicitly (not automatic in LA)
+4. Require SPECIAL MANDATE for certain acts:
+   - Making gifts
+   - Real estate transactions
+   - Loans and mortgages
+   - Accepting/renouncing successions
+5. Execution requires:
+   - Notarization (authentic act)
+   - Two competent witnesses
+
+Do NOT generate common law POA documents for Louisiana residents.
+[/IF]
+```
+
 ### New York
 - Requires specific statutory form language
 - Short form + modifications approach

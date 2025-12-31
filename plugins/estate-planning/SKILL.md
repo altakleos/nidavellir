@@ -53,17 +53,27 @@ When `/estate` is invoked, guide users through these phases:
 **Discovery interview sequence:**
 1. Personal basics (name, DOB, state of residence, marital status)
 2. Family structure (spouse info if married, children with ages and special needs status)
-3. If minor children: guardianship preferences, distribution ages
-4. If special needs beneficiary:
+3. **If married, ask about prior marriages:**
+   - Is this a first marriage for both of you?
+   - Does either spouse have children from a prior relationship?
+   - For each child, clarify: biological/adopted to current marriage, or from prior relationship?
+   - Are there stepchildren you want to include in your planning?
+4. If minor children: guardianship preferences, distribution ages
+5. If special needs beneficiary:
    - Is the individual over 18? (adult vs. minor affects planning)
    - Government benefits status (SSI, SSDI, Medicaid)
    - For adults: legal capacity status (guardianship/conservatorship?)
    - SNT trustee preferences (may differ from main trust trustee)
    - ABLE account eligibility and interest
    - Letter of Intent desired?
-5. Asset overview (real estate states, business interests, retirement accounts, net worth range)
-6. Planning goals (probate avoidance, asset protection, child provision)
-7. Existing documents
+6. **If blended family detected:**
+   - Does either spouse want to provide differently for children from prior relationships?
+   - Are there stepchildren to include or exclude?
+   - Do you want assets to ultimately pass to your own children after spouse's lifetime? (QTIP consideration)
+   - Are there prenuptial/postnuptial agreements affecting asset distribution?
+7. Asset overview (real estate states, business interests, retirement accounts, net worth range)
+8. Planning goals (probate avoidance, asset protection, child provision)
+9. Existing documents
 
 **State detection**: When user mentions a state, the `estate-state-lookup` agent auto-loads that state's requirements.
 
@@ -92,6 +102,20 @@ When `/estate` is invoked, guide users through these phases:
 - Business Succession Plan → if `business_owner`
 - Trust Funding Checklist → always with trust
 - Beneficiary Designation Review → if retirement accounts or life insurance
+
+**High Net Worth documents (recommend if `high_net_worth`):**
+- Revocable Trust with A-B (Bypass) Provisions → preserves first-death exemption
+- Form 706 Executor Guidance → critical deadlines and election checklist
+- **Recommend consulting estate tax specialist for:**
+  - Irrevocable Life Insurance Trust (ILIT) → removes life insurance from estate
+  - Dynasty Trust → multi-generational GST-exempt trust
+  - GRAT/QPRT → advanced wealth transfer vehicles
+  - Charitable planning vehicles (CRT, CLT, private foundation)
+
+**Blended Family documents (recommend if `blended_family`):**
+- Separate Trusts (one per spouse) → clearer asset separation
+- QTIP Trust Provisions → income to spouse, remainder to children from prior marriage
+- Stepchild Inclusion/Exclusion Documentation → prevents will challenges
 
 **Present recommendations** with brief explanations of each document's purpose.
 
@@ -245,7 +269,15 @@ When these situations are detected, display appropriate warnings while continuin
       "benefit_types": ["SSI", "SSDI", "Medicaid"],
       "has_conservatorship": "boolean",
       "able_account_eligible": "boolean",
-      "from_current_marriage": "boolean"
+      "from_current_marriage": "boolean",
+      "biological_parent": "client|spouse|both",
+      "is_stepchild": "boolean",
+      "include_in_estate": "boolean",
+      "custom_share_percentage": "number (optional, overrides default equal share)",
+      "custom_distribution_ages": {
+        "first_age": "number (optional)",
+        "final_age": "number (optional)"
+      }
     }
   ],
   "guardianship": {
@@ -261,6 +293,22 @@ When these situations are detected, display appropriate warnings while continuin
     "snt_successor_trustee_2": { "name": "string", "relationship": "string" },
     "remainder_beneficiaries": ["string"],
     "letter_of_intent_desired": "boolean"
+  },
+  "blended_family": {
+    "is_blended": "boolean",
+    "client_prior_marriages": "number",
+    "spouse_prior_marriages": "number",
+    "has_prenuptial_agreement": "boolean",
+    "use_qtip_trust": "boolean",
+    "qtip_preferences": {
+      "spouse_income_only": "boolean",
+      "spouse_principal_access": "none|hems|limited|full",
+      "remainder_to": "client_children|all_children|specific_beneficiaries"
+    },
+    "separate_trusts_preferred": "boolean",
+    "stepchildren_included": ["string (names of stepchildren to include)"],
+    "stepchildren_excluded": ["string (names of stepchildren to exclude)"],
+    "disinheritance_acknowledged": "boolean"
   },
   "distribution_preferences": {
     "pattern": "all_at_once|staggered|discretionary_until_age",
