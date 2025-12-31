@@ -52,9 +52,9 @@ If client is in CA, TX, AZ, NV, WA, ID, NM, WI, or LA:
 
 ## Template Selection
 
-Load appropriate template from `templates/trust/`:
-- `revocable-living-trust.md` - Standard revocable trust
-- `special-needs-trust.md` - If `special_needs_beneficiary` flag
+Load appropriate template from `intelligence/templates/`:
+- `revocable-trust.md` - Standard revocable trust
+- Reference `intelligence/specialized/special-needs-trust.md` - If `special_needs_beneficiary` flag
 
 ## Document Structure
 

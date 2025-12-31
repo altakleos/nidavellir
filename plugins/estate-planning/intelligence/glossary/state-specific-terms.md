@@ -10,6 +10,13 @@ Load when complex state rules detected or multi-state situation.
 | **Pretermitted Heir** | Child born or adopted after will execution who wasn't intentionally excluded. May be entitled to share under state law. |
 | **Forced Heirship** | Louisiana rule requiring portion of estate go to certain children. Cannot be avoided by will or trust. |
 | **Legitime** | In Louisiana, the portion of estate that forced heirs are entitled to receive. |
+| **Usufruct** | Louisiana civil law concept: right to use property and receive income/fruits during lifetime while another person (naked owner) holds title. Commonly granted to surviving spouse over deceased spouse's share. |
+| **Naked Ownership** | Louisiana civil law: ownership of property subject to another person's usufruct. Naked owner has title but cannot use property until usufruct terminates. |
+| **Notarial Testament** | Louisiana will format executed before notary and 2 witnesses. Most common valid will type in Louisiana. |
+| **Olographic Testament** | Louisiana handwritten will: entirely in testator's handwriting, dated, and signed. No witnesses or notary required. |
+| **Mystic Testament** | Louisiana sealed will: signed, sealed, and delivered to notary with declaration. Rarely used. |
+| **Forced Portion** | Louisiana: specific fraction forced heirs must receive (1/4 of estate divided among forced heirs). |
+| **Disposable Portion** | Louisiana: portion of estate testator may freely dispose of (3/4 if forced heirs exist, 100% if none). |
 | **Homestead** | Primary residence, often with special protection from creditors and special rules on transfer at death. |
 | **Homestead Exemption** | Protection of home equity from creditors. Amount varies dramatically by state ($0 to unlimited). |
 | **Ancillary Probate** | Additional probate in state where decedent owned real estate but didn't live. Creates extra cost and delay. |

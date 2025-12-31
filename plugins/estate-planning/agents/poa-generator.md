@@ -36,7 +36,7 @@ You receive from the coordinator:
 
 ## Template Selection
 
-Load template from `templates/poa/financial-poa.md`
+Load template from `intelligence/templates/financial-poa.md`
 
 ## Document Structure
 

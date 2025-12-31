@@ -34,7 +34,7 @@ A pour-over will:
 
 ## Template Selection
 
-Load template from `templates/wills/pour-over-will.md`
+Load template from `intelligence/templates/pour-over-will.md`
 
 ## Document Structure
 
