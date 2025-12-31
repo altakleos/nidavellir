@@ -28,10 +28,13 @@ Choose the optimal format based on context:
 - Gantt charts, pie charts, git graphs
 - Mindmaps, timelines, architecture diagrams
 
-### ASCII (Future)
-- Simple box diagrams
-- Tree structures
-- Plain text flowcharts
+### ASCII
+- Box diagrams with perfect alignment
+- Tree structures (directory listings, hierarchies)
+- Plain text flowcharts and architecture diagrams
+- Tables and grids
+- State machines and sequences
+- Terminal-friendly output
 
 ### PlantUML (Future)
 - Complex UML diagrams
@@ -40,9 +43,13 @@ Choose the optimal format based on context:
 
 ## Delegation
 
-For Mermaid diagrams, apply the expertise from:
+Apply the appropriate expertise based on format:
 
+**Mermaid diagrams:**
 @skills/mermaid/SKILL.md
+
+**ASCII diagrams:**
+@skills/ascii/SKILL.md
 
 ## Output Rules
 
@@ -53,11 +60,20 @@ For Mermaid diagrams, apply the expertise from:
 
 ## Quick Reference
 
+**Mermaid:**
 ```markdown
-# Mermaid block
 ​```mermaid
 flowchart LR
     A --> B --> C
+​```
+```
+
+**ASCII:**
+```markdown
+​```
+┌─────────┐     ┌─────────┐     ┌─────────┐
+│    A    │────▶│    B    │────▶│    C    │
+└─────────┘     └─────────┘     └─────────┘
 ​```
 ```
 

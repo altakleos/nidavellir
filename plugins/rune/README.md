@@ -31,13 +31,14 @@ Just describe what you need. Rune auto-invokes when diagrams are relevant.
 | Problem | Rune's Solution |
 |---------|-----------------|
 | Broken Mermaid syntax | Validated against Mermaid 11.x spec |
+| Misaligned ASCII boxes | Character-counted alignment rules |
 | Wrong diagram type | Intelligent selection based on content |
 | Ugly layouts | Optimized direction, grouping, and styling |
 | Confusing diagrams | Clarity-first design principles |
 
 ## Supported Formats
 
-### Mermaid (Primary)
+### Mermaid
 - Flowcharts & process diagrams
 - Sequence diagrams
 - Class & ER diagrams
@@ -45,8 +46,14 @@ Just describe what you need. Rune auto-invokes when diagrams are relevant.
 - Gantt charts, timelines, mindmaps
 - Architecture diagrams
 
+### ASCII
+- Perfectly aligned box diagrams
+- Tree structures (directory listings)
+- Terminal-friendly flowcharts
+- Tables and grids
+- Plain text architectures
+
 ### Coming Soon
-- ASCII diagrams (terminal-friendly)
 - PlantUML (complex UML)
 
 ---
@@ -71,17 +78,31 @@ Just describe what you need. Rune auto-invokes when diagrams are relevant.
 ```
 → Generates ER diagram with proper cardinality and constraints
 
+**ASCII Architecture:**
+```
+"Show me the system architecture in ASCII"
+```
+→ Generates perfectly aligned box diagram for terminal/plain text
+
 ---
 
 ## Why Rune?
 
-LLMs frequently generate broken Mermaid syntax:
+LLMs frequently generate broken diagrams:
+
+**Mermaid issues:**
 - Unescaped special characters
 - Unquoted reserved words
 - Inconsistent arrow styles
 - Missing type declarations
 
-Rune embeds deep Mermaid expertise to prevent these errors before they happen.
+**ASCII issues:**
+- Misaligned box borders
+- Off-by-one line widths
+- Broken corner connections
+- Inconsistent spacing
+
+Rune embeds deep expertise to prevent these errors before they happen.
 
 ---
 
