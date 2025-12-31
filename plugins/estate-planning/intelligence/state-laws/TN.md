@@ -34,9 +34,9 @@ Surviving spouse entitled to elective share based on marriage length (T.C.A. 31-
 ## Power of Attorney
 
 ### Durable Power of Attorney
-Tennessee requires formal execution:
-- Two witnesses required
-- Notarization required
+Tennessee POA execution:
+- No witnesses legally required
+- Notarization recommended for third-party acceptance
 - Statutory form available (T.C.A. § 34-6-109)
 
 ### Key Features
@@ -142,14 +142,81 @@ Tennessee allows married couples to opt into community property:
 - Provides step-up in basis benefit at first death
 - Unique planning opportunity
 
+## TennCare (Tennessee Medicaid)
+
+### Overview
+TennCare is Tennessee's Medicaid program with specific planning implications.
+
+### Transfer Lookback
+- **5-year lookback** for all transfers
+- Applies to gifts, trust funding, and asset transfers
+- Different from DAPT lookback (18 months for creditors)
+- Transfers during lookback may trigger penalty period
+
+### Waiver Programs
+Tennessee offers several home and community-based waiver programs:
+
+| Program | Purpose | Who It Serves |
+|---------|---------|---------------|
+| **CHOICES** | Long-term services and supports | Elderly and adults with physical disabilities |
+| **ECF** (Employment and Community First) | Community integration and employment | Adults with intellectual/developmental disabilities |
+| **Katie Beckett** | Home care for children | Children with disabilities who would otherwise require institutional care |
+
+### Special Needs Planning
+- Third-party SNTs protect TennCare eligibility
+- First-party SNTs require TennCare payback at death
+- ABLE TN accounts available (www.abletn.gov)
+- Pooled trust options for beneficiaries 65+
+
+### Asset Recovery
+- TennCare may seek recovery from estates
+- Applies to properly transferred probate estates
+- Proper SNT planning can avoid recovery
+- Homestead may be subject to recovery after both spouses deceased
+
+## Property Titling for Tennessee Residents
+
+### Tenancy by the Entirety (TBE)
+**Recommended for married couples' assets:**
+- Available for both real and personal property
+- Strongest creditor protection in Tennessee
+- Automatic survivorship
+- Cannot be severed unilaterally
+
+**How to Title for TBE:**
+- Real property: "[Spouse 1] and [Spouse 2], husband and wife, as tenants by the entirety"
+- Financial accounts: Both spouses named with TBE designation
+
+### Trust Funding for Real Estate
+When funding real estate into revocable trust:
+1. **Quitclaim deed** or **warranty deed** to trust
+2. Record with county register of deeds
+3. No transfer tax for trust funding (exempt)
+4. Update homeowners insurance with trust as named insured
+5. Notify mortgage company (due-on-sale rarely enforced for revocable trusts)
+
+### Mortgage Considerations
+- Tennessee is a **title theory** state
+- Deed of trust used (not mortgage)
+- Trust funding generally doesn't trigger due-on-sale clause (per Garn-St. Germain Act)
+
 ## Common Pitfalls
 
+### For All Tennessee Residents
 1. **Assuming old inheritance tax rules** - Fully repealed by 2016
-2. **Not utilizing community property trust** - Unique TN advantage
-3. **Low homestead exemption** - Only $5,000 protected
-4. **Springing POA difficulties** - Immediate recommended
-5. **Healthcare advance directive flexibility** - Either witnesses OR notary
-6. **Dynasty trust opportunities missed** - No perpetuities rule for trusts
+2. **Not utilizing community property trust** - Unique TN advantage for step-up in basis
+3. **Missing homestead designation** - Must be claimed in writing; protects $35,000/$52,500
+4. **Springing POA difficulties** - Immediate effectiveness recommended
+5. **Healthcare advance directive confusion** - Either witnesses OR notary (not both required)
+6. **Dynasty trust opportunities missed** - 360-year trust duration available
+
+### For Special Needs Planning
+7. **Confusing DAPT and TennCare lookbacks** - DAPT is 18 months; TennCare is 5 years
+8. **Not funding real estate into trust** - Assets must be titled in trust name to avoid probate
+9. **Wrong SNT type** - Third-party SNT (no payback) vs. first-party SNT (payback required)
+10. **Missing Letter of Intent** - Critical companion document for SNT trustees
+11. **Not coordinating with ABLE account** - ABLE TN can complement SNT planning
+12. **Ignoring TennCare waiver programs** - CHOICES and ECF provide valuable services
 
 ## Transfer on Death Instruments
 

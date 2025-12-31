@@ -148,6 +148,31 @@ Consider:
 
 ## State Variations
 
+### Tennessee (TennCare)
+
+**TennCare** is Tennessee's Medicaid program with specific rules:
+
+**Transfer Lookback:**
+- **5-year lookback** for transfers to SNTs
+- Different from DAPT lookback (18 months)
+- Transfers during lookback may trigger penalty period
+
+**Waiver Programs:**
+- **CHOICES** - Long-term services and supports
+- **ECF (Employment and Community First)** - Community integration focus
+- Waiver services may provide additional supports beyond standard Medicaid
+
+**Pooled Trust Option:**
+- Tennessee has qualified pooled trust options
+- Useful for beneficiaries over 65 (cannot create new first-party SNT)
+- Some allow remainder to stay in pool rather than Medicaid payback
+
+**Tennessee ABLE:**
+- Tennessee ABLE accounts available through ABLE TN
+- Can fund from SNT for routine expenses
+- First $100,000 doesn't count against SSI $2,000 limit
+
+### Other State Variations
 - Some states have supplemental programs beyond federal
 - Medicaid eligibility varies by state
 - Some states have pooled trust options

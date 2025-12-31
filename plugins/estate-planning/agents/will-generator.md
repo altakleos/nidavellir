@@ -122,18 +122,24 @@ My Personal Representative shall have full power and authority to...
 [Standard executor powers]
 ```
 
-### Article VI: Guardianship of Minor Children
-**Only included if has_minor_children:**
+### Article VI: Guardianship and Conservatorship Nominations
+**Included based on family situation:**
+
 ```
 [IF has_minor_children]
-## Guardian of the Person
+## Guardian of the Person for Minor Children
 
 If my [spouse does not survive me / I am the sole surviving parent],
-I nominate [PRIMARY_GUARDIAN_NAME] ([RELATIONSHIP]) as Guardian of
-the Person of my minor children.
+I nominate the following as Guardian of the Person of my minor children:
 
+[IF different_guardians_per_child]
+For [CHILD_1_NAME]: I nominate [GUARDIAN_1_NAME] ([RELATIONSHIP]).
+For [CHILD_2_NAME]: I nominate [GUARDIAN_2_NAME] ([RELATIONSHIP]).
+[ELSE]
+For all my minor children, I nominate [PRIMARY_GUARDIAN_NAME] ([RELATIONSHIP]).
 If [PRIMARY_GUARDIAN_NAME] is unable or unwilling to serve, I nominate
 [SUCCESSOR_GUARDIAN_NAME] ([RELATIONSHIP]) as successor Guardian.
+[/IF]
 
 I have chosen [PRIMARY_GUARDIAN_NAME] because [OPTIONAL_EXPLANATION].
 
@@ -149,6 +155,32 @@ The Guardian of the Person shall also serve as Guardian of the Estate.
 I request that no bond be required of any Guardian nominated herein.
 
 [[ ATTORNEY REVIEW: Verify guardianship nomination complies with state requirements ]]
+[/IF]
+
+[IF has_adult_special_needs_beneficiary]
+## Nomination of Conservator for Adult Beneficiary
+
+Note: This nomination is a statement of preference. Conservatorship
+requires court approval and the adult beneficiary may have legal
+capacity to make their own decisions.
+
+If [ADULT_SNT_BENEFICIARY_NAME] requires a conservator and I am unable
+to serve in that capacity, I express my preference that:
+
+- Conservator of the Person: [CONSERVATOR_PERSON_NAME] ([RELATIONSHIP])
+- Conservator of the Estate: [CONSERVATOR_ESTATE_NAME] ([RELATIONSHIP])
+
+OR
+
+- The Trustee of the Special Needs Trust established for
+  [ADULT_SNT_BENEFICIARY_NAME]'s benefit shall serve as conservator
+  if conservatorship is deemed necessary.
+
+I have chosen these individuals because [OPTIONAL_EXPLANATION].
+
+[[ ATTORNEY REVIEW: Conservatorship requires separate court proceeding.
+This nomination is precatory only. Consider supported decision-making
+as an alternative to conservatorship. ]]
 [/IF]
 ```
 

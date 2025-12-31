@@ -54,7 +54,13 @@ When `/estate` is invoked, guide users through these phases:
 1. Personal basics (name, DOB, state of residence, marital status)
 2. Family structure (spouse info if married, children with ages and special needs status)
 3. If minor children: guardianship preferences, distribution ages
-4. If special needs beneficiary: government benefits status, trustee preferences
+4. If special needs beneficiary:
+   - Is the individual over 18? (adult vs. minor affects planning)
+   - Government benefits status (SSI, SSDI, Medicaid)
+   - For adults: legal capacity status (guardianship/conservatorship?)
+   - SNT trustee preferences (may differ from main trust trustee)
+   - ABLE account eligibility and interest
+   - Letter of Intent desired?
 5. Asset overview (real estate states, business interests, retirement accounts, net worth range)
 6. Planning goals (probate avoidance, asset protection, child provision)
 7. Existing documents
@@ -82,6 +88,7 @@ When `/estate` is invoked, guide users through these phases:
 
 **Specialized documents (recommend based on flags):**
 - Special Needs Trust → if `special_needs_beneficiary`
+- Letter of Intent → if `special_needs_beneficiary` AND `letter_of_intent_desired`
 - Business Succession Plan → if `business_owner`
 - Trust Funding Checklist → always with trust
 - Beneficiary Designation Review → if retirement accounts or life insurance
@@ -93,13 +100,32 @@ When `/estate` is invoked, guide users through these phases:
 ### Phase 3: Document Drafting
 **Purpose**: Generate each selected document.
 
+**Progress Tracking:**
+Display progress at start of each document generation:
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                    DOCUMENT PROGRESS                              ║
+╠══════════════════════════════════════════════════════════════════╣
+║ ✓ Revocable Living Trust ..................... COMPLETE          ║
+║ ✓ Pour-Over Will (Client) .................... COMPLETE          ║
+║ ▶ Pour-Over Will (Spouse) .................... IN PROGRESS       ║
+║ ○ Financial Power of Attorney (Client) ....... PENDING           ║
+║ ○ Financial Power of Attorney (Spouse) ....... PENDING           ║
+║ ○ Healthcare Directive (Client) .............. PENDING           ║
+║ ○ Healthcare Directive (Spouse) .............. PENDING           ║
+║ ○ Special Needs Trust ........................ PENDING           ║
+║ ○ Letter of Intent ........................... PENDING           ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
 **For each document type:**
-1. Invoke the appropriate generator agent (trust-generator, will-generator, poa-generator, healthcare-generator)
+1. Invoke the appropriate generator agent (trust-generator, will-generator, poa-generator, healthcare-generator, snt-generator)
 2. Pass client profile and state requirements
 3. Receive draft content, warnings, and attorney review items
 4. Present draft to user for review
 5. Ask for approval before writing file
 6. If approved, write to `estate-planning/drafts/[document-type]-[YYYY-MM-DD]-v[N].md`
+7. Update progress tracking display
 
 **Document versioning:**
 - Never overwrite existing documents
@@ -172,6 +198,7 @@ When these situations are detected, display appropriate warnings while continuin
 - **will-generator**: Phase 3, when will document selected
 - **poa-generator**: Phase 3, when POA document selected
 - **healthcare-generator**: Phase 3, when healthcare directive selected
+- **snt-generator**: Phase 3, when Special Needs Trust selected (uses separate SNT trustee designation)
 - **estate-validation**: Phase 3, after ALL documents generated
 
 **Agent invocation pattern:**
@@ -213,7 +240,11 @@ When these situations are detected, display appropriate warnings while continuin
       "date_of_birth": "date",
       "is_minor": "boolean",
       "has_special_needs": "boolean",
+      "is_adult_special_needs": "boolean",
       "receives_government_benefits": "boolean",
+      "benefit_types": ["SSI", "SSDI", "Medicaid"],
+      "has_conservatorship": "boolean",
+      "able_account_eligible": "boolean",
       "from_current_marriage": "boolean"
     }
   ],
@@ -221,6 +252,14 @@ When these situations are detected, display appropriate warnings while continuin
     "primary_guardian": { "name": "string", "relationship": "string" },
     "successor_guardian": { "name": "string", "relationship": "string" },
     "guardian_of_estate_different": "boolean",
+    "minor_guardian": { "name": "string", "for_children": ["string"] },
+    "adult_conservator": { "name": "string", "for_beneficiary": "string" }
+  },
+  "special_needs_trust": {
+    "snt_trustee": { "name": "string", "relationship": "string", "is_professional": "boolean" },
+    "snt_successor_trustee_1": { "name": "string", "relationship": "string" },
+    "snt_successor_trustee_2": { "name": "string", "relationship": "string" },
+    "remainder_beneficiaries": ["string"],
     "letter_of_intent_desired": "boolean"
   },
   "distribution_preferences": {
