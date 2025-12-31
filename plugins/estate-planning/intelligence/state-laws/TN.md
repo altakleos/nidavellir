@@ -20,6 +20,94 @@ Tennessee offers several unique estate planning advantages:
 
 ⭐ **NEW in 2025:** Transfer-on-Death deeds now available for Tennessee real estate
 
+---
+
+## ⭐ RECOMMENDED FOR MARRIED COUPLES: Community Property Trust
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║     TENNESSEE COMMUNITY PROPERTY TRUST - UNIQUE TAX BENEFIT      ║
+╠══════════════════════════════════════════════════════════════════╣
+║ Tennessee's Community Property Trust Act (2010) allows married   ║
+║ couples to elect community property treatment for trust assets,  ║
+║ even though Tennessee is a common law property state.            ║
+║                                                                  ║
+║ KEY BENEFITS:                                                    ║
+║ 1. Double Step-Up in Basis - BOTH halves get FMV at first death ║
+║ 2. Capital Gains Elimination - Heirs avoid gains on appreciation║
+║ 3. No State Tax Cost - TN has no income or estate tax           ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+### How It Works
+
+**Without Community Property Trust (Common Law):**
+- Only deceased spouse's half gets step-up in basis
+- Survivor's half retains original cost basis
+- Potential capital gains tax on survivor's appreciation
+
+**With Community Property Trust:**
+- BOTH halves get step-up in basis at first spouse's death
+- All pre-death appreciation escapes capital gains tax
+- Significant tax savings for appreciated assets
+
+### Example Calculation
+
+```
+Asset: $500,000 stock portfolio
+Original basis: $100,000 (cost when purchased)
+
+SCENARIO A - Without Community Property Trust:
+├── Deceased spouse's half: $250,000 (gets step-up to $250,000)
+├── Surviving spouse's half: $50,000 basis (no step-up)
+├── Combined basis at first death: $300,000
+└── If sold for $500,000: $200,000 taxable gain (~$30,000+ tax)
+
+SCENARIO B - With Community Property Trust:
+├── Deceased spouse's half: $250,000 (gets step-up to $250,000)
+├── Surviving spouse's half: $250,000 (ALSO gets step-up!)
+├── Combined basis at first death: $500,000
+└── If sold for $500,000: $0 taxable gain (TAX SAVINGS: ~$30,000+)
+```
+
+### Who Should Consider
+
+**Ideal Candidates:**
+- Married couples with appreciated assets (stocks, real estate, business interests)
+- Couples where one spouse is likely to die first (age gap, health conditions)
+- Couples with low-basis assets accumulated during marriage
+- Long-term married couples with significant unrealized gains
+
+**Who Should NOT Use:**
+
+⚠️ **High Divorce Risk:**
+- Community property means 50/50 split if divorced
+- May be disadvantageous if one spouse brought more assets
+
+⚠️ **Litigation-Prone Professions:**
+- May prefer separate property for asset protection
+- Common law tenancy by entirety may provide better protection
+
+⚠️ **Couples Who May Move:**
+- Other states may not recognize TN community property trust
+- Could complicate estate planning if relocating
+
+### Important Considerations
+
+**Irrevocable Election:**
+- Once assets are transferred to a community property trust, the election is generally irrevocable for those assets
+- Cannot easily undo the community property characterization
+
+**Attorney Review Required:**
+```
+[[ ATTORNEY REVIEW: Community property election has significant legal and tax
+   implications. Ensure couple fully understands the irrevocable nature and
+   tradeoffs before electing. Consider impact of potential divorce or
+   relocation to another state. ]]
+```
+
+---
+
 ## Execution Requirements
 
 | Document | Witnesses | Notarization | Special Requirements |

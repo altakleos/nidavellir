@@ -27,6 +27,99 @@ Business succession planning ensures smooth transition of business ownership and
 - Shareholder agreements important
 - S-Corp has ownership restrictions
 
+## Entity Transfer Restrictions (Trust Funding)
+
+⚠️ **CRITICAL:** Before transferring business interests into a revocable trust, review entity-specific restrictions.
+
+### LLC Interests
+
+**Before funding LLC into trust:**
+1. **Review operating agreement** for transfer restrictions
+2. Check if member consent is required
+3. Verify trust qualifies as "permitted transferee"
+4. Confirm transfer won't trigger buy-sell provisions
+
+**Common restrictions:**
+- Right of first refusal for other members
+- Approval required from managing member
+- Limitations on transferring to non-family trusts
+
+**Solution:** Amend operating agreement to:
+- Add revocable trust as permitted transferee
+- Confirm trust ownership doesn't change member status
+- Clarify what happens when trust becomes irrevocable at death
+
+### S-Corporation Stock
+
+⚠️ **S-Corp ownership is heavily restricted by IRS rules.**
+
+**Eligible shareholders for S-Corps:**
+- U.S. citizens and resident aliens
+- Certain trusts (see below)
+- Estates (temporary)
+- **NOT:** Corporations, partnerships, non-resident aliens
+
+**Trust eligibility during grantor's lifetime:**
+- Revocable trusts: ✅ Eligible (treated as grantor trust)
+- Grantor trusts: ✅ Eligible
+
+**After grantor's death - CRITICAL:**
+- Trust has **2-year grace period** after grantor's death
+- Must make election or distribute stock within 2 years
+- Failure to act = **S-Corp status terminates** (becomes C-Corp)
+
+**Post-death options:**
+
+| Option | Requirement | Best For |
+|--------|-------------|----------|
+| **QSST** (Qualified Subchapter S Trust) | Single beneficiary, all income distributed | Simple family succession |
+| **ESBT** (Electing Small Business Trust) | Election made, special tax rules | Multiple beneficiaries |
+| **Distribute stock** | Give shares to individuals | Exiting trust ownership |
+
+**QSST Requirements:**
+- Only one income beneficiary
+- All trust income distributed annually
+- Corpus distributions only to income beneficiary
+- Beneficiary makes election
+
+**ESBT Requirements:**
+- Election filed with IRS
+- S-Corp income taxed at highest marginal rate (37% in 2025)
+- More flexibility but higher taxes
+
+[[ ATTORNEY REVIEW: S-Corp trust ownership requires careful planning. Ensure
+   proper elections are made timely. Failure terminates S-Corp status. ]]
+
+### C-Corporation Stock
+
+**No ownership restrictions** - Trusts can freely hold C-Corp stock.
+
+**Considerations:**
+- Check bylaws for right of first refusal
+- Shareholder agreements may restrict transfers
+- Board notification may be required
+- Stock certificates may need reissuance in trust name
+
+### Partnership Interests (General and Limited)
+
+**General Partner interest:**
+- May require consent of other partners
+- Trust may not be able to serve as GP
+- Consider retaining GP interest personally
+
+**Limited Partner interest:**
+- Usually transferable to trust
+- Check partnership agreement
+- LP units typically have fewer restrictions
+
+### Family Limited Partnerships (FLPs)
+
+**Special considerations:**
+- GP interest often kept outside trust for control
+- LP interests transferred to trust for discount planning
+- Partnership agreement should explicitly permit trust as LP
+- Consider whether transferring defeats asset protection goals
+
 ## Exit Strategies
 
 ### Transfer to Family

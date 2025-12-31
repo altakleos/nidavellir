@@ -58,11 +58,49 @@ When `/estate` is invoked, guide users through these phases:
    - Does either spouse have children from a prior relationship?
    - For each child, clarify: biological/adopted to current marriage, or from prior relationship?
    - Are there stepchildren you want to include in your planning?
+
+   **[IF state == "TN" AND marital_status == "married"]**
+   **Tennessee Community Property Trust Option:**
+   Tennessee offers a unique Community Property Trust option that provides significant tax benefits:
+   - **Double Step-Up in Basis:** BOTH spouses' shares get fair market value basis at first death
+   - **Capital Gains Elimination:** Heirs avoid capital gains tax on pre-death appreciation
+   - **Example:** $500K stock (basis $100K) → Without CPT: basis $300K; With CPT: basis $500K = ~$30K+ savings
+
+   Would you like to structure your trust as a Tennessee Community Property Trust?
+   - Note: This election is irrevocable for assets transferred to the trust
+   - Best for: Couples with appreciated assets (stocks, real estate, business interests)
+   - Not recommended if: High divorce risk or litigation-prone profession
+
+   [Save response to: `tn_community_property_trust: boolean`]
+   **[/IF]**
+
 4. If minor children: guardianship preferences, distribution ages
 5. **If single parent with minor children (critical emphasis):**
    - Who will care for your children if you become incapacitated for an extended period?
    - Do you have a deeper chain of backup trustees/guardians? (single parents need 3+ successors)
    - Have you discussed these roles with your proposed guardians? (get confirmation)
+
+   ```
+   ╔══════════════════════════════════════════════════════════════════╗
+   ║     ⚠️ IMPORTANT: CUSTODY RIGHTS OF OTHER BIOLOGICAL PARENT      ║
+   ╠══════════════════════════════════════════════════════════════════╣
+   ║ If your children's other biological or adoptive parent is        ║
+   ║ living, they typically have legal custody rights regardless of   ║
+   ║ your will's guardian nomination.                                 ║
+   ║                                                                  ║
+   ║ Your nominated guardian would only serve if the other parent:    ║
+   ║ • Is deceased                                                    ║
+   ║ • Voluntarily relinquishes parental rights                       ║
+   ║ • Is found unfit by a court                                      ║
+   ║                                                                  ║
+   ║ If you have concerns about the other parent's fitness:           ║
+   ║ • Document your concerns in writing                              ║
+   ║ • Discuss with a family law attorney                             ║
+   ║ • Your estate planning documents cannot override the other       ║
+   ║   parent's legal rights                                          ║
+   ╚══════════════════════════════════════════════════════════════════╝
+   ```
+
 6. If special needs beneficiary:
    - Is the individual over 18? (adult vs. minor affects planning)
    - Government benefits status (SSI, SSDI, Medicaid)
@@ -88,6 +126,30 @@ When `/estate` is invoked, guide users through these phases:
    - Are you or any family member currently receiving Medicaid/TennCare, SSI, or SSDI?
    - Are you considering applying for Medicaid/TennCare in the next 5 years?
    - Do you have long-term care insurance?
+
+   **[IF planning_medicaid_within_5_years = true]**
+   ```
+   ╔══════════════════════════════════════════════════════════════════╗
+   ║           ⚠️ CRITICAL MEDICAID/TENNCARE PLANNING NOTE            ║
+   ╠══════════════════════════════════════════════════════════════════╣
+   ║ A revocable living trust does NOT protect your assets from       ║
+   ║ Medicaid/TennCare spend-down. Because you can revoke the trust   ║
+   ║ at any time, it is counted as an available resource.             ║
+   ║                                                                  ║
+   ║ For Medicaid asset protection, you would need an IRREVOCABLE     ║
+   ║ trust (outside this tool's scope) created more than 5 years      ║
+   ║ before applying for benefits.                                    ║
+   ║                                                                  ║
+   ║ This tool can still help you with:                               ║
+   ║ • Probate avoidance                                              ║
+   ║ • Incapacity planning                                            ║
+   ║ • Document organization                                          ║
+   ║                                                                  ║
+   ║ Just understand the Medicaid limitation before proceeding.       ║
+   ╚══════════════════════════════════════════════════════════════════╝
+   ```
+   **[/IF]**
+
 10. **Real estate titling strategy:**
     - How is your real property currently titled? (sole ownership, joint, tenancy by entirety)
     - Are you aware of Transfer-on-Death deed options in your state?
@@ -131,6 +193,35 @@ When `/estate` is invoked, guide users through these phases:
 - Beneficiary Designation Checklist → if `retirement_heavy_estate` (SECURE Act coordination)
 - Tennessee TOD Deed → if state = TN AND prefers TOD deed for real estate
 
+**[IF state == "TN"] Trust vs. TOD Deed Decision Guide:**
+
+For Tennessee residents with simple estates, consider whether a full revocable trust is needed:
+
+| Factor | TOD Deed Alone | Revocable Trust |
+|--------|----------------|-----------------|
+| **Properties** | Single TN property | Multiple properties or multi-state |
+| **Incapacity Planning** | ❌ No protection | ✅ Seamless trustee succession |
+| **Privacy** | ❌ Recorded publicly | ✅ Trust is private |
+| **Complexity** | Simple, one page | Comprehensive, 20+ pages |
+| **Cost** | Recording fee only | Attorney fees + trust administration |
+| **Probate Avoidance** | ✅ For that property | ✅ For all trust assets |
+
+**When TOD Deed may be sufficient:**
+- Single property owner with simple beneficiary structure
+- Incapacity handled via separate POA documents
+- Privacy not a concern
+- No minor children or special needs beneficiaries
+
+**When Trust is recommended:**
+- Multiple properties or assets
+- Minor children (need distribution provisions)
+- Special needs beneficiaries
+- Complex family situations
+- Privacy important
+- Want single comprehensive document
+
+[/IF]
+
 **High Net Worth documents (recommend if `high_net_worth`):**
 - Revocable Trust with A-B (Bypass) Provisions → preserves first-death exemption
 - Form 706 Executor Guidance → critical deadlines and election checklist
@@ -139,6 +230,27 @@ When `/estate` is invoked, guide users through these phases:
   - Dynasty Trust → multi-generational GST-exempt trust
   - GRAT/QPRT → advanced wealth transfer vehicles
   - Charitable planning vehicles (CRT, CLT, private foundation)
+
+**Portability Election Consideration (for HNW couples):**
+> Before implementing an A-B trust structure, consider whether the federal estate tax
+> **portability election** may simplify your plan:
+>
+> | Approach | Complexity | Flexibility | Asset Protection |
+> |----------|------------|-------------|------------------|
+> | **A-B Trust** | Higher | Less flexible | Bypass trust protected from remarriage creditors |
+> | **Portability** | Simpler | More flexible | No protection, surviving spouse controls all |
+>
+> **When A-B is preferred:**
+> - State has estate tax (not TN - TN has no state estate tax)
+> - Asset protection from surviving spouse's future creditors/remarriage
+> - GST planning for grandchildren
+>
+> **When Portability may suffice:**
+> - Simpler administration desired
+> - Step-up in basis on all assets at second death preferred
+> - No state estate tax (like Tennessee)
+>
+> [[ ATTORNEY REVIEW: Discuss A-B vs. portability tradeoffs with qualified estate planning attorney. ]]
 
 **Blended Family documents (recommend if `blended_family`):**
 - Separate Trusts (one per spouse) → clearer asset separation

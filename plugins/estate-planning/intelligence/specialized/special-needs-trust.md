@@ -55,11 +55,22 @@ ABLE (Achieving a Better Life Experience) accounts are tax-advantaged savings ac
 - Tax-free growth if used for qualified disability expenses
 
 ### ABLE Age Expansion (January 1, 2026)
-**CRITICAL CHANGE:** The ABLE Age Adjustment Act expands eligibility:
-- **Current (2025):** Disability onset before age 26
-- **Effective January 1, 2026:** Disability onset before age **46**
 
-This dramatically expands who can benefit from ABLE accounts.
+```
+╔══════════════════════════════════════════════════════════════════╗
+║     ⭐ SECURE ACT 2.0 - ABLE AGE EXPANSION ⭐                     ║
+╠══════════════════════════════════════════════════════════════════╣
+║ Effective: January 1, 2026                                       ║
+║                                                                  ║
+║ Current (2025): Disability onset before age 26                  ║
+║ NEW (2026+):    Disability onset before age 46                  ║
+║                                                                  ║
+║ Impact: Millions of adults disabled in their 20s-40s will       ║
+║ newly qualify for ABLE accounts. This is a significant          ║
+║ planning opportunity for clients with beneficiaries who         ║
+║ became disabled after age 26.                                   ║
+╚══════════════════════════════════════════════════════════════════╝
+```
 
 ### ABLE vs. SNT Comparison
 
@@ -72,8 +83,47 @@ This dramatically expands who can benefit from ABLE accounts.
 | Cost | Low | Higher (trustee fees) |
 | Medicaid payback | Yes (first-party funds) | No (third-party) |
 | Setup complexity | Simple | Requires legal drafting |
+| Beneficiary control | ✅ Full debit card access | ❌ Trustee decides |
+| Investment options | Limited menu | Full flexibility |
 
 **Best Practice:** Use BOTH - ABLE for smaller, routine expenses; SNT for larger funds.
+
+### ABLE + SNT Integration Strategy
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║          RECOMMENDED: ABLE + SNT COMBINATION                     ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║  ┌─────────────────┐          ┌─────────────────┐              ║
+║  │   THIRD-PARTY   │          │  ABLE ACCOUNT   │              ║
+║  │      SNT        │ ───────► │                 │              ║
+║  │                 │  Annual  │  Debit card for │              ║
+║  │  Larger assets  │  $18K    │  daily expenses │              ║
+║  │  (no $ limit)   │  max     │                 │              ║
+║  └─────────────────┘          └─────────────────┘              ║
+║                                                                  ║
+║  Use ABLE for:                Use SNT for:                      ║
+║  • Day-to-day purchases       • Vehicle purchases               ║
+║  • Small medical expenses     • Home modifications              ║
+║  • Entertainment              • Vacations, large items          ║
+║  • Personal items             • Amounts over $100,000           ║
+║  • When beneficiary wants     • When beneficiary needs          ║
+║    direct control               trustee oversight               ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+**SNT to ABLE Funding:**
+- Trustee CAN transfer from SNT to ABLE (up to $18,000/year)
+- Counts as qualified distribution from SNT
+- Gives beneficiary more autonomy for routine expenses
+- Does NOT change SNT's tax status
+
+**529 to ABLE Rollover:**
+- Unused 529 education funds can roll to ABLE
+- Subject to annual contribution limit
+- Beneficiary must be ABLE account owner or family member
+- Tax-free if proper rollover
 
 ## Government Benefits Protected
 
@@ -158,19 +208,68 @@ Consider:
 - Transfers during lookback may trigger penalty period
 
 **Waiver Programs:**
-- **CHOICES** - Long-term services and supports
-- **ECF (Employment and Community First)** - Community integration focus
+| Program | Who It Serves | Focus |
+|---------|---------------|-------|
+| **CHOICES** | Elderly & adults with physical disabilities | Long-term services & supports |
+| **ECF** | Adults with intellectual/developmental disabilities | Employment & community integration |
+| **Katie Beckett** | Children with disabilities | Home care (alternative to institutional care) |
+
 - Waiver services may provide additional supports beyond standard Medicaid
+- ECF especially valuable for employment support and community integration
 
 **Pooled Trust Option:**
 - Tennessee has qualified pooled trust options
 - Useful for beneficiaries over 65 (cannot create new first-party SNT)
 - Some allow remainder to stay in pool rather than Medicaid payback
 
-**Tennessee ABLE:**
-- Tennessee ABLE accounts available through ABLE TN
-- Can fund from SNT for routine expenses
-- First $100,000 doesn't count against SSI $2,000 limit
+**ABLE TN - Tennessee ABLE Account Program**
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                      ABLE TN ENROLLMENT                          ║
+╠══════════════════════════════════════════════════════════════════╣
+║ Website: www.abletn.gov                                          ║
+║ Administrator: Tennessee Treasury                                ║
+║                                                                  ║
+║ ELIGIBILITY (2025):                                              ║
+║ • Disability onset before age 26                                 ║
+║ • Meets SSI disability definition                                ║
+║ • Self-certification or SSDI/SSI recipient                       ║
+║                                                                  ║
+║ ⭐ COMING JAN 1, 2026: Age expands to 46 ⭐                       ║
+║                                                                  ║
+║ 2025 CONTRIBUTION LIMITS:                                        ║
+║ • Annual: $18,000                                                ║
+║ • Additional if working: up to FPL ($15,060)                     ║
+║ • Total account cap for SSI: $100,000                            ║
+║ • Total account max: $518,000 (TN 529 limit)                     ║
+║                                                                  ║
+║ QUALIFIED EXPENSES:                                              ║
+║ • Housing, transportation, health care                           ║
+║ • Education, job training, employment support                    ║
+║ • Assistive technology, personal support                         ║
+║ • Financial management, legal fees                               ║
+║ • Oversight and monitoring                                       ║
+║                                                                  ║
+║ TAX BENEFITS:                                                    ║
+║ • TN has no income tax - no state deduction needed               ║
+║ • Earnings grow federal tax-free                                 ║
+║ • Distributions tax-free if for qualified expenses               ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+**ABLE TN + SNT Coordination for Tennessee Families:**
+
+1. **Open ABLE TN first** if beneficiary is eligible
+2. **Create Third-Party SNT** for larger assets
+3. **Fund SNT → ABLE annually** (up to $18,000) for beneficiary autonomy
+4. **Use ABLE for routine expenses** (debit card convenience)
+5. **Reserve SNT for major purchases** (vehicles, home mods, travel)
+
+**First-Party ABLE Considerations:**
+- If beneficiary's own funds go into ABLE, Medicaid payback applies
+- Third-party contributions to ABLE have NO payback
+- Consider source of funds when deciding ABLE vs. SNT
 
 ### Other State Variations
 - Some states have supplemental programs beyond federal
