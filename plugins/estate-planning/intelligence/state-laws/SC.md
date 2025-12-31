@@ -8,7 +8,7 @@
 
 | Document | Witnesses | Notarization | Special Requirements |
 |----------|-----------|--------------|---------------------|
-| Will | 3 | Self-proving available | **Three witnesses** (unusual) |
+| Will | 2 | Self-proving available | Standard execution |
 | Trust | N/A | Required | Notary acknowledgment |
 | POA | N/A | Required | Statutory form available |
 | Healthcare | 2 | Recommended | Declaration or healthcare POA |
@@ -20,10 +20,10 @@
 - No inheritance tax
 - Tax-friendly state
 
-### THREE Witnesses for Will
-- South Carolina is unusual in requiring 3 witnesses
-- Most states require only 2
-- Important for out-of-state wills
+### Will Execution
+- South Carolina requires 2 witnesses for wills
+- Self-proving affidavit available
+- Standard execution requirements
 
 ### Transfer on Death Deed
 - South Carolina does NOT have TOD deed for real estate
@@ -35,7 +35,7 @@
 - Narrower than some states
 
 ## Common Considerations
-1. **Three witnesses required** for wills (unusual)
-2. No TOD deed - use trust for real estate
-3. Elective share limited to probate estate
-4. Retiree destination - coordinate with former state
+1. No TOD deed - use trust for real estate
+2. Elective share limited to probate estate
+3. Retiree destination - coordinate with former state
+4. No state death taxes - tax-friendly jurisdiction

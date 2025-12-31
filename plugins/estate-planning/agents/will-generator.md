@@ -206,12 +206,6 @@ Signature: _________________________
 Print Name: ________________________
 Address: ___________________________
 
-[IF state_requires_3_witnesses]
-Witness 3:
-Signature: _________________________
-Print Name: ________________________
-Address: ___________________________
-[/IF]
 
 
 ## SELF-PROVING AFFIDAVIT
@@ -236,9 +230,6 @@ My Commission Expires: ___________
 - Requires 2 witnesses
 - Self-proving affidavit strongly recommended
 - Electronic wills allowed with specific requirements
-
-### Vermont (VT) / South Carolina (SC)
-- Require 3 witnesses (not 2)
 
 ### Ohio (OH) / DC
 - Self-proving affidavit NOT allowed

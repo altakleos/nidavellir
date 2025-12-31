@@ -9,7 +9,7 @@
 
 | Document | Witnesses | Notarization | Special Requirements |
 |----------|-----------|--------------|---------------------|
-| Will | 2 | Self-proving affidavit available | Standard execution |
+| Will | 2 | Self-proving NOT allowed | Witnesses may need to testify in probate |
 | Trust | N/A | Required | Notary acknowledgment |
 | POA | N/A | Required | Statutory form available |
 | Healthcare | N/A | Notarization OR 2 witnesses | Either method valid |

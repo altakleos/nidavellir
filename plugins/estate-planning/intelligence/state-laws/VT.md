@@ -8,7 +8,7 @@
 
 | Document | Witnesses | Notarization | Special Requirements |
 |----------|-----------|--------------|---------------------|
-| Will | 3 | Self-proving available | **Three witnesses** (unusual) |
+| Will | 2 | Self-proving available | Standard execution |
 | Trust | N/A | Required | Notary acknowledgment |
 | POA | N/A | Required | Durable POA |
 | Healthcare | 2 | Not required | Advance directive |
@@ -21,10 +21,10 @@
 - Decoupled from federal
 - Lower exemption than federal
 
-### THREE Witnesses for Will
-- Vermont requires 3 witnesses (like SC)
-- Most states require only 2
-- Important for out-of-state wills
+### Will Execution
+- Vermont requires 2 witnesses for wills
+- Standard execution requirements
+- Self-proving affidavit available
 
 ### Medical Aid in Dying
 - Vermont has Patient Choice at End of Life Act
@@ -36,8 +36,7 @@
 - Dower/curtesy rights
 
 ## Common Considerations
-1. **Three witnesses required** for wills (unusual)
-2. $5M exemption - lower than federal
-3. Small state - coordinate with NH
-4. Medical aid in dying considerations
-5. Many second homes - dual state planning
+1. $5M estate tax exemption - lower than federal
+2. Small state - coordinate with NH for cross-border planning
+3. Medical aid in dying considerations
+4. Many second homes - dual state planning common
