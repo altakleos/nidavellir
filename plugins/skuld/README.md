@@ -1,4 +1,4 @@
-# Estate Planning Assistant
+# Skuld
 
 > **Prepare your estate documents with confidence—guided every step of the way.**
 
@@ -10,7 +10,7 @@ A comprehensive estate planning assistant that walks you through creating wills,
 
 **Install:**
 ```bash
-/plugin install estate-planning@altakleos
+/plugin install skuld@altakleos
 ```
 
 **Begin planning:**
@@ -219,7 +219,7 @@ For developers and curious users:
 
 **Architecture:**
 ```
-estate-planning/
+skuld/
 ├── SKILL.md                 # Main orchestrator
 ├── commands/                # /estate, /estate:lookup
 ├── agents/                  # 8 specialized agents

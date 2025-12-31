@@ -59,7 +59,7 @@ Eitri is an intelligent extension forge that creates precisely optimized Claude 
 | Plugin | What It Does |
 |--------|--------------|
 | **[Rune](plugins/rune/README.md)** | Generate beautiful Mermaid and ASCII diagrams that just work |
-| **[Estate Planning](plugins/estate-planning/README.md)** | Guided estate document preparation with state-specific rules |
+| **[Skuld](plugins/skuld/README.md)** | Guided estate document preparation with state-specific rules |
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: estate-planning
+name: skuld
 description: Comprehensive estate planning assistant that guides users through document preparation with state-specific intelligence, educational guidance, and professional boundaries. Auto-invokes when users mention wills, trusts, estate planning, power of attorney, healthcare directives, beneficiary designations, or related topics.
 version: 1.0.0
 allowed-tools:
@@ -46,7 +46,7 @@ When `/estate` is invoked, guide users through these phases:
 ```
 
 **Check for existing profile:**
-1. Look for `estate-planning/client_profile.json`
+1. Look for `skuld/client_profile.json`
 2. If exists, display summary and ask: "Continue with existing profile or start fresh?"
 3. If resuming, load profile and skip to last incomplete phase
 
@@ -161,7 +161,7 @@ When `/estate` is invoked, guide users through these phases:
 
 **State detection**: When user mentions a state, the `estate-state-lookup` agent auto-loads that state's requirements.
 
-**Save profile**: Write `estate-planning/client_profile.json` after completing discovery.
+**Save profile**: Write `skuld/client_profile.json` after completing discovery.
 
 **Set flags** based on responses:
 - `high_net_worth`: estimated_net_worth > $13.99M
@@ -288,7 +288,7 @@ Display progress at start of each document generation:
 3. Receive draft content, warnings, and attorney review items
 4. Present draft to user for review
 5. Ask for approval before writing file
-6. If approved, write to `estate-planning/drafts/[document-type]-[YYYY-MM-DD]-v[N].md`
+6. If approved, write to `skuld/drafts/[document-type]-[YYYY-MM-DD]-v[N].md`
 7. Update progress tracking display
 
 **Document versioning:**
@@ -308,7 +308,7 @@ Display progress at start of each document generation:
 - Original storage guidance
 - Copy distribution recommendations
 
-**Write checklist** to `estate-planning/execution/signing-checklist-[DATE].md`
+**Write checklist** to `skuld/execution/signing-checklist-[DATE].md`
 
 ### Phase 5: Funding & Next Steps
 **Purpose**: Ensure trust is properly funded and provide maintenance guidance.
@@ -325,7 +325,7 @@ Display progress at start of each document generation:
 - Life event triggers for updates (marriage, divorce, birth, death, move)
 - Beneficiary designation coordination
 
-**Write funding guide** to `estate-planning/funding/funding-checklist-[DATE].md`
+**Write funding guide** to `skuld/funding/funding-checklist-[DATE].md`
 
 **Offer cleanup prompt:**
 ```
@@ -383,8 +383,8 @@ When these situations are detected, display appropriate warnings while continuin
 ## Profile Management
 
 ### Profile Location
-- Current profile: `estate-planning/client_profile.json`
-- Backups: `estate-planning/.profile-backups/`
+- Current profile: `skuld/client_profile.json`
+- Backups: `skuld/.profile-backups/`
 - Keep last 3 backups
 
 ### Profile Schema
