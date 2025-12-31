@@ -370,6 +370,31 @@ I provide:
 5. **Migration path** - If replacing existing solution
 6. **Integration guide** - How it fits your workflow
 
+### Context-Aware Output Location
+
+Before writing files, I detect your current context to suggest the optimal location. See `core/context-detector.md` for full logic.
+
+**Detection hierarchy:**
+1. **Inside plugin?** → Check for `.claude-plugin/plugin.json` → Add to this plugin
+2. **In marketplace?** → Check for `.claude-plugin/marketplace.json` → Create new plugin
+3. **Default** → Project-scoped `.claude/skills/` or `.claude/commands/`
+
+**Example interaction:**
+```
+Eitri: I've forged your code-reviewer agent.
+
+Detected: You're in the "altakleos" marketplace.
+Recommended: Create new plugin → plugins/code-reviewer/
+
+[Enter to confirm] or type: project | user | <custom-path>
+```
+
+**Override keywords:**
+- `project` → Use `.claude/` in current project
+- `user` or `global` → Use `~/.claude/` for all projects
+- `new-plugin` → Create new plugin (even if inside existing one)
+- `<path>` → Custom path (absolute or relative)
+
 ## Intelligence Features
 
 ### Domain Intelligence

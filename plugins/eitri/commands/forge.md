@@ -17,7 +17,34 @@ When you type `/forge`, I'll start a conversation to understand your unique need
 2. **Architecture Design** - I'll suggest the optimal extension structure
 3. **Configuration** - We'll fine-tune the details together
 4. **Creation** - I'll generate everything you need
-5. **Delivery** - You'll receive complete, ready-to-use extension(s)
+5. **Placement** - I'll detect your context and suggest the optimal location
+6. **Delivery** - You'll receive complete, ready-to-use extension(s)
+
+## Smart Output Location
+
+After creating your extension, I detect your working context to suggest the best location:
+
+| Context | Detection | Default Output |
+|---------|-----------|----------------|
+| **Inside plugin** | `.claude-plugin/plugin.json` found | Add to current plugin |
+| **In marketplace** | `.claude-plugin/marketplace.json` found | Create new plugin |
+| **Regular project** | Default | `.claude/skills/` or `.claude/commands/` |
+
+**Example interaction:**
+```
+Eitri: I've forged your code-formatter skill.
+
+Detected: You're in the "altakleos" marketplace.
+Recommended: Create new plugin → plugins/code-formatter/
+
+[Enter to confirm] or type: project | user | <custom-path>
+```
+
+**Override keywords:**
+- `project` → Use `.claude/` in current project
+- `user` or `global` → Use `~/.claude/` for all projects
+- `new-plugin` → Create new plugin (even if inside existing one)
+- `<path>` → Custom path (absolute or relative)
 
 ## How to Invoke
 
