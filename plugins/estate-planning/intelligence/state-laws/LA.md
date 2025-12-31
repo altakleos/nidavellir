@@ -28,7 +28,7 @@
 ## Forced Heirship (Legitime)
 
 ### Protected Heirs ("Forced Heirs")
-- Children under age 24
+- Children who have not attained age 23 (per LA Civil Code Art. 1493)
 - Children of any age who are permanently incapable (mental or physical)
 
 ### Forced Portion

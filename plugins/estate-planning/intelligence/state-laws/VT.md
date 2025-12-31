@@ -31,9 +31,9 @@
 - Specific requirements and documentation
 
 ## Elective Share
-- Surviving spouse: 1/3 of real property (life estate)
-- Or statutory share of personal property
-- Dower/curtesy rights
+- Surviving spouse entitled to portion of estate
+- Vermont uses statutory fractional share system
+- Life estate or outright share options available
 
 ## Common Considerations
 1. $5M estate tax exemption - lower than federal

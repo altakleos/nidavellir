@@ -16,6 +16,8 @@
 
 **CRITICAL UPDATE:** The 2025 OBBB Act made the increased exemption PERMANENT.
 
+> **VERIFY CURRENT LAW:** Tax legislation changes frequently. Confirm this information with a CPA or tax attorney before making major planning decisions. Data current as of December 2025.
+
 **Impact:**
 - The $10 million base (indexed) is now permanent law
 - **No sunset to ~$7 million in 2026**

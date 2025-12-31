@@ -45,7 +45,7 @@ In common law states:
 - Not available in all common law states
 
 **States with TBE for real property only**:
-Delaware, Florida, Hawaii, Illinois, Indiana, Maryland, Massachusetts, Michigan, Missouri, New Jersey, New York, North Carolina, Ohio, Oregon, Pennsylvania, Rhode Island, Tennessee, Vermont, Virginia, Wyoming
+Delaware, Florida, Hawaii, Illinois, Indiana, Maryland, Massachusetts, Michigan, Missouri, New Jersey, New York, North Carolina, Ohio, Oregon, Pennsylvania, Rhode Island, Vermont, Virginia, Wyoming
 
 **States with TBE for all property**:
 Alaska, Arkansas, Delaware, Florida, Hawaii, Indiana, Kentucky, Maryland, Massachusetts, Michigan, Mississippi, Missouri, New Jersey, New York, North Carolina, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, Tennessee, Vermont, Virginia, Wyoming

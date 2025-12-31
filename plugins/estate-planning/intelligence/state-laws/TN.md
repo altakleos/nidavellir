@@ -10,8 +10,8 @@
 | Document | Witnesses | Notarization | Special Requirements |
 |----------|-----------|--------------|---------------------|
 | Will | 2 | Self-proving affidavit available | Standard execution |
-| Trust | N/A | Required | Notary acknowledgment |
-| POA | 2 | Required | Both witnesses AND notary |
+| Trust | N/A | Recommended | Notary acknowledgment recommended but not required |
+| POA | N/A | Recommended | Notarization recommended; no witness requirement |
 | Healthcare | 2 or Notary | Either acceptable | Advance care plan form |
 
 ## Key Features
@@ -23,11 +23,13 @@
 - Very tax-friendly state
 
 ### Elective Share
-Surviving spouse entitled to elective share:
-- If no minor children: **40% of net estate**
-- If minor children: **40% of net estate** (same percentage)
+Surviving spouse entitled to elective share based on marriage length (T.C.A. 31-4-101):
+- Less than 3 years: **10%** of net estate
+- 3-6 years: **20%** of net estate
+- 6-9 years: **30%** of net estate
+- 9+ years: **40%** of net estate
 - Includes augmented estate
-- Must elect within 9 months (extensions possible)
+- Must elect within later of 6 months after probate or 9 months after death
 
 ## Power of Attorney
 
@@ -64,10 +66,12 @@ Tennessee combines documents into "Advance Care Plan":
 - Widely accepted form
 
 ### Witness Requirements (if not notarized)
-Two witnesses required who are:
+Two witnesses required where **at least one**:
+- Is not related by blood, marriage, or adoption
+- Is not entitled to any portion of the estate
+
+**Both witnesses must be:**
 - 18+ years old
-- Not related by blood or marriage
-- Not entitled to any part of estate
 - Not financially responsible for healthcare
 
 ### POST (Physician Orders for Scope of Treatment)
@@ -100,8 +104,8 @@ Two witnesses required who are:
 ## Special Considerations
 
 ### Tennessee Investment Services Act (Dynasty Trusts)
-- Tennessee allows perpetual trusts
-- No rule against perpetuities for trusts
+- Tennessee allows dynasty trusts up to **360 years**
+- Rule against perpetuities replaced with 360-year limit
 - Favorable trust jurisdiction
 - Asset protection trust provisions (2007)
 
@@ -109,18 +113,27 @@ Two witnesses required who are:
 - Domestic asset protection trust (DAPT) available
 - Self-settled spendthrift trusts allowed
 - Must meet specific requirements
-- 2-year (good faith) to 4-year fraudulent transfer lookback
+- **18-month** fraudulent transfer lookback (general creditors)
+- **6-month** lookback if creditors properly notified
+- Note: TennCare/Medicaid has separate 5-year lookback
 
 ### Tenancy by the Entirety
 - Available for married couples
-- Real and personal property
-- Strong creditor protection (even from one spouse's creditors)
+- Real and personal property (per *Bryant v. Bryant*, 2017)
+- Strong creditor protection (from one spouse's individual creditors)
 - Automatic right of survivorship
 
+**Exceptions to TBE protection:**
+- Joint debts (co-signed by both spouses)
+- Federal tax liens
+- Converts to tenancy in common upon divorce
+
 ### Homestead Exemption
-- $5,000 value (one of lowest in nation)
+- Single owner: **$35,000** (updated January 2022)
+- Joint married owners: **$52,500**
 - Additional exemption for surviving spouse and minor children
 - Must be designated in writing to claim
+- Note: 40-month residency requirement for full federal bankruptcy exemption
 
 ### Community Property Trust Option
 Tennessee allows married couples to opt into community property:
@@ -141,8 +154,8 @@ Tennessee allows married couples to opt into community property:
 ## Transfer on Death Instruments
 
 ### TOD Deed
-- Tennessee does NOT have TOD deed statute
-- Must use trust or other methods for real estate
+- Tennessee enacted TOD deed statute effective **July 1, 2025** (SB0984)
+- Prior to July 2025: Must use trust or other methods for real estate
 
 ### TOD Securities
 - Standard TOD registration available
@@ -155,12 +168,11 @@ Witnesses for will must:
 - Be 18+ years old
 - Be competent
 - Sign in presence of testator
-- Disinterested recommended
+- Disinterested strongly recommended (interested witnesses forfeit bequests exceeding intestate share per T.C.A. 32-1-103)
 
 Witnesses for POA:
-- Must be 18+
-- Two required
-- Plus notarization required
+- No witnesses legally required
+- Notarization recommended for third-party acceptance
 
 Witnesses for advance care plan (if not notarized):
 - Must be 18+
