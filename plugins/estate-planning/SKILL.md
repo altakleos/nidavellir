@@ -59,7 +59,11 @@ When `/estate` is invoked, guide users through these phases:
    - For each child, clarify: biological/adopted to current marriage, or from prior relationship?
    - Are there stepchildren you want to include in your planning?
 4. If minor children: guardianship preferences, distribution ages
-5. If special needs beneficiary:
+5. **If single parent with minor children (critical emphasis):**
+   - Who will care for your children if you become incapacitated for an extended period?
+   - Do you have a deeper chain of backup trustees/guardians? (single parents need 3+ successors)
+   - Have you discussed these roles with your proposed guardians? (get confirmation)
+6. If special needs beneficiary:
    - Is the individual over 18? (adult vs. minor affects planning)
    - Government benefits status (SSI, SSDI, Medicaid)
    - For adults: legal capacity status (guardianship/conservatorship?)
@@ -71,9 +75,27 @@ When `/estate` is invoked, guide users through these phases:
    - Are there stepchildren to include or exclude?
    - Do you want assets to ultimately pass to your own children after spouse's lifetime? (QTIP consideration)
    - Are there prenuptial/postnuptial agreements affecting asset distribution?
-7. Asset overview (real estate states, business interests, retirement accounts, net worth range)
-8. Planning goals (probate avoidance, asset protection, child provision)
-9. Existing documents
+7. **Healthcare preferences (for healthcare directive):**
+   - Life support wishes: full measures, comfort care, or no extraordinary measures
+   - Organ donation preferences
+   - Any specific medical treatments to accept or refuse
+   - Who should make healthcare decisions if you cannot?
+8. **Agent confirmation:**
+   - Have you discussed with your proposed trustee(s) and they agreed to serve?
+   - Have you discussed with your proposed guardian(s) and they agreed to serve?
+   - Have you discussed with your proposed POA agent(s) and they agreed to serve?
+9. **Government benefits status (for Medicaid/TennCare planning):**
+   - Are you or any family member currently receiving Medicaid/TennCare, SSI, or SSDI?
+   - Are you considering applying for Medicaid/TennCare in the next 5 years?
+   - Do you have long-term care insurance?
+10. **Real estate titling strategy:**
+    - How is your real property currently titled? (sole ownership, joint, tenancy by entirety)
+    - Are you aware of Transfer-on-Death deed options in your state?
+    - Would you prefer TOD deeds or trust ownership for real estate?
+11. Asset overview (real estate states, business interests, retirement accounts, net worth range)
+    - **If significant retirement accounts (>50% of net worth):** SECURE Act beneficiary planning critical
+12. Planning goals (probate avoidance, asset protection, child provision)
+13. Existing documents
 
 **State detection**: When user mentions a state, the `estate-state-lookup` agent auto-loads that state's requirements.
 
@@ -86,6 +108,10 @@ When `/estate` is invoked, guide users through these phases:
 - `business_owner`: has business interests
 - `multi_state_property`: real estate in 2+ states
 - `blended_family`: children from prior marriage
+- `single_parent`: has minor children AND (marital_status = single|divorced|widowed)
+- `retirement_heavy_estate`: retirement accounts > 50% of estimated net worth
+- `planning_medicaid`: planning_medicaid_within_5_years = true
+- `agents_confirmed`: all applicable agent confirmations = true
 
 ### Phase 2: Document Selection
 **Purpose**: Recommend appropriate documents based on client situation.
@@ -102,6 +128,8 @@ When `/estate` is invoked, guide users through these phases:
 - Business Succession Plan → if `business_owner`
 - Trust Funding Checklist → always with trust
 - Beneficiary Designation Review → if retirement accounts or life insurance
+- Beneficiary Designation Checklist → if `retirement_heavy_estate` (SECURE Act coordination)
+- Tennessee TOD Deed → if state = TN AND prefers TOD deed for real estate
 
 **High Net Worth documents (recommend if `high_net_worth`):**
 - Revocable Trust with A-B (Bypass) Provisions → preserves first-death exemption
@@ -208,6 +236,10 @@ When these situations are detected, display appropriate warnings while continuin
 | International assets | ⚠️ Medium | "International assets involve additional treaty and tax considerations." |
 | Non-US citizen spouse | ⚠️ High | "Marital deduction planning for non-citizen spouses requires QDOT consideration." |
 | Louisiana residence | ⚠️ High | "Louisiana operates under civil law. Work with a Louisiana-licensed attorney." |
+| Single parent with minors | ⚠️ High | "Incapacity planning is critical. Ensure multiple backup trustees/guardians are named." |
+| Retirement-heavy estate | ⚠️ Medium | "Beneficiary designations are more impactful than your trust for retirement accounts." |
+| Planning Medicaid in 5 years | ⚠️ High | "Trust transfers may affect Medicaid eligibility. Consider lookback period." |
+| Agents not confirmed | ⚠️ Low | "Consider confirming with proposed trustees/guardians that they agree to serve." |
 
 ---
 
@@ -317,11 +349,42 @@ When these situations are detected, display appropriate warnings while continuin
     "include_hems_standard": "boolean",
     "include_spendthrift_clause": "boolean"
   },
+  "healthcare_preferences": {
+    "life_support_wishes": "full_measures|comfort_care|no_extraordinary",
+    "organ_donation": "boolean",
+    "specific_instructions": "string",
+    "healthcare_agent": { "name": "string", "relationship": "string" },
+    "successor_healthcare_agent": { "name": "string", "relationship": "string" }
+  },
+  "agent_confirmations": {
+    "trustee_confirmed": "boolean",
+    "successor_trustee_confirmed": "boolean",
+    "guardian_confirmed": "boolean",
+    "poa_agent_confirmed": "boolean",
+    "healthcare_agent_confirmed": "boolean",
+    "confirmation_date": "date"
+  },
+  "government_benefits": {
+    "receiving_medicaid": "boolean",
+    "medicaid_program": "TennCare|Medicaid|other",
+    "receiving_ssi": "boolean",
+    "receiving_ssdi": "boolean",
+    "planning_medicaid_within_5_years": "boolean",
+    "has_long_term_care_insurance": "boolean"
+  },
+  "real_estate_titling": {
+    "current_titling": "sole|joint_tenancy|tenancy_entirety|community_property|other",
+    "prefers_tod_deed": "boolean",
+    "prefers_trust_ownership": "boolean",
+    "multi_state_properties": [{ "state": "string", "titling": "string" }]
+  },
   "assets": {
     "real_estate": [{ "state": "string", "approximate_value": "number" }],
     "retirement_accounts": "boolean",
+    "retirement_account_value_range": "under_100k|100k_500k|500k_1m|over_1m",
+    "retirement_heavy_estate": "boolean",
     "life_insurance": "boolean",
-    "business_interests": [{ "entity_type": "string", "ownership_percentage": "number" }],
+    "business_interests": [{ "entity_type": "string", "ownership_percentage": "number", "has_partners": "boolean", "employee_count": "number" }],
     "estimated_net_worth": "under_1m|1m_5m|5m_13m|over_13m"
   },
   "goals": {
@@ -344,9 +407,13 @@ When these situations are detected, display appropriate warnings while continuin
     "has_minor_children": "boolean",
     "special_needs_beneficiary": "boolean",
     "receives_government_benefits": "boolean",
+    "planning_medicaid": "boolean",
     "business_owner": "boolean",
     "multi_state_property": "boolean",
-    "blended_family": "boolean"
+    "blended_family": "boolean",
+    "single_parent": "boolean",
+    "retirement_heavy_estate": "boolean",
+    "agents_confirmed": "boolean"
   },
   "session": {
     "current_phase": "number",

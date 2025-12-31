@@ -5,6 +5,21 @@
 **Population Rank:** 16
 **State Tax:** None (no income tax, no estate tax)
 
+## Tennessee Advantages Summary
+
+Tennessee offers several unique estate planning advantages:
+
+| Feature | Benefit | Key Details |
+|---------|---------|-------------|
+| **Dynasty Trust** | 360-year trust duration | Multi-generational wealth transfer without estate tax |
+| **Community Property Trust** | Double step-up in basis | Married couples can elect community property treatment |
+| **DAPT** | Asset protection | Self-settled spendthrift trusts with 18-month lookback |
+| **No State Tax** | Tax-free transfers | No estate, inheritance, or income tax |
+| **Tenancy by Entirety** | Creditor protection | Available for real AND personal property |
+| **TOD Deeds** ⭐ NEW | Probate avoidance | Effective July 1, 2025 for real estate |
+
+⭐ **NEW in 2025:** Transfer-on-Death deeds now available for Tennessee real estate
+
 ## Execution Requirements
 
 | Document | Witnesses | Notarization | Special Requirements |
@@ -168,6 +183,24 @@ Tennessee offers several home and community-based waiver programs:
 - ABLE TN accounts available (www.abletn.gov)
 - Pooled trust options for beneficiaries 65+
 
+### ABLE TN Accounts
+ABLE accounts allow individuals with disabilities to save up to $100,000+ without affecting SSI/TennCare.
+
+**Current eligibility (2025):**
+- Disability onset before age 26
+- Annual contribution limit: $18,000 (2024 limit, adjusts annually)
+- Account limit: $100,000 for SSI eligibility
+
+**⭐ SECURE Act 2.0 Change (Effective January 1, 2026):**
+- Disability onset age **increases from 26 to 46**
+- Significantly expands ABLE eligibility
+- Many adults who became disabled in their 20s-40s will newly qualify
+
+**ABLE Planning Integration:**
+- ABLE can complement SNT (allows beneficiary more control)
+- ABLE can receive rollovers from 529 plans
+- First-party ABLE has Medicaid payback; third-party funding does not
+
 ### Asset Recovery
 - TennCare may seek recovery from estates
 - Applies to properly transferred probate estates
@@ -220,9 +253,34 @@ When funding real estate into revocable trust:
 
 ## Transfer on Death Instruments
 
-### TOD Deed
-- Tennessee enacted TOD deed statute effective **July 1, 2025** (SB0984)
-- Prior to July 2025: Must use trust or other methods for real estate
+### TOD Deed ⭐ NEW (Effective July 1, 2025)
+
+Tennessee enacted TOD deed legislation (SB0984/HB1088) allowing beneficiary deeds for real estate.
+
+**What is a TOD Deed?**
+- Records transfer intent but owner retains full ownership during lifetime
+- Property passes directly to beneficiaries at death without probate
+- Owner can sell, mortgage, or change beneficiaries at any time
+- Simpler and cheaper than trust for single-property situations
+
+**When to Use TOD Deed vs. Trust:**
+
+| Situation | TOD Deed | Revocable Trust |
+|-----------|----------|-----------------|
+| Single property, simple plan | ✅ Preferred | Works but overkill |
+| Multiple properties | Requires separate deed for each | ✅ Single document covers all |
+| Multi-state property | Each state has different requirements | ✅ Single trust, multiple states |
+| Incapacity planning | ❌ No incapacity protection | ✅ Seamless trustee succession |
+| Privacy concerns | ❌ Recorded publicly | ✅ Trust is private |
+| Complex distribution | ❌ Limited flexibility | ✅ Detailed provisions |
+
+**TOD Deed Requirements (Tennessee):**
+- Must be recorded during owner's lifetime
+- Must be signed, acknowledged (notarized), and include legal description
+- Beneficiary need not sign
+- Revocable at any time by recording revocation or new deed
+
+**Planning Note:** For clients with only Tennessee real estate seeking probate avoidance, TOD deed may be simpler than a trust. For comprehensive estate planning, trust remains preferred.
 
 ### TOD Securities
 - Standard TOD registration available
