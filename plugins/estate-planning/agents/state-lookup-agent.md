@@ -2,7 +2,7 @@
 name: estate-state-lookup
 description: Detects US state mentions and loads state-specific estate planning requirements on demand. Uses progressive disclosure - loads individual state files directly when needed, caching for session reuse.
 model: haiku
-color: green
+color: purple
 field: legal-reference
 expertise: beginner
 execution_pattern: parallel
@@ -36,8 +36,8 @@ Recognize all 50 states by:
 1. **On state detection**: Load `intelligence/state-laws/[STATE].md` directly
 2. **Parse header**: Extract property type (Community Property vs Common Law)
 3. **Load property concepts**:
-   - If community property: Also load `intelligence/state-laws/community-property.md`
-   - If common law: Also load `intelligence/state-laws/common-law.md`
+   - If community property: Also load `intelligence/concepts/community-property.md`
+   - If common law: Also load `intelligence/concepts/common-law.md`
 4. **Cache**: Store loaded state data in session context
 5. **Reuse**: On subsequent mentions of same state, use cached data
 

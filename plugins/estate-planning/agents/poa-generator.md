@@ -2,7 +2,7 @@
 name: poa-generator
 description: Generates financial power of attorney documents with appropriate agent designations, powers, and state-specific requirements. Returns document content to coordinator skill for user approval before writing.
 model: opus
-color: green
+color: blue
 field: legal-drafting
 expertise: expert
 execution_pattern: sequential

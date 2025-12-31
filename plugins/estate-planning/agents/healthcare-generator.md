@@ -2,7 +2,7 @@
 name: healthcare-generator
 description: Generates healthcare directive package including living will, healthcare proxy, and HIPAA authorization. Addresses end-of-life treatment preferences with sensitivity. Returns document content to coordinator skill for user approval before writing.
 model: opus
-color: green
+color: purple
 field: legal-drafting
 expertise: expert
 execution_pattern: sequential
