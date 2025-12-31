@@ -1,75 +1,76 @@
-# AltaKleos Claude Code Marketplace
+# AltaKleos Plugin Marketplace
 
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-![Validation](https://github.com/altakleos/plugins/workflows/Validate%20Marketplace/badge.svg)
+> **Extend Claude Code with powerful plugins.**
 
-Private marketplace for internal AltaKleos development tools and Claude Code plugins.
+The official AltaKleos marketplace for Claude Code plugins. Install extensions that supercharge your development workflow—from AI-assisted code generation to automated documentation.
 
-## Quick Links
+---
 
-- [Installation](#for-users-installing-plugins)
-- [Contributing](CONTRIBUTING.md)
-- [Security Policy](SECURITY.md)
-- [Available Plugins](#available-plugins)
+## Quick Start
 
-## Repository Structure
-
-This repository contains the AltaKleos Claude Code plugin marketplace:
-
-```
-.
-├── .claude/               # Claude Code configuration
-│   ├── policies/          # Project policies
-│   └── skills/            # Local skills (plugin-packager)
-├── .claude-plugin/        # Marketplace configuration
-│   └── marketplace.json   # Plugin registry
-├── .github/               # GitHub templates and workflows
-├── plugins/               # Plugin directory
-│   └── eitri/             # Intelligent skill forge plugin
-├── schemas/               # JSON validation schemas
-├── scripts/               # Validation and utility scripts
-├── AGENTS.md              # Claude Code project instructions
-├── CHANGELOG.md           # Version history
-├── CONTRIBUTING.md        # Contribution guidelines
-├── SECURITY.md            # Security policy
-└── README.md              # This file
-```
-
-## For Users: Installing Plugins
-
-### Prerequisites
-
-Authenticate with GitHub (one-time setup):
-
+**1. Add the marketplace** (one-time):
 ```bash
-# Option A: GitHub CLI (recommended)
-gh auth login
-
-# Option B: SSH keys
-# Follow: https://docs.github.com/en/authentication/connecting-to-github-with-ssh
-```
-
-### Install the Marketplace
-
-```bash
-# Add the AltaKleos marketplace
 /plugin marketplace add altakleos/plugins
-
-# Verify it's added
-/plugin marketplace list
 ```
 
-### Browse and Install Plugins
-
+**2. Browse and install**:
 ```bash
-# Browse all available plugins interactively
-/plugin
+/plugin                           # Browse all plugins
+/plugin install eitri@altakleos   # Install a plugin
+```
 
-# Install a specific plugin
+That's it. You're ready to go.
+
+---
+
+## Featured: Eitri
+
+> **Forge Claude Code extensions with AI.**
+
+Eitri is an intelligent extension forge that creates precisely optimized Claude Code extensions. Named after the legendary Norse dwarf smith who forged Thor's hammer.
+
+**What Eitri Creates:**
+| Extension Type | What It Does |
+|----------------|--------------|
+| **Skills** | Add new capabilities to Claude Code |
+| **Agents** | Specialized sub-agents for complex tasks |
+| **Agent Suites** | Coordinated teams of agents working together |
+| **Hooks** | Automated actions on tool calls and events |
+| **MCP Servers** | Connect Claude to external services |
+
+**Install:**
+```bash
+/plugin install eitri@altakleos
+```
+
+**Use:**
+```
+/forge                # Start creating an extension
+/forge:template       # Quick-start from templates
+/forge:validate       # Check your extension
+```
+
+[Full Eitri documentation →](plugins/eitri/README.md)
+
+---
+
+## More Plugins
+
+| Plugin | What It Does |
+|--------|--------------|
+| **[Rune](plugins/rune/README.md)** | Generate beautiful Mermaid and ASCII diagrams that just work |
+| **[Estate Planning](plugins/estate-planning/README.md)** | Guided estate document preparation with state-specific rules |
+
+---
+
+## Installation Options
+
+### Per-Session Install
+```bash
 /plugin install plugin-name@altakleos
 ```
 
-### Auto-Install for Projects
+### Project Auto-Install
 
 Add to your project's `.claude/settings.json`:
 
@@ -84,283 +85,40 @@ Add to your project's `.claude/settings.json`:
     }
   },
   "enabledPlugins": [
-    "your-plugin-name@altakleos"
+    "eitri@altakleos"
   ]
 }
 ```
 
-When team members trust the project folder, plugins install automatically.
+Plugins install automatically when team members trust the project folder.
 
-## Available Plugins
+---
 
-### eitri
+## Prerequisites
 
-Intelligent extension forge that creates precisely optimized Claude Code extensions through deep contextual understanding and adaptive intelligence. Named after the legendary Norse dwarf smith who forged Thor's hammer Mjolnir.
-
-- **Version**: 1.9.0
-- **Category**: Development
-- **Installation**: `/plugin install eitri@altakleos`
-
-**Commands:**
-| Command | Purpose |
-|---------|---------|
-| `/forge` | Launch intelligent extension creation workflow |
-| `/forge:validate` | Validate extensions for specification compliance |
-| `/forge:install` | Install extensions to Claude Code environment |
-| `/forge:upgrade` | Upgrade existing extensions with new features |
-| `/forge:template` | Quick-start from pre-built templates |
-| `/forge:browse` | Discover templates from local filesystem |
-| `/forge:feedback` | Provide feedback to improve recommendations |
-| `/forge:publish` | Publish extensions to marketplaces |
-| `/forge:export` | Export to Agent Skills standard for cross-platform use |
-| `/forge:test` | Test extensions in sandbox before deployment |
-| `/forge:diagram` | Visualize extension architecture with Mermaid diagrams |
-| `/forge:improve` | Optimize extension prompts based on feedback |
-
-**Creates:** Skills, Agents, Agent Suites, Hybrid Solutions, Hooks, MCP Servers
-
-[View Plugin Documentation](plugins/eitri/README.md)
-
-## For Contributors: Developing Plugins
-
-### Initial Setup
+Authenticate with GitHub once:
 
 ```bash
-# Clone the repository
-git clone git@github.com:altakleos/plugins.git
-cd plugins
+# Using GitHub CLI (recommended)
+gh auth login
 
-# Create a feature branch
-git checkout -b feature/your-plugin-name
+# Or using SSH keys
+# See: https://docs.github.com/en/authentication/connecting-to-github-with-ssh
 ```
 
-### Development Workflow
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
-
-Quick overview:
-
-1. Create plugin in `plugins/your-plugin-name/`
-2. Add entry to `.claude-plugin/marketplace.json`
-3. Test locally
-4. Submit pull request
-
-## Adding New Plugins
-
-### 1. Create Plugin Structure
-
-```bash
-# Create plugin directory
-cd plugins
-mkdir my-new-plugin
-cd my-new-plugin
-
-# Create plugin directory structure
-mkdir -p .claude-plugin
-
-# Create plugin.json in .claude-plugin/
-cat > .claude-plugin/plugin.json << 'EOF'
-{
-  "name": "my-new-plugin",
-  "version": "1.0.0",
-  "description": "Description of what the plugin does (10-500 chars)",
-  "author": {
-    "name": "Your Name",
-    "email": "your.email@altakleos.com"
-  },
-  "keywords": ["keyword1", "keyword2"],
-  "category": "productivity",
-  "license": "MIT"
-}
-EOF
-
-# Create README.md
-cat > README.md << 'EOF'
-# My New Plugin
-
-Brief description of the plugin.
-
-## Installation
-
-\`\`\`bash
-/plugin install my-new-plugin@altakleos
-\`\`\`
-
-## Usage
-
-Describe how to use the plugin.
-EOF
-
-# Add plugin files (commands, skills, etc.)
-mkdir -p .claude-plugin commands skills
-```
-
-### 2. Add to Marketplace
-
-Edit `.claude-plugin/marketplace.json` to add your plugin:
-
-```json
-{
-  "plugins": [
-    {
-      "name": "my-new-plugin",
-      "source": "./plugins/my-new-plugin",
-      "description": "Description of what the plugin does and when to use it",
-      "version": "1.0.0",
-      "author": {
-        "name": "Your Name",
-        "email": "your.email@altakleos.com"
-      },
-      "category": "productivity",
-      "keywords": ["keyword1", "keyword2"]
-    }
-  ]
-}
-```
-
-### 3. Test Locally
-
-```bash
-# Return to repository root
-cd /path/to/plugins
-
-# Run validation
-npm run validate
-
-# Add local marketplace for testing
-/plugin marketplace add /path/to/plugins
-
-# Install and test your plugin
-/plugin install my-new-plugin@altakleos
-
-# Test all commands and features
-```
-
-### 4. Commit and Push
-
-```bash
-git add plugins/my-new-plugin
-git add .claude-plugin/marketplace.json
-git commit -m "feat: Add my-new-plugin to marketplace"
-git push -u origin feature/your-plugin-name
-```
-
-### 5. Create Pull Request
-
-```bash
-# Using GitHub CLI
-gh pr create --title "Add my-new-plugin" --body "Description of the plugin and what it does"
-
-# Or create PR on GitHub web interface
-```
-
-## Validation
-
-Validate your changes before submitting:
-
-```bash
-# Run validation script
-npm run validate
-
-# Or directly
-./scripts/validate.sh
-```
-
-This checks:
-- JSON syntax validity
-- Schema compliance
-- Required files presence
-- Version consistency
-
-## Troubleshooting
-
-### Can't Access Repository
-
-**Error**: "Permission denied" or "Repository not found"
-
-**Solution**:
-```bash
-# Test GitHub authentication
-gh auth status
-
-# Or test SSH
-ssh -T git@github.com
-
-# Verify repository access
-git ls-remote git@github.com:altakleos/plugins.git
-```
-
-### Marketplace Not Loading
-
-**Error**: Claude Code can't find plugins
-
-**Solution**:
-```bash
-# Verify marketplace structure
-cat .claude-plugin/marketplace.json
-
-# Validate marketplace
-npm run validate
-
-# Test local marketplace (adjust path)
-/plugin marketplace add /path/to/plugins
-/plugin marketplace list
-```
-
-### Validation Failures
-
-**Error**: Schema validation fails
-
-**Solution**:
-```bash
-# Run validation to see specific errors
-npm run validate
-
-# Check JSON syntax
-jq . .claude-plugin/marketplace.json
-jq . plugins/*/plugin.json
-```
-
-### Plugin Installation Fails
-
-**Error**: Can't install plugin from marketplace
-
-**Solution**:
-```bash
-# Verify plugin exists in marketplace.json
-jq '.plugins[] | select(.name=="plugin-name")' .claude-plugin/marketplace.json
-
-# Check plugin directory exists
-ls -la plugins/plugin-name/
-
-# Verify plugin.json is valid
-jq . plugins/plugin-name/plugin.json
-```
-
-## Best Practices
-
-1. **Use descriptive branch names**: `feature/auth-helper`, `fix/marketplace-bug`, `docs/update-readme`
-2. **Keep main stable**: Only merge tested, reviewed code
-3. **Document plugins**: Add clear descriptions and usage examples in README.md
-4. **Test locally first**: Always validate and test plugins before pushing
-5. **Follow semver**: Use semantic versioning for plugin releases
-6. **Security first**: Never commit secrets, API keys, or sensitive data
-7. **Validate before commit**: Run `npm run validate` before every commit
+---
 
 ## Resources
 
 - [Claude Code Plugins Documentation](https://docs.claude.com/en/docs/claude-code/plugins)
-- [Claude Code Plugin Marketplaces](https://docs.claude.com/en/docs/claude-code/plugin-marketplaces)
 - [Contributing Guidelines](CONTRIBUTING.md)
 - [Security Policy](SECURITY.md)
 
 ## Support
 
-For questions or issues:
-- Email: hello@altakleos.com
 - GitHub Issues: [Create an issue](https://github.com/altakleos/plugins/issues)
-- Internal Documentation: See AltaKleos Vault
+- Email: hello@altakleos.com
 
-## License
+---
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+**License:** MIT
