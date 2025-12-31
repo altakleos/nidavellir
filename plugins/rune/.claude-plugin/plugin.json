@@ -1,0 +1,9 @@
+{
+  "name": "rune",
+  "version": "1.0.0",
+  "description": "Beautiful, correct diagrams and documentation. Auto-generates Mermaid diagrams with intelligent type selection and validated syntax.",
+  "author": {
+    "name": "AltaKleos Platform Team",
+    "email": "hello@altakleos.com"
+  }
+}

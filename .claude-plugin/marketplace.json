@@ -21,6 +21,18 @@
       },
       "category": "development",
       "keywords": ["skill-creation", "factory", "generator", "forge", "adaptive", "intelligent", "hooks", "mcp", "export", "agent-skills", "testing", "sandbox", "diagram", "visualization"]
+    },
+    {
+      "name": "rune",
+      "source": "./plugins/rune",
+      "description": "Beautiful, correct diagrams and documentation. Auto-generates Mermaid diagrams with intelligent type selection and validated syntax.",
+      "version": "1.0.0",
+      "author": {
+        "name": "AltaKleos Platform Team",
+        "email": "hello@altakleos.com"
+      },
+      "category": "documentation",
+      "keywords": ["mermaid", "diagrams", "documentation", "visualization", "flowchart", "sequence", "architecture"]
     }
   ]
 }
