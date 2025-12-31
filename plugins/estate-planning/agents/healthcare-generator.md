@@ -35,6 +35,16 @@ Healthcare directives involve sensitive end-of-life discussions. Approach with:
 - Recognition that preferences may evolve
 - Emphasis on communication with family and healthcare providers
 
+## Template Selection
+
+Load template from `intelligence/templates/healthcare-directive.md`
+
+The template provides structural framework for the healthcare directive package. Adapt sections based on:
+- State-specific requirements and terminology
+- Treatment preferences gathered during discovery
+- Religious or personal values
+- Family situation
+
 ## Document Package Structure
 
 Generate three documents as a single package (can be separated if state requires):
