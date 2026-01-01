@@ -8,6 +8,15 @@ expertise: intermediate
 execution_pattern: sequential
 allowed-tools:
   - Read
+triggers_on:
+  state_of_residence: "TN"
+  creating_trust: true
+  needs_certificate_of_trust: true
+requires_intake:
+  - trust_funding_needs
+optional_intake:
+  - real_estate_transfer_details
+  - trust_account_setup
 ---
 
 # Certificate of Trust Generator Agent

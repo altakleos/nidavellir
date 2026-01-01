@@ -10,6 +10,15 @@ allowed-tools:
   - Read
   - Glob
   - Grep
+triggers_on:
+  creating_poa: true
+requires_intake:
+  - personal_basics
+  - state_of_residence
+  - financial_agent_selection
+optional_intake:
+  - poa_powers_scope
+  - poa_effective_date
 ---
 
 # Power of Attorney Generator Agent

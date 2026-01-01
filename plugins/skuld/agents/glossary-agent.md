@@ -9,6 +9,10 @@ execution_pattern: parallel
 allowed-tools:
   - Read
   - Glob
+triggers_on:
+  auto_invoke: true
+requires_intake: []
+optional_intake: []
 ---
 
 # Estate Planning Glossary Agent

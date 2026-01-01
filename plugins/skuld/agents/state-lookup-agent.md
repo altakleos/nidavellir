@@ -10,6 +10,11 @@ allowed-tools:
   - Read
   - Glob
   - Grep
+triggers_on:
+  auto_invoke: true
+requires_intake:
+  - state_of_residence
+optional_intake: []
 ---
 
 # State Lookup Agent

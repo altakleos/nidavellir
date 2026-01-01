@@ -78,10 +78,62 @@ When `/estate` is invoked, guide users through these phases:
 2. If exists, display summary and ask: "Continue with existing profile or start fresh?"
 3. If resuming, load profile and skip to last incomplete phase
 
+---
+
+## Intake Graph Definition
+
+<!--
+  This structured graph defines all intake questions, their conditions,
+  and what they unlock. The validation script uses this to ensure all
+  handler requirements have corresponding intake questions.
+-->
+
+### Entry Points (Always Asked)
+| ID | Question | Sets Flags |
+|----|----------|------------|
+| `personal_basics` | Name, DOB, state of residence | `state_of_residence` |
+| `relationship_status` | Single, Married, Divorced, etc. | `marital_status`, `has_spouse` |
+| `children_inventory` | List children with names and DOB | `has_children`, `has_minor_children` |
+| `retirement_account_details` | 401k, IRA presence and beneficiaries | `has_retirement_accounts`, `retirement_beneficiaries` |
+
+### Conditional Questions
+| ID | Condition | Sets Flags | Unlocks |
+|----|-----------|------------|---------|
+| `spouse_citizenship` | `has_spouse = true` | `spouse_is_us_citizen`, `qdot_required` | `qdot_planning` |
+| `special_needs_screening` | `has_children = true` | `special_needs_beneficiary` | `child_age_status`, `government_benefits_status` |
+| `child_age_status` | `special_needs_beneficiary = true` | `is_adult_special_needs` | `legal_capacity_status` |
+| `government_benefits_status` | `special_needs_beneficiary = true` | `receives_government_benefits`, `benefit_types` | |
+| `legal_capacity_status` | `is_adult_special_needs = true` | `has_conservatorship` | |
+| `guardian_preferences` | `has_minor_children = true` | `guardian_of_person`, `guardian_of_estate` | |
+| `business_entity_type` | `has_business = true` | `business_type`, `has_partners` | `buy_sell_agreement`, `business_succession_preferences` |
+| `business_partners` | `has_business = true` | `has_partners` | `buy_sell_agreement` |
+| `buy_sell_agreement` | `has_partners = true` | `has_buy_sell_agreement` | |
+| `business_succession_preferences` | `has_business = true` | `succession_preference` | |
+| `digital_asset_details` | `has_digital_assets = true` | `digital_asset_types`, `credential_storage` | |
+| `life_insurance_details` | `always` | `has_life_insurance`, `life_insurance_value` | `ilit_consideration` |
+| `current_asset_titling` | `state = "TN" AND has_spouse = true` | `current_titling_strategy` | `tbe_recommendation` |
+| `trust_funding_needs` | `creating_trust = true` | `needs_certificate_of_trust` | |
+| `financial_agent_selection` | `creating_poa = true` | `financial_agent` | |
+| `healthcare_agent_selection` | `creating_healthcare_directive = true` | `healthcare_agent` | |
+| `healthcare_preferences` | `creating_healthcare_directive = true` | `life_support_wishes`, `organ_donation` | |
+| `tn_real_estate_details` | `state = "TN" AND has_real_estate = true` | `tn_properties` | `tod_beneficiary_selection` |
+| `tod_beneficiary_selection` | `wants_tod_deed = true` | `tod_beneficiaries` | |
+
+### Handler-Unlocked Questions (Progressive Disclosure)
+| ID | Unlocked By | Condition |
+|----|-------------|-----------|
+| `first_party_snt_detection` | `snt-generator` | During SNT generation |
+| `snt_remainder_beneficiary` | `snt-generator` | During SNT generation |
+| `qdot_trustee_selection` | `trust-generator` | `qdot_required = true` |
+
+---
+
 **Discovery interview sequence:**
 1. Personal basics (name, DOB, state of residence, relationship status)
+   <!-- intake_id: personal_basics, state_of_residence -->
 
    **Relationship status options:**
+   <!-- intake_id: relationship_status -->
    SKULD: What is your relationship status?
    - Single (never married)
    - Married
@@ -129,6 +181,7 @@ When `/estate` is invoked, guide users through these phases:
 2. Family structure (spouse info if married, children with ages and special needs status)
 
    **[IF marital_status == "married"]**
+   <!-- intake_id: spouse_citizenship -->
    SKULD: Is your spouse a U.S. citizen?
           - Yes
           - No (permanent resident, visa holder, or other status)
@@ -267,6 +320,7 @@ When `/estate` is invoked, guide users through these phases:
 
    **[IF has_children = true]**
    **Special Needs Screening:**
+   <!-- intake_id: special_needs_screening -->
 
    SKULD: Do any of your children have special needs, a disability,
           or currently receive government benefits like SSI, Medicaid,
@@ -528,8 +582,139 @@ When `/estate` is invoked, guide users through these phases:
     - Guidance on cryptocurrency wallet handling
     - Instructions for social media disposition (memorialize, delete, transfer)
 
-13. Planning goals (probate avoidance, asset protection, child provision)
-14. Existing documents
+13. **Life Insurance:**
+    <!-- intake_id: life_insurance_details -->
+    SKULD: Do you have life insurance policies?
+           - Yes
+           - No
+
+    **[IF has_life_insurance = true]**
+    SKULD: What is the approximate total death benefit across all policies?
+           - Under $500,000
+           - $500,000 - $1,000,000
+           - $1,000,000 - $5,000,000
+           - Over $5,000,000
+
+    SKULD: Who is currently named as beneficiary on your life insurance?
+           - Spouse
+           - Children
+           - Trust
+           - Other
+           - Not sure
+
+    [Save to profile: `has_life_insurance: true`, `life_insurance_value: [range]`, `life_insurance_beneficiary: [selection]`]
+    **[/IF]**
+
+14. **Retirement Accounts:**
+    <!-- intake_id: retirement_account_details -->
+    SKULD: Do you have retirement accounts (401k, IRA, 403b, Roth IRA, etc.)?
+           - Yes
+           - No
+
+    **[IF has_retirement_accounts = true]**
+    SKULD: Approximate total value across all retirement accounts?
+           - Under $100,000
+           - $100,000 - $500,000
+           - $500,000 - $1,000,000
+           - Over $1,000,000
+
+    SKULD: Who is currently named as beneficiary on these accounts?
+           - Spouse as primary
+           - Children as primary
+           - Trust as beneficiary
+           - Not sure / Need to check
+
+    [Save to profile: `has_retirement_accounts: true`, `retirement_value: [range]`, `retirement_beneficiaries: [selection]`]
+
+    **[IF retirement_beneficiaries == "Not sure"]**
+    ```
+    ╔══════════════════════════════════════════════════════════════════╗
+    ║           ⚠️ CRITICAL: CHECK YOUR BENEFICIARIES                  ║
+    ╠══════════════════════════════════════════════════════════════════╣
+    ║ Retirement account beneficiaries pass OUTSIDE your will/trust.  ║
+    ║ Outdated beneficiaries are a common estate planning mistake.    ║
+    ║                                                                  ║
+    ║ Please check your beneficiary designations with your plan       ║
+    ║ administrator. We'll include a Beneficiary Coordination         ║
+    ║ Checklist in your document package.                             ║
+    ╚══════════════════════════════════════════════════════════════════╝
+    ```
+    **[/IF]**
+    **[/IF]**
+
+15. **Business Interests:**
+    <!-- intake_id: business_entity_type -->
+    SKULD: Do you own a business or have ownership interest in a business?
+           - Yes
+           - No
+
+    **[IF has_business = true]**
+    SKULD: What type of business entity?
+           - Sole proprietorship
+           - Partnership
+           - LLC (single-member)
+           - LLC (multi-member)
+           - S-Corporation
+           - C-Corporation
+           - Multiple entities
+
+    <!-- intake_id: business_partners -->
+    SKULD: Do you have partners or other owners?
+           - Yes
+           - No
+
+    **[IF has_partners = true]**
+    <!-- intake_id: buy_sell_agreement -->
+    SKULD: Is there an existing buy-sell agreement?
+           - Yes
+           - No
+           - Not sure
+
+    **[IF has_buy_sell_agreement = true]**
+    ```
+    ╔══════════════════════════════════════════════════════════════════╗
+    ║           📋 BUY-SELL AGREEMENT COORDINATION                     ║
+    ╠══════════════════════════════════════════════════════════════════╣
+    ║ Your estate plan must coordinate with your buy-sell agreement.  ║
+    ║                                                                  ║
+    ║ Common provisions to verify:                                    ║
+    ║ • Does the agreement trigger on death or disability?            ║
+    ║ • Is life insurance funding the buyout?                         ║
+    ║ • Does your trust need to be named in the agreement?            ║
+    ║                                                                  ║
+    ║ Your attorney should review both documents together.            ║
+    ╚══════════════════════════════════════════════════════════════════╝
+    ```
+    **[/IF]**
+    **[/IF]**
+
+    <!-- intake_id: business_succession_preferences -->
+    SKULD: What should happen to the business if you die or become incapacitated?
+           - Family member(s) should take over
+           - Partners should buy out my share
+           - Business should be sold
+           - Not sure - need guidance
+
+    [Save to profile: `has_business: true`, `business_type: [type]`, `has_partners: boolean`, `has_buy_sell_agreement: boolean`, `succession_preference: [selection]`]
+    **[/IF]**
+
+16. **[IF state == "TN" AND has_spouse = true]**
+    <!-- intake_id: current_asset_titling -->
+    **Current Asset Titling (Tennessee):**
+    SKULD: How are your major assets currently titled?
+           - Joint tenancy with spouse
+           - Tenancy by the entirety
+           - Individual names (separate)
+           - Mix of different titling methods
+           - Already in a trust
+           - Not sure
+
+    [This informs Tenancy by Entirety vs Trust recommendations]
+    [Save to profile: `current_titling_strategy: [selection]`]
+    **[/IF]**
+
+17. Planning goals (probate avoidance, asset protection, child provision)
+18. Existing documents
 
 **State detection**: When user mentions a state, the `estate-state-lookup` agent auto-loads that state's requirements.
 
@@ -561,9 +746,29 @@ When `/estate` is invoked, guide users through these phases:
 - Letter of Intent → if `special_needs_beneficiary` AND `letter_of_intent_desired`
 - Business Succession Plan → if `business_owner`
 - Trust Funding Checklist → always with trust
+- Certificate of Trust (TN) → if state = TN AND `needs_certificate_of_trust`
 - Beneficiary Designation Review → if retirement accounts or life insurance
 - Beneficiary Designation Checklist → if `retirement_heavy_estate` (SECURE Act coordination)
 - Tennessee TOD Deed → if state = TN AND prefers TOD deed for real estate
+
+**[IF state == "TN" AND creating_trust = true]**
+<!-- intake_id: trust_funding_needs -->
+**Trust Funding Needs (Tennessee):**
+SKULD: Will you need to transfer real estate or open accounts in the trust's name?
+       - Yes, I have real estate to transfer
+       - Yes, I need to open trust bank/brokerage accounts
+       - Both real estate and accounts
+       - No, I'll handle funding later
+
+**[IF trust_funding_needs != "No"]**
+A Certificate of Trust will be included in your document package. This allows you to:
+- Transfer real estate into the trust without recording the full trust document
+- Open bank and brokerage accounts in the trust's name
+- Prove trustee authority to third parties without revealing private trust terms
+
+[Save to profile: `needs_certificate_of_trust: true`]
+**[/IF]**
+**[/IF]**
 
 **[IF retirement_heavy_estate = true]**
 ```

@@ -10,6 +10,15 @@ allowed-tools:
   - Read
   - Glob
   - Grep
+triggers_on:
+  state_of_residence: "TN"
+  has_real_estate: true
+  wants_tod_deed: true
+requires_intake:
+  - tn_real_estate_details
+  - tod_beneficiary_selection
+optional_intake:
+  - property_legal_description
 ---
 
 # TOD Deed Generator Agent

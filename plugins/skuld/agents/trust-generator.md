@@ -10,6 +10,19 @@ allowed-tools:
   - Read
   - Glob
   - Grep
+triggers_on:
+  creating_trust: true
+requires_intake:
+  - personal_basics
+  - relationship_status
+  - state_of_residence
+  - children_inventory
+optional_intake:
+  - distribution_preferences
+  - qdot_planning
+  - blended_family_preferences
+progressive_unlock:
+  - qdot_trustee_selection
 ---
 
 # Trust Generator Agent

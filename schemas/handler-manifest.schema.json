@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/altakleos/nidavellir/schemas/handler-manifest.schema.json",
+  "title": "Handler Manifest Schema",
+  "description": "Schema for validating handler (agent) manifest frontmatter in Skuld plugin",
+  "type": "object",
+  "required": ["name", "description"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Handler identifier (kebab-case)",
+      "pattern": "^[a-z0-9-]+$",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief description of what this handler does",
+      "minLength": 10,
+      "maxLength": 500
+    },
+    "triggers_on": {
+      "type": "object",
+      "description": "Profile flags that must be true to activate this handler",
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "boolean" },
+          { "type": "string" },
+          { "type": "number" }
+        ]
+      }
+    },
+    "requires_intake": {
+      "type": "array",
+      "description": "Intake IDs that MUST be collected before invoking this handler",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z_]+$"
+      },
+      "uniqueItems": true
+    },
+    "optional_intake": {
+      "type": "array",
+      "description": "Intake IDs that enhance output if present but are not required",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z_]+$"
+      },
+      "uniqueItems": true
+    },
+    "progressive_unlock": {
+      "type": "array",
+      "description": "Intake IDs that this handler unlocks for progressive disclosure",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z_]+$"
+      },
+      "uniqueItems": true
+    },
+    "allowed-tools": {
+      "type": "array",
+      "description": "Claude Code tools this agent is allowed to use",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

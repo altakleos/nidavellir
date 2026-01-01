@@ -10,6 +10,10 @@ allowed-tools:
   - Read
   - Glob
   - Grep
+triggers_on:
+  all_documents_generated: true
+requires_intake: []
+optional_intake: []
 ---
 
 # Estate Planning Validation Agent

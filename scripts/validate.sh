@@ -301,6 +301,22 @@ if [[ -f "$MARKETPLACE_FILE" ]]; then
 fi
 
 echo ""
+
+# Validate Skuld intake coverage
+echo "5. Validating Skuld intake coverage"
+echo "-------------------------------------"
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ -f "$SCRIPT_DIR/validate-intake-coverage.sh" ]]; then
+    if ! "$SCRIPT_DIR/validate-intake-coverage.sh"; then
+        ERRORS=$((ERRORS + 1))
+    fi
+else
+    echo -e "${YELLOW}⚠ validate-intake-coverage.sh not found, skipping${NC}"
+    WARNINGS=$((WARNINGS + 1))
+fi
+
+echo ""
 echo "========================================="
 echo "Validation Summary"
 echo "========================================="

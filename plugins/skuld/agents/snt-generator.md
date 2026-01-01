@@ -10,6 +10,20 @@ allowed-tools:
   - Read
   - Glob
   - Grep
+triggers_on:
+  special_needs_beneficiary: true
+requires_intake:
+  - special_needs_screening
+  - child_age_status
+  - government_benefits_status
+optional_intake:
+  - legal_capacity_status
+  - snt_trustee_preference
+  - able_account_interest
+  - letter_of_intent_preference
+progressive_unlock:
+  - first_party_snt_detection
+  - snt_remainder_beneficiary
 ---
 
 # Special Needs Trust Generator Agent

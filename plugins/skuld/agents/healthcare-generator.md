@@ -10,6 +10,16 @@ allowed-tools:
   - Read
   - Glob
   - Grep
+triggers_on:
+  creating_healthcare_directive: true
+requires_intake:
+  - personal_basics
+  - state_of_residence
+  - healthcare_agent_selection
+  - healthcare_preferences
+optional_intake:
+  - organ_donation_preference
+  - religious_considerations
 ---
 
 # Healthcare Directive Generator Agent

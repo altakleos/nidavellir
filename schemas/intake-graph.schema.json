@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/altakleos/nidavellir/schemas/intake-graph.schema.json",
+  "title": "Intake Graph Schema",
+  "description": "Schema for validating intake graph definitions in Skuld SKILL.md",
+  "type": "object",
+  "properties": {
+    "entry_points": {
+      "type": "array",
+      "description": "Questions that are always asked (unconditional entry points)",
+      "items": {
+        "$ref": "#/definitions/intake_item"
+      }
+    },
+    "conditional_questions": {
+      "type": "array",
+      "description": "Questions asked when their condition is met",
+      "items": {
+        "$ref": "#/definitions/intake_item"
+      }
+    },
+    "handler_unlocked": {
+      "type": "array",
+      "description": "Questions unlocked by handlers during document generation (progressive disclosure)",
+      "items": {
+        "$ref": "#/definitions/unlocked_item"
+      }
+    }
+  },
+  "definitions": {
+    "intake_item": {
+      "type": "object",
+      "required": ["id", "question"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this intake item (snake_case)",
+          "pattern": "^[a-z_]+$"
+        },
+        "question": {
+          "type": "string",
+          "description": "Brief description of the question asked"
+        },
+        "condition": {
+          "type": "string",
+          "description": "Condition expression for when to ask (e.g., 'has_children = true')"
+        },
+        "sets_flags": {
+          "type": "array",
+          "description": "Profile flags set by this question's answer",
+          "items": {
+            "type": "string"
+          }
+        },
+        "unlocks": {
+          "type": "array",
+          "description": "Intake IDs that become available after this question",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z_]+$"
+          }
+        }
+      }
+    },
+    "unlocked_item": {
+      "type": "object",
+      "required": ["id", "question", "unlocked_by"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this intake item (snake_case)",
+          "pattern": "^[a-z_]+$"
+        },
+        "question": {
+          "type": "string",
+          "description": "Brief description of the question asked"
+        },
+        "unlocked_by": {
+          "type": "string",
+          "description": "Handler name that unlocks this question"
+        },
+        "condition": {
+          "type": "string",
+          "description": "Additional condition for when to ask within the handler"
+        }
+      }
+    }
+  }
+}

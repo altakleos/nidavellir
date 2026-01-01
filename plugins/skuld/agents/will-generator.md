@@ -10,6 +10,14 @@ allowed-tools:
   - Read
   - Glob
   - Grep
+triggers_on:
+  creating_will: true
+requires_intake:
+  - personal_basics
+  - state_of_residence
+optional_intake:
+  - guardian_preferences
+  - executor_preferences
 ---
 
 # Will Generator Agent
