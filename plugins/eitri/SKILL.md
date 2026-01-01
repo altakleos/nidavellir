@@ -395,6 +395,53 @@ Recommended: Create new plugin → plugins/code-reviewer/
 - `new-plugin` → Create new plugin (even if inside existing one)
 - `<path>` → Custom path (absolute or relative)
 
+### Plugin.json Schema (STRICT)
+
+When generating `.claude-plugin/plugin.json`, use ONLY these fields:
+
+**Required:**
+- `name` - kebab-case plugin name (pattern: `^[a-z0-9-]+$`)
+- `version` - semver (e.g., "1.0.0")
+- `description` - brief description (10-500 chars)
+- `author` - object with `name` and `email`
+
+**Optional metadata:**
+- `homepage` - repository URL
+- `repository` - object with `type` and `url`
+- `license` - SPDX identifier (e.g., "MIT")
+- `keywords` - array of strings (1-20 items)
+- `dependencies` - object mapping plugin names to versions
+
+**Component paths (optional, auto-discovered by default):**
+- `commands` - path(s) to command files (default: `commands/`)
+- `agents` - path(s) to agent files (default: `agents/`)
+- `skills` - path(s) to skill directories (default: `skills/`)
+- `hooks` - path or inline hooks config
+- `mcpServers` - path or inline MCP config
+- `lspServers` - path or inline LSP config
+- `outputStyles` - path(s) to output style files
+
+**NEVER include these fields (Claude Code will reject them):**
+- `category` - belongs in marketplace.json only, not plugin.json
+- `components` - use specific component path fields above instead
+- `data_version` - not a valid field
+- Any other unlisted fields (`additionalProperties: false`)
+
+**Example valid plugin.json:**
+```json
+{
+  "name": "my-plugin",
+  "version": "1.0.0",
+  "description": "Brief description of what this plugin does",
+  "author": {
+    "name": "Your Name",
+    "email": "you@example.com"
+  },
+  "license": "MIT",
+  "keywords": ["utility", "automation"]
+}
+```
+
 ## Intelligence Features
 
 ### Domain Intelligence

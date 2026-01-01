@@ -220,7 +220,25 @@ WebFetch, WebSearch, NotebookEdit, AskUserQuestion, TodoWrite
 
 Note: Component paths (`commands`, `agents`, `skills`, `hooks`, `mcpServers`) are optional top-level fields. Claude Code auto-discovers from default directories if not specified.
 
+### Invalid Fields (Claude Code Rejects)
+
+These fields are NOT valid in plugin.json and will cause installation to fail:
+
+| Invalid Field | Error | Fix |
+|---------------|-------|-----|
+| `category` | Unrecognized key | Remove from plugin.json (belongs in marketplace.json only) |
+| `components` | Unrecognized key | Remove entirely; use specific paths like `commands`, `agents` |
+| `data_version` | Unrecognized key | Remove entirely; not a valid field |
+
+The plugin.json schema has `additionalProperties: false` - only documented fields are allowed.
+
 ## Common Issues and Fixes
+
+### Issue: Invalid Plugin.json Fields
+
+**Symptom:** Installation fails with "Unrecognized key(s) in object: 'category', 'components', 'data_version'"
+
+**Fix:** Remove invalid fields from plugin.json. Only use fields listed above.
 
 ### Issue: Commands Not Discovered
 

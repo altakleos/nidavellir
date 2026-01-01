@@ -52,21 +52,6 @@
       "minItems": 1,
       "maxItems": 20
     },
-    "category": {
-      "type": "string",
-      "description": "Plugin category",
-      "enum": [
-        "productivity",
-        "development",
-        "testing",
-        "documentation",
-        "security",
-        "ai-assistance",
-        "utilities",
-        "integration",
-        "other"
-      ]
-    },
     "license": {
       "type": "string",
       "description": "SPDX license identifier"
