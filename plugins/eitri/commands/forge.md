@@ -14,11 +14,22 @@ When you type `/forge`, I'll start a conversation to understand your unique need
 ## The Process
 
 1. **Context Discovery** - I'll ask about your business, team, and needs
-2. **Architecture Design** - I'll suggest the optimal extension structure
-3. **Configuration** - We'll fine-tune the details together
-4. **Creation** - I'll generate everything you need
-5. **Placement** - I'll detect your context and suggest the optimal location
-6. **Delivery** - You'll receive complete, ready-to-use extension(s)
+2. **Domain Research** - I'll proactively research your domain to understand industry-specific requirements, intake patterns, and conditional logic
+3. **Architecture Design** - I'll suggest the optimal extension structure informed by domain research
+4. **Configuration** - We'll fine-tune the details together
+5. **Creation** - I'll generate everything you need, including intake coordination if detected
+6. **Placement** - I'll detect your context and suggest the optimal location
+7. **Delivery** - You'll receive complete, ready-to-use extension(s)
+
+### Domain Research (New)
+
+When I detect a domain from your request (e.g., "estate planning", "healthcare", "legal services"), I'll automatically:
+- Research industry-specific compliance requirements
+- Discover client intake patterns and best practices
+- Identify conditional screening questions
+- Map intake fields to handler dependencies
+
+This means extensions for complex domains come with **complete intake coordination** - not placeholders.
 
 ## Smart Output Location
 

@@ -108,6 +108,99 @@ mcp_tools: [Optional MCP integrations]
 - Affects documentation complexity
 - Influences error message detail
 
+### Phase 3b: Handler Manifest Generation (Domain-Aware)
+
+When domain research indicates the agent needs intake coordination, I generate handler manifest fields that map to the intake graph.
+
+**Handler Manifest Fields:**
+
+```yaml
+---
+name: [agent-name]
+description: [description]
+# ... standard fields ...
+
+# Handler Manifest (from domain research)
+requires_intake:
+  - state_of_residence    # Required for this handler to function
+  - marital_status        # Required for this handler to function
+optional_intake:
+  - special_needs_status  # Enhances handler but not required
+triggers_on:
+  state_of_residence: true   # Handler activates when this intake is collected
+  marital_status: true       # Handler activates when this intake is collected
+---
+```
+
+**Field Population from Domain Research:**
+
+Using the `domain_intelligence` output from the discovery engine:
+
+```python
+def generate_handler_manifest(agent_name, domain_intelligence, agent_responsibilities):
+    """Generate handler manifest from domain research."""
+
+    manifest = {
+        "requires_intake": [],
+        "optional_intake": [],
+        "triggers_on": {}
+    }
+
+    # Match agent responsibilities to domain-derived handler dependencies
+    for dep in domain_intelligence.get("handler_dependencies", []):
+        if matches_agent_responsibility(dep["handler"], agent_responsibilities):
+            # These intake fields are REQUIRED for this handler
+            for field in dep.get("requires_intake", []):
+                if field not in manifest["requires_intake"]:
+                    manifest["requires_intake"].append(field)
+
+    # Add optional fields from conditional triggers
+    for trigger in domain_intelligence.get("conditional_triggers", []):
+        field = trigger.get("then_ask")
+        if relevant_to_agent(field, agent_responsibilities):
+            if field not in manifest["optional_intake"]:
+                manifest["optional_intake"].append(field)
+
+    # Set trigger conditions (when handler should activate)
+    for field in manifest["requires_intake"]:
+        manifest["triggers_on"][field] = True
+
+    return manifest
+```
+
+**Example: Estate Planning Trust Generator**
+
+Given domain research findings:
+- Trust generator needs state jurisdiction (laws vary by state)
+- Trust generator needs marital status (spousal rights vary)
+- Special needs provisions enhance trust but aren't required
+
+Generated manifest:
+
+```yaml
+---
+name: trust-generator
+description: Generates revocable living trust documents based on client profile
+requires_intake:
+  - state_of_residence    # From: "estate planning requires state jurisdiction"
+  - marital_status        # From: "spousal rights vary by state"
+optional_intake:
+  - special_needs_status  # From: "SNT provisions enhance trust"
+  - spouse_citizenship    # From: "QDOT considerations for non-citizen"
+triggers_on:
+  state_of_residence: true
+  marital_status: true
+---
+```
+
+**Handler Manifest Validation:**
+
+Before finalizing, validate that:
+- All `requires_intake` fields have corresponding intake graph questions
+- `triggers_on` conditions reference valid intake IDs
+- No circular dependencies between handlers
+- Optional fields are truly optional (handler works without them)
+
 ### Phase 4: System Prompt Generation
 
 Create sophisticated, context-aware system prompt:

@@ -190,6 +190,104 @@ Verify generated content matches user context:
 - Appropriate error handling for context
 - Documentation depth matches audience
 
+### Intake Coverage Validation
+
+When domain research indicates intake coordination is needed, validate that all handler requirements have corresponding intake sources.
+
+**Coverage Validation Algorithm:**
+
+```python
+def validate_intake_coverage(handlers, intake_graph, domain_research):
+    """Validate that domain research produced complete coverage."""
+
+    errors = []
+    warnings = []
+
+    # Collect all required intake fields from handlers
+    required_fields = set()
+    for handler in handlers:
+        for field in handler.get("requires_intake", []):
+            required_fields.add(field)
+
+    # Collect all intake IDs from generated graph
+    provided_fields = set()
+    for question in intake_graph.get("entry_points", []):
+        provided_fields.add(question["id"])
+    for question in intake_graph.get("conditional_questions", []):
+        provided_fields.add(question["id"])
+
+    # Identify gaps
+    uncovered = required_fields - provided_fields
+
+    if uncovered:
+        errors.append({
+            "type": "intake_coverage_gap",
+            "missing_fields": list(uncovered),
+            "severity": "error",
+            "message": f"Handler requirements missing intake sources: {uncovered}"
+        })
+
+        # Attempt additional domain research for missing fields
+        for field in uncovered:
+            domain = domain_research.get("domain_detected", "unknown")
+            additional_search = WebSearch(f"{domain} {field} client intake requirements")
+            if additional_search.has_relevant_results:
+                warnings.append({
+                    "type": "suggested_intake_question",
+                    "field": field,
+                    "suggested_question": extract_question_from_research(additional_search),
+                    "source": "additional_domain_research"
+                })
+
+    return {"errors": errors, "warnings": warnings, "coverage_complete": len(uncovered) == 0}
+```
+
+**Coverage Validation Checks:**
+
+1. **Handler-Intake Mapping**: Every `requires_intake` field in handlers has corresponding intake question
+2. **Conditional Trigger Coverage**: Conditional questions are reachable from entry points
+3. **No Orphaned Questions**: Every intake question maps to at least one handler
+4. **Flag Consistency**: Flags set by questions match flags consumed by handlers
+
+**Gap Detection and Resolution:**
+
+When coverage gaps are detected:
+
+```markdown
+⚠️ INTAKE COVERAGE GAP DETECTED
+
+Handler `snt-generator` requires:
+  - special_needs_status (NOT FOUND in intake graph)
+
+Suggested resolution:
+1. Add conditional question after `has_children`:
+   "Does any beneficiary have special needs?"
+   - Sets flag: snt_applicable
+
+OR
+
+2. Research additional requirements:
+   WebSearch "estate planning special needs trust screening questions"
+```
+
+**Coverage Report Format:**
+
+```markdown
+## Intake Coverage Report
+
+| Handler | Required Fields | Status |
+|---------|-----------------|--------|
+| trust-generator | state_of_residence, marital_status | ✅ Covered |
+| will-generator | state_of_residence, has_children | ✅ Covered |
+| snt-generator | special_needs_status | ❌ Gap |
+
+### Gaps Requiring Attention:
+1. `special_needs_status` needed by `snt-generator`
+   - Suggested: Add conditional question after `has_children`
+
+### Coverage Score: 85% (5/6 fields covered)
+```
+
 ## Post-Generation Validation
 
 ### Syntax Verification

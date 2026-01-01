@@ -354,6 +354,195 @@ suite:
       enforcement: warning
 ```
 
+### Phase 6b: Domain-Aware Intake Graph Generation
+
+When domain research indicates intake coordination is needed, I generate a complete intake graph that maps questions to handlers.
+
+**Intake Graph Generation Using Domain Research:**
+
+Using the `domain_intelligence` and `intake_coordination` outputs from the discovery engine, I generate a structured intake graph:
+
+```python
+def generate_intake_graph(domain_intelligence, intake_coordination, handlers):
+    """Generate intake graph from domain research findings."""
+
+    intake_graph = {
+        "entry_points": [],
+        "conditional_questions": [],
+        "handler_coverage": {}
+    }
+
+    # Generate entry point questions from domain research
+    for pattern in domain_intelligence.get("intake_patterns", []):
+        if pattern.get("required", False):
+            intake_graph["entry_points"].append({
+                "id": pattern["id"],
+                "question": pattern["question"],
+                "required": True,
+                "sets_flags": infer_flags(pattern["id"]),
+                "source": pattern.get("source", "domain_research")
+            })
+
+    # Generate conditional questions from domain triggers
+    for trigger in domain_intelligence.get("conditional_triggers", []):
+        intake_graph["conditional_questions"].append({
+            "id": trigger["then_ask"],
+            "condition": trigger["if"],
+            "question": generate_question(trigger["then_ask"], domain_intelligence),
+            "sets_flags": infer_flags(trigger["then_ask"]),
+            "source": trigger.get("reasoning", "conditional_trigger")
+        })
+
+    # Validate handler coverage
+    for handler in handlers:
+        handler_reqs = handler.get("requires_intake", [])
+        covered = all(
+            req in [q["id"] for q in intake_graph["entry_points"]]
+            or req in [q["id"] for q in intake_graph["conditional_questions"]]
+            for req in handler_reqs
+        )
+        intake_graph["handler_coverage"][handler["name"]] = {
+            "requires": handler_reqs,
+            "status": "covered" if covered else "gap_detected"
+        }
+
+    return intake_graph
+```
+
+**Generated Intake Graph Example (Estate Planning):**
+
+From domain research about estate planning:
+
+```yaml
+intake_graph:
+  # Entry points from domain research
+  entry_points:
+    - id: state_of_residence
+      question: "What state do you primarily reside in?"
+      required: true
+      sets_flags: [state_jurisdiction]
+      source: "Domain research: estate planning requires state jurisdiction"
+
+    - id: marital_status
+      question: "What is your current marital status?"
+      required: true
+      sets_flags: [is_married, spouse_applicable]
+      source: "Domain research: spousal rights vary by state"
+
+    - id: has_children
+      question: "Do you have any children?"
+      required: true
+      sets_flags: [has_children, guardian_applicable]
+      source: "Domain research: guardianship planning required if minors"
+
+  # Conditional branches from domain research
+  conditional_questions:
+    - id: spouse_citizenship
+      condition: "is_married == true"
+      question: "Is your spouse a US citizen?"
+      sets_flags: [qdot_applicable]
+      source: "Domain research: QDOT required for non-citizen spouses"
+
+    - id: special_needs_screening
+      condition: "has_children == true"
+      question: "Does any child or beneficiary have special needs that might affect their eligibility for government benefits?"
+      sets_flags: [snt_applicable]
+      source: "Domain research: SNT planning for special needs beneficiaries"
+
+    - id: community_property_election
+      condition: "state_jurisdiction in ['CA', 'TX', 'AZ', 'NV', 'WA', 'ID', 'NM', 'WI', 'LA']"
+      question: "Would you like to elect community property treatment for your assets?"
+      sets_flags: [community_property]
+      source: "Domain research: community property states have special rules"
+
+  # Handler coverage validation
+  handler_coverage:
+    trust-generator:
+      requires: [state_jurisdiction, marital_status, is_married]
+      status: covered
+    will-generator:
+      requires: [state_jurisdiction, has_children]
+      status: covered
+    snt-generator:
+      requires: [snt_applicable, special_needs_screening]
+      status: covered
+    qdot-generator:
+      requires: [qdot_applicable, spouse_citizenship]
+      status: covered
+```
+
+**Intake Graph to SKILL.md Conversion:**
+
+The intake graph is rendered into the coordinator SKILL.md:
+
+```markdown
+## Intake Flow
+
+### Entry Questions
+<!-- intake_id: state_of_residence -->
+**State of Residence**: What state do you primarily reside in?
+- *Source*: Estate planning requires state jurisdiction
+
+<!-- intake_id: marital_status -->
+**Marital Status**: What is your current marital status?
+- *Source*: Spousal rights vary by state
+
+<!-- intake_id: has_children -->
+**Children**: Do you have any children?
+- *Source*: Guardianship planning required if minors
+
+### Conditional Screening
+
+<!-- intake_id: spouse_citizenship -->
+**IF** client is married:
+> Is your spouse a US citizen?
+> *Triggers*: QDOT planning if non-citizen
+
+<!-- intake_id: special_needs_screening -->
+**IF** client has children:
+> Does any child or beneficiary have special needs?
+> *Triggers*: SNT handler activation
+
+### Handler Dependencies
+
+| Handler | Required Intake | Status |
+|---------|-----------------|--------|
+| `trust-generator` | state_of_residence, marital_status | ✅ Covered |
+| `will-generator` | state_of_residence, has_children | ✅ Covered |
+| `snt-generator` | snt_applicable | ✅ Covered |
+| `qdot-generator` | qdot_applicable | ✅ Covered |
+```
+
+**Coverage Gap Detection:**
+
+If any handler has uncovered requirements:
+
+```python
+def detect_coverage_gaps(intake_graph, handlers):
+    """Detect and suggest fixes for coverage gaps."""
+
+    gaps = []
+    for handler_name, coverage in intake_graph["handler_coverage"].items():
+        if coverage["status"] == "gap_detected":
+            missing = [r for r in coverage["requires"]
+                      if r not in get_all_intake_ids(intake_graph)]
+            gaps.append({
+                "handler": handler_name,
+                "missing_intake": missing,
+                "suggested_action": f"Add intake question(s) for: {', '.join(missing)}"
+            })
+
+    if gaps:
+        # Try additional domain research for missing fields
+        for gap in gaps:
+            for field in gap["missing_intake"]:
+                additional = WebSearch(f"{domain} {field} intake requirements")
+                if additional.has_relevant_results:
+                    gap["suggested_question"] = extract_question(additional)
+
+    return gaps
+```
+
 ### Phase 7: Suite Documentation
 
 Generate comprehensive suite documentation:

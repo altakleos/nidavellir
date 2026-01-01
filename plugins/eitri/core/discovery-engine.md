@@ -70,6 +70,185 @@ When detected, I gently probe:
 "I notice you're asking for [Y], but it sounds like you're trying to achieve [X].
 Let's talk about [X] - there might be a simpler approach."
 
+## Domain Intelligence Research
+
+At forge-time, I proactively research the target domain to understand domain-specific requirements, intake patterns, and conditional logic. This enables generating complete, domain-aware extensions rather than generic placeholders.
+
+### Domain Detection
+
+I identify the domain from user-provided input and context:
+
+**Explicit Domain Signals:**
+- Industry mentions: "estate planning", "healthcare", "real estate", "manufacturing"
+- Professional context: "attorneys", "doctors", "accountants", "realtors"
+- Regulatory references: "HIPAA", "GDPR", "QDOT", "SOX"
+- Process terminology: "client intake", "patient onboarding", "case management"
+
+**Domain Extraction Process:**
+1. Parse user request for industry/domain keywords
+2. Identify professional context and stakeholders
+3. Detect regulatory and compliance signals
+4. Note domain-specific terminology
+
+### When to Research
+
+**ALWAYS** research when a domain is detected from user input. No hard-coded domain checks.
+
+Research triggers:
+- User mentions ANY industry or domain
+- Regulatory/compliance signals detected
+- Domain involves sensitive data collection
+- User mentions unfamiliar industry terminology
+- Complex multi-step workflows described
+
+### Research Strategy
+
+For the detected domain, I use WebSearch to gather intelligence:
+
+**1. Regulatory Requirements**
+```
+WebSearch "{domain} {current_year} compliance requirements"
+WebSearch "{domain} regulatory framework"
+WebSearch "{domain} legal requirements"
+```
+
+**2. Client/User Intake Patterns**
+```
+WebSearch "{domain} client intake questionnaire best practices"
+WebSearch "{domain} client onboarding workflow"
+WebSearch "{domain} required client information"
+```
+
+**3. Conditional Screening Questions**
+```
+WebSearch "{domain} conditional screening questions"
+WebSearch "{domain} intake branching logic"
+WebSearch "{domain} decision tree client questions"
+```
+
+**4. Industry-Specific Concepts**
+```
+WebSearch "{domain} key concepts terminology"
+WebSearch "{domain} common scenarios edge cases"
+WebSearch "{domain} professional standards"
+```
+
+### Pattern Extraction
+
+From research results, I extract structured intelligence:
+
+**Intake Field Extraction:**
+- Identify required data points mentioned in multiple sources
+- Note which fields are conditional (depend on other answers)
+- Detect mandatory vs optional data collection
+- Map fields to common naming conventions
+
+**Conditional Branch Extraction:**
+- Identify "if X then Y" patterns from research
+- Note decision points that trigger different workflows
+- Map conditions to specific questions
+- Detect nested conditional logic
+
+**Handler Dependency Extraction:**
+- Identify which data is needed for which operations
+- Map intake fields to handler requirements
+- Detect sequential dependencies between handlers
+- Note shared data requirements across handlers
+
+### Research Output
+
+Domain research produces structured intelligence for generation:
+
+```python
+domain_intelligence = {
+    "domain_detected": "estate planning",
+    "research_performed": True,
+    "regulatory_requirements": [
+        {"name": "state_jurisdiction", "source": "laws vary by state"},
+        {"name": "witness_requirements", "source": "execution requirements"},
+    ],
+    "intake_patterns": [
+        {
+            "id": "state_of_residence",
+            "question": "What state do you primarily reside in?",
+            "required": True,
+            "source": "estate planning requires state jurisdiction"
+        },
+        {
+            "id": "marital_status",
+            "question": "What is your current marital status?",
+            "required": True,
+            "source": "spousal rights vary by state"
+        }
+    ],
+    "conditional_triggers": [
+        {
+            "if": "marital_status == 'married'",
+            "then_ask": "spouse_citizenship",
+            "reasoning": "QDOT required for non-citizen spouses"
+        },
+        {
+            "if": "has_children == True",
+            "then_ask": "special_needs_screening",
+            "reasoning": "SNT planning for special needs beneficiaries"
+        }
+    ],
+    "handler_dependencies": [
+        {
+            "handler": "trust-generator",
+            "requires_intake": ["state_of_residence", "marital_status"]
+        },
+        {
+            "handler": "snt-generator",
+            "requires_intake": ["special_needs_status", "benefit_types"]
+        }
+    ]
+}
+```
+
+## Intake Coordination Detection
+
+Based on domain research AND user context, I detect whether the extension needs intake coordination (structured user data collection with conditional branching and handler mapping).
+
+### High-Confidence Signals (from domain research)
+
+- Domain research found "client intake form" patterns
+- Domain research found "conditional screening" requirements
+- Domain research found "compliance questionnaire" obligations
+- Multiple handlers need shared user data
+- Progressive disclosure patterns detected
+
+### Context Signals (from user conversation)
+
+- User mentions collecting information from users
+- Multiple agents that share user data
+- Conditional question patterns: "if X, then ask Y"
+- Sensitive/regulated domain requiring audit trails
+- Multi-phase workflow with user input at each phase
+
+### Intake Detection Output
+
+```python
+intake_coordination = {
+    "needs_intake_coordination": True,
+    "intake_confidence": 0.9,
+    "reasoning": "Domain research found conditional screening patterns",
+    "domain_derived_questions": [
+        {"id": "state_of_residence", "source": "web_research", "required": True},
+        {"id": "marital_status", "source": "web_research", "required": True},
+        {"id": "spouse_citizenship", "source": "web_research", "conditional": True}
+    ],
+    "conditional_branches": [
+        {"if": "marital_status == 'married'", "then_ask": ["spouse_details"]},
+        {"if": "has_children == True", "then_ask": ["special_needs_screening"]}
+    ],
+    "handler_requirements": {
+        "trust-generator": ["state_of_residence", "marital_status"],
+        "snt-generator": ["special_needs_status"]
+    }
+}
+```
+
 ## Discovery Conversation Techniques
 
 ### Opening Gambits
