@@ -446,6 +446,39 @@ When generating `.claude-plugin/plugin.json`, use ONLY these fields:
 }
 ```
 
+## Error Handling & Phase Reporting
+
+When errors occur during forging, I report which phase failed for easier debugging:
+
+| Phase | What It Does | Common Issues |
+|-------|--------------|---------------|
+| **Phase 1: Discovery** | Analyzes needs, detects domain | Domain research timeout, ambiguous requirements |
+| **Phase 2: Decision** | Determines extension type | Conflicting signals, edge cases |
+| **Phase 3: Generation** | Creates the extension | Syntax errors, invalid configurations |
+| **Phase 4: Validation** | Checks safety & correctness | Safety rule violations, tool conflicts |
+| **Phase 5: Delivery** | Writes files, provides guidance | Permission errors, path conflicts |
+
+**Error format:**
+```
+⚠️ FORGE ERROR [Phase 3: Generation]
+
+Issue: Invalid frontmatter field "data_version"
+Location: agent-generator.md → frontmatter validation
+
+Suggested fix:
+  Remove "data_version" - not a valid SKILL.md field
+  Use "version" with semver format instead
+
+Recovery:
+  [Retry generation] or [Skip validation]
+```
+
+**Retry logic:**
+- Phase 1-2 errors: Re-run discovery with clarifying questions
+- Phase 3 errors: Auto-fix common issues and regenerate
+- Phase 4 errors: Present violations for user decision
+- Phase 5 errors: Suggest alternative paths or permissions
+
 ## Intelligence Features
 
 ### Domain Intelligence

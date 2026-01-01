@@ -53,6 +53,40 @@ Don't worry about choosing—Eitri recommends, you approve.
 
 ---
 
+## 🏗️ Architecture
+
+Eitri operates in five phases, with domain research delegated to a subagent to prevent context overflow:
+
+```mermaid
+graph TD
+    A["/forge"] --> B[Discovery Engine]
+    B --> C{Domain detected?}
+    C -->|Yes| D["domain-researcher agent<br/>(WebSearch in subagent)"]
+    D --> E[domain_intelligence]
+    C -->|No| F[Skip research]
+    E --> G[Decision Framework]
+    F --> G
+    G --> H{Extension Type?}
+    H --> I[skill-generator]
+    H --> J[agent-generator]
+    H --> K[suite-coordinator]
+    H --> L[hook-generator]
+    H --> M[mcp-generator]
+    I --> N[Validation Framework]
+    J --> N
+    K --> N
+    L --> N
+    M --> N
+    N --> O[Delivery]
+```
+
+**Why this design:**
+- **Domain research delegation**: Raw WebSearch results (~45-75KB) stay in subagent context; only structured `domain_intelligence` (~2-3KB) returns to main context
+- **Single decision point**: One framework selects the appropriate generator
+- **Unified validation**: All extension types pass through the same safety checks
+
+---
+
 ## 📦 Commands
 
 | Command | Purpose |
