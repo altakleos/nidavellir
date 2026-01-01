@@ -19,6 +19,21 @@ This command launches the full 5-phase estate planning workflow.
 
 5. **Funding & Next Steps** - I'll create checklists for trust funding and ongoing maintenance.
 
+## Time Commitment
+
+A complete estate planning session typically takes:
+
+| Phase | Estimated Time |
+|-------|----------------|
+| Discovery (interview) | 15-30 minutes |
+| Document Selection | 10-15 minutes |
+| Document Drafting | 30-60 minutes |
+| Execution Guidance | 10-15 minutes |
+| Funding Checklist | 10-15 minutes |
+| **Total** | **75-135 minutes** |
+
+**Note:** You can pause at any phase and resume later. Complex situations (blended families, special needs planning, business interests) may take longer.
+
 ## Before You Begin
 
 Have the following information ready:

@@ -98,6 +98,29 @@ SCENARIO B - With Community Property Trust:
 - Once assets are transferred to a community property trust, the election is generally irrevocable for those assets
 - Cannot easily undo the community property characterization
 
+### CPT Suitability Checklist
+
+Before recommending CPT, verify ALL of the following:
+
+| Criterion | Favorable | Unfavorable |
+|-----------|-----------|-------------|
+| **Marriage Stability** | Long, stable marriage | Recent marriage, prior divorces, current difficulties |
+| **Relocation Plans** | Plan to stay in TN | May relocate out of state |
+| **Asset Source** | Most assets acquired during marriage | Significant pre-marital/inherited assets |
+| **Liability Exposure** | Low-risk profession | Doctor, attorney, business owner with guarantees |
+| **Estate Size** | Appreciated assets (basis < FMV) | Mostly cash/recently purchased assets |
+| **Beneficiaries** | Same beneficiaries for both spouses | Different intended beneficiaries |
+
+**Score:**
+- 5-6 Favorable → CPT likely beneficial
+- 3-4 Favorable → Discuss with attorney, weigh tradeoffs
+- 0-2 Favorable → CPT likely not appropriate, consider alternatives
+
+**Alternatives to CPT:**
+- **Tenancy by Entirety:** Better creditor protection, still has survivorship
+- **Joint Trust without CPT:** Standard step-up (only deceased spouse's half)
+- **Separate Trusts:** Asset protection, different beneficiary flexibility
+
 **Attorney Review Required:**
 ```
 [[ ATTORNEY REVIEW: Community property election has significant legal and tax

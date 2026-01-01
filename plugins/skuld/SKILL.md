@@ -51,8 +51,99 @@ When `/estate` is invoked, guide users through these phases:
 3. If resuming, load profile and skip to last incomplete phase
 
 **Discovery interview sequence:**
-1. Personal basics (name, DOB, state of residence, marital status)
+1. Personal basics (name, DOB, state of residence, relationship status)
+
+   **Relationship status options:**
+   SKULD: What is your relationship status?
+   - Single (never married)
+   - Married
+   - Divorced
+   - Widowed
+   - Domestic partnership (registered)
+   - **Unmarried but cohabiting with a partner**
+
+   **[IF unmarried_partner = true]**
+   ```
+   ╔══════════════════════════════════════════════════════════════════╗
+   ║         ESTATE PLANNING FOR UNMARRIED PARTNERS                   ║
+   ╠══════════════════════════════════════════════════════════════════╣
+   ║ Estate planning for unmarried partners requires special attention:║
+   ║                                                                   ║
+   ║ • NO automatic inheritance rights (unlike married couples)       ║
+   ║ • NO spousal elective share protection                          ║
+   ║ • Your partner could be excluded entirely without a plan        ║
+   ║ • Hospital visitation rights may require healthcare directive   ║
+   ║ • Tenancy by entirety NOT available (married couples only)      ║
+   ╚══════════════════════════════════════════════════════════════════╝
+   ```
+
+   SKULD: Would you like to include your partner in your estate plan?
+          - Yes, my partner is a significant beneficiary
+          - Yes, but my partner should receive specific items only
+          - No, I have other beneficiaries in mind
+
+   **[IF partner_included = true]**
+   SKULD: Please provide your partner's information:
+          - Full legal name: _________
+          - Relationship duration: _________
+          - Do you want them as a healthcare agent? (critical for hospital access)
+          - Do you want them as a financial POA agent?
+
+   [Save to profile:
+     `has_unmarried_partner: true`
+     `partner_name: [NAME]`
+     `partner_is_beneficiary: true|false`
+     `partner_is_healthcare_agent: true|false`
+     `partner_is_financial_agent: true|false`]
+   **[/IF]**
+   **[/IF]**
+
 2. Family structure (spouse info if married, children with ages and special needs status)
+
+   **[IF marital_status == "married"]**
+   SKULD: Is your spouse a U.S. citizen?
+          - Yes
+          - No (permanent resident, visa holder, or other status)
+          - Naturalization pending
+
+   **[IF spouse_is_us_citizen == false]**
+   ```
+   ╔══════════════════════════════════════════════════════════════════╗
+   ║       ⚠️ CRITICAL: NON-CITIZEN SPOUSE - QDOT REQUIRED            ║
+   ╠══════════════════════════════════════════════════════════════════╣
+   ║ The unlimited marital deduction is NOT available for non-citizen ║
+   ║ spouses. Without proper planning, estate taxes may be due at     ║
+   ║ the first spouse's death.                                        ║
+   ║                                                                   ║
+   ║ To defer estate taxes, assets must pass through a:               ║
+   ║                                                                   ║
+   ║   QUALIFIED DOMESTIC TRUST (QDOT)                                ║
+   ║                                                                   ║
+   ║ QDOT Requirements:                                               ║
+   ║ • At least one U.S. citizen or U.S. bank as trustee              ║
+   ║ • Trust must meet specific IRS requirements                      ║
+   ║ • Estate tax is deferred but paid when assets distributed        ║
+   ║ • Surviving spouse can receive income, limited principal         ║
+   ║                                                                   ║
+   ║ Alternative: Spouse may become citizen before first death        ║
+   ║ (marital deduction then applies retroactively)                   ║
+   ║                                                                   ║
+   ║ ⚠️ This is complex planning requiring specialized counsel.       ║
+   ║    We strongly recommend working with an estate attorney         ║
+   ║    experienced in international/cross-border planning.           ║
+   ╚══════════════════════════════════════════════════════════════════╝
+   ```
+
+   [Save to profile: `spouse_is_us_citizen: false`, `qdot_required: true`]
+
+   **Note for document generation:**
+   - Trust templates will include QDOT placeholder provisions
+   - Final QDOT drafting requires specialized attorney review
+   - Beneficiary designations on retirement accounts may need special treatment
+
+   **[/IF]**
+   **[/IF]**
+
 3. **If married, ask about prior marriages:**
    - Is this a first marriage for both of you?
    - Does either spouse have children from a prior relationship?
@@ -60,18 +151,90 @@ When `/estate` is invoked, guide users through these phases:
    - Are there stepchildren you want to include in your planning?
 
    **[IF state == "TN" AND marital_status == "married"]**
+   **Tennessee Community Property Trust Suitability Screening:**
+
+   Before offering CPT, ask these screening questions:
+
+   SKULD: Are you planning to relocate outside Tennessee in the next 5-10 years?
+          - Yes → Flag: `cpt_relocation_risk: true`
+          - No
+          - Uncertain
+
+   SKULD: Has either spouse ever been through a divorce or legal separation?
+          - Yes → Flag: `cpt_divorce_history: true`
+          - No
+
+   SKULD: Did either spouse bring significant separate property (pre-marital or inherited) into the marriage?
+          - Yes, significant assets → Flag: `cpt_separate_property_concern: true`
+          - Some, but not significant
+          - No, most assets acquired during marriage
+
+   SKULD: Is either spouse in a profession with high liability exposure (doctor, attorney, business owner with personal guarantees)?
+          - Yes → Flag: `cpt_liability_profession: true`
+          - No
+
+   **[IF any CPT risk flag = true]**
+   ```
+   ╔══════════════════════════════════════════════════════════════════╗
+   ║           ⚠️ COMMUNITY PROPERTY TRUST CONSIDERATIONS             ║
+   ╠══════════════════════════════════════════════════════════════════╣
+   ║ Based on your responses, we identified potential concerns:       ║
+   ║                                                                  ║
+   ║ [IF cpt_relocation_risk]                                         ║
+   ║ • RELOCATION RISK: Other states may not recognize Tennessee's   ║
+   ║   CPT. If you move, the tax benefits could be compromised and   ║
+   ║   property characterization may become unclear.                 ║
+   ║ [/IF]                                                           ║
+   ║                                                                  ║
+   ║ [IF cpt_divorce_history]                                        ║
+   ║ • DIVORCE HISTORY: CPT creates 50/50 ownership. In a divorce,   ║
+   ║   all CPT assets would be split equally regardless of who       ║
+   ║   contributed what.                                              ║
+   ║ [/IF]                                                           ║
+   ║                                                                  ║
+   ║ [IF cpt_separate_property_concern]                              ║
+   ║ • SEPARATE PROPERTY: Pre-marital or inherited assets transferred║
+   ║   to CPT become community property (50/50). Consider keeping    ║
+   ║   separate property outside the CPT.                            ║
+   ║ [/IF]                                                           ║
+   ║                                                                  ║
+   ║ [IF cpt_liability_profession]                                   ║
+   ║ • LIABILITY EXPOSURE: Tenancy by Entirety may provide better    ║
+   ║   creditor protection for your situation than CPT.              ║
+   ║ [/IF]                                                           ║
+   ║                                                                  ║
+   ║ We recommend discussing CPT with your attorney before electing. ║
+   ╚══════════════════════════════════════════════════════════════════╝
+   ```
+   **[/IF]**
+
    **Tennessee Community Property Trust Option:**
    Tennessee offers a unique Community Property Trust option that provides significant tax benefits:
    - **Double Step-Up in Basis:** BOTH spouses' shares get fair market value basis at first death
    - **Capital Gains Elimination:** Heirs avoid capital gains tax on pre-death appreciation
    - **Example:** $500K stock (basis $100K) → Without CPT: basis $300K; With CPT: basis $500K = ~$30K+ savings
 
+   ```
+   ╔══════════════════════════════════════════════════════════════════╗
+   ║              ⚠️ IRREVOCABILITY WARNING                           ║
+   ╠══════════════════════════════════════════════════════════════════╣
+   ║ CRITICAL: Once you transfer assets to a Community Property      ║
+   ║ Trust, that election is IRREVOCABLE for those assets.           ║
+   ║                                                                  ║
+   ║ • You CANNOT undo the community property characterization       ║
+   ║ • If you divorce, CPT assets will be split 50/50                ║
+   ║ • If you move states, tax treatment may become complex          ║
+   ║                                                                  ║
+   ║ This is a permanent decision that should be made carefully.     ║
+   ╚══════════════════════════════════════════════════════════════════╝
+   ```
+
    Would you like to structure your trust as a Tennessee Community Property Trust?
-   - Note: This election is irrevocable for assets transferred to the trust
-   - Best for: Couples with appreciated assets (stocks, real estate, business interests)
-   - Not recommended if: High divorce risk or litigation-prone profession
+   - Best for: Couples with appreciated assets acquired during marriage, no relocation plans
+   - Not recommended if: Relocation likely, divorce history, significant separate property, liability concerns
 
    [Save response to: `tn_community_property_trust: boolean`]
+   [Save screening flags to profile]
    **[/IF]**
 
 4. If minor children: guardianship preferences, distribution ages
@@ -101,6 +264,40 @@ When `/estate` is invoked, guide users through these phases:
    ╚══════════════════════════════════════════════════════════════════╝
    ```
 
+   **Custody Order Verification:**
+   SKULD: Is there an existing court custody order or parenting plan
+          for your children?
+          - Yes, there is a custody order
+          - No custody order exists
+          - Not applicable (other parent is deceased)
+
+   **[IF has_custody_order = true]**
+   ```
+   ╔══════════════════════════════════════════════════════════════════╗
+   ║           📋 CUSTODY ORDER COORDINATION                          ║
+   ╠══════════════════════════════════════════════════════════════════╣
+   ║ Existing custody orders may affect your estate planning:        ║
+   ║                                                                  ║
+   ║ • Some orders include standby guardian provisions               ║
+   ║ • Orders may specify what happens if custodial parent dies      ║
+   ║ • Courts generally honor existing order provisions              ║
+   ║                                                                  ║
+   ║ IMPORTANT: Your attorney should review your custody order       ║
+   ║ alongside your will. Any guardian nomination should be          ║
+   ║ consistent with or acknowledge the custody order terms.         ║
+   ╚══════════════════════════════════════════════════════════════════╝
+   ```
+
+   SKULD: Does your custody order include any provisions about what
+          happens to the children if something happens to you?
+          - Yes, it has standby guardian or succession provisions
+          - No, it only covers current custody arrangement
+          - Not sure
+
+   [Save to: `has_custody_order: boolean`]
+   [Save to: `custody_order_has_succession: boolean`]
+   **[/IF]**
+
 6. If special needs beneficiary:
    - Is the individual over 18? (adult vs. minor affects planning)
    - Government benefits status (SSI, SSDI, Medicaid)
@@ -112,7 +309,43 @@ When `/estate` is invoked, guide users through these phases:
    - Does either spouse want to provide differently for children from prior relationships?
    - Are there stepchildren to include or exclude?
    - Do you want assets to ultimately pass to your own children after spouse's lifetime? (QTIP consideration)
-   - Are there prenuptial/postnuptial agreements affecting asset distribution?
+
+   **Prenuptial/Postnuptial Agreement Check:**
+   SKULD: Do you have a prenuptial or postnuptial agreement?
+          - Yes
+          - No
+          - Not sure
+
+   **[IF has_prenuptial_agreement = true]**
+   ```
+   ╔══════════════════════════════════════════════════════════════════╗
+   ║           📋 AGREEMENT COORDINATION REQUIRED                     ║
+   ╠══════════════════════════════════════════════════════════════════╣
+   ║ Your estate plan must coordinate with your prenuptial or        ║
+   ║ postnuptial agreement. These agreements often specify:          ║
+   ║                                                                  ║
+   ║ • How assets are characterized (separate vs. marital)           ║
+   ║ • What each spouse is entitled to receive                       ║
+   ║ • Waiver of elective share rights                               ║
+   ║ • Specific provisions about inheritance                         ║
+   ║                                                                  ║
+   ║ IMPORTANT: Your attorney should review both your agreement      ║
+   ║ and these estate planning documents together to ensure          ║
+   ║ they do not conflict.                                           ║
+   ║                                                                  ║
+   ║ Please have your agreement available for attorney review.       ║
+   ╚══════════════════════════════════════════════════════════════════╝
+   ```
+
+   SKULD: Does your agreement specify how assets should be distributed
+          at death? (This may affect our trust structure)
+          - Yes, it specifies distribution terms
+          - No, it only covers divorce
+          - Not sure
+
+   [Save response to: `has_prenuptial_agreement: boolean`]
+   [Save response to: `prenup_covers_death: boolean`]
+   **[/IF]**
 7. **Healthcare preferences (for healthcare directive):**
    - Life support wishes: full measures, comfort care, or no extraordinary measures
    - Organ donation preferences
@@ -156,8 +389,32 @@ When `/estate` is invoked, guide users through these phases:
     - Would you prefer TOD deeds or trust ownership for real estate?
 11. Asset overview (real estate states, business interests, retirement accounts, net worth range)
     - **If significant retirement accounts (>50% of net worth):** SECURE Act beneficiary planning critical
-12. Planning goals (probate avoidance, asset protection, child provision)
-13. Existing documents
+12. **Digital Assets:**
+    SKULD: Do you have any significant digital assets we should address?
+
+    **Common Digital Assets:**
+    - Cryptocurrency (Bitcoin, Ethereum, etc.)
+    - NFTs or digital collectibles
+    - Online business accounts (Amazon seller, Etsy, etc.)
+    - Domain names with value
+    - Digital media libraries (significant iTunes, Kindle, Steam purchases)
+    - Social media accounts with monetization
+    - Cloud storage with important files
+    - Password managers
+
+    **If yes to any:**
+    - Note: Most digital assets have Terms of Service that may affect transferability
+    - Cryptocurrency requires secure key transfer procedures
+    - Consider a Digital Asset Memorandum (separate document with access info)
+    - [Save to: `has_digital_assets: true`, `digital_asset_types: [list]`]
+
+    **Trust provisions may include:**
+    - Authorization for trustee to access digital accounts
+    - Guidance on cryptocurrency wallet handling
+    - Instructions for social media disposition (memorialize, delete, transfer)
+
+13. Planning goals (probate avoidance, asset protection, child provision)
+14. Existing documents
 
 **State detection**: When user mentions a state, the `estate-state-lookup` agent auto-loads that state's requirements.
 
@@ -192,6 +449,59 @@ When `/estate` is invoked, guide users through these phases:
 - Beneficiary Designation Review → if retirement accounts or life insurance
 - Beneficiary Designation Checklist → if `retirement_heavy_estate` (SECURE Act coordination)
 - Tennessee TOD Deed → if state = TN AND prefers TOD deed for real estate
+
+**[IF retirement_heavy_estate = true]**
+```
+╔══════════════════════════════════════════════════════════════════╗
+║       ⚠️ CRITICAL: BENEFICIARY DESIGNATIONS OVERRIDE TRUST       ║
+╠══════════════════════════════════════════════════════════════════╣
+║ Your retirement accounts represent a significant portion of      ║
+║ your estate. These accounts pass by BENEFICIARY DESIGNATION,     ║
+║ NOT by your trust terms.                                         ║
+║                                                                  ║
+║ Common conflicts to avoid:                                       ║
+║                                                                  ║
+║ • Trust says "equally to children" but 401(k) names only one    ║
+║ • Trust creates Special Needs Trust but IRA names disabled      ║
+║   child directly (disqualifies them from benefits!)             ║
+║ • Trust excludes ex-spouse but old 401(k) still names them     ║
+║ • Trust provides for spouse but IRA names children directly     ║
+║                                                                  ║
+║ I will generate a Beneficiary Designation Coordination          ║
+║ Checklist to help you align these designations with your trust. ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+SKULD: Would you like me to generate a Beneficiary Designation
+       Coordination Checklist for your retirement accounts and
+       life insurance policies?
+       - Yes (recommended)
+       - No, I'll handle this separately
+
+[Add `beneficiary-coordination-checklist` to documents_selected if yes]
+**[/IF]**
+
+**[IF special_needs_beneficiary AND (retirement_accounts OR life_insurance)]**
+```
+╔══════════════════════════════════════════════════════════════════╗
+║    ⚠️ SPECIAL NEEDS + BENEFICIARY DESIGNATIONS - CRITICAL       ║
+╠══════════════════════════════════════════════════════════════════╣
+║ NEVER name a disabled beneficiary directly on retirement        ║
+║ accounts or life insurance policies.                            ║
+║                                                                  ║
+║ Direct inheritance can DISQUALIFY them from SSI, Medicaid,      ║
+║ and other vital government benefits.                            ║
+║                                                                  ║
+║ CORRECT approach:                                                ║
+║ • Name the Special Needs Trust as beneficiary                   ║
+║ • Use exact trust name: "[Name] Special Needs Trust"            ║
+║ • Provide trust date and trustee information                    ║
+║                                                                  ║
+║ This will be addressed in your Beneficiary Designation          ║
+║ Coordination Checklist.                                         ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+**[/IF]**
 
 **[IF state == "TN"] Trust vs. TOD Deed Decision Guide:**
 
@@ -320,6 +630,43 @@ Display progress at start of each document generation:
 - Life insurance beneficiary designations
 - Vehicle transfers (if applicable)
 
+**[IF state == "TN" AND marital_status == "married"]**
+
+### Tennessee Tenancy by Entirety Recommendation
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║         TENNESSEE MARRIED COUPLES - ASSET TITLING TIP           ║
+╠══════════════════════════════════════════════════════════════════╣
+║ For assets NOT transferred to your trust (e.g., checking        ║
+║ accounts, vehicles, personal property), consider titling as     ║
+║ "tenants by the entirety" (TBE) for creditor protection.        ║
+║                                                                  ║
+║ Tennessee allows TBE for both REAL and PERSONAL property.       ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+**Tenancy by Entirety Benefits:**
+- Protected from creditors of ONE spouse (individual debts)
+- Automatic right of survivorship
+- Cannot be severed unilaterally by one spouse
+
+**Exceptions (TBE does NOT protect against):**
+- Joint debts (co-signed by both spouses)
+- Federal tax liens
+- Debts agreed to by both spouses
+
+**How to Title for TBE:**
+| Asset Type | Titling Language |
+|------------|------------------|
+| Real Property | "[Spouse 1] and [Spouse 2], husband and wife, as tenants by the entirety" |
+| Bank Accounts | Both spouses named with TBE designation (check with bank) |
+| Vehicles | Some states allow; check TN DMV requirements |
+
+**Note:** Assets titled as TBE convert to tenancy in common upon divorce.
+
+**[/IF]**
+
 **Provide ongoing maintenance reminders:**
 - Annual review recommendation
 - Life event triggers for updates (marriage, divorce, birth, death, move)
@@ -394,13 +741,22 @@ When these situations are detected, display appropriate warnings while continuin
     "full_name": "string",
     "date_of_birth": "date",
     "state_of_residence": "string (2-letter)",
-    "marital_status": "single|married|divorced|widowed|domestic_partnership",
+    "marital_status": "single|married|divorced|widowed|domestic_partnership|unmarried_with_partner",
     "citizenship": "us_citizen|resident_alien|non_resident"
   },
   "spouse": {
     "full_name": "string",
     "date_of_birth": "date",
     "is_us_citizen": "boolean"
+  },
+  "unmarried_partner": {
+    "has_partner": "boolean",
+    "full_name": "string",
+    "relationship_duration": "string",
+    "is_beneficiary": "boolean",
+    "beneficiary_level": "significant|specific_items|none",
+    "is_healthcare_agent": "boolean",
+    "is_financial_agent": "boolean"
   },
   "children": [
     {
@@ -443,6 +799,7 @@ When these situations are detected, display appropriate warnings while continuin
     "client_prior_marriages": "number",
     "spouse_prior_marriages": "number",
     "has_prenuptial_agreement": "boolean",
+    "prenup_covers_death": "boolean",
     "use_qtip_trust": "boolean",
     "qtip_preferences": {
       "spouse_income_only": "boolean",
@@ -483,6 +840,15 @@ When these situations are detected, display appropriate warnings while continuin
     "receiving_ssdi": "boolean",
     "planning_medicaid_within_5_years": "boolean",
     "has_long_term_care_insurance": "boolean"
+  },
+  "tn_community_property_trust": {
+    "elected": "boolean",
+    "screening": {
+      "cpt_relocation_risk": "boolean",
+      "cpt_divorce_history": "boolean",
+      "cpt_separate_property_concern": "boolean",
+      "cpt_liability_profession": "boolean"
+    }
   },
   "real_estate_titling": {
     "current_titling": "sole|joint_tenancy|tenancy_entirety|community_property|other",

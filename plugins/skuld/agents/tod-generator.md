@@ -63,8 +63,57 @@ If not already in profile, ask for:
 1. Primary beneficiary name(s):
 2. Relationship to owner:
 3. If multiple beneficiaries, percentage shares (must total 100%):
-4. Alternate/contingent beneficiaries (if primary predeceases owner):
 ```
+
+### Contingent Beneficiary Requirement
+
+**CRITICAL: Always ask about contingent beneficiaries**
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║        ⚠️ CONTINGENT BENEFICIARY - IMPORTANT DECISION           ║
+╠══════════════════════════════════════════════════════════════════╣
+║ What should happen if a primary beneficiary dies before you?    ║
+║                                                                  ║
+║ Without a contingent beneficiary, if your named beneficiary     ║
+║ predeceases you, the property will pass through PROBATE -       ║
+║ defeating the purpose of the TOD deed.                          ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+SKULD: What should happen if a primary beneficiary predeceases you?
+
+**Option A: Per Stirpes (to their children)**
+- Their share passes to their surviving descendants
+- Example: If son dies, his children receive his share
+- Most common choice for family beneficiaries
+
+**Option B: To Surviving Beneficiaries**
+- Their share is divided among remaining primary beneficiaries
+- Example: If one of three children dies, the other two split their share
+- Works well when multiple beneficiaries named
+
+**Option C: Name Specific Alternates**
+- You designate specific backup beneficiaries
+- Example: "If John predeceases me, his share goes to Jane"
+- Maximum control but requires updating if circumstances change
+
+**Option D: No Contingent (Not Recommended)**
+- If beneficiary predeceases, that share goes through probate
+- ⚠️ This defeats the purpose of the TOD deed
+
+SKULD: Which approach would you prefer?
+
+[Save to: `tod_contingent_approach: per_stirpes|surviving|specific|none`]
+
+**[IF tod_contingent_approach = "specific"]**
+SKULD: Who should be the alternate beneficiary for each primary beneficiary?
+
+| Primary Beneficiary | Alternate Beneficiary |
+|---------------------|----------------------|
+| [NAME_1] | [ALTERNATE_1] |
+| [NAME_2] | [ALTERNATE_2] |
+**[/IF]**
 
 ### Married Owner Considerations
 ```
@@ -272,7 +321,6 @@ Generate checklist for the user:
 ║ 2. RECORD with the Register of Deeds                             ║
 ║    County: [PROPERTY_COUNTY]                                      ║
 ║    Address: [REGISTER_OF_DEEDS_ADDRESS]                          ║
-║    Recording Fee: Approximately $[FEE] (call to confirm)         ║
 ║                                                                   ║
 ║ 3. KEEP copies of:                                               ║
 ║    - Recorded deed (with book/page or instrument number)         ║
@@ -287,6 +335,52 @@ Generate checklist for the user:
 ║    to be effective. An unrecorded TOD deed has no legal effect. ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
+
+## Tennessee Recording Fees
+
+Tennessee recording fees are set by state statute but may vary slightly by county:
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║              TENNESSEE RECORDING FEE ESTIMATES                   ║
+╠══════════════════════════════════════════════════════════════════╣
+║ Basic Recording Fee:                                             ║
+║ • First page: $10.00                                             ║
+║ • Each additional page: $5.00                                    ║
+║ • Typical TOD Deed (2-3 pages): $15.00 - $20.00                 ║
+║                                                                  ║
+║ Additional Fees (may apply):                                     ║
+║ • Recordation Tax: Generally exempt for TOD deeds (no transfer) ║
+║ • Document preparation fee: Varies by county                     ║
+║ • Certified copy: $1.00 per page + $5.00 certification          ║
+║                                                                  ║
+║ Total Estimated Cost: $15.00 - $30.00                           ║
+║                                                                  ║
+║ Note: Call your county Register of Deeds to confirm exact fees. ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+### Major Tennessee Counties - Register of Deeds
+
+| County | Address | Phone |
+|--------|---------|-------|
+| Davidson (Nashville) | 700 2nd Ave S, Nashville, TN 37210 | (615) 862-6790 |
+| Shelby (Memphis) | 150 Washington Ave, Memphis, TN 38103 | (901) 222-3000 |
+| Knox (Knoxville) | 400 Main Street, Knoxville, TN 37902 | (865) 215-2310 |
+| Hamilton (Chattanooga) | 625 Georgia Ave, Chattanooga, TN 37402 | (423) 209-6570 |
+| Williamson (Franklin) | 1320 W Main Street, Franklin, TN 37064 | (615) 790-5712 |
+| Rutherford (Murfreesboro) | 319 N Maple Street, Murfreesboro, TN 37130 | (615) 898-7800 |
+
+**[INSERT_COUNTY_INFO]** based on client's property county.
+
+### Online Recording Options
+
+Some Tennessee counties offer online recording services:
+- Davidson County: Electronic recording available
+- Shelby County: Electronic recording available
+- Check with your specific county for availability
+
+Alternatively, many title companies can record documents for a nominal fee.
 
 ## Machine-Readable Markers
 

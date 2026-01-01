@@ -213,6 +213,55 @@ The Marital Trust shall be administered as follows:
 [/IF]
 ```
 
+**QDOT Trust (Non-Citizen Spouse):**
+```
+[IF qdot_required == true]
+## Qualified Domestic Trust (QDOT) Provisions
+
+╔══════════════════════════════════════════════════════════════════╗
+║          ⚠️ QDOT PLACEHOLDER - ATTORNEY DRAFTING REQUIRED        ║
+╠══════════════════════════════════════════════════════════════════╣
+║ The surviving spouse is not a U.S. citizen. To qualify for the  ║
+║ marital deduction and defer estate taxes, assets must pass       ║
+║ through a Qualified Domestic Trust (QDOT).                       ║
+║                                                                   ║
+║ QDOT REQUIREMENTS (IRC § 2056A):                                 ║
+║ • At least one U.S. citizen or U.S. bank must serve as trustee  ║
+║ • Trustee must withhold estate tax on principal distributions   ║
+║ • Trust must meet IRS regulatory requirements                    ║
+║ • If trust exceeds $2M, additional security required             ║
+║                                                                   ║
+║ This template includes placeholder provisions. Final drafting   ║
+║ MUST be completed by an attorney experienced in QDOT planning.   ║
+╚══════════════════════════════════════════════════════════════════╝
+
+### QDOT Trust Provisions (Placeholder)
+
+Upon the death of the first Grantor to die, assets intended for the surviving
+non-citizen spouse shall be allocated to a Qualified Domestic Trust meeting
+the requirements of Internal Revenue Code Section 2056A.
+
+**Trustee Requirements:**
+- At least one U.S. citizen trustee OR
+- A U.S. bank serving as trustee
+
+**Distribution Standards:**
+- Surviving spouse entitled to all net income, distributed at least annually
+- Principal distributions subject to estate tax withholding
+- HEMS distributions allowed but subject to QDOT tax
+
+**Upon Surviving Spouse's Death:**
+- Remaining QDOT assets subject to estate tax
+- Then distributed per remainder provisions of this Trust
+
+[[ ATTORNEY REVIEW: QDOT provisions require specialized drafting.
+   This placeholder MUST be replaced with compliant QDOT language. ]]
+[[ ATTORNEY REVIEW: Verify trustee qualifications meet IRC § 2056A. ]]
+[[ ATTORNEY REVIEW: If QDOT exceeds $2M, ensure bond or bank trustee requirement is met. ]]
+[[ ATTORNEY REVIEW: Consider whether surviving spouse may become citizen before death. ]]
+[/IF]
+```
+
 **Per-Child Distribution (Blended Family):**
 ```
 [IF blended_family AND custom_share_percentages]
@@ -266,6 +315,57 @@ encumber any interest in this Trust...
 [/IF]
 [/IF]
 ```
+
+### Per Stirpes vs. Per Capita Distribution
+
+**[IF has_children]**
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║        DISTRIBUTION IF A BENEFICIARY PREDECEASES YOU            ║
+╠══════════════════════════════════════════════════════════════════╣
+║ What should happen to a child's share if they die before you?   ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+SKULD: If a beneficiary (e.g., one of your children) predeceases you, how should their share be distributed?
+
+**Option A: Per Stirpes (to their descendants)**
+- Their share passes to THEIR children (your grandchildren)
+- Example: If your son dies, his 1/3 share goes to his children
+- Most common choice for family beneficiaries
+- Keeps the inheritance in that "branch" of the family
+
+**Option B: Per Capita (to surviving beneficiaries)**
+- Their share is divided among remaining beneficiaries
+- Example: If one of three children dies, the other two each get 1/2
+- Works when you prefer assets stay with living beneficiaries
+- May exclude grandchildren if parent predeceases
+
+**Option C: Per Capita at Each Generation**
+- First divides equally at the first generation with survivors
+- Then pools deceased members' shares for equal division at next level
+- More complex but treats all grandchildren equally
+
+[Save to: `distribution_method: per_stirpes|per_capita|per_capita_each_generation`]
+
+**Include in trust document based on selection:**
+```
+[IF distribution_method == "per_stirpes"]
+... in equal shares, per stirpes, meaning if any beneficiary predeceases
+the distribution, that beneficiary's share shall pass to their then-living
+descendants, by right of representation.
+[ELSIF distribution_method == "per_capita"]
+... in equal shares among the then-living beneficiaries. The share of any
+beneficiary who predeceases the distribution shall be divided equally among
+the surviving beneficiaries.
+[ELSIF distribution_method == "per_capita_each_generation"]
+... per capita at each generation, meaning the shares shall be divided into
+equal portions based on the number of living members and deceased members
+with living descendants at each generational level.
+[/IF]
+```
+**[/IF]**
 
 **If special needs beneficiary:**
 ```

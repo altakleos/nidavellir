@@ -33,6 +33,69 @@ Third-Party SNT is appropriate when:
 - Beneficiary is NOT funding with their own money
 - No personal injury settlement or direct inheritance involved
 
+### First-Party SNT Detection
+
+SKULD: Does [BENEFICIARY_NAME] have any assets of their own?
+       - No - all funds will come from family members
+       - Yes - beneficiary has their own assets (savings, inheritance, etc.)
+       - Yes - beneficiary has a personal injury settlement
+       - Not sure
+
+**[IF beneficiary_has_own_assets == true]**
+```
+╔══════════════════════════════════════════════════════════════════╗
+║        ⚠️ FIRST-PARTY SNT MAY BE REQUIRED                        ║
+╠══════════════════════════════════════════════════════════════════╣
+║ When a beneficiary has their OWN assets, a different type of     ║
+║ Special Needs Trust may be needed.                               ║
+║                                                                   ║
+║ THIRD-PARTY SNT (This tool generates):                          ║
+║ • Funded by family/others (NOT the beneficiary)                 ║
+║ • NO Medicaid payback at death                                   ║
+║ • Remainder goes to family's chosen beneficiaries               ║
+║                                                                   ║
+║ FIRST-PARTY SNT (d)(4)(A) (Requires attorney):                  ║
+║ • Funded by beneficiary's OWN assets                            ║
+║ • MEDICAID PAYBACK REQUIRED at death                            ║
+║ • Must be established by parent, grandparent, guardian, or court║
+║ • Beneficiary must be under 65 at creation                      ║
+║                                                                   ║
+║ Common situations requiring first-party SNT:                     ║
+║ • Child receives inheritance directly (not through trust)       ║
+║ • Personal injury settlement                                     ║
+║ • Back Social Security benefits                                  ║
+║ • UTMA/UGMA account reaching maturity                           ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+**For Minor Children with Their Own Assets:**
+- A minor child may have assets from:
+  - UTMA/UGMA accounts
+  - Direct inheritances
+  - Personal injury settlements
+  - Court awards
+
+If these assets must be protected:
+1. First-party (d)(4)(A) SNT is typically required
+2. Parent, grandparent, or guardian can establish (no court required)
+3. Upon beneficiary's death, Medicaid must be reimbursed FIRST
+4. Any remainder then passes to other beneficiaries
+
+```
+[[ ATTORNEY REVIEW: Beneficiary has their own assets. First-party SNT
+   may be required for these funds. Consider:
+   - Pooled trust as alternative (no age limit)
+   - ABLE account for first $100K
+   - Separate first-party SNT for beneficiary's own assets
+   - Third-party SNT for family's contributions ONLY ]]
+```
+
+**Planning Note:** Many families use BOTH types:
+- First-party SNT for child's own assets (Medicaid payback applies)
+- Third-party SNT for family contributions (no payback)
+
+**[/IF]**
+
 If first-party SNT is needed (beneficiary's own funds), display:
 ```
 [[ ATTORNEY REVIEW: Beneficiary may need first-party (d)(4)(A) SNT instead.
@@ -135,6 +198,75 @@ a first-party special needs trust with Medicaid payback provisions.
 funds belong to beneficiary, a separate first-party SNT is required. ]]
 ```
 
+### Professional vs. Family Trustee Discussion
+
+**Before drafting trustee provisions, address this with the client:**
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║        SNT TRUSTEE SELECTION - IMPORTANT CONSIDERATION           ║
+╠══════════════════════════════════════════════════════════════════╣
+║ Special Needs Trust administration is different from regular     ║
+║ trust administration. The trustee must:                          ║
+║                                                                  ║
+║ • Understand SSI, SSDI, and Medicaid rules                       ║
+║ • Know what distributions are "safe" vs. benefit-threatening     ║
+║ • Keep detailed records for benefit agency reporting             ║
+║ • Coordinate with government programs for decades               ║
+║ • Navigate complex food/shelter (ISM) calculations               ║
+║ • Understand ABLE account coordination                           ║
+║                                                                  ║
+║ This role typically lasts 20-50+ years. Family burnout is common.║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+SKULD: Who should serve as the Special Needs Trust trustee?
+
+**Option A: Family Member**
+- Pros: Knows beneficiary well, no ongoing fees
+- Cons: May lack expertise, burnout risk, family conflicts
+- Best for: Engaged family with backup plan
+
+**Option B: Professional/Corporate Trustee**
+- Pros: Expertise in benefits, continuity, no burnout
+- Cons: Annual fees (typically 1-1.5% of assets), less personal
+- Best for: Larger trusts, complex needs, limited family
+
+**Option C: Co-Trustees (Family + Professional)**
+- Pros: Family provides personal knowledge, professional provides expertise
+- Cons: More expensive, coordination required
+- Best for: Balance of personal attention and professional management
+
+SKULD: Have you considered how long this trustee role will last?
+       For a beneficiary currently age [AGE], this could be
+       [ESTIMATED_YEARS] or more years of trust administration.
+
+       Would you like to:
+       - Name a family member as initial trustee with professional backup
+       - Start with a professional trustee
+       - Use co-trustees from the beginning
+       - I need more information to decide
+
+[Save to: `snt_trustee_type: family|professional|co-trustees`]
+
+**[IF snt_trustee_type = "family"]**
+```
+╔══════════════════════════════════════════════════════════════════╗
+║              📋 FAMILY TRUSTEE RECOMMENDATION                    ║
+╠══════════════════════════════════════════════════════════════════╣
+║ Since you've chosen a family member as trustee, we recommend:    ║
+║                                                                  ║
+║ 1. Name a corporate trustee as a backup successor (third in line)║
+║ 2. Include a "trust protector" who can replace the trustee      ║
+║ 3. Authorize the trustee to hire SNT administration consultants  ║
+║ 4. Include explicit permission to delegate to professionals     ║
+║                                                                  ║
+║ This provides a safety net if family members become unavailable  ║
+║ or the administration becomes too burdensome over time.          ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+**[/IF]**
+
 ### Article III: Trustee Provisions
 
 ```
@@ -152,7 +284,7 @@ knowledge of government benefit programs.
 3.2 Successor Trustees.
    (a) First Successor: [SNT_SUCCESSOR_1]
    (b) Second Successor: [SNT_SUCCESSOR_2]
-   (c) Third Successor: [CORPORATE_TRUSTEE_OPTION]
+   (c) Third Successor: [CORPORATE_TRUSTEE_OPTION or specific corporate trustee]
 
 3.3 Trustee Qualifications. Any Trustee serving hereunder must:
    (a) Be familiar with government benefit programs including SSI, SSDI,
@@ -165,8 +297,20 @@ compensation for services rendered.
 
 3.5 Bond Waiver. No Trustee shall be required to post bond.
 
+3.6 Professional Assistance. The Trustee is authorized to hire attorneys,
+accountants, benefits specialists, and other professionals as needed for
+proper trust administration. Such fees shall be paid from trust assets.
+
+3.7 Trust Protector. [TRUST_PROTECTOR_NAME], or their successor, shall
+serve as Trust Protector with authority to:
+   (a) Remove and replace the Trustee for cause;
+   (b) Appoint a successor Trustee if no named successor is willing or able;
+   (c) Modify administrative provisions to respond to changes in law;
+   (d) Resolve disputes between the Trustee and beneficiary.
+
 [[ ATTORNEY REVIEW: Consider whether professional or corporate trustee is
-advisable given the specialized nature of SNT administration. ]]
+advisable given the specialized nature of SNT administration. Long-term
+trusts (20+ years) often benefit from institutional backup. ]]
 ```
 
 ### Article IV: Distributions
@@ -252,6 +396,56 @@ Beneficiary.
 6.3 No Voluntary Alienation. The Beneficiary may not voluntarily or
 involuntarily alienate, anticipate, or encumber any interest in this Trust.
 ```
+
+### SNT Remainder Beneficiary Collection
+
+**[CRITICAL - Collect remainder beneficiaries before drafting Article VII]**
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║           SNT REMAINDER BENEFICIARIES - IMPORTANT                ║
+╠══════════════════════════════════════════════════════════════════╣
+║ Third-party SNTs have NO Medicaid payback requirement.           ║
+║ This means the remaining assets go to YOUR chosen beneficiaries, ║
+║ not to the government.                                           ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+SKULD: After [BENEFICIARY_NAME]'s lifetime, who should receive the remaining SNT assets?
+
+**Common Approaches:**
+
+**Option A: Other Children Equally**
+- Remaining assets divided equally among your other children
+- Simple and treats all children fairly
+- Works well when other children don't have special needs
+
+**Option B: Specific Individuals**
+- You name specific people and percentages
+- Example: "Sister Sarah 50%, Brother Mark 50%"
+- Allows for customized distribution
+
+**Option C: Back to the Trust**
+- Remainder flows into your main revocable trust
+- Distributed per trust terms
+- Keeps everything coordinated
+
+**Option D: Charity**
+- Name one or more charitable organizations
+- May provide estate tax benefits (for large estates)
+- Consider organizations that serve people with similar needs
+
+SKULD: Who should be the remainder beneficiaries?
+- Primary remainder beneficiary: _________
+- If primary doesn't survive, then to: _________
+- Final backup (if all above have predeceased): _________
+
+[Save to profile:
+  `snt_remainder_primary: [NAME(S)]`
+  `snt_remainder_secondary: [NAME(S)]`
+  `snt_remainder_final: [NAME(S)]`]
+
+**Note:** The Settlor's descendants, per stirpes, is a common final backup.
 
 ### Article VII: Trust Termination and Remainder
 
@@ -374,10 +568,58 @@ Would you like to generate a Letter of Intent template now?
 ## State-Specific Variations
 
 ### Tennessee (TN)
-- Medicaid program: TennCare
-- CHOICES waiver for home/community services
-- Employment and Community First (ECF) waiver
-- TennCare has 5-year lookback for transfers
+
+**TennCare Program:** Tennessee's Medicaid program has specific waiver programs that provide home and community-based services.
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║            TENNCARE WAIVER PROGRAMS FOR SNT PLANNING            ║
+╠══════════════════════════════════════════════════════════════════╣
+║ CHOICES - Long-Term Services & Supports                          ║
+║ • For: Elderly and adults with physical disabilities             ║
+║ • Services: Home care, community living, nursing facility alt.   ║
+║ • Key: Must meet nursing facility level of care                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║ ECF (Employment and Community First)                             ║
+║ • For: Adults with intellectual/developmental disabilities       ║
+║ • Services: Job coaching, day services, residential supports     ║
+║ • Key: No waitlist for community-based services                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║ Katie Beckett                                                    ║
+║ • For: Children with disabilities                                ║
+║ • Services: Home care that would otherwise require facility      ║
+║ • Key: Child's income/assets considered, not parent's            ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+**[IF state == "TN" AND snt_beneficiary_exists]**
+
+SKULD: Is [BENEFICIARY_NAME] currently enrolled in any TennCare waiver program?
+       - CHOICES (long-term services for elderly/physical disabilities)
+       - ECF (Employment and Community First for intellectual disabilities)
+       - Katie Beckett (children with disabilities)
+       - Applied but on waitlist
+       - Not currently enrolled / Not sure
+
+[Save to: `tenncare_waiver_program: choices|ecf|katie_beckett|waitlist|none`]
+
+**[IF tenncare_waiver_program != "none"]**
+Include in SNT provisions:
+```
+The Trustee shall coordinate with the Beneficiary's TennCare waiver program
+([WAIVER_PROGRAM_NAME]) to ensure distributions do not jeopardize waiver
+eligibility or services. The Trustee should consult with a benefits specialist
+when making significant distributions.
+```
+**[/IF]**
+
+**[/IF]**
+
+**Key Tennessee SNT Considerations:**
+- TennCare has **5-year lookback** for asset transfers
+- Third-party SNT assets are NOT counted for TennCare eligibility
+- ABLE TN accounts available (www.abletn.gov) - first $100K doesn't affect SSI
+- Pooled trusts available for beneficiaries 65+ (first-party only)
 
 ### California (CA)
 - Medi-Cal program
