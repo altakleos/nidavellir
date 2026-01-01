@@ -1,26 +1,28 @@
 ---
 name: domain-intelligence
 type: module
-description: Dynamic domain research strategy for discovering industry-specific requirements at forge-time
+description: Dynamic domain research strategy for discovering domain-specific requirements at forge-time
 ---
 
 # Domain Intelligence - Dynamic Research Strategy
 
-This module defines HOW to research any domain at forge-time, not WHAT domains exist. Rather than maintaining a static list of hard-coded domains (which can never be comprehensive), Eitri dynamically discovers domain-specific requirements through web research.
+This module defines HOW to research any domain at forge-time. Eitri dynamically discovers domain-specific requirements through web research.
 
 ## Design Philosophy
 
-**Old Approach (DEPRECATED):**
-- 6 hard-coded domains (Healthcare, Financial, E-Commerce, SaaS, DevOps, Data Science)
-- New domains required manual addition to this file
-- Estate planning, legal, real estate, manufacturing, etc. were NOT covered
-- Generic placeholders generated for unknown domains
+**Two Extension Categories:**
 
-**New Approach (ACTIVE):**
+| Category | Description | Example |
+|----------|-------------|---------|
+| **Domain-agnostic** | Meta-tools that generate tools for any domain | Eitri itself |
+| **Domain-specific** | Tools serving a particular domain | Healthcare intake, code reviewer, estate planning |
+
+Software engineering is a domain like any other (healthcare, legal, finance). All domains are researched dynamically:
+
 - Domain detected from user context at forge-time
-- WebSearch used to discover domain requirements
-- Intake patterns extracted from research results
-- ANY domain can be researched dynamically
+- WebSearch discovers domain-specific requirements, best practices, and patterns
+- Intake patterns and conditional logic extracted from research results
+- No hard-coded domain lists - any domain can be researched
 
 ## Domain Detection
 
@@ -32,6 +34,13 @@ I identify domains from user-provided input, not from a pre-defined list.
 - Direct mentions: "estate planning", "healthcare", "real estate", "manufacturing"
 - Professional contexts: "attorneys", "doctors", "accountants", "realtors"
 - Business types: "law firm", "medical practice", "accounting firm"
+
+**Software Engineering Signals:**
+- Development activities: "code review", "testing", "debugging", "refactoring"
+- Artifacts: "pull request", "commit", "branch", "merge", "CI/CD", "pipeline"
+- Roles: "developer", "engineer", "architect", "QA", "DevOps"
+- Tools/frameworks: language names, framework names, build tools
+- Processes: "code review", "pair programming", "TDD", "agile", "sprint"
 
 **Regulatory/Compliance Signals:**
 - Regulatory references: "HIPAA", "GDPR", "QDOT", "SOX", "PCI-DSS"
@@ -322,6 +331,38 @@ WebSearch "estate planning conditional screening questions"
 - Intake graph with entry points and conditional branches
 - Handler manifests with `requires_intake` populated
 
+## Example: Software Engineering Domain Research
+
+When user requests: "I need a code reviewer agent"
+
+**Step 1: Domain Detection**
+- Development activity: "code review"
+- Artifact implied: "pull request", "diff"
+- Domain detected: "software engineering"
+- Confidence: 0.9
+
+**Step 2: Research Execution**
+```
+WebSearch "code review best practices 2026"
+→ Finds: Review checklist patterns, common issues to catch, review comment etiquette
+
+WebSearch "code review automation tools patterns"
+→ Finds: Static analysis integration, security scanning, style enforcement
+
+WebSearch "code review conditional checks"
+→ Finds: Language-specific rules, framework conventions, security vulnerability patterns
+```
+
+**Step 3: Pattern Extraction**
+- Required checks: syntax errors, security vulnerabilities, code style
+- Conditional: language-specific rules (if Python → check type hints, if JS → check async patterns)
+- Integration points: CI/CD hooks, PR comments, IDE extensions
+
+**Step 4: Output**
+- Complete `domain_intelligence` object with software engineering patterns
+- Review criteria based on current best practices
+- Language/framework-specific conditional logic
+
 ## Integration with Other Modules
 
 This module feeds into:
@@ -343,4 +384,4 @@ This module feeds into:
 - Present options to user via AskUserQuestion
 - Allow user to refine domain context
 
-This dynamic approach ensures Eitri can intelligently handle ANY domain, not just the few that were previously hard-coded.
+This dynamic approach ensures Eitri can intelligently handle ANY domain - including software engineering - through consistent research rather than special-casing. The only extensions that skip domain research are truly domain-agnostic meta-tools (like Eitri itself).
