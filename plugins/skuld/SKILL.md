@@ -265,6 +265,48 @@ When `/estate` is invoked, guide users through these phases:
    [Save screening flags to profile]
    **[/IF]**
 
+   **[IF has_children = true]**
+   **Special Needs Screening:**
+
+   SKULD: Do any of your children have special needs, a disability,
+          or currently receive government benefits like SSI, Medicaid,
+          or disability services?
+
+          - Yes
+          - No
+          - Not currently, but I anticipate one might in the future
+
+   **[IF special_needs_response == "yes" OR special_needs_response == "anticipate"]**
+
+   SKULD: Which of your children? (select all that apply)
+          [Display multi-select list of children names from inventory]
+
+   [For each selected child, set flags:]
+   [Save to child profile: `has_special_needs: true`]
+   [If "anticipate" selected: `anticipated_special_needs: true`]
+
+   **[IF special_needs_response == "anticipate"]**
+   ```
+   ╔══════════════════════════════════════════════════════════════════╗
+   ║           📋 PLANNING FOR ANTICIPATED SPECIAL NEEDS              ║
+   ╠══════════════════════════════════════════════════════════════════╣
+   ║ Even if your child doesn't currently have special needs or      ║
+   ║ receive benefits, planning ahead with a Special Needs Trust     ║
+   ║ provides flexibility:                                           ║
+   ║                                                                  ║
+   ║ • Trust can be drafted now but only used if needed              ║
+   ║ • Protects future benefit eligibility                           ║
+   ║ • Avoids need to modify estate plan later                       ║
+   ║ • Can convert to standard distribution if never needed          ║
+   ╚══════════════════════════════════════════════════════════════════╝
+   ```
+   **[/IF]**
+
+   [Set global flag: `special_needs_beneficiary: true`]
+
+   **[/IF]**
+   **[/IF]**
+
 4. If minor children: guardianship preferences, distribution ages
 5. **If single parent with minor children (critical emphasis):**
    - Who will care for your children if you become incapacitated for an extended period?
@@ -326,13 +368,58 @@ When `/estate` is invoked, guide users through these phases:
    [Save to: `custody_order_has_succession: boolean`]
    **[/IF]**
 
-6. If special needs beneficiary:
-   - Is the individual over 18? (adult vs. minor affects planning)
-   - Government benefits status (SSI, SSDI, Medicaid)
-   - For adults: legal capacity status (guardianship/conservatorship?)
-   - SNT trustee preferences (may differ from main trust trustee)
-   - ABLE account eligibility and interest
-   - Letter of Intent desired?
+6. **[FOR EACH child WHERE has_special_needs = true]**
+   Special needs planning for [child.name]:
+
+   SKULD: Is [child.name] over 18?
+          - Yes (adult)
+          - No (minor)
+
+   [Save to child profile: `is_adult_special_needs: boolean`]
+
+   SKULD: Does [child.name] currently receive any government benefits?
+          (select all that apply)
+          - SSI (Supplemental Security Income)
+          - SSDI (Social Security Disability Insurance)
+          - Medicaid
+          - None currently
+          - Not sure
+
+   [Save to child profile: `receives_government_benefits: boolean`, `benefit_types: array`]
+
+   **[IF is_adult_special_needs = true]**
+   SKULD: What is [child.name]'s legal capacity status?
+          - Full legal capacity (makes own decisions)
+          - Has a court-appointed guardian or conservator
+          - Has supported decision-making arrangement
+          - Guardianship/conservatorship is being considered
+
+   [Save to child profile: `has_conservatorship: boolean`]
+   **[/IF]**
+
+   SKULD: Should we designate a different trustee for [child.name]'s
+          Special Needs Trust than your main trust trustee?
+          - Yes, I want to name a specific SNT trustee
+          - No, use the same trustee as my main trust
+
+   SKULD: Is [child.name] eligible for or interested in an ABLE account?
+          (tax-advantaged savings for disability expenses)
+          - Yes, already has one
+          - Yes, interested in establishing one
+          - No / Not sure
+
+   [Save to child profile: `able_account_eligible: boolean`]
+
+   SKULD: Would you like to create a Letter of Intent for [child.name]?
+          (A personal document describing care preferences, routines,
+          and important information for future caregivers)
+          - Yes
+          - No
+          - Maybe later
+
+   [Save to child profile: `letter_of_intent_desired: boolean`]
+
+   **[/FOR EACH]**
 6. **If blended family detected:**
    - Does either spouse want to provide differently for children from prior relationships?
    - Are there stepchildren to include or exclude?
