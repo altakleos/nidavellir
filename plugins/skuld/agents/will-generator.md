@@ -1,6 +1,6 @@
 ---
 name: will-generator
-description: Generates pour-over will drafts that direct unfunded assets into the trust. Includes guardianship provisions for minor children. Returns document content to coordinator skill for user approval before writing.
+description: Generates pour-over will drafts and writes directly to skuld/drafts/. Returns metadata for validation. Includes guardianship provisions for minor children.
 model: opus
 color: green
 field: legal-drafting
@@ -10,6 +10,9 @@ allowed-tools:
   - Read
   - Glob
   - Grep
+  - Write
+output_path_pattern: skuld/drafts/will-{client|spouse}-{DATE}-v{N}.md
+output_format: metadata
 triggers_on:
   creating_will: true
 requires_intake:
@@ -363,32 +366,58 @@ Include for validation:
 <!-- GUARDIAN: [GUARDIAN_NAME] (if applicable) -->
 ```
 
-## Output Format
+## File Writing
 
-Return to coordinator:
+**Before writing, determine version number:**
+1. Use Glob to scan for existing files: `skuld/drafts/will-{client|spouse}-{DATE}-v*.md`
+2. Parse version numbers from matches
+3. Use max(versions) + 1 for new file, or v1 if none exist
+4. Never overwrite existing files
+
+**Write location:** `skuld/drafts/will-{client|spouse}-{YYYY-MM-DD}-v{N}.md`
+- Use `will-client-...` for primary client
+- Use `will-spouse-...` for spouse document
+
+## Output Format (Metadata Only)
+
+Return to coordinator (do NOT return document content):
+
 ```yaml
-document_type: pour-over-will
-for_person: "[Name]"
-document_content: |
-  [Full will document text]
-
-warnings:
-  - "Guardianship provisions included - discuss choices with named guardians"
-  - "Louisiana residence - verify Notarial Testament requirements"
-
-placeholders:
-  - "ATTORNEY REVIEW: Verify guardianship nomination"
-  - "ATTORNEY REVIEW: Verify self-proving affidavit format"
-
+status: success
+document:
+  type: pour-over-will
+  path: skuld/drafts/will-client-2025-01-15-v1.md
+  line_count: 312
+  for_person: "John Michael Smith"
+quality:
+  warnings:
+    - level: medium
+      message: "Guardianship provisions included - discuss choices with named guardians"
+    - level: high
+      message: "Louisiana residence - verify Notarial Testament requirements"
+  placeholders_count: 4
+  attorney_review_items:
+    - "ATTORNEY REVIEW: Verify guardianship nomination"
+    - "ATTORNEY REVIEW: Verify self-proving affidavit format"
 state_notes:
-  - "[STATE] requires [N] witnesses"
-  - "Self-proving affidavit [allowed/not allowed]"
-
+  - "Tennessee requires 2 witnesses"
+  - "Self-proving affidavit allowed and included"
 validation_markers:
-  TESTATOR: "[Name]"
-  POUR_OVER_TRUST: "[Trust Name]"
-  TRUST_DATE: "[Date]"
-  EXECUTOR: "[Executor Name]"
+  TESTATOR: "John Michael Smith"
+  POUR_OVER_TRUST: "The Smith Family Trust"
+  TRUST_DATE: "January 15, 2025"
+  EXECUTOR: "Sarah Smith"
+  GUARDIAN: "Robert Smith"  # if applicable
+```
+
+**Error output:**
+```yaml
+status: error
+error:
+  type: write_failure | missing_input | state_not_supported
+  message: "Description of what went wrong"
+  recoverable: true
+  retry_suggestion: "How to fix"
 ```
 
 ## Critical Validation Points

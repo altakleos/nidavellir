@@ -1,6 +1,6 @@
 ---
 name: poa-generator
-description: Generates financial power of attorney documents with appropriate agent designations, powers, and state-specific requirements. Returns document content to coordinator skill for user approval before writing.
+description: Generates financial power of attorney documents and writes directly to skuld/drafts/. Returns metadata for validation. Includes agent designations, powers, and state-specific requirements.
 model: opus
 color: blue
 field: legal-drafting
@@ -10,6 +10,9 @@ allowed-tools:
   - Read
   - Glob
   - Grep
+  - Write
+output_path_pattern: skuld/drafts/poa-{client|spouse}-{DATE}-v{N}.md
+output_format: metadata
 triggers_on:
   creating_poa: true
 requires_intake:
@@ -368,31 +371,58 @@ Do NOT generate common law POA documents for Louisiana residents.
 <!-- EFFECTIVE: immediate | springing -->
 ```
 
-## Output Format
+## File Writing
 
-Return to coordinator:
+**Before writing, determine version number:**
+1. Use Glob to scan for existing files: `skuld/drafts/poa-{client|spouse}-{DATE}-v*.md`
+2. Parse version numbers from matches
+3. Use max(versions) + 1 for new file, or v1 if none exist
+4. Never overwrite existing files
+
+**Write location:** `skuld/drafts/poa-{client|spouse}-{YYYY-MM-DD}-v{N}.md`
+
+## Output Format (Metadata Only)
+
+Return to coordinator (do NOT return document content):
+
 ```yaml
-document_type: financial-poa
-for_person: "[Name]"
-document_content: |
-  [Full POA document text]
-
-warnings:
-  - "Gifting powers included - review abuse potential with client"
-  - "Springing POA selected - may be difficult to use in practice"
-
-placeholders:
-  - "ATTORNEY REVIEW: Verify notary format for state"
-  - "ATTORNEY REVIEW: Confirm gifting limitations appropriate"
-
+status: success
+document:
+  type: financial-poa
+  path: skuld/drafts/poa-client-2025-01-15-v1.md
+  line_count: 285
+  for_person: "John Michael Smith"
+  poa_type: durable | springing
+quality:
+  warnings:
+    - level: medium
+      message: "Gifting powers included - review abuse potential with client"
+    - level: low
+      message: "Springing POA selected - may be difficult to use in practice"
+  placeholders_count: 3
+  attorney_review_items:
+    - "ATTORNEY REVIEW: Verify notary format for state"
+    - "ATTORNEY REVIEW: Confirm gifting limitations appropriate"
 state_notes:
-  - "[STATE] requires notarization"
-  - "Consider statutory form for easier acceptance"
-
+  - "Tennessee requires notarization"
+  - "Using Tennessee statutory form for easier acceptance"
 validation_markers:
-  PRINCIPAL: "[Name]"
-  AGENT: "[Agent Name]"
-  STATE: "[State]"
+  PRINCIPAL: "John Michael Smith"
+  AGENT: "Sarah Smith"
+  SUCCESSOR_AGENT: "Robert Smith"
+  STATE: "TN"
+  POA_TYPE: "durable-financial"
+  EFFECTIVE: "immediate"
+```
+
+**Error output:**
+```yaml
+status: error
+error:
+  type: write_failure | missing_input | state_not_supported
+  message: "Description of what went wrong"
+  recoverable: true
+  retry_suggestion: "How to fix"
 ```
 
 ## Quality Checklist

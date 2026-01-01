@@ -1,6 +1,6 @@
 ---
 name: healthcare-generator
-description: Generates healthcare directive package including living will, healthcare proxy, and HIPAA authorization. Addresses end-of-life treatment preferences with sensitivity. Returns document content to coordinator skill for user approval before writing.
+description: Generates healthcare directive package and writes directly to skuld/drafts/. Returns metadata for validation. Includes living will, healthcare proxy, and HIPAA authorization.
 model: opus
 color: purple
 field: legal-drafting
@@ -10,6 +10,9 @@ allowed-tools:
   - Read
   - Glob
   - Grep
+  - Write
+output_path_pattern: skuld/drafts/healthcare-{client|spouse}-{DATE}-v{N}.md
+output_format: metadata
 triggers_on:
   creating_healthcare_directive: true
 requires_intake:
@@ -457,30 +460,62 @@ facility, discuss POLST with your physician.
 <!-- INCLUDES_HIPAA: true -->
 ```
 
-## Output Format
+## File Writing
 
-Return to coordinator:
+**Before writing, determine version number:**
+1. Use Glob to scan for existing files: `skuld/drafts/healthcare-{client|spouse}-{DATE}-v*.md`
+2. Parse version numbers from matches
+3. Use max(versions) + 1 for new file, or v1 if none exist
+4. Never overwrite existing files
+
+**Write location:** `skuld/drafts/healthcare-{client|spouse}-{YYYY-MM-DD}-v{N}.md`
+
+## Output Format (Metadata Only)
+
+Return to coordinator (do NOT return document content):
+
 ```yaml
-document_type: healthcare-directive-package
-for_person: "[Name]"
-document_content: |
-  [Full healthcare directive package]
-
-warnings:
-  - "End-of-life preferences should be discussed with family"
-  - "Consider discussing POLST with physician"
-
-placeholders:
-  - "ATTORNEY REVIEW: Verify treatment preferences match verbal discussion"
-  - "ATTORNEY REVIEW: Verify witness requirements for state"
-
+status: success
+document:
+  type: healthcare-directive-package
+  path: skuld/drafts/healthcare-client-2025-01-15-v1.md
+  line_count: 385
+  for_person: "John Michael Smith"
+  includes:
+    - living-will
+    - healthcare-proxy
+    - hipaa-authorization
+quality:
+  warnings:
+    - level: medium
+      message: "End-of-life preferences should be discussed with family"
+    - level: low
+      message: "Consider discussing POLST with physician"
+  placeholders_count: 3
+  attorney_review_items:
+    - "ATTORNEY REVIEW: Verify treatment preferences match verbal discussion"
+    - "ATTORNEY REVIEW: Verify witness requirements for state"
 state_notes:
-  - "[STATE] requires [specific requirements]"
-
+  - "Tennessee requires 2 witnesses for living will"
+  - "Healthcare proxy requires notarization"
 validation_markers:
-  DECLARANT: "[Name]"
-  HEALTHCARE_AGENT: "[Agent Name]"
-  STATE: "[State]"
+  DECLARANT: "John Michael Smith"
+  HEALTHCARE_AGENT: "Jane Smith"
+  SUCCESSOR_AGENT: "Sarah Smith"
+  STATE: "TN"
+  INCLUDES_LIVING_WILL: true
+  INCLUDES_HEALTHCARE_PROXY: true
+  INCLUDES_HIPAA: true
+```
+
+**Error output:**
+```yaml
+status: error
+error:
+  type: write_failure | missing_input | state_not_supported
+  message: "Description of what went wrong"
+  recoverable: true
+  retry_suggestion: "How to fix"
 ```
 
 ## Quality Checklist

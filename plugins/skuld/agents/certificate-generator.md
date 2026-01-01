@@ -1,6 +1,6 @@
 ---
 name: certificate-generator
-description: Generates Tennessee Certificate of Trust per T.C.A. § 35-15-1013 for property transfers and third-party reliance. Provides a summary document that proves trust existence without revealing private trust terms.
+description: Generates Tennessee Certificate of Trust per T.C.A. § 35-15-1013 and writes directly to skuld/drafts/. Returns metadata for validation. Provides a summary document that proves trust existence without revealing private trust terms.
 model: haiku
 color: green
 field: legal-drafting
@@ -8,6 +8,10 @@ expertise: intermediate
 execution_pattern: sequential
 allowed-tools:
   - Read
+  - Glob
+  - Write
+output_path_pattern: skuld/drafts/certificate-of-trust-{DATE}-v{N}.md
+output_format: metadata
 triggers_on:
   state_of_residence: "TN"
   creating_trust: true
@@ -295,10 +299,52 @@ When generating, verify consistency with:
 [[ ATTORNEY REVIEW: If for real estate, verify legal description accuracy. ]]
 ```
 
-## Output
+## File Writing
 
-Return to coordinator:
-1. Certificate of Trust document
-2. Recording instructions (if for real estate)
-3. Any warnings or attorney review items
-4. Guidance on when to use Certificate vs. full trust
+**Before writing, determine version number:**
+1. Use Glob to scan for existing files: `skuld/drafts/certificate-of-trust-{DATE}-v*.md`
+2. Parse version numbers from matches
+3. Use max(versions) + 1 for new file, or v1 if none exist
+4. Never overwrite existing files
+
+**Write location:** `skuld/drafts/certificate-of-trust-{YYYY-MM-DD}-v{N}.md`
+
+## Output Format (Metadata Only)
+
+Return to coordinator (do NOT return document content):
+
+```yaml
+status: success
+document:
+  type: certificate-of-trust
+  path: skuld/drafts/certificate-of-trust-2025-01-15-v1.md
+  line_count: 230
+  for_property: "123 Main Street, Nashville" # if for real estate, else null
+quality:
+  warnings: []
+  placeholders_count: 4
+  attorney_review_items:
+    - "ATTORNEY REVIEW: Verify trust name matches exactly with trust document"
+    - "ATTORNEY REVIEW: Confirm current trustee designations are accurate"
+state_notes:
+  - "Tennessee Certificate of Trust per T.C.A. § 35-15-1013"
+  - "Includes recording instructions for real estate"
+validation_markers:
+  CERT_TRUST_NAME: "The Smith Family Trust"
+  CERT_TRUST_DATE: "January 15, 2025"
+  CERT_SETTLOR: "John Michael Smith"
+  CERT_TRUSTEE: "John Michael Smith"
+  CERT_SUCCESSOR_TRUSTEE: "Sarah Smith"
+  CERT_REVOCABLE: true
+  CERT_STATE: "TN"
+```
+
+**Error output:**
+```yaml
+status: error
+error:
+  type: write_failure | missing_input
+  message: "Description of what went wrong"
+  recoverable: true
+  retry_suggestion: "How to fix"
+```

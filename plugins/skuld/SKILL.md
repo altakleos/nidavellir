@@ -894,6 +894,16 @@ For Tennessee residents with simple estates, consider whether a full revocable t
 ### Phase 3: Document Drafting
 **Purpose**: Generate each selected document.
 
+Phase 3 has three sub-phases: 3A (Generation), 3B (Validation), and 3C (User Review).
+
+---
+
+#### Phase 3A: Document Generation
+
+**Pre-Generation Setup:**
+1. Ensure `skuld/drafts/` directory exists
+2. Ensure `skuld/validation/` directory exists
+
 **Progress Tracking:**
 Display progress at start of each document generation:
 ```
@@ -913,20 +923,148 @@ Display progress at start of each document generation:
 ```
 
 **For each document type:**
-1. Invoke the appropriate generator agent (trust-generator, will-generator, poa-generator, healthcare-generator, snt-generator)
+1. Invoke the appropriate generator agent (trust-generator, will-generator, poa-generator, healthcare-generator, snt-generator, tod-generator, certificate-generator)
 2. Pass client profile and state requirements
-3. Receive draft content, warnings, and attorney review items
-4. Present draft to user for review
-5. Ask for approval before writing file
-6. If approved, write to `skuld/drafts/[document-type]-[YYYY-MM-DD]-v[N].md`
-7. Update progress tracking display
+3. **Agent writes directly to `skuld/drafts/`**
+4. Receive **metadata only** (path, line count, validation markers, warnings)
+5. Display: "✓ Trust generated: skuld/drafts/trust-2025-01-15-v1.md (567 lines)"
+6. Update progress tracking display
+7. Collect metadata for validation phase
+
+**Error Handling:**
+If agent returns error:
+```yaml
+status: error
+error:
+  type: write_failure
+  message: "Directory does not exist"
+  recoverable: true
+  retry_suggestion: "Create directory and retry"
+```
+
+**Recovery options:**
+- `write_failure` with `recoverable: true`: Fix issue, retry agent
+- `missing_input`: Return to discovery to collect missing data
+- `state_not_supported`: Inform user, skip document or suggest alternative
+
+**Partial Success:**
+If some documents succeed and others fail, offer:
+```
+⚠️ 5 of 7 documents generated successfully.
+Failed: Healthcare Directive (Client), Healthcare Directive (Spouse)
+Error: Missing healthcare agent information
+
+Would you like to:
+1. Provide missing information and retry failed documents
+2. Continue with successful documents only
+3. Stop and review what we have
+```
 
 **Document versioning:**
+- Agents handle versioning automatically (scan for existing, increment)
 - Never overwrite existing documents
-- Increment version number for same-day regeneration
-- New date starts at v1
+- Same-day regeneration increments version number
 
-**After ALL documents generated**, invoke `estate-validation` agent for cross-document consistency checks.
+---
+
+#### Phase 3B: Validation Gate
+
+**After ALL documents generated**, invoke `estate-validation` agent:
+
+1. Pass document metadata array (paths, types, validation markers)
+2. Validation agent reads documents from disk
+3. Validation agent may ask user questions about ambiguous issues
+4. Validation agent writes report to `skuld/validation/`
+5. Receive validation results with correction guidance
+
+**Handling Validation Results:**
+
+```yaml
+# Validation returns issues with correction_method
+critical_issues:
+  - type: trust_reference_mismatch
+    correction_method: patch
+    fixer_agent: document-sync-fixer
+    source_of_truth: skuld/drafts/trust-2025-01-15-v1.md
+    target_docs: [skuld/drafts/will-client-2025-01-15-v1.md]
+
+  - type: name_inconsistency
+    correction_method: regenerate
+    profile_fields: [personal.full_name]
+    affected_docs: [will, poa]
+```
+
+**Correction Flow by Method:**
+
+| correction_method | Action |
+|-------------------|--------|
+| `regenerate` | Update profile fields → Re-invoke generator for affected docs |
+| `patch` | Invoke `document-sync-fixer` agent with issue details |
+| `ask_user` | Present question to user → Update profile if needed → Re-validate |
+| `none` | User verified as intentional, no action needed |
+
+**For `regenerate` issues:**
+1. Display issue to user
+2. "This appears to be a profile error. Updating [field] to [value]."
+3. Update client profile
+4. Re-invoke affected generator(s)
+5. Re-run validation
+
+**For `patch` issues:**
+1. Invoke `document-sync-fixer` agent
+2. Agent patches target documents to match source of truth
+3. Display diff preview to user
+4. Re-run validation to confirm fix
+
+**Validation Success:**
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                    VALIDATION COMPLETE                            ║
+╠══════════════════════════════════════════════════════════════════╣
+║ ✓ Trust-Will Consistency ..................... PASS               ║
+║ ✓ Name Consistency ........................... PASS               ║
+║ ⚠ Agent Role Differences ..................... VERIFIED INTENTIONAL║
+║ ✓ Beneficiary Alignment ...................... PASS               ║
+║ ✓ State Compliance ........................... PASS               ║
+║                                                                   ║
+║ Validation report: skuld/validation/report-2025-01-15-v1.md      ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+---
+
+#### Phase 3C: User Review Prompt
+
+After validation passes, prompt user to review documents:
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                    DOCUMENTS READY FOR REVIEW                     ║
+╠══════════════════════════════════════════════════════════════════╣
+║ The following documents have been generated and validated:       ║
+║                                                                   ║
+║   skuld/drafts/trust-2025-01-15-v1.md              (567 lines)   ║
+║   skuld/drafts/will-client-2025-01-15-v1.md        (312 lines)   ║
+║   skuld/drafts/will-spouse-2025-01-15-v1.md        (298 lines)   ║
+║   skuld/drafts/poa-client-2025-01-15-v1.md         (285 lines)   ║
+║   skuld/drafts/poa-spouse-2025-01-15-v1.md         (285 lines)   ║
+║   skuld/drafts/healthcare-client-2025-01-15-v1.md  (385 lines)   ║
+║   skuld/drafts/healthcare-spouse-2025-01-15-v1.md  (385 lines)   ║
+║                                                                   ║
+║ Validation report: skuld/validation/report-2025-01-15-v1.md      ║
+║                                                                   ║
+║ Please review these documents with your preferred editor before   ║
+║ proceeding to execution guidance.                                 ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+SKULD: Have you reviewed the documents and are ready to proceed to execution guidance?
+       - Yes, proceed to execution guidance
+       - I have questions about the documents
+       - I need to make changes to my information
+
+**If user has questions:** Answer questions about document content
+**If user needs changes:** Return to discovery or regenerate affected documents
 
 ### Phase 4: Execution Guidance
 **Purpose**: Provide signing and notarization instructions.
@@ -1028,21 +1166,67 @@ When these situations are detected, display appropriate warnings while continuin
 - **estate-glossary**: When legal terminology detected (grantor, trustee, probate, etc.)
 - **estate-state-lookup**: When US state mentioned in estate planning context
 
-### Manual Agents (Called by Coordinator)
-- **trust-generator**: Phase 3, when trust document selected
-- **will-generator**: Phase 3, when will document selected
-- **poa-generator**: Phase 3, when POA document selected
-- **healthcare-generator**: Phase 3, when healthcare directive selected
-- **snt-generator**: Phase 3, when Special Needs Trust selected (uses separate SNT trustee designation)
-- **estate-validation**: Phase 3, after ALL documents generated
+### Document Generator Agents (Phase 3A)
+All generators write directly to `skuld/drafts/` and return metadata only.
 
-**Agent invocation pattern:**
+| Agent | When Called | Output Path Pattern |
+|-------|-------------|---------------------|
+| **trust-generator** | Trust document selected | `trust-{DATE}-v{N}.md` |
+| **will-generator** | Will document selected | `will-{client\|spouse}-{DATE}-v{N}.md` |
+| **poa-generator** | POA document selected | `poa-{client\|spouse}-{DATE}-v{N}.md` |
+| **healthcare-generator** | Healthcare directive selected | `healthcare-{client\|spouse}-{DATE}-v{N}.md` |
+| **snt-generator** | Special Needs Trust selected | `snt-{beneficiary-slug}-{DATE}-v{N}.md` |
+| **tod-generator** | Tennessee TOD deed selected | `tod-{county-slug}-{DATE}-v{N}.md` |
+| **certificate-generator** | Certificate of Trust needed | `certificate-of-trust-{DATE}-v{N}.md` |
+
+### Validation & Correction Agents (Phase 3B)
+| Agent | When Called | Purpose |
+|-------|-------------|---------|
+| **estate-validation** | After ALL documents generated | Cross-document consistency checks, writes report |
+| **document-sync-fixer** | When validation returns `correction_method: patch` | Applies trust/will reference fixes |
+
+### Generator Agent Invocation Pattern
 ```
 1. Prepare context (client_profile, state_requirements, selected_options)
-2. Invoke agent via Task tool
-3. Receive response (document_content, warnings, placeholders)
-4. Present to user for approval
-5. If approved, write file
+2. Invoke generator agent via Task tool
+3. Agent writes document to skuld/drafts/
+4. Receive metadata response:
+   - status: success | error
+   - document.path: file path written
+   - document.line_count: document size
+   - quality.warnings: any issues noted
+   - validation_markers: key-value pairs for cross-doc validation
+5. Display confirmation with path and line count
+6. Collect metadata for validation phase
+```
+
+### Validation Agent Invocation Pattern
+```
+1. Collect all document metadata from generation phase
+2. Invoke estate-validation agent with metadata array
+3. Agent reads documents from disk, validates consistency
+4. Agent may use AskUserQuestion for ambiguous issues
+5. Agent writes validation report to skuld/validation/
+6. Receive validation results with correction guidance:
+   - validation_status: pass | fail | warnings
+   - critical_issues: with correction_method for each
+   - warnings: with user_verified status
+7. For each issue, dispatch to appropriate handler:
+   - regenerate → Update profile, re-invoke generator
+   - patch → Invoke document-sync-fixer
+   - ask_user → Present question, update if needed
+   - none → Log as verified, continue
+```
+
+### Sync Fixer Agent Invocation Pattern
+```
+1. Receive issue from validation with correction_method: patch
+2. Invoke document-sync-fixer with:
+   - source_of_truth: path to authoritative document
+   - target_docs: array of documents to patch
+3. Agent reads source, patches targets, writes updated files
+4. Receive diff preview for user display
+5. Re-run validation to confirm fix
 ```
 
 ---

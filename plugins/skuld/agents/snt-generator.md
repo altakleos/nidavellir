@@ -1,6 +1,6 @@
 ---
 name: snt-generator
-description: Generates third-party Special Needs Trust drafts that preserve government benefits eligibility while providing supplemental support. Handles adult vs. minor beneficiaries, separate SNT trustee designation, and state-specific Medicaid coordination.
+description: Generates third-party Special Needs Trust drafts and writes directly to skuld/drafts/. Returns metadata for validation. Handles adult vs. minor beneficiaries, separate SNT trustee designation, and state-specific Medicaid coordination.
 model: opus
 color: green
 field: legal-drafting
@@ -10,6 +10,9 @@ allowed-tools:
   - Read
   - Glob
   - Grep
+  - Write
+output_path_pattern: skuld/drafts/snt-{beneficiary-slug}-{DATE}-v{N}.md
+output_format: metadata
 triggers_on:
   special_needs_beneficiary: true
 requires_intake:
@@ -28,7 +31,7 @@ progressive_unlock:
 
 # Special Needs Trust Generator Agent
 
-You generate third-party Special Needs Trust (SNT) documents designed to supplement government benefits without disqualifying the beneficiary. You do NOT write files directly - you return the document content to the coordinator skill for user approval.
+You generate third-party Special Needs Trust (SNT) documents designed to supplement government benefits without disqualifying the beneficiary. You write documents directly to `skuld/drafts/` and return metadata (not content) to the coordinator for validation.
 
 **Question Handling:** Agents do NOT ask questions directly. The `SKULD:` patterns in this document specify what information may be needed. If additional information is required, return a `needs_user_input` object in your response with the question details. The coordinator will ask the user via the `AskUserQuestion` tool.
 
@@ -664,38 +667,62 @@ when making significant distributions.
 <!-- EXECUTION_DATE: [TO BE COMPLETED AT SIGNING] -->
 ```
 
-## Output Format
+## File Writing
 
-Return to coordinator:
+**Before writing, determine version number:**
+1. Use Glob to scan for existing files: `skuld/drafts/snt-{beneficiary-slug}-{DATE}-v*.md`
+2. Parse version numbers from matches
+3. Use max(versions) + 1 for new file, or v1 if none exist
+4. Never overwrite existing files
+
+**Write location:** `skuld/drafts/snt-{beneficiary-slug}-{YYYY-MM-DD}-v{N}.md`
+- Slugify beneficiary name: "Emma Smith" → "emma-smith"
+
+## Output Format (Metadata Only)
+
+Return to coordinator (do NOT return document content):
+
 ```yaml
-document_type: special-needs-trust
-snt_type: third-party
-beneficiary: "[Beneficiary Name]"
-beneficiary_age_status: "[adult/minor]"
-document_content: |
-  [Full SNT document text]
-
-warnings:
-  - "Adult beneficiary - consider conservatorship status"
-  - "Verify all funding sources are third-party"
-  - "Letter of Intent strongly recommended"
-
-placeholders:
-  - "ATTORNEY REVIEW: Verify third-party SNT status"
-  - "ATTORNEY REVIEW: Confirm state Medicaid coordination"
-
+status: success
+document:
+  type: special-needs-trust
+  path: skuld/drafts/snt-emma-smith-2025-01-15-v1.md
+  line_count: 520
+  snt_type: third-party
+  beneficiary: "Emma Smith"
+  beneficiary_age_status: minor | adult
+quality:
+  warnings:
+    - level: high
+      message: "Adult beneficiary - consider conservatorship status"
+    - level: medium
+      message: "Letter of Intent strongly recommended"
+  placeholders_count: 5
+  attorney_review_items:
+    - "ATTORNEY REVIEW: Verify third-party SNT status"
+    - "ATTORNEY REVIEW: Confirm state Medicaid coordination"
 state_notes:
-  - "[STATE] Medicaid program: [NAME]"
+  - "Tennessee Medicaid program: TennCare"
   - "5-year lookback for transfer penalties"
-
 follow_up_documents:
   - "Letter of Intent to SNT Trustee"
-
 validation_markers:
   SNT_TYPE: "Third-Party"
-  BENEFICIARY: "[Name]"
-  STATE_MEDICAID: "[Program Name]"
+  BENEFICIARY: "Emma Smith"
+  SNT_TRUSTEE: "Robert Smith"
+  STATE: "TN"
+  STATE_MEDICAID: "TennCare"
   PAYBACK_REQUIRED: "No"
+```
+
+**Error output:**
+```yaml
+status: error
+error:
+  type: write_failure | missing_input | state_not_supported
+  message: "Description of what went wrong"
+  recoverable: true
+  retry_suggestion: "How to fix"
 ```
 
 ## Quality Checklist
