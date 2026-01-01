@@ -87,32 +87,41 @@ If source access fails:
 
 **File:** `core/discovery-engine.md`
 
-Add source signal detection to existing discovery:
+Add source signal detection to existing discovery (both local files AND MCPs):
 
 ```markdown
 ### Source Signal Detection
 
 During conversation, detect indicators that sources would help:
 
-**Local File Indicators:**
-- "our existing [code|patterns|conventions]"
-- "based on current [implementation|structure]"
-- "similar to what we have"
-- References to specific file types (.env, config, schema)
+**Local File Indicators:** (confidence modifiers)
+- "our existing [code|patterns|conventions]" → +0.3
+- "based on current [implementation|structure]" → +0.3
+- "similar to what we have" → +0.2
+- References to specific file types (.env, config, schema) → +0.4
+- Explicit: "check my files" → +0.5
 
-**MCP Indicators:**
-- "database schema"
-- "GitHub [issues|PRs|repo]"
-- "Notion [docs|pages]"
-- "Slack [channels|messages]"
+**MCP Indicators:** (confidence modifiers)
+- "database schema" → +0.4
+- "GitHub [issues|PRs|repo]" → +0.4
+- "Notion [docs|pages]" → +0.3
+- "Slack [channels|messages]" → +0.3
+- Explicit: "query my database" → +0.5
 
-**When detected:** Add to `discovery_context.potential_sources[]`
+**Base confidence:** 0.5 (requires modifiers to reach 0.75 threshold)
+
+**When detected:** Add to `discovery_context.potential_sources[]` with:
+- source_type: local_file | mcp
+- detected_signal: the phrase that triggered detection
+- confidence: calculated confidence score
+- mcp_tool: (if MCP) the specific tool needed (mcp__postgres, mcp__github, etc.)
 ```
 
 **Deliverables:**
-- [ ] Source signal detection patterns
+- [ ] Source signal detection patterns (local + MCP)
+- [ ] Confidence scoring algorithm
 - [ ] `potential_sources` array in discovery context
-- [ ] No changes to discovery flow yet
+- [ ] MCP availability check (is the tool configured?)
 
 ---
 
@@ -120,31 +129,38 @@ During conversation, detect indicators that sources would help:
 
 **File:** `core/discovery-engine.md` (continued)
 
-Add targeted source offers:
+Add targeted source offers with diminishing frequency:
 
 ```markdown
 ### Targeted Source Offers
 
-When `potential_sources` is non-empty, offer specific checks:
+When `potential_sources` is non-empty and confidence >= threshold, offer specific checks:
 
-**Pattern:**
-"I notice you mentioned [indicator]. Would you like me to:
-1. Check your [specific source] for [specific info]
-2. Have you describe it instead
+**Offer Pattern:**
+"I notice you mentioned [indicator]. Should I check your [specific source]
+to understand [what it helps with], or would you prefer to describe it?"
 
-This helps me understand [what it helps with]."
+**Diminishing Frequency Rules:**
+- Offers 1-2: Threshold = 0.75 (standard high-confidence)
+- Offers 3+: Threshold = 0.90 (only very explicit signals)
+- Never exceed ~4 offers total per conversation
 
-**Rules:**
-- Maximum 2 source offers per conversation
-- Only offer sources that are likely accessible
+**Additional Rules:**
+- Only offer if source is likely accessible (MCP configured, path exists)
 - Accept "no" gracefully and continue
 - Don't offer again for same source type
+- If user says "stop offering" → disable for session
+
+**MCP-Specific:**
+- Before offering MCP source, verify tool is available
+- If MCP not configured: Skip offer (don't ask user to set up MCP mid-flow)
 ```
 
 **Deliverables:**
-- [ ] Source offer templates
-- [ ] Offer limit enforcement
-- [ ] User response handling
+- [ ] Source offer templates (local + MCP variants)
+- [ ] Diminishing threshold logic
+- [ ] MCP availability pre-check
+- [ ] User response handling ("yes", "no", "stop asking")
 
 ---
 
@@ -338,21 +354,49 @@ These are NOT part of this feature:
 | Risk | Mitigation |
 |------|------------|
 | Feature creep | Strict scope defined above |
-| Overcomplication | Start with local files only, add MCP later |
+| MCP complexity | Graceful fallbacks, 10s timeouts, clear error messages |
 | User confusion | Clear, specific offers (not vague) |
 | Performance | Async source reading, timeouts |
 | Breaking existing | Additive only, no required changes |
 
 ---
 
-## Decision Points for Review
+## Design Decisions (Confirmed)
 
-Before implementation, confirm:
+| Decision | Choice | Rationale |
+|----------|--------|-----------|
+| **Offer frequency** | Diminishing | First 2 offers freely, then only high-confidence (>0.75). Balances coverage with UX. |
+| **MCP scope** | Included from Phase 1 | MCPs are where the real value is. Handle complexity with graceful fallbacks. |
+| **Default behavior** | High-confidence only | Only offer when signal strength >0.75. Reduces noise, users can mention sources explicitly. |
+| **Persistence** | None initially | Keep it simple. No state management in v1. Users repeat preferences per session. |
 
-1. **Offer frequency:** Max 2 source offers per conversation? Or dynamic?
-2. **MCP scope:** Include in Phase 1 or defer to Phase 2?
-3. **Default behavior:** Offer sources by default or only when high-confidence signals?
-4. **Persistence:** Remember user preferences across sessions? (Currently: No)
+### Signal Confidence Thresholds
+
+| Signal Type | Example | Confidence | Action |
+|-------------|---------|------------|--------|
+| Explicit mention | "check my database schema" | 0.95 | Always offer |
+| Strong indicator | "our existing patterns" | 0.80 | Offer (within limit) |
+| Weak indicator | "similar to before" | 0.50 | Don't offer |
+| Ambiguous | "the usual way" | 0.30 | Don't offer |
+
+### Offer Frequency Logic
+
+```
+offers_made = 0
+confidence_threshold = 0.75
+
+for signal in detected_signals:
+    if offers_made < 2:
+        # First 2 offers: use standard threshold
+        if signal.confidence >= confidence_threshold:
+            make_offer(signal)
+            offers_made++
+    else:
+        # After 2 offers: only very high confidence
+        if signal.confidence >= 0.90:
+            make_offer(signal)
+            offers_made++
+```
 
 ---
 
@@ -360,11 +404,17 @@ Before implementation, confirm:
 
 This plan transforms "Data Source Awareness" from a form-based Phase 0.5 into a conversational enhancement. Eitri detects when sources would help, offers to check them, respects user decisions, and gracefully handles failures.
 
-The approach:
+**Confirmed Design:**
+- Diminishing offer frequency (2 free, then high-confidence only)
+- MCPs included from Phase 1
+- High-confidence threshold (0.75) for offers
+- No persistence (stateless per session)
+
+**The approach:**
 - Preserves Eitri's conversational UX
 - Keeps users in control
 - Reduces unnecessary questions
 - Adds no mandatory steps
 - Degrades gracefully
 
-**Next step:** Review this plan and confirm decision points before implementation.
+**Status:** Ready for implementation.
