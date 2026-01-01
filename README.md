@@ -10,7 +10,7 @@ The official AltaKleos marketplace for Claude Code plugins. Install extensions t
 
 **1. Add the marketplace** (one-time):
 ```bash
-/plugin marketplace add altakleos/plugins
+/plugin marketplace add altakleos/nidavellir
 ```
 
 **2. Browse and install**:
@@ -80,7 +80,7 @@ Add to your project's `.claude/settings.json`:
     "altakleos": {
       "source": {
         "source": "github",
-        "repo": "altakleos/plugins"
+        "repo": "altakleos/nidavellir"
       }
     }
   },
@@ -116,7 +116,7 @@ gh auth login
 
 ## Support
 
-- GitHub Issues: [Create an issue](https://github.com/altakleos/plugins/issues)
+- GitHub Issues: [Create an issue](https://github.com/altakleos/nidavellir/issues)
 - Email: hello@altakleos.com
 
 ---

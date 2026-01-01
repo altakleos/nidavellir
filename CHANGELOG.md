@@ -182,4 +182,4 @@ All critical infrastructure is in place, including comprehensive documentation, 
 
 ---
 
-**Note**: This changelog follows [semantic versioning](https://semver.org/). For a detailed list of changes, see the [commit history](https://github.com/altakleos/plugins/commits).
+**Note**: This changelog follows [semantic versioning](https://semver.org/). For a detailed list of changes, see the [commit history](https://github.com/altakleos/nidavellir/commits).

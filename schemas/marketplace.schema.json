@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/altakleos/plugins/schemas/marketplace.schema.json",
+  "$id": "https://github.com/altakleos/nidavellir/schemas/marketplace.schema.json",
   "title": "Claude Code Marketplace Schema",
   "description": "Schema for validating marketplace.json files",
   "type": "object",

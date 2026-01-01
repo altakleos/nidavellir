@@ -33,8 +33,8 @@ By participating in this project, you agree to:
 
 1. Clone the repository:
    ```bash
-   git clone git@github.com:altakleos/plugins.git
-   cd plugins
+   git clone git@github.com:altakleos/nidavellir.git
+   cd nidavellir
    ```
 
 2. Create a feature branch:

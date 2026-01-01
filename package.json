@@ -1,5 +1,5 @@
 {
-  "name": "plugins",
+  "name": "nidavellir",
   "version": "1.0.0",
   "description": "AltaKleos Claude Code Marketplace - Internal development tools and plugins",
   "private": true,
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/altakleos/plugins.git"
+    "url": "git+https://github.com/altakleos/nidavellir.git"
   },
   "keywords": [
     "claude-code",
@@ -20,7 +20,7 @@
   "author": "AltaKleos Platform Team <hello@altakleos.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/altakleos/plugins/issues"
+    "url": "https://github.com/altakleos/nidavellir/issues"
   },
-  "homepage": "https://github.com/altakleos/plugins#readme"
+  "homepage": "https://github.com/altakleos/nidavellir#readme"
 }
