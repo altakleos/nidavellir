@@ -1,14 +1,14 @@
 {
   "extraKnownMarketplaces": {
-    "altakleos": {
+    "nidavellir": {
       "source": {
         "source": "directory",
-        "path": "."
+        "path": "/home/rosantos/workspace/platform/nidavellir/main"
       }
     }
   },
   "enabledPlugins": {
-    "eitri@altakleos": true,
-    "rune@altakleos": true
+    "eitri@nidavellir": true,
+    "rune@nidavellir": true
   }
 }
