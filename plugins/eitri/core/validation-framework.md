@@ -227,17 +227,28 @@ def validate_intake_coverage(handlers, intake_graph, domain_research):
             "message": f"Handler requirements missing intake sources: {uncovered}"
         })
 
-        # Attempt additional domain research for missing fields
-        for field in uncovered:
-            domain = domain_research.get("domain_detected", "unknown")
-            additional_search = WebSearch(f"{domain} {field} client intake requirements")
-            if additional_search.has_relevant_results:
-                warnings.append({
-                    "type": "suggested_intake_question",
-                    "field": field,
-                    "suggested_question": extract_question_from_research(additional_search),
-                    "source": "additional_domain_research"
-                })
+        # Delegate additional domain research for missing fields to subagent
+        domain = domain_research.get("domain_detected", "unknown")
+        gap_research = Task(
+            subagent_type="domain-researcher",
+            prompt=f"""
+            Research intake requirements for missing fields:
+            - Domain: {domain}
+            - Missing fields: {list(uncovered)}
+            - Research phases: ["gap_resolution"]
+            - Max searches: 2 per field
+
+            Return suggested intake questions for each missing field.
+            """
+        )
+
+        for field, suggestion in gap_research.get("suggested_questions", {}).items():
+            warnings.append({
+                "type": "suggested_intake_question",
+                "field": field,
+                "suggested_question": suggestion,
+                "source": "delegated_gap_research"
+            })
 
     return {"errors": errors, "warnings": warnings, "coverage_complete": len(uncovered) == 0}
 ```
@@ -266,8 +277,8 @@ Suggested resolution:
 
 OR
 
-2. Research additional requirements:
-   WebSearch "estate planning special needs trust screening questions"
+2. Delegate additional research to domain-researcher agent:
+   Task(subagent_type="domain-researcher", prompt="Research special needs trust screening...")
 ```
 
 **Coverage Report Format:**

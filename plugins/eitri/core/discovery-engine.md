@@ -101,59 +101,72 @@ Research triggers:
 - User mentions unfamiliar industry terminology
 - Complex multi-step workflows described
 
-### Research Strategy
+### Research Strategy: Delegated Domain Research
 
-For the detected domain, I use WebSearch to gather intelligence:
+To prevent context overflow from raw WebSearch results, domain research is **delegated to the `domain-researcher` agent**. This keeps raw search results in the subagent's context while returning only structured intelligence to the main forge context.
 
-**1. Regulatory Requirements**
-```
-WebSearch "{domain} {current_year} compliance requirements"
-WebSearch "{domain} regulatory framework"
-WebSearch "{domain} legal requirements"
-```
+**Delegation Pattern:**
 
-**2. Client/User Intake Patterns**
-```
-WebSearch "{domain} client intake questionnaire best practices"
-WebSearch "{domain} client onboarding workflow"
-WebSearch "{domain} required client information"
-```
+```python
+# Invoke domain-researcher agent via Task tool
+domain_intelligence = Task(
+    subagent_type="domain-researcher",
+    prompt=f"""
+    Research domain intelligence for:
+    - Domain: {detected_domain}
+    - User request: {user_request}
+    - Year: {current_year}
+    - Research phases: regulatory, intake, conditional, concepts, technology
 
-**3. Conditional Screening Questions**
-```
-WebSearch "{domain} conditional screening questions"
-WebSearch "{domain} intake branching logic"
-WebSearch "{domain} decision tree client questions"
+    Return structured domain_intelligence object only.
+    """
+)
 ```
 
-**4. Industry-Specific Concepts**
-```
-WebSearch "{domain} key concepts terminology"
-WebSearch "{domain} common scenarios edge cases"
-WebSearch "{domain} professional standards"
-```
+**The agent executes 5 research phases:**
+1. Regulatory requirements and compliance
+2. Client/user intake patterns
+3. Conditional screening questions
+4. Industry concepts and terminology
+5. Technology and integration patterns
+
+See `agents/domain-researcher.md` for the complete research protocol.
+
+**Why Delegation:**
+- Raw WebSearch results (~3-5KB each) stay in subagent context
+- Only structured `domain_intelligence` (~2-3KB) returns to main context
+- Prevents context overflow before generation phase
+- Consistent research quality across all domains
+
+**Fallback Handling:**
+If the domain-researcher agent fails or times out:
+1. Mark `domain_intelligence.confidence` as "degraded"
+2. Generate with placeholders for uncertain areas
+3. Flag in validation report for user review
 
 ### Pattern Extraction
 
-From research results, I extract structured intelligence:
+The `domain-researcher` agent performs extraction and returns structured intelligence. The extraction logic includes:
 
 **Intake Field Extraction:**
-- Identify required data points mentioned in multiple sources
-- Note which fields are conditional (depend on other answers)
-- Detect mandatory vs optional data collection
-- Map fields to common naming conventions
+- Required data points mentioned in multiple sources
+- Fields that are conditional (depend on other answers)
+- Mandatory vs optional data collection
+- Field naming conventions
 
 **Conditional Branch Extraction:**
-- Identify "if X then Y" patterns from research
-- Note decision points that trigger different workflows
-- Map conditions to specific questions
-- Detect nested conditional logic
+- "If X then Y" patterns from research
+- Decision points that trigger different workflows
+- Conditions mapped to specific questions
+- Nested conditional logic
 
 **Handler Dependency Extraction:**
-- Identify which data is needed for which operations
-- Map intake fields to handler requirements
-- Detect sequential dependencies between handlers
-- Note shared data requirements across handlers
+- Data needed for each operation
+- Intake fields mapped to handler requirements
+- Sequential dependencies between handlers
+- Shared data requirements across handlers
+
+See `agents/domain-researcher.md` for the complete extraction protocol.
 
 ### Research Output
 

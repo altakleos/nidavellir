@@ -124,6 +124,10 @@ I analyze your initial description for key signals:
 
 I engage my **discovery-engine** module (see `core/discovery-engine.md`) to understand your needs through systematic analysis. For comprehensive context understanding, I apply my **context dimensions framework** (see `references/context-dimensions.md`) which covers business maturity, technical sophistication, regulatory environment, team structure, data characteristics, and industry patterns.
 
+### Domain Research Delegation
+
+When domain research is needed, I delegate to the **domain-researcher** agent (see `agents/domain-researcher.md`) via the Task tool. This keeps raw WebSearch results out of my main context while obtaining comprehensive domain intelligence. The agent returns only structured `domain_intelligence` data, preventing context overflow before the generation phase.
+
 ### Multi-Dimensional Analysis
 
 **Surface Layer (Explicit):**
