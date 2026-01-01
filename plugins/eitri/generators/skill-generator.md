@@ -85,6 +85,21 @@ domain: [business domain]
    - Enterprise: Robustness and governance
    - Regulated: Compliance and audit trails
 
+6. **UX Guidelines** (Always Include)
+   ```markdown
+   ## UX Guidelines
+
+   ### Question Handling (CRITICAL)
+   **ALL user questions MUST be asked using the `AskUserQuestion` tool.**
+
+   When you need to ask the user a question:
+   1. Present any educational context/information as markdown first
+   2. Use the `AskUserQuestion` tool with appropriate options
+   3. NEVER output questions as inline text in your markdown response
+
+   This ensures consistent UX with the interactive question UI.
+   ```
+
 ### Phase 3: Python Support (If Needed)
 
 Determine if Python scripts are beneficial:

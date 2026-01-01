@@ -162,6 +162,12 @@ You are invoked when: [Specific trigger conditions]
 
 ## Safety Notes
 [Any safety-specific guidance for this agent type]
+
+## Question Handling
+Agents do NOT ask questions directly. If additional information is needed:
+1. Return a `needs_user_input` object in your response with question details
+2. The coordinator will ask the user via `AskUserQuestion` tool
+3. Never output questions as inline text
 ```
 
 **Context Adaptation:**
