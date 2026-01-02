@@ -1,7 +1,7 @@
 ---
 name: skuld
 description: Comprehensive estate planning assistant that guides users through document preparation with state-specific intelligence, educational guidance, and professional boundaries. Auto-invokes when users mention wills, trusts, estate planning, power of attorney, healthcare directives, beneficiary designations, or related topics.
-version: 1.2.1
+version: 1.2.2
 allowed-tools:
   - Read
   - Write
@@ -98,6 +98,20 @@ The rule "ALL questions use AskUserQuestion" applies to **selection questions** 
 - Names, dates, addresses, custom values
 - No meaningful predefined options exist
 - Output question as markdown, accept next message as input
+
+### Single-Select vs Multi-Select Questions
+
+**Single-select (default):** Mutually exclusive options
+- Marital status (can only be one)
+- Yes/No questions
+- "Which ONE of these..."
+
+**Multi-select (`multiSelect: true`):** Multiple can apply
+- Asset inventory ("What types of accounts?")
+- Special circumstances screening
+- "Select all that apply" questions
+
+When a pattern includes `[MULTI-SELECT]`, use `multiSelect: true` in AskUserQuestion.
 
 ### Format Hints
 
@@ -929,10 +943,30 @@ If user later wants to answer skipped questions:
     - How is your real property currently titled? (sole ownership, joint, tenancy by entirety)
     - Are you aware of Transfer-on-Death deed options in your state?
     - Would you prefer TOD deeds or trust ownership for real estate?
-11. Asset overview (real estate states, business interests, retirement accounts, net worth range)
+11. **Asset Inventory (Consolidated Multi-Select):**
+
+    <!-- intake_id: financial_assets -->
+    SKULD: Which financial assets do you have? (select all that apply) [MULTI-SELECT]
+           - Retirement accounts (401k, IRA, 403b, pension)
+           - Bank/brokerage/investment accounts
+           - Life insurance policies
+           - None of these
+
+    [Save selections to profile and set flags: `has_retirement_accounts`, `has_life_insurance`]
+
+    <!-- intake_id: other_assets -->
+    SKULD: Do you have any of these? (select all that apply) [MULTI-SELECT]
+           - Business ownership or interests
+           - Significant digital assets (crypto, domains)
+           - Property in multiple states
+           - None of these
+
+    [Save selections and set flags: `has_business`, `has_digital_assets`, `multi_state_property`]
+
     - **If significant retirement accounts (>50% of net worth):** SECURE Act beneficiary planning critical
-12. **Digital Assets:**
-    SKULD: Do you have any significant digital assets we should address?
+
+12. **[IF has_digital_assets = true]**
+    **Digital Assets Details:**
 
     **Common Digital Assets:**
     - Cryptocurrency (Bitcoin, Ethereum, etc.)
@@ -954,14 +988,12 @@ If user later wants to answer skipped questions:
     - Authorization for trustee to access digital accounts
     - Guidance on cryptocurrency wallet handling
     - Instructions for social media disposition (memorialize, delete, transfer)
+    **[/IF]**
 
-13. **Life Insurance:**
+13. **[IF has_life_insurance = true]**
+    **Life Insurance Details:**
     <!-- intake_id: life_insurance_details -->
-    SKULD: Do you have life insurance policies?
-           - Yes
-           - No
 
-    **[IF has_life_insurance = true]**
     SKULD: What is the approximate total death benefit across all policies?
            - Under $500,000
            - $500,000 - $1,000,000
@@ -972,19 +1004,15 @@ If user later wants to answer skipped questions:
            - Spouse
            - Children
            - Trust
-           - Other
-           - Not sure
+           - Other / Not sure
 
-    [Save to profile: `has_life_insurance: true`, `life_insurance_value: [range]`, `life_insurance_beneficiary: [selection]`]
+    [Save to profile: `life_insurance_value: [range]`, `life_insurance_beneficiary: [selection]`]
     **[/IF]**
 
-14. **Retirement Accounts:**
+14. **[IF has_retirement_accounts = true]**
+    **Retirement Account Details:**
     <!-- intake_id: retirement_account_details -->
-    SKULD: Do you have retirement accounts (401k, IRA, 403b, Roth IRA, etc.)?
-           - Yes
-           - No
 
-    **[IF has_retirement_accounts = true]**
     SKULD: Approximate total value across all retirement accounts?
            - Under $100,000
            - $100,000 - $500,000
@@ -997,7 +1025,7 @@ If user later wants to answer skipped questions:
            - Trust as beneficiary
            - Not sure / Need to check
 
-    [Save to profile: `has_retirement_accounts: true`, `retirement_value: [range]`, `retirement_beneficiaries: [selection]`]
+    [Save to profile: `retirement_value: [range]`, `retirement_beneficiaries: [selection]`]
 
     **[IF retirement_beneficiaries == "Not sure"]**
     ```
@@ -1015,13 +1043,10 @@ If user later wants to answer skipped questions:
     **[/IF]**
     **[/IF]**
 
-15. **Business Interests:**
+15. **[IF has_business = true]**
+    **Business Interest Details:**
     <!-- intake_id: business_entity_type -->
-    SKULD: Do you own a business or have ownership interest in a business?
-           - Yes
-           - No
 
-    **[IF has_business = true]**
     SKULD: What type of business entity?
            - Sole proprietorship
            - Partnership
@@ -1068,10 +1093,21 @@ If user later wants to answer skipped questions:
            - Business should be sold
            - Not sure - need guidance
 
-    [Save to profile: `has_business: true`, `business_type: [type]`, `has_partners: boolean`, `has_buy_sell_agreement: boolean`, `succession_preference: [selection]`]
+    [Save to profile: `business_type: [type]`, `has_partners: boolean`, `has_buy_sell_agreement: boolean`, `succession_preference: [selection]`]
     **[/IF]**
 
-16. **[IF state == "TN" AND has_spouse = true]**
+16. **Special Circumstances Screening:**
+
+    <!-- intake_id: special_circumstances -->
+    SKULD: Do any of these apply to your situation? (select all that apply) [MULTI-SELECT]
+           - Special needs family member (disabled beneficiary)
+           - Blended family (children from prior relationships)
+           - Planning for Medicaid within next 5 years
+           - None of these apply
+
+    [Save selections and set flags: `special_needs_beneficiary`, `blended_family`, `planning_medicaid`]
+
+17. **[IF state == "TN" AND has_spouse = true]**
     <!-- intake_id: current_asset_titling -->
     **Current Asset Titling (Tennessee):**
     SKULD: How are your major assets currently titled?
@@ -1086,8 +1122,8 @@ If user later wants to answer skipped questions:
     [Save to profile: `current_titling_strategy: [selection]`]
     **[/IF]**
 
-17. Planning goals (probate avoidance, asset protection, child provision)
-18. Existing documents
+18. Planning goals (probate avoidance, asset protection, child provision)
+19. Existing documents
 
 **State detection**: When user mentions a state, the `estate-state-lookup` agent auto-loads that state's requirements.
 
@@ -1095,14 +1131,17 @@ If user later wants to answer skipped questions:
 
 **Set flags** based on responses:
 - `high_net_worth`: estimated_net_worth > $13.99M
-- `has_minor_children`: any children under 18
-- `special_needs_beneficiary`: any beneficiary with disabilities
-- `business_owner`: has business interests
-- `multi_state_property`: real estate in 2+ states
-- `blended_family`: children from prior marriage
+- `has_minor_children`: auto-calculated from children birth dates (any under 18)
+- `has_retirement_accounts`: from financial_assets multi-select
+- `has_life_insurance`: from financial_assets multi-select
+- `has_business`: from other_assets multi-select
+- `has_digital_assets`: from other_assets multi-select
+- `multi_state_property`: from other_assets multi-select
+- `special_needs_beneficiary`: from special_circumstances multi-select
+- `blended_family`: from special_circumstances multi-select
+- `planning_medicaid`: from special_circumstances multi-select
 - `single_parent`: has minor children AND (marital_status = single|divorced|widowed)
 - `retirement_heavy_estate`: retirement accounts > 50% of estimated net worth
-- `planning_medicaid`: planning_medicaid_within_5_years = true
 - `agents_confirmed`: all applicable agent confirmations = true
 
 ### Phase 2: Document Selection
