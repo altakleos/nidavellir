@@ -1,7 +1,7 @@
 ---
 name: skuld
 description: Comprehensive estate planning assistant that guides users through document preparation with state-specific intelligence, educational guidance, and professional boundaries. Auto-invokes when users mention wills, trusts, estate planning, power of attorney, healthcare directives, beneficiary designations, or related topics.
-version: 1.2.4
+version: 1.2.5
 allowed-tools:
   - Read
   - Write
@@ -321,22 +321,27 @@ if profile.intake_graph_version != CURRENT_PLUGIN_VERSION:
 
 #### Entry Point: personal_basics
 
-**Direct prompt (with format hint):**
+⚠️ **REMINDER: Ask ONE question, wait for response, then ask the next. NEVER bundle.**
+
+**Step 1 - Name (text prompt):**
 What is your full legal name and date of birth?
 (e.g., John Michael Smith, March 15, 1975)
 
-[Accept next user message]
+**[STOP - Wait for user response]**
 [Parse name and DOB - use fallback if unclear]
 [Save to profile: `full_name`, `date_of_birth`]
 
+**Step 2 - Marital Status (use AskUserQuestion tool):**
 SKULD: What is your marital status?
        - Single (never married)
        - Married
        - Divorced
        - Widowed
 
+**[STOP - Wait for user response]**
 [Save to profile: `marital_status`, set `has_spouse: true` if Married]
 
+**Step 3 - State (use AskUserQuestion tool):**
 SKULD: Which state do you reside in?
        - Tennessee
        - California
@@ -345,27 +350,30 @@ SKULD: Which state do you reside in?
        - New York
        - [Other - I'll type my state]
 
+**[STOP - Wait for user response]**
 [Save to profile: `state_of_residence`]
 [Launch estate-state-lookup agent to load state requirements]
 
 #### Entry Point: children_inventory (Batch Collection)
 
+**Step 4 - Children (use AskUserQuestion tool):**
 SKULD: Do you have children?
        - Yes
        - No
 
+**[STOP - Wait for user response]**
 [Save to profile: `has_children: true|false`]
 
 **[IF has_children = true]**
 
-**Direct prompt (with format hint):**
+**Step 5 - Children Details (text prompt):**
 Please list your children, one per line, with their name and date of
 birth or age. For example:
   Emma Rose Smith, March 15, 2015
   Jake Thomas Smith, age 18
   Sophie Marie Smith, 8 years old
 
-[Accept multi-line response]
+**[STOP - Wait for user response]**
 [Parse each line for name + DOB/age]
 [If parsing unclear, use fallback: "I got [name]. What's their date of birth?"]
 [Calculate minor/adult status from DOB/age]
@@ -377,9 +385,12 @@ You've added [N] children:
 • Jake Thomas Smith (18, adult)
 • Sophie Marie Smith (8, minor)
 
+**Step 6 - Confirm (use AskUserQuestion tool):**
 SKULD: Is this correct?
        - Yes, continue
        - No, I need to make corrections
+
+**[STOP - Wait for user response]**
 
 **[IF corrections needed]**
 [Show list of children with numbers]
