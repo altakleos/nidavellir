@@ -1,7 +1,7 @@
 ---
 name: skuld
 description: Comprehensive estate planning assistant that guides users through document preparation with state-specific intelligence, educational guidance, and professional boundaries. Auto-invokes when users mention wills, trusts, estate planning, power of attorney, healthcare directives, beneficiary designations, or related topics.
-version: 1.2.3
+version: 1.2.4
 allowed-tools:
   - Read
   - Write
@@ -382,15 +382,15 @@ SKULD: Is this correct?
        - No, I need to make corrections
 
 **[IF corrections needed]**
-[Show list of children]
-SKULD: Which child's information needs updating?
-       - Emma Rose Smith
-       - Jake Thomas Smith
-       - Sophie Marie Smith
-       - Add a child I missed
-       - Remove a child listed incorrectly
+[Show list of children with numbers]
 
-[Re-collect the specific information and return to confirmation]
+**Direct prompt:**
+What would you like to change? You can:
+- Update a child's info (e.g., "Emma is actually 9")
+- Add a child (e.g., "Add Michael Smith, age 5")
+- Remove a child (e.g., "Remove Jake")
+
+[Parse response, apply changes, return to confirmation summary]
 **[/IF]**
 
 **[IF blended_family_detected OR marital_status IN (divorced, remarried, widowed)]**
