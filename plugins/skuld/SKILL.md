@@ -84,6 +84,85 @@ When a user responds to an intake question via the "Other" option (or types some
 If user asks 3+ questions on same intake question, offer:
 "Would you prefer to skip this for now and come back to it later?"
 
+### Text Input vs Selection Questions
+
+The rule "ALL questions use AskUserQuestion" applies to **selection questions** with predefined options. For **text input** (names, dates, addresses), use direct prompting.
+
+**Selection questions** (use AskUserQuestion):
+- Questions with predefined categorical options
+- Yes/No questions, confirmations
+- Example: "Is your spouse a U.S. citizen?" [Yes/No/Other status]
+
+**Text input questions** (use direct prompting):
+- Names, dates, addresses, custom values
+- No meaningful predefined options exist
+- Output question as markdown, accept next message as input
+
+### Format Hints
+
+Always include format hints for text input to set clear expectations:
+
+**Single field:**
+```
+What is your full legal name (as it should appear on documents)?
+(e.g., John Michael Smith)
+```
+
+**Batched fields (2 related facts OK):**
+```
+What is your full legal name and date of birth?
+(e.g., John Michael Smith, March 15, 1975)
+```
+
+**Multi-line batch input:**
+```
+Please list your children, one per line, with name and DOB/age:
+  Emma Rose Smith, March 15, 2015
+  Jake Thomas Smith, age 18
+```
+
+### Parsing Fallback
+
+If Claude can't fully parse a user's response:
+1. Extract what you can: "Got it, Emma Rose Smith."
+2. Ask for the missing piece: "What's Emma's date of birth?"
+3. Never ask user to reformat their entire response
+4. Be flexible with date formats: "March 15, 2015", "3/15/15", "age 15", "she's 15"
+
+### Confirmation Summaries
+
+After collecting complex data (children, beneficiaries), show a summary for verification:
+
+```
+You've added 3 children:
+• Emma Rose Smith (15, minor)
+• Jake Thomas Smith (18, adult)
+• Sophie Marie Smith (8, minor)
+
+Is this correct?
+```
+
+Then use AskUserQuestion with: "Yes, continue" / "No, I need to make corrections"
+
+### Skip Detection
+
+Detect skip intent in user responses:
+- Keywords: "skip", "don't know", "later", "come back", "not sure", "I'll figure this out"
+- Response: "No problem, we'll skip this for now and return to it later."
+- Mark in session: `skipped_questions: ["question_id"]`
+
+At end of intake, remind about skipped questions:
+"Before we proceed, you skipped [N] questions earlier. Would you like to answer them now?"
+
+### Correction Flow
+
+If user indicates error ("wait", "actually", "I made a mistake", "typo"):
+1. Acknowledge: "No problem, let's fix that."
+2. Show recent entries: "Here's what we have so far for [section]..."
+3. Ask what to correct: "Which would you like to update?"
+4. Re-collect that specific field
+5. Continue from where we left off
+
 ## 5-Phase Workflow
 
 When `/estate` is invoked, guide users through these phases:
@@ -206,6 +285,95 @@ if profile.intake_graph_version != CURRENT_PLUGIN_VERSION:
 | `children_inventory` | List children with names and DOB | `has_children`, `has_minor_children` |
 | `retirement_account_details` | 401k, IRA presence and beneficiaries | `has_retirement_accounts`, `retirement_beneficiaries` |
 
+#### Entry Point: personal_basics
+
+**Direct prompt (with format hint):**
+What is your full legal name and date of birth?
+(e.g., John Michael Smith, March 15, 1975)
+
+[Accept next user message]
+[Parse name and DOB - use fallback if unclear]
+[Save to profile: `full_name`, `date_of_birth`]
+
+SKULD: Which state do you reside in?
+       - Tennessee
+       - California
+       - Texas
+       - Florida
+       - New York
+       - [Other - I'll type my state]
+
+[Save to profile: `state_of_residence`]
+[Launch estate-state-lookup agent to load state requirements]
+
+#### Entry Point: children_inventory (Batch Collection)
+
+SKULD: Do you have children?
+       - Yes, minor children only (under 18)
+       - Yes, adult children only (18+)
+       - Yes, both minor and adult children
+       - No
+
+[Save to profile: `has_children`, `has_minor_children`]
+
+**[IF has_children = true]**
+
+**Direct prompt (with format hint):**
+Please list your children, one per line, with their name and date of
+birth or age. For example:
+  Emma Rose Smith, March 15, 2015
+  Jake Thomas Smith, age 18
+  Sophie Marie Smith, 8 years old
+
+[Accept multi-line response]
+[Parse each line for name + DOB/age]
+[If parsing unclear, use fallback: "I got [name]. What's their date of birth?"]
+[Calculate minor/adult status from DOB/age]
+
+[Show confirmation summary:]
+You've added [N] children:
+• Emma Rose Smith (15, minor)
+• Jake Thomas Smith (18, adult)
+• Sophie Marie Smith (8, minor)
+
+SKULD: Is this correct?
+       - Yes, continue
+       - No, I need to make corrections
+
+**[IF corrections needed]**
+[Show list of children]
+SKULD: Which child's information needs updating?
+       - Emma Rose Smith
+       - Jake Thomas Smith
+       - Sophie Marie Smith
+       - Add a child I missed
+       - Remove a child listed incorrectly
+
+[Re-collect the specific information and return to confirmation]
+**[/IF]**
+
+**[IF blended_family_detected OR marital_status IN (divorced, remarried, widowed)]**
+
+SKULD: Are all of your children from your current marriage/relationship?
+       - Yes, all from current relationship
+       - No, some are from prior relationships or stepchildren
+
+**[IF mixed_relationships = true]**
+[For each child:]
+SKULD: Is [child_name] from your current relationship, a prior
+       relationship, a stepchild, or adopted?
+       - Current relationship
+       - Prior relationship (mine)
+       - Stepchild (partner's child)
+       - Adopted
+
+[Save relationship type for each child]
+**[/IF]**
+**[/IF]**
+
+[Save to profile: `children: [{name, dob, is_minor, relationship}]`]
+**[/IF]**
+
 ### Conditional Questions
 | ID | Condition | Sets Flags | Unlocks |
 |----|-----------|------------|---------|
@@ -284,6 +452,30 @@ for each question in intake_graph:
 1. Set `session.current_intake_id = null`
 2. Transition to Phase 2
 
+**Handling Skipped Questions:**
+When a user skips a question (see Skip Detection in UX Guidelines):
+1. Add question ID to `session.skipped_questions` array
+2. Do NOT save a placeholder to profile (leave field null/undefined)
+3. Continue to next question
+4. Before Phase 2 transition, review skipped questions:
+   ```
+   if session.skipped_questions.length > 0:
+     "Before we continue, you skipped [N] questions:
+      • [question descriptions]
+      Would you like to answer them now, or continue and address them later?"
+   ```
+
+**Resuming with Skipped Questions:**
+When walking the intake graph, skip questions that are:
+- Already answered in profile, OR
+- Listed in `session.skipped_questions`
+
+If user later wants to answer skipped questions:
+1. Present the skipped question list
+2. Let them select which to answer
+3. Remove from `skipped_questions` once answered
+4. Save to profile normally
+
 ---
 
 **Discovery interview sequence:**
@@ -321,17 +513,39 @@ for each question in intake_graph:
           - No, I have other beneficiaries in mind
 
    **[IF partner_included = true]**
-   SKULD: Please provide your partner's information:
-          - Full legal name: _________
-          - Relationship duration: _________
-          - Do you want them as a healthcare agent? (critical for hospital access)
-          - Do you want them as a financial POA agent?
+
+   **Direct prompt (with format hint):**
+   What is your partner's full legal name (as it should appear on legal documents)?
+   (e.g., Jane Marie Smith)
+
+   [Accept next user message]
+   [Parse name - use fallback if unclear]
+   [Save to profile: `partner_name`]
+
+   **Direct prompt:**
+   How long have you been in this relationship?
+   (e.g., "5 years", "since 2019", "12 years")
+
+   [Accept next user message]
+   [Save to profile: `relationship_duration`]
+
+   SKULD: Would you like your partner to serve as your healthcare agent?
+          This allows them to make medical decisions if you're incapacitated
+          and ensures hospital visitation rights.
+          - Yes, I want them as my healthcare agent
+          - No, I'll designate someone else for healthcare decisions
+
+   [Save to profile: `partner_is_healthcare_agent: true|false`]
+
+   SKULD: Would you like your partner to serve as your financial agent
+          (Power of Attorney)? This allows them to manage your finances
+          if you're incapacitated.
+          - Yes, I want them as my financial agent
+          - No, I'll designate someone else for financial decisions
 
    [Save to profile:
      `has_unmarried_partner: true`
-     `partner_name: [NAME]`
-     `partner_is_beneficiary: true|false`
-     `partner_is_healthcare_agent: true|false`
+     `partner_is_beneficiary: true` (based on earlier answer)
      `partner_is_financial_agent: true|false`]
    **[/IF]**
    **[/IF]**
@@ -1676,6 +1890,7 @@ All generators write directly to `skuld/drafts/` and return metadata only.
     "documents_drafted": ["string"],
     "last_updated": "datetime",
     "current_intake_id": "string | null",
+    "skipped_questions": ["string"],
     "sub_phase": "null | '3A' | '3B' | '3C'",
     "session_started_at": "datetime",
     "generation_queue": {
