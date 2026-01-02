@@ -1,7 +1,7 @@
 ---
 name: skuld
 description: Comprehensive estate planning assistant that guides users through document preparation with state-specific intelligence, educational guidance, and professional boundaries. Auto-invokes when users mention wills, trusts, estate planning, power of attorney, healthcare directives, beneficiary designations, or related topics.
-version: 1.1.0
+version: 1.2.0
 allowed-tools:
   - Read
   - Write
@@ -309,12 +309,10 @@ SKULD: Which state do you reside in?
 #### Entry Point: children_inventory (Batch Collection)
 
 SKULD: Do you have children?
-       - Yes, minor children only (under 18)
-       - Yes, adult children only (18+)
-       - Yes, both minor and adult children
+       - Yes
        - No
 
-[Save to profile: `has_children`, `has_minor_children`]
+[Save to profile: `has_children: true|false`]
 
 **[IF has_children = true]**
 
@@ -329,6 +327,7 @@ birth or age. For example:
 [Parse each line for name + DOB/age]
 [If parsing unclear, use fallback: "I got [name]. What's their date of birth?"]
 [Calculate minor/adult status from DOB/age]
+[Set `has_minor_children: true` if any child's age < 18, else false]
 
 [Show confirmation summary:]
 You've added [N] children:
