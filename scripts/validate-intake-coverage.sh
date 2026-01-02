@@ -14,9 +14,19 @@ NC='\033[0m' # No Color
 SKULD_DIR="plugins/skuld"
 AGENTS_DIR="$SKULD_DIR/agents"
 SKILL_FILE="$SKULD_DIR/SKILL.md"
+INTAKE_REGISTRY="$SKULD_DIR/intake-registry.json"
 
 ERRORS=0
 WARNINGS=0
+
+# Composite/alias intake IDs that are text prompts or parent concepts
+# These don't need individual entries in the selection question registry
+COMPOSITE_INTAKES=(
+    "personal_basics"           # Text prompt: name + DOB
+    "children_inventory"        # Text prompt: list children with names and DOBs
+    "relationship_status"       # Alias for marital_status
+    "healthcare_preferences"    # Parent: healthcare_preferences_life_support + organ_donation
+)
 
 # Check if skuld plugin exists
 if [[ ! -d "$SKULD_DIR" ]]; then
@@ -94,32 +104,42 @@ extract_handler_requirements() {
     HANDLER_OPTIONAL[$agent_name]="$optional"
 }
 
-# Extract intake_ids from SKILL.md
+# Extract intake_ids from intake-registry.json
 declare -A INTAKE_IDS
 
 extract_intake_ids() {
-    # Extract from HTML comments: <!-- intake_id: xxx -->
-    while IFS= read -r line; do
-        if [[ "$line" =~ \<!--[[:space:]]*intake_id:[[:space:]]*([a-z_,[:space:]]+)[[:space:]]*--\> ]]; then
-            local ids="${BASH_REMATCH[1]}"
-            # Split by comma and add each
-            IFS=',' read -ra ID_ARRAY <<< "$ids"
-            for id in "${ID_ARRAY[@]}"; do
-                id=$(echo "$id" | tr -d ' ')
-                if [[ -n "$id" ]]; then
-                    INTAKE_IDS[$id]=1
-                fi
-            done
-        fi
-    done < "$SKILL_FILE"
-
-    # Also extract from intake graph tables (| `id` | format)
-    while IFS= read -r line; do
-        if [[ "$line" =~ ^\|[[:space:]]*\`([a-z_]+)\`[[:space:]]*\| ]]; then
-            local id="${BASH_REMATCH[1]}"
+    # Primary source: intake-registry.json
+    if [[ -f "$INTAKE_REGISTRY" ]]; then
+        for id in $(jq -r '.questions | keys[]' "$INTAKE_REGISTRY" 2>/dev/null); do
             INTAKE_IDS[$id]=1
-        fi
-    done < "$SKILL_FILE"
+        done
+    fi
+
+    # Fallback: Also check SKILL.md for legacy patterns
+    if [[ -f "$SKILL_FILE" ]]; then
+        # Extract from HTML comments: <!-- intake_id: xxx -->
+        while IFS= read -r line; do
+            if [[ "$line" =~ \<!--[[:space:]]*intake_id:[[:space:]]*([a-z_,[:space:]]+)[[:space:]]*--\> ]]; then
+                local ids="${BASH_REMATCH[1]}"
+                # Split by comma and add each
+                IFS=',' read -ra ID_ARRAY <<< "$ids"
+                for id in "${ID_ARRAY[@]}"; do
+                    id=$(echo "$id" | tr -d ' ')
+                    if [[ -n "$id" ]]; then
+                        INTAKE_IDS[$id]=1
+                    fi
+                done
+            fi
+        done < "$SKILL_FILE"
+
+        # Also extract from intake graph tables (| `id` | format)
+        while IFS= read -r line; do
+            if [[ "$line" =~ ^\|[[:space:]]*\`([a-z_]+)\`[[:space:]]*\| ]]; then
+                local id="${BASH_REMATCH[1]}"
+                INTAKE_IDS[$id]=1
+            fi
+        done < "$SKILL_FILE"
+    fi
 }
 
 # Process all agent files
@@ -130,8 +150,8 @@ for agent_file in "$AGENTS_DIR"/*.md; do
     fi
 done
 
-# Extract intake IDs from SKILL.md
-echo "  Extracting intake IDs from SKILL.md..."
+# Extract intake IDs from intake-registry.json (and SKILL.md fallback)
+echo "  Extracting intake IDs from intake-registry.json..."
 extract_intake_ids
 
 # Report findings
@@ -152,9 +172,24 @@ echo ""
 echo "  Checking coverage..."
 MISSING_INTAKES=""
 
+# Helper function to check if intake is in composite list
+is_composite_intake() {
+    local needle=$1
+    for item in "${COMPOSITE_INTAKES[@]}"; do
+        if [[ "$item" == "$needle" ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
 for agent in "${!HANDLER_REQUIREMENTS[@]}"; do
     reqs="${HANDLER_REQUIREMENTS[$agent]}"
     for req in $reqs; do
+        # Skip known composite/alias intakes
+        if is_composite_intake "$req"; then
+            continue
+        fi
         if [[ -z "${INTAKE_IDS[$req]}" ]]; then
             MISSING_INTAKES+="    $agent requires '$req' - NOT FOUND\n"
             ERRORS=$((ERRORS + 1))
@@ -175,6 +210,10 @@ MISSING_OPTIONAL=""
 for agent in "${!HANDLER_OPTIONAL[@]}"; do
     opts="${HANDLER_OPTIONAL[$agent]}"
     for opt in $opts; do
+        # Skip known composite/alias intakes
+        if is_composite_intake "$opt"; then
+            continue
+        fi
         if [[ -z "${INTAKE_IDS[$opt]}" ]]; then
             MISSING_OPTIONAL+="    $agent optional '$opt' - NOT FOUND\n"
             WARNINGS=$((WARNINGS + 1))

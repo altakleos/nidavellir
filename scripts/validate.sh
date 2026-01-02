@@ -302,8 +302,78 @@ fi
 
 echo ""
 
+# Validate Skuld intake registry
+echo "5. Validating Skuld intake registry"
+echo "-------------------------------------"
+
+INTAKE_REGISTRY="plugins/skuld/intake-registry.json"
+INTAKE_SCHEMA="schemas/intake-registry.schema.json"
+
+if [[ -f "$INTAKE_REGISTRY" ]]; then
+    echo "  Checking $INTAKE_REGISTRY..."
+
+    # Validate JSON syntax
+    if ! validate_json_syntax "$INTAKE_REGISTRY"; then
+        echo -e "${RED}  ✗ Invalid JSON in intake-registry.json${NC}"
+    else
+        # Check required top-level fields
+        if ! jq -e '.version' "$INTAKE_REGISTRY" > /dev/null 2>&1; then
+            echo -e "${RED}  ✗ Missing required field: version${NC}"
+            ERRORS=$((ERRORS + 1))
+        fi
+
+        if ! jq -e '.questions' "$INTAKE_REGISTRY" > /dev/null 2>&1; then
+            echo -e "${RED}  ✗ Missing required field: questions${NC}"
+            ERRORS=$((ERRORS + 1))
+        fi
+
+        # Validate each question has required fields
+        QUESTION_COUNT=$(jq '.questions | keys | length' "$INTAKE_REGISTRY")
+        echo "  Found $QUESTION_COUNT questions in registry"
+
+        INVALID_QUESTIONS=0
+        for key in $(jq -r '.questions | keys[]' "$INTAKE_REGISTRY"); do
+            # Check id matches key
+            local_id=$(jq -r ".questions[\"$key\"].id // \"\"" "$INTAKE_REGISTRY")
+            if [[ "$local_id" != "$key" ]]; then
+                echo -e "${RED}  ✗ Question id mismatch: key=$key, id=$local_id${NC}"
+                INVALID_QUESTIONS=$((INVALID_QUESTIONS + 1))
+            fi
+
+            # Check required fields
+            for field in "phase" "type" "question_text"; do
+                if ! jq -e ".questions[\"$key\"].$field" "$INTAKE_REGISTRY" > /dev/null 2>&1; then
+                    echo -e "${RED}  ✗ Question '$key' missing required field: $field${NC}"
+                    INVALID_QUESTIONS=$((INVALID_QUESTIONS + 1))
+                fi
+            done
+
+            # Check select/multi_select have options
+            local_type=$(jq -r ".questions[\"$key\"].type // \"\"" "$INTAKE_REGISTRY")
+            if [[ "$local_type" == "select" || "$local_type" == "multi_select" ]]; then
+                options_count=$(jq ".questions[\"$key\"].options | length // 0" "$INTAKE_REGISTRY")
+                if [[ "$options_count" -lt 2 ]]; then
+                    echo -e "${RED}  ✗ Question '$key' ($local_type) needs at least 2 options, found $options_count${NC}"
+                    INVALID_QUESTIONS=$((INVALID_QUESTIONS + 1))
+                fi
+            fi
+        done
+
+        if [[ $INVALID_QUESTIONS -gt 0 ]]; then
+            ERRORS=$((ERRORS + INVALID_QUESTIONS))
+        else
+            echo -e "${GREEN}  ✓ All $QUESTION_COUNT questions validated${NC}"
+        fi
+    fi
+else
+    echo -e "${YELLOW}⚠ intake-registry.json not found at $INTAKE_REGISTRY${NC}"
+    WARNINGS=$((WARNINGS + 1))
+fi
+
+echo ""
+
 # Validate Skuld intake coverage
-echo "5. Validating Skuld intake coverage"
+echo "6. Validating Skuld intake coverage"
 echo "-------------------------------------"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

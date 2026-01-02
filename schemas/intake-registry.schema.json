@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/altakleos/nidavellir/schemas/intake-registry.schema.json",
+  "title": "Skuld Intake Registry Schema",
+  "description": "Schema for validating intake-registry.json - the single source of truth for all Skuld intake questions",
+  "type": "object",
+  "required": ["version", "questions"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema reference"
+    },
+    "version": {
+      "type": "string",
+      "description": "Registry version date (YYYY-MM-DD format)",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of the registry's purpose"
+    },
+    "questions": {
+      "type": "object",
+      "description": "Map of question IDs to question definitions",
+      "additionalProperties": {
+        "$ref": "#/definitions/question"
+      },
+      "minProperties": 1
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "question": {
+      "type": "object",
+      "required": ["id", "phase", "type", "question_text"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this question (must match the key in questions object)",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "phase": {
+          "type": "integer",
+          "description": "Workflow phase (1=Discovery, 2=Document Selection, 3=Drafting, 4=Execution, 5=Funding)",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "type": {
+          "type": "string",
+          "description": "Question type determining how user responds",
+          "enum": ["select", "multi_select", "text", "confirm"]
+        },
+        "question_text": {
+          "type": "string",
+          "description": "The exact question text to present to the user",
+          "minLength": 5,
+          "maxLength": 500
+        },
+        "options": {
+          "type": "array",
+          "description": "Available options for select/multi_select questions. Required for select and multi_select types.",
+          "items": {
+            "$ref": "#/definitions/option"
+          },
+          "minItems": 2,
+          "maxItems": 10
+        },
+        "condition": {
+          "type": "string",
+          "description": "Condition expression determining when this question should be asked (e.g., 'has_children == true')",
+          "maxLength": 200
+        },
+        "constraints": {
+          "type": "array",
+          "description": "Constraint references (e.g., ['C1', 'C7']) that apply to this question",
+          "items": {
+            "type": "string",
+            "pattern": "^C\\d+$"
+          },
+          "maxItems": 5
+        },
+        "save_to": {
+          "type": "string",
+          "description": "Dot-notation path where answer should be saved in client profile (e.g., 'personal.marital_status')",
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$",
+          "maxLength": 100
+        },
+        "sets_flags": {
+          "type": "array",
+          "description": "Flags to set based on the answer (used for conditional logic)",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "maxItems": 10
+        },
+        "note": {
+          "type": "string",
+          "description": "Internal note for developers/maintainers about this question's usage",
+          "maxLength": 500
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": { "enum": ["select", "multi_select"] }
+            }
+          },
+          "then": {
+            "required": ["options"]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "option": {
+      "type": "object",
+      "required": ["value", "label"],
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "Machine-readable value stored when this option is selected",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "label": {
+          "type": "string",
+          "description": "Human-readable label displayed to the user",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "exclusive": {
+          "type": "boolean",
+          "description": "For multi_select: if true, selecting this option deselects all others (e.g., 'None of these')"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

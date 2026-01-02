@@ -1,0 +1,736 @@
+{
+  "$schema": "../schemas/intake-registry.schema.json",
+  "version": "2026-01-02",
+  "description": "Single source of truth for all Skuld intake questions. Claude MUST read this file before asking any selection question.",
+  "questions": {
+    "marital_status": {
+      "id": "marital_status",
+      "phase": 1,
+      "type": "select",
+      "question_text": "What is your marital status?",
+      "options": [
+        { "value": "single", "label": "Single (never married)" },
+        { "value": "married", "label": "Married" },
+        { "value": "divorced", "label": "Divorced" },
+        { "value": "widowed", "label": "Widowed" },
+        { "value": "domestic_partnership", "label": "Domestic partnership (registered)" },
+        { "value": "cohabiting", "label": "Unmarried but cohabiting with a partner" }
+      ],
+      "save_to": "personal.marital_status",
+      "sets_flags": ["marital_status", "has_spouse"]
+    },
+
+    "state_of_residence": {
+      "id": "state_of_residence",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Which state do you reside in?",
+      "options": [
+        { "value": "TN", "label": "Tennessee" },
+        { "value": "CA", "label": "California" },
+        { "value": "TX", "label": "Texas" },
+        { "value": "FL", "label": "Florida" },
+        { "value": "NY", "label": "New York" },
+        { "value": "OTHER", "label": "[Other - I'll type my state]" }
+      ],
+      "constraints": ["C6"],
+      "save_to": "personal.state_of_residence"
+    },
+
+    "has_children": {
+      "id": "has_children",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Do you have children?",
+      "options": [
+        { "value": "yes", "label": "Yes" },
+        { "value": "no", "label": "No" }
+      ],
+      "constraints": ["C1"],
+      "save_to": "flags.has_children"
+    },
+
+    "children_confirm": {
+      "id": "children_confirm",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Is this correct?",
+      "options": [
+        { "value": "yes", "label": "Yes, continue" },
+        { "value": "no", "label": "No, I need to make corrections" }
+      ],
+      "condition": "has_children == true"
+    },
+
+    "children_relationship_type": {
+      "id": "children_relationship_type",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Are all of your children from your current marriage/relationship?",
+      "options": [
+        { "value": "yes", "label": "Yes, all from current relationship" },
+        { "value": "no", "label": "No, some are from prior relationships or stepchildren" }
+      ],
+      "condition": "blended_family_detected OR marital_status IN (divorced, widowed)"
+    },
+
+    "child_relationship_detail": {
+      "id": "child_relationship_detail",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Is [child_name] from your current relationship, a prior relationship, a stepchild, or adopted?",
+      "options": [
+        { "value": "current", "label": "Current relationship" },
+        { "value": "prior", "label": "Prior relationship (mine)" },
+        { "value": "stepchild", "label": "Stepchild (partner's child)" },
+        { "value": "adopted", "label": "Adopted" }
+      ],
+      "condition": "mixed_relationships == true",
+      "note": "Asked for each child when blended family detected"
+    },
+
+    "spouse_citizenship": {
+      "id": "spouse_citizenship",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Is your spouse a U.S. citizen?",
+      "options": [
+        { "value": "yes", "label": "Yes" },
+        { "value": "no", "label": "No (permanent resident, visa holder, or other status)" },
+        { "value": "pending", "label": "Naturalization pending" }
+      ],
+      "condition": "has_spouse == true",
+      "sets_flags": ["spouse_is_us_citizen", "qdot_required"],
+      "save_to": "spouse.is_us_citizen"
+    },
+
+    "partner_included": {
+      "id": "partner_included",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Would you like to include your partner in your estate plan?",
+      "options": [
+        { "value": "significant", "label": "Yes, my partner is a significant beneficiary" },
+        { "value": "specific", "label": "Yes, but my partner should receive specific items only" },
+        { "value": "no", "label": "No, I have other beneficiaries in mind" }
+      ],
+      "condition": "marital_status == cohabiting"
+    },
+
+    "partner_healthcare_agent": {
+      "id": "partner_healthcare_agent",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Would you like your partner to serve as your healthcare agent? This allows them to make medical decisions if you're incapacitated and ensures hospital visitation rights.",
+      "options": [
+        { "value": "yes", "label": "Yes, I want them as my healthcare agent" },
+        { "value": "no", "label": "No, I'll designate someone else for healthcare decisions" }
+      ],
+      "condition": "partner_included != no"
+    },
+
+    "partner_financial_agent": {
+      "id": "partner_financial_agent",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Would you like your partner to serve as your financial agent (Power of Attorney)? This allows them to manage your finances if you're incapacitated.",
+      "options": [
+        { "value": "yes", "label": "Yes, I want them as my financial agent" },
+        { "value": "no", "label": "No, I'll designate someone else for financial decisions" }
+      ],
+      "condition": "partner_included != no"
+    },
+
+    "cpt_relocation_risk": {
+      "id": "cpt_relocation_risk",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Are you planning to relocate outside Tennessee in the next 5-10 years?",
+      "options": [
+        { "value": "yes", "label": "Yes" },
+        { "value": "no", "label": "No" },
+        { "value": "uncertain", "label": "Uncertain" }
+      ],
+      "condition": "state == TN AND marital_status == married",
+      "sets_flags": ["cpt_relocation_risk"]
+    },
+
+    "cpt_divorce_history": {
+      "id": "cpt_divorce_history",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Has either spouse ever been through a divorce or legal separation?",
+      "options": [
+        { "value": "yes", "label": "Yes" },
+        { "value": "no", "label": "No" }
+      ],
+      "condition": "state == TN AND marital_status == married",
+      "sets_flags": ["cpt_divorce_history"]
+    },
+
+    "cpt_separate_property": {
+      "id": "cpt_separate_property",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Did either spouse bring significant separate property (pre-marital or inherited) into the marriage?",
+      "options": [
+        { "value": "yes_significant", "label": "Yes, significant assets" },
+        { "value": "some", "label": "Some, but not significant" },
+        { "value": "no", "label": "No, most assets acquired during marriage" }
+      ],
+      "condition": "state == TN AND marital_status == married",
+      "sets_flags": ["cpt_separate_property_concern"]
+    },
+
+    "cpt_liability_profession": {
+      "id": "cpt_liability_profession",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Is either spouse in a profession with high liability exposure (doctor, attorney, business owner with personal guarantees)?",
+      "options": [
+        { "value": "yes", "label": "Yes" },
+        { "value": "no", "label": "No" }
+      ],
+      "condition": "state == TN AND marital_status == married",
+      "sets_flags": ["cpt_liability_profession"]
+    },
+
+    "cpt_election": {
+      "id": "cpt_election",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Would you like to structure your trust as a Tennessee Community Property Trust?",
+      "options": [
+        { "value": "yes", "label": "Yes, I want the double step-up in basis benefit" },
+        { "value": "no", "label": "No, standard revocable trust is fine" },
+        { "value": "discuss", "label": "I'd like to discuss this with my attorney first" }
+      ],
+      "condition": "state == TN AND marital_status == married",
+      "save_to": "tn_community_property_trust"
+    },
+
+    "special_needs_screening": {
+      "id": "special_needs_screening",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Do any of your children have special needs, a disability, or currently receive government benefits like SSI, Medicaid, or disability services?",
+      "options": [
+        { "value": "yes", "label": "Yes" },
+        { "value": "no", "label": "No" },
+        { "value": "anticipate", "label": "Not currently, but I anticipate one might in the future" }
+      ],
+      "condition": "has_children == true",
+      "sets_flags": ["special_needs_beneficiary"]
+    },
+
+    "custody_order": {
+      "id": "custody_order",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Is there an existing court custody order or parenting plan for your children?",
+      "options": [
+        { "value": "yes", "label": "Yes, there is a custody order" },
+        { "value": "no", "label": "No custody order exists" },
+        { "value": "na", "label": "Not applicable (other parent is deceased)" }
+      ],
+      "condition": "single_parent == true"
+    },
+
+    "custody_order_succession": {
+      "id": "custody_order_succession",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Does your custody order include any provisions about what happens to the children if something happens to you?",
+      "options": [
+        { "value": "yes", "label": "Yes, it has standby guardian or succession provisions" },
+        { "value": "no", "label": "No, it only covers current custody arrangement" },
+        { "value": "unsure", "label": "Not sure" }
+      ],
+      "condition": "has_custody_order == true"
+    },
+
+    "child_age_status": {
+      "id": "child_age_status",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Is [child_name] over 18?",
+      "options": [
+        { "value": "yes", "label": "Yes (adult)" },
+        { "value": "no", "label": "No (minor)" }
+      ],
+      "condition": "child.has_special_needs == true",
+      "note": "Asked for each special needs child"
+    },
+
+    "government_benefits_status": {
+      "id": "government_benefits_status",
+      "phase": 1,
+      "type": "multi_select",
+      "question_text": "Does [child_name] currently receive any government benefits? (select all that apply)",
+      "options": [
+        { "value": "ssi", "label": "SSI (Supplemental Security Income)" },
+        { "value": "ssdi", "label": "SSDI (Social Security Disability Insurance)" },
+        { "value": "medicaid", "label": "Medicaid" },
+        { "value": "none", "label": "None currently" },
+        { "value": "unsure", "label": "Not sure" }
+      ],
+      "condition": "child.has_special_needs == true",
+      "sets_flags": ["receives_government_benefits"]
+    },
+
+    "legal_capacity_status": {
+      "id": "legal_capacity_status",
+      "phase": 1,
+      "type": "select",
+      "question_text": "What is [child_name]'s legal capacity status?",
+      "options": [
+        { "value": "full", "label": "Full legal capacity (makes own decisions)" },
+        { "value": "guardian", "label": "Has a court-appointed guardian or conservator" },
+        { "value": "supported", "label": "Has supported decision-making arrangement" },
+        { "value": "considering", "label": "Guardianship/conservatorship is being considered" }
+      ],
+      "condition": "is_adult_special_needs == true",
+      "sets_flags": ["has_conservatorship"]
+    },
+
+    "snt_trustee": {
+      "id": "snt_trustee",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Should we designate a different trustee for [child_name]'s Special Needs Trust than your main trust trustee?",
+      "options": [
+        { "value": "yes", "label": "Yes, I want to name a specific SNT trustee" },
+        { "value": "no", "label": "No, use the same trustee as my main trust" },
+        { "value": "help", "label": "I have a question about this" }
+      ],
+      "condition": "child.has_special_needs == true"
+    },
+
+    "able_account_interest": {
+      "id": "able_account_interest",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Is [child_name] eligible for or interested in an ABLE account? (tax-advantaged savings for disability expenses)",
+      "options": [
+        { "value": "has", "label": "Yes, already has one" },
+        { "value": "interested", "label": "Yes, interested in establishing one" },
+        { "value": "no", "label": "No / Not sure" }
+      ],
+      "condition": "child.has_special_needs == true"
+    },
+
+    "letter_of_intent": {
+      "id": "letter_of_intent",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Would you like to create a Letter of Intent for [child_name]? (A personal document describing care preferences, routines, and important information for future caregivers)",
+      "options": [
+        { "value": "yes", "label": "Yes" },
+        { "value": "no", "label": "No" },
+        { "value": "later", "label": "Maybe later" }
+      ],
+      "condition": "child.has_special_needs == true",
+      "sets_flags": ["letter_of_intent_desired"]
+    },
+
+    "prenuptial_agreement": {
+      "id": "prenuptial_agreement",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Do you have a prenuptial or postnuptial agreement?",
+      "options": [
+        { "value": "yes", "label": "Yes" },
+        { "value": "no", "label": "No" },
+        { "value": "unsure", "label": "Not sure" }
+      ],
+      "condition": "blended_family == true"
+    },
+
+    "prenup_covers_death": {
+      "id": "prenup_covers_death",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Does your agreement specify how assets should be distributed at death? (This may affect our trust structure)",
+      "options": [
+        { "value": "yes", "label": "Yes, it specifies distribution terms" },
+        { "value": "no", "label": "No, it only covers divorce" },
+        { "value": "unsure", "label": "Not sure" }
+      ],
+      "condition": "has_prenuptial_agreement == true"
+    },
+
+    "financial_assets": {
+      "id": "financial_assets",
+      "phase": 1,
+      "type": "multi_select",
+      "question_text": "Which financial assets do you have? (select all that apply)",
+      "options": [
+        { "value": "retirement", "label": "Retirement accounts (401k, IRA, 403b, pension)" },
+        { "value": "bank_brokerage", "label": "Bank/brokerage/investment accounts" },
+        { "value": "life_insurance", "label": "Life insurance policies" },
+        { "value": "none", "label": "None of these", "exclusive": true }
+      ],
+      "sets_flags": ["has_retirement_accounts", "has_life_insurance"],
+      "save_to": "assets.financial"
+    },
+
+    "other_assets": {
+      "id": "other_assets",
+      "phase": 1,
+      "type": "multi_select",
+      "question_text": "Do you have any of these? (select all that apply)",
+      "options": [
+        { "value": "business", "label": "Business ownership or interests" },
+        { "value": "digital", "label": "Significant digital assets (crypto, domains)" },
+        { "value": "multi_state", "label": "Property in multiple states" },
+        { "value": "none", "label": "None of these", "exclusive": true }
+      ],
+      "sets_flags": ["has_business", "has_digital_assets", "multi_state_property"],
+      "save_to": "assets.other"
+    },
+
+    "life_insurance_value": {
+      "id": "life_insurance_value",
+      "phase": 1,
+      "type": "select",
+      "question_text": "What is the approximate total death benefit across all policies?",
+      "options": [
+        { "value": "under_500k", "label": "Under $500,000" },
+        { "value": "500k_1m", "label": "$500,000 - $1,000,000" },
+        { "value": "1m_5m", "label": "$1,000,000 - $5,000,000" },
+        { "value": "over_5m", "label": "Over $5,000,000" }
+      ],
+      "condition": "has_life_insurance == true",
+      "save_to": "assets.life_insurance_value"
+    },
+
+    "life_insurance_beneficiary": {
+      "id": "life_insurance_beneficiary",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Who is currently named as beneficiary on your life insurance?",
+      "options": [
+        { "value": "spouse", "label": "Spouse" },
+        { "value": "children", "label": "Children" },
+        { "value": "trust", "label": "Trust" },
+        { "value": "other", "label": "Other / Not sure" }
+      ],
+      "condition": "has_life_insurance == true",
+      "save_to": "assets.life_insurance_beneficiary"
+    },
+
+    "retirement_value": {
+      "id": "retirement_value",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Approximate total value across all retirement accounts?",
+      "options": [
+        { "value": "under_100k", "label": "Under $100,000" },
+        { "value": "100k_500k", "label": "$100,000 - $500,000" },
+        { "value": "500k_1m", "label": "$500,000 - $1,000,000" },
+        { "value": "over_1m", "label": "Over $1,000,000" }
+      ],
+      "condition": "has_retirement_accounts == true",
+      "save_to": "assets.retirement_value"
+    },
+
+    "retirement_beneficiaries": {
+      "id": "retirement_beneficiaries",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Who is currently named as beneficiary on these accounts?",
+      "options": [
+        { "value": "spouse", "label": "Spouse as primary" },
+        { "value": "children", "label": "Children as primary" },
+        { "value": "trust", "label": "Trust as beneficiary" },
+        { "value": "unsure", "label": "Not sure / Need to check" }
+      ],
+      "condition": "has_retirement_accounts == true",
+      "save_to": "assets.retirement_beneficiaries"
+    },
+
+    "business_entity_type": {
+      "id": "business_entity_type",
+      "phase": 1,
+      "type": "select",
+      "question_text": "What type of business entity?",
+      "options": [
+        { "value": "sole_prop", "label": "Sole proprietorship" },
+        { "value": "partnership", "label": "Partnership" },
+        { "value": "llc_single", "label": "LLC (single-member)" },
+        { "value": "llc_multi", "label": "LLC (multi-member)" },
+        { "value": "s_corp", "label": "S-Corporation" },
+        { "value": "c_corp", "label": "C-Corporation" },
+        { "value": "multiple", "label": "Multiple entities" }
+      ],
+      "condition": "has_business == true",
+      "save_to": "business.entity_type"
+    },
+
+    "business_partners": {
+      "id": "business_partners",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Do you have partners or other owners?",
+      "options": [
+        { "value": "yes", "label": "Yes" },
+        { "value": "no", "label": "No" }
+      ],
+      "condition": "has_business == true",
+      "sets_flags": ["has_partners"]
+    },
+
+    "buy_sell_agreement": {
+      "id": "buy_sell_agreement",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Is there an existing buy-sell agreement?",
+      "options": [
+        { "value": "yes", "label": "Yes" },
+        { "value": "no", "label": "No" },
+        { "value": "unsure", "label": "Not sure" }
+      ],
+      "condition": "has_partners == true",
+      "sets_flags": ["has_buy_sell_agreement"]
+    },
+
+    "business_succession_preferences": {
+      "id": "business_succession_preferences",
+      "phase": 1,
+      "type": "select",
+      "question_text": "What should happen to the business if you die or become incapacitated?",
+      "options": [
+        { "value": "family", "label": "Family member(s) should take over" },
+        { "value": "partner_buyout", "label": "Partners should buy out my share" },
+        { "value": "sell", "label": "Business should be sold" },
+        { "value": "unsure", "label": "Not sure - need guidance" }
+      ],
+      "condition": "has_business == true",
+      "save_to": "business.succession_preference"
+    },
+
+    "special_circumstances": {
+      "id": "special_circumstances",
+      "phase": 1,
+      "type": "multi_select",
+      "question_text": "Do any of these apply to your situation? (select all that apply)",
+      "options": [
+        { "value": "special_needs", "label": "Special needs family member (disabled beneficiary)" },
+        { "value": "blended_family", "label": "Blended family (children from prior relationships)" },
+        { "value": "medicaid", "label": "Planning for Medicaid within next 5 years" },
+        { "value": "none", "label": "None of these apply", "exclusive": true }
+      ],
+      "sets_flags": ["special_needs_beneficiary", "blended_family", "planning_medicaid"]
+    },
+
+    "current_asset_titling": {
+      "id": "current_asset_titling",
+      "phase": 1,
+      "type": "select",
+      "question_text": "How are your major assets currently titled?",
+      "options": [
+        { "value": "joint", "label": "Joint tenancy with spouse" },
+        { "value": "tbe", "label": "Tenancy by the entirety" },
+        { "value": "separate", "label": "Individual names (separate)" },
+        { "value": "mix", "label": "Mix of different titling methods" },
+        { "value": "trust", "label": "Already in a trust" },
+        { "value": "unsure", "label": "Not sure" }
+      ],
+      "condition": "state == TN AND has_spouse == true",
+      "save_to": "assets.current_titling_strategy"
+    },
+
+    "session_timeout_proceed": {
+      "id": "session_timeout_proceed",
+      "phase": 1,
+      "type": "select",
+      "question_text": "How would you like to proceed?",
+      "options": [
+        { "value": "review", "label": "Review and update my information" },
+        { "value": "continue", "label": "Continue where I left off" },
+        { "value": "fresh", "label": "Start fresh with a new session" }
+      ],
+      "condition": "session_age > 30 days"
+    },
+
+    "trust_funding_needs": {
+      "id": "trust_funding_needs",
+      "phase": 2,
+      "type": "select",
+      "question_text": "Will you need to transfer real estate or open accounts in the trust's name?",
+      "options": [
+        { "value": "real_estate", "label": "Yes, I have real estate to transfer" },
+        { "value": "accounts", "label": "Yes, I need to open trust bank/brokerage accounts" },
+        { "value": "both", "label": "Both real estate and accounts" },
+        { "value": "later", "label": "No, I'll handle funding later" }
+      ],
+      "condition": "state == TN AND creating_trust == true",
+      "sets_flags": ["needs_certificate_of_trust"]
+    },
+
+    "beneficiary_coordination_checklist": {
+      "id": "beneficiary_coordination_checklist",
+      "phase": 2,
+      "type": "select",
+      "question_text": "Would you like me to generate a Beneficiary Designation Coordination Checklist for your retirement accounts and life insurance policies?",
+      "options": [
+        { "value": "yes", "label": "Yes (recommended)" },
+        { "value": "no", "label": "No, I'll handle this separately" }
+      ],
+      "condition": "retirement_heavy_estate == true"
+    },
+
+    "document_acceptance": {
+      "id": "document_acceptance",
+      "phase": 2,
+      "type": "select",
+      "question_text": "Would you like to proceed with these recommended documents?",
+      "options": [
+        { "value": "accept", "label": "Yes, proceed with all recommended documents" },
+        { "value": "customize", "label": "I want to customize which documents to include" },
+        { "value": "questions", "label": "I have questions about these documents" }
+      ],
+      "constraints": ["C7"]
+    },
+
+    "trust_structure": {
+      "id": "trust_structure",
+      "phase": 2,
+      "type": "select",
+      "question_text": "Since you're married, how would you like to structure your trust?",
+      "options": [
+        { "value": "joint", "label": "Joint trust (both as co-grantors - recommended for first marriages)" },
+        { "value": "separate", "label": "Separate trusts (each spouse has their own trust)" }
+      ],
+      "condition": "marital_status == married AND blended_family != true",
+      "constraints": ["C7"],
+      "save_to": "trust.structure"
+    },
+
+    "tn_real_estate_details": {
+      "id": "tn_real_estate_details",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Do you own real estate in Tennessee?",
+      "options": [
+        { "value": "yes", "label": "Yes" },
+        { "value": "no", "label": "No" }
+      ],
+      "condition": "state == TN",
+      "sets_flags": ["has_tn_real_estate"]
+    },
+
+    "tod_beneficiary_selection": {
+      "id": "tod_beneficiary_selection",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Who should receive this property at your death?",
+      "options": [
+        { "value": "spouse", "label": "Spouse" },
+        { "value": "children", "label": "Children equally" },
+        { "value": "trust", "label": "My trust" },
+        { "value": "other", "label": "Other beneficiary (I'll specify)" }
+      ],
+      "condition": "wants_tod_deed == true",
+      "save_to": "tod.beneficiaries"
+    },
+
+    "healthcare_preferences_life_support": {
+      "id": "healthcare_preferences_life_support",
+      "phase": 1,
+      "type": "select",
+      "question_text": "If you were terminally ill or permanently unconscious with no reasonable expectation of recovery, what are your wishes regarding life-sustaining treatment?",
+      "options": [
+        { "value": "full", "label": "I want all possible life-sustaining measures" },
+        { "value": "comfort", "label": "I want comfort care only (pain management, no extraordinary measures)" },
+        { "value": "limited", "label": "I want limited intervention (try treatment, but stop if no improvement)" },
+        { "value": "discuss", "label": "I want to discuss this with my healthcare agent" }
+      ],
+      "save_to": "healthcare.life_support_wishes"
+    },
+
+    "healthcare_preferences_organ_donation": {
+      "id": "healthcare_preferences_organ_donation",
+      "phase": 1,
+      "type": "select",
+      "question_text": "What are your wishes regarding organ and tissue donation?",
+      "options": [
+        { "value": "yes_all", "label": "Yes, donate any organs/tissues that can help others" },
+        { "value": "yes_limited", "label": "Yes, but only specific organs/tissues" },
+        { "value": "no", "label": "No, I do not wish to donate" },
+        { "value": "family", "label": "Let my family decide at the time" }
+      ],
+      "save_to": "healthcare.organ_donation"
+    },
+
+    "financial_agent_selection": {
+      "id": "financial_agent_selection",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Who should serve as your financial agent (Power of Attorney)?",
+      "options": [
+        { "value": "spouse", "label": "Spouse" },
+        { "value": "adult_child", "label": "Adult child" },
+        { "value": "other", "label": "Other person (I'll provide the name)" }
+      ],
+      "save_to": "agents.financial_agent"
+    },
+
+    "healthcare_agent_selection": {
+      "id": "healthcare_agent_selection",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Who should make healthcare decisions for you if you cannot?",
+      "options": [
+        { "value": "spouse", "label": "Spouse" },
+        { "value": "adult_child", "label": "Adult child" },
+        { "value": "other", "label": "Other person (I'll provide the name)" }
+      ],
+      "save_to": "agents.healthcare_agent"
+    },
+
+    "guardian_preferences": {
+      "id": "guardian_preferences",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Who would you like to name as guardian for your minor children?",
+      "options": [
+        { "value": "family", "label": "Family member" },
+        { "value": "friend", "label": "Close friend" },
+        { "value": "other", "label": "Other person (I'll provide details)" },
+        { "value": "help", "label": "I have a question about this" }
+      ],
+      "condition": "has_minor_children == true",
+      "save_to": "guardianship.guardian_selection"
+    },
+
+    "executor_preferences": {
+      "id": "executor_preferences",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Who should serve as executor of your will?",
+      "options": [
+        { "value": "spouse", "label": "Spouse" },
+        { "value": "adult_child", "label": "Adult child" },
+        { "value": "family", "label": "Other family member" },
+        { "value": "professional", "label": "Professional (bank, attorney, trust company)" },
+        { "value": "other", "label": "Other person (I'll provide the name)" }
+      ],
+      "save_to": "agents.executor"
+    },
+
+    "distribution_preferences": {
+      "id": "distribution_preferences",
+      "phase": 1,
+      "type": "select",
+      "question_text": "How would you like assets distributed to your beneficiaries?",
+      "options": [
+        { "value": "all_at_once", "label": "All at once when they inherit" },
+        { "value": "staggered", "label": "Staggered distributions at certain ages (e.g., 25, 30, 35)" },
+        { "value": "discretionary", "label": "Trustee discretion with HEMS standard" },
+        { "value": "help", "label": "I have a question about distribution options" }
+      ],
+      "save_to": "distribution.pattern"
+    }
+  }
+}
