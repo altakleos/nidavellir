@@ -38,7 +38,7 @@
       "name": "skuld",
       "source": "./plugins/skuld",
       "description": "Comprehensive estate planning assistant with state-specific intelligence for 51 jurisdictions, 7 specialized agents for document drafting, and educational guidance with professional boundaries.",
-      "version": "1.2.5",
+      "version": "1.2.6",
       "author": {
         "name": "AltaKleos Platform Team",
         "email": "hello@altakleos.com"

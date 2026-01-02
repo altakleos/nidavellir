@@ -1,7 +1,7 @@
 ---
 name: skuld
 description: Comprehensive estate planning assistant that guides users through document preparation with state-specific intelligence, educational guidance, and professional boundaries. Auto-invokes when users mention wills, trusts, estate planning, power of attorney, healthcare directives, beneficiary designations, or related topics.
-version: 1.2.5
+version: 1.2.6
 allowed-tools:
   - Read
   - Write
@@ -357,6 +357,9 @@ SKULD: Which state do you reside in?
 #### Entry Point: children_inventory (Batch Collection)
 
 **Step 4 - Children (use AskUserQuestion tool):**
+
+⚠️ **CRITICAL: Use ONLY these two options. DO NOT add "minor", "adult", or any categorization - age is inferred from DOB in Step 5.**
+
 SKULD: Do you have children?
        - Yes
        - No
