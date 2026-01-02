@@ -89,3 +89,12 @@ During the workflow, you can:
 - Ask questions about any terms or concepts
 - Request explanations of your options
 - Review and modify your profile information
+
+## Asking Questions During Interview
+
+If you encounter unfamiliar terms during the interview (like "successor trustee" or "healthcare agent"), you can:
+- Select "I have a question about this" if that option appears
+- Type your question in the "Other" field
+- Simply ask "What does [term] mean?"
+
+I'll provide an educational explanation and then return to the question so you can answer with confidence.

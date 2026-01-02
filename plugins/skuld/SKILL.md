@@ -53,6 +53,37 @@ Your implementation:
 
 **NEVER** output questions as inline text in your markdown response. This ensures consistent UX with the interactive question UI.
 
+### Handling User Questions During Intake
+
+When a user responds to an intake question via the "Other" option (or types something unexpected), check if it's a question rather than an answer.
+
+**Detection heuristics:**
+- Response ends with `?`
+- Response starts with: What, Why, How, Should, Can, Is, Does, Will
+- Response contains: "don't understand", "not sure", "what does X mean", "explain"
+- Response is significantly longer than expected for a simple selection
+
+**Response Pattern:**
+1. Acknowledge the question: "Great question!"
+2. Read `reference/glossary.md` if you need term definitions
+3. Provide educational explanation:
+   - Define the term/concept in plain language
+   - Explain why it matters for estate planning
+   - Give a concrete example
+4. Re-present the intake question:
+   "Now that you understand [concept], let me ask again:"
+   [Look up question from intake graph using current_intake_id]
+   [Use AskUserQuestion with same options]
+
+**State Handling:**
+- Do NOT change `current_intake_id` - we're still on the same question
+- Do NOT save partial answers to profile
+- The question is only "answered" when user selects a valid option
+
+**Multiple clarifications:**
+If user asks 3+ questions on same intake question, offer:
+"Would you prefer to skip this for now and come back to it later?"
+
 ## 5-Phase Workflow
 
 When `/estate` is invoked, guide users through these phases:
@@ -204,6 +235,22 @@ if profile.intake_graph_version != CURRENT_PLUGIN_VERSION:
 | `first_party_snt_detection` | `snt-generator` | During SNT generation |
 | `snt_remainder_beneficiary` | `snt-generator` | During SNT generation |
 | `qdot_trustee_selection` | `trust-generator` | `qdot_required = true` |
+
+### Question Lookup (for Re-Asking After Clarification)
+
+When a user asks a clarification question and you need to re-present the original intake question, look up the question text and options here:
+
+| ID | Question Text | Options |
+|----|---------------|---------|
+| `relationship_status` | "What is your relationship status?" | Single, Married, Divorced, Widowed, Partnership, Cohabiting |
+| `spouse_citizenship` | "Is your spouse a U.S. citizen?" | Yes, No (other status), Naturalization pending |
+| `guardian_preferences` | "Who would you like to name as guardian for your minor children?" | Family member, Close friend, Other, [HELP] |
+| `snt_trustee` | "Should we designate a different trustee for [child]'s Special Needs Trust?" | Yes (name specific), No (use main trustee), [HELP] |
+| `financial_agent_selection` | "Who should serve as your financial agent (power of attorney)?" | Spouse, Adult child, Other person, [HELP] |
+| `healthcare_agent_selection` | "Who should make healthcare decisions for you if you cannot?" | Spouse, Adult child, Other person |
+| `business_succession` | "What is your preference for business succession?" | Family member, Partner buyout, Sell to third party |
+
+**Note:** Questions marked with `[HELP]` should include "I have a question about this" as an option. When selected, ask the user what they'd like to know, then answer and re-present the question.
 
 ### Intake State Tracking (Session Persistence)
 
@@ -566,6 +613,7 @@ for each question in intake_graph:
           Special Needs Trust than your main trust trustee?
           - Yes, I want to name a specific SNT trustee
           - No, use the same trustee as my main trust
+          - I have a question about this
 
    SKULD: Is [child.name] eligible for or interested in an ABLE account?
           (tax-advantaged savings for disability expenses)
