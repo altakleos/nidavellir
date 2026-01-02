@@ -32,7 +32,7 @@ A complete estate planning session typically takes:
 | Funding Checklist | 10-15 minutes |
 | **Total** | **75-135 minutes** |
 
-**Note:** You can pause at any phase and resume later. Complex situations (blended families, special needs planning, business interests) may take longer.
+**Note:** You can pause at any point and resume later - even days or weeks later. Your progress is automatically saved. Complex situations (blended families, special needs planning, business interests) may take longer.
 
 ## Before You Begin
 
@@ -54,7 +54,33 @@ All documents generated are **DRAFTS intended for attorney review**. I provide e
 
 ## Resume Existing Session
 
-If you have an existing profile from a previous session, I'll detect it and ask whether you want to continue or start fresh.
+Your progress is automatically saved throughout the workflow. You can stop at any time and resume another day - even weeks later.
+
+**What gets saved:**
+- All your answers from the discovery interview
+- Which documents you selected
+- Which documents have been generated
+- Your current position in the workflow
+
+**When you return:**
+- I'll detect your existing profile and show a summary of your progress
+- You can choose to: continue where you left off, review your information, or start fresh
+- If it's been more than 30 days, I'll suggest reviewing your information (life changes may affect your plan)
+
+**Session data locations:**
+| Data | Location |
+|------|----------|
+| Your profile | `skuld/client_profile.json` |
+| Draft documents | `skuld/drafts/` |
+| Validation reports | `skuld/validation/` |
+| Execution checklists | `skuld/execution/` |
+| Funding guides | `skuld/funding/` |
+
+**Cleanup options:**
+At the end of the workflow, you can choose to:
+- Keep everything for future updates
+- Archive (keep documents, reset session state)
+- Delete all working data
 
 ## Commands Within the Workflow
 

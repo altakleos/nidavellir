@@ -75,8 +75,87 @@ When `/estate` is invoked, guide users through these phases:
 
 **Check for existing profile:**
 1. Look for `skuld/client_profile.json`
-2. If exists, display summary and ask: "Continue with existing profile or start fresh?"
-3. If resuming, load profile and skip to last incomplete phase
+2. If exists:
+   a. Load and migrate profile if needed (see Migration Logic below)
+   b. Check session age and intake graph version
+   c. Display resume summary with progress
+   d. Offer: "Continue where you left off / Review your information / Start fresh"
+3. If resuming, skip to appropriate phase and resume point
+
+**Profile Migration Logic:**
+On profile load, check for schema_version. If missing or outdated:
+```
+if !profile.schema_version OR profile.schema_version < "2.0.0":
+  # Upgrade to current schema
+  profile.schema_version = "2.0.0"
+  profile.intake_graph_version = "2026-01-01"  # Current plugin version
+
+  # Add session persistence fields with sensible defaults
+  profile.session.current_intake_id = null
+  profile.session.sub_phase = null
+  profile.session.session_started_at = profile.session.last_updated  # Best guess
+  profile.session.generation_queue = {pending: [], completed: [], current: null}
+
+  # Infer sub_phase from existing state
+  if profile.session.documents_drafted.length > 0:
+    profile.session.sub_phase = "3C"  # Already have drafts
+  elif profile.session.documents_selected.length > 0:
+    profile.session.sub_phase = "3A"  # Ready to generate
+
+  # Save migrated profile
+```
+
+**Session Age Check (30-day timeout):**
+```
+days_since = now - profile.session.session_started_at
+
+if days_since > 30:
+  Display warning:
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║           ⚠️ SESSION TIMEOUT WARNING                              ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║ It's been [X] days since you started this estate plan.           ║
+  ║                                                                   ║
+  ║ Life changes (marriage, children, job changes, moves) can        ║
+  ║ affect your estate plan. Consider reviewing your information.    ║
+  ╚══════════════════════════════════════════════════════════════════╝
+
+  SKULD: How would you like to proceed?
+         - Review and update my information
+         - Continue where I left off
+         - Start fresh with a new session
+```
+
+**Intake Graph Version Check:**
+```
+if profile.intake_graph_version != CURRENT_PLUGIN_VERSION:
+  Display notice:
+  "The questionnaire has been updated since your last session.
+   Some questions may be re-asked to ensure completeness."
+
+  # Clear current_intake_id to restart intake (preserving answers)
+  profile.session.current_intake_id = null
+```
+
+**Enhanced Resume Display:**
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                    WELCOME BACK                                   ║
+╠══════════════════════════════════════════════════════════════════╣
+║ Name: [profile.personal.full_name]                               ║
+║ State: [profile.personal.state_of_residence]                     ║
+║ Phase: [current_phase] - [phase_description]                      ║
+║ Last Activity: [relative_time] ([formatted_date])                ║
+║                                                                   ║
+║ [IF current_intake_id]                                            ║
+║ Resuming intake questions about: [intake_topic]                   ║
+║ [/IF]                                                             ║
+║                                                                   ║
+║ [IF sub_phase == "3A"]                                            ║
+║ Documents generated: [completed_count]/[total_count]              ║
+║ [/IF]                                                             ║
+╚══════════════════════════════════════════════════════════════════╝
+```
 
 ---
 
@@ -125,6 +204,38 @@ When `/estate` is invoked, guide users through these phases:
 | `first_party_snt_detection` | `snt-generator` | During SNT generation |
 | `snt_remainder_beneficiary` | `snt-generator` | During SNT generation |
 | `qdot_trustee_selection` | `trust-generator` | `qdot_required = true` |
+
+### Intake State Tracking (Session Persistence)
+
+**Before asking each question:**
+1. Set `session.current_intake_id` to the question's ID
+2. Save profile to persist state
+3. Ask the question
+
+**After user answers:**
+1. Save answer to appropriate profile field
+2. Update `session.last_updated`
+3. Save profile
+
+**Resuming from `current_intake_id`:**
+When resuming a session, walk the intake graph to find the resume point:
+```
+for each question in intake_graph:
+  # Check if question's output is already in profile
+  if question_output_exists_in_profile(question):
+    skip  # Already answered
+  else:
+    # This is where we resume
+    if question.id == session.current_intake_id:
+      resume_here
+    else:
+      # Mismatch - profile was manually edited
+      warn_user_and_restart_from(question.id)
+```
+
+**On intake completion:**
+1. Set `session.current_intake_id = null`
+2. Transition to Phase 2
 
 ---
 
@@ -896,6 +1007,43 @@ For Tennessee residents with simple estates, consider whether a full revocable t
 
 Phase 3 has three sub-phases: 3A (Generation), 3B (Validation), and 3C (User Review).
 
+**Sub-Phase State Tracking:**
+```
+On entering Phase 3:
+  session.current_phase = 3
+  session.sub_phase = "3A"
+  session.generation_queue = {
+    pending: [...documents_selected],  # All selected documents
+    completed: [],
+    current: null
+  }
+  Save profile
+```
+
+**Resume Logic for Phase 3:**
+```
+Based on session.sub_phase:
+  "3A":
+    # Resume generation from where we stopped
+    if generation_queue.current:
+      resume_generating(generation_queue.current)
+    else:
+      generate_next(generation_queue.pending[0])
+
+  "3B":
+    # Check for existing validation report
+    report = find_latest("skuld/validation/report-*.md")
+    if report.has_unresolved_issues:
+      continue_corrections(report)
+    elif report.passed:
+      transition_to_3C()
+    else:
+      run_validation()
+
+  "3C":
+    display_review_prompt()
+```
+
 ---
 
 #### Phase 3A: Document Generation
@@ -903,6 +1051,8 @@ Phase 3 has three sub-phases: 3A (Generation), 3B (Validation), and 3C (User Rev
 **Pre-Generation Setup:**
 1. Ensure `skuld/drafts/` directory exists
 2. Ensure `skuld/validation/` directory exists
+3. Set `session.sub_phase = "3A"`
+4. Initialize `session.generation_queue` with pending documents
 
 **Progress Tracking:**
 Display progress at start of each document generation:
@@ -923,13 +1073,32 @@ Display progress at start of each document generation:
 ```
 
 **For each document type:**
-1. Invoke the appropriate generator agent (trust-generator, will-generator, poa-generator, healthcare-generator, snt-generator, tod-generator, certificate-generator)
-2. Pass client profile and state requirements
-3. **Agent writes directly to `skuld/drafts/`**
-4. Receive **metadata only** (path, line count, validation markers, warnings)
-5. Display: "✓ Trust generated: skuld/drafts/trust-2025-01-15-v1.md (567 lines)"
-6. Update progress tracking display
-7. Collect metadata for validation phase
+1. **Update generation queue:**
+   ```
+   session.generation_queue.current = document_type
+   Save profile  # Persist state before generation
+   ```
+2. Invoke the appropriate generator agent (trust-generator, will-generator, poa-generator, healthcare-generator, snt-generator, tod-generator, certificate-generator)
+3. Pass client profile and state requirements
+4. **Agent writes directly to `skuld/drafts/`**
+5. Receive **metadata only** (path, line count, validation markers, warnings)
+6. **Update generation queue on success:**
+   ```
+   session.generation_queue.pending.remove(document_type)
+   session.generation_queue.completed.push(document_type)
+   session.generation_queue.current = null
+   Save profile  # Persist completion state
+   ```
+7. Display: "✓ Trust generated: skuld/drafts/trust-2025-01-15-v1.md (567 lines)"
+8. Update progress tracking display
+9. Collect metadata for validation phase
+
+**After all documents generated:**
+```
+session.sub_phase = "3B"
+session.generation_queue.current = null
+Save profile
+```
 
 **Error Handling:**
 If agent returns error:
@@ -1029,6 +1198,12 @@ critical_issues:
 ║                                                                   ║
 ║ Validation report: skuld/validation/report-2025-01-15-v1.md      ║
 ╚══════════════════════════════════════════════════════════════════╝
+```
+
+**On validation success, transition to 3C:**
+```
+session.sub_phase = "3C"
+Save profile
 ```
 
 ---
@@ -1132,9 +1307,57 @@ SKULD: Have you reviewed the documents and are ready to proceed to execution gui
 
 **Write funding guide** to `skuld/funding/funding-checklist-[DATE].md`
 
-**Offer cleanup prompt:**
+**Session Completion & Cleanup:**
+On Phase 5 completion, update session state and offer cleanup options:
+
 ```
-Would you like to keep your profile for future sessions, or delete it now?
+# Mark session as complete
+session.current_phase = 5
+session.sub_phase = null
+session.current_intake_id = null
+session.last_updated = now
+Save profile
+```
+
+**Display completion message:**
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                    ESTATE PLANNING COMPLETE                      ║
+╠══════════════════════════════════════════════════════════════════╣
+║ Your estate planning documents have been generated and validated.║
+║                                                                   ║
+║ Documents: skuld/drafts/                                          ║
+║ Validation: skuld/validation/                                     ║
+║ Execution Guide: skuld/execution/                                 ║
+║ Funding Checklist: skuld/funding/                                 ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+SKULD: How would you like to handle your session data?
+       - Keep everything for future updates (profile, drafts, and session state)
+       - Archive session (keep profile and documents, clear session state)
+       - Delete working data (remove skuld/ directory entirely)
+
+**Archive option behavior:**
+```
+# Reset session for fresh start while keeping profile data
+session.current_phase = 0
+session.sub_phase = null
+session.current_intake_id = null
+session.generation_queue = {pending: [], completed: [], current: null}
+session.documents_selected = []
+session.documents_drafted = []
+session.session_started_at = null
+Save profile
+```
+
+**Delete option behavior:**
+```
+# Offer confirmation before deletion
+SKULD: This will permanently delete all generated documents and your profile.
+       Are you sure?
+       - Yes, delete everything
+       - No, keep my files
 ```
 
 ---
@@ -1241,6 +1464,8 @@ All generators write directly to `skuld/drafts/` and return metadata only.
 ### Profile Schema
 ```json
 {
+  "schema_version": "2.0.0",
+  "intake_graph_version": "2026-01-01",
   "personal": {
     "full_name": "string",
     "date_of_birth": "date",
@@ -1401,7 +1626,15 @@ All generators write directly to `skuld/drafts/` and return metadata only.
     "current_phase": "number",
     "documents_selected": ["string"],
     "documents_drafted": ["string"],
-    "last_updated": "datetime"
+    "last_updated": "datetime",
+    "current_intake_id": "string | null",
+    "sub_phase": "null | '3A' | '3B' | '3C'",
+    "session_started_at": "datetime",
+    "generation_queue": {
+      "pending": ["string"],
+      "completed": ["string"],
+      "current": "string | null"
+    }
   }
 }
 ```
