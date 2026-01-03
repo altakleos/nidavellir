@@ -9,6 +9,7 @@
   },
   "enabledPlugins": {
     "eitri@nidavellir": true,
-    "rune@nidavellir": true
+    "rune@nidavellir": true,
+    "skuld@nidavellir": true
   }
 }

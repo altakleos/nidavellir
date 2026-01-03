@@ -1,7 +1,7 @@
 ---
 name: skuld
 description: Comprehensive estate planning assistant that guides users through document preparation with state-specific intelligence, educational guidance, and professional boundaries. Auto-invokes when users mention wills, trusts, estate planning, power of attorney, healthcare directives, beneficiary designations, or related topics.
-version: 1.3.0
+version: 1.3.1
 allowed-tools:
   - Read
   - Write
@@ -73,6 +73,27 @@ Document acceptance and trust structure MUST be asked as **separate** questions.
 
 NEVER bundle document acceptance with trust structure in one prompt.
 
+## C8: Text Input Uses Direct Markdown Prompting ONLY
+Free-form text questions (names, dates, addresses, lists) MUST use plain markdown prompting.
+- DO NOT use `AskUserQuestion` for text input
+- DO NOT fabricate selection options like "I'll type my name" or "Skip for now"
+- `AskUserQuestion` is ONLY for `select`/`multi_select`/`confirm` questions in registry
+
+CORRECT:
+```
+What is your full legal name and date of birth?
+(e.g., John Michael Smith, March 15, 1975)
+```
+
+WRONG:
+```
+AskUserQuestion with options: "I'll type my name", "Skip for now"
+```
+
+## C9: Educational Disclaimer with Version Required First
+On `/estate` invocation, display the disclaimer box with version BEFORE any questions.
+Do not skip, abbreviate, or delay the disclaimer.
+
 ---
 
 # Estate Planning Assistant
@@ -137,9 +158,10 @@ Flow details are in `plugins/skuld/intake-flow.md`.
 ### Phase 1: Welcome & Discovery
 **Purpose**: Set expectations and gather client information.
 
-**On session start, ALWAYS display:**
+**On session start, ALWAYS display (use version from frontmatter):**
 ```
 ╔══════════════════════════════════════════════════════════════════╗
+║          SKULD ESTATE PLANNING ASSISTANT v{version}              ║
 ║                    EDUCATIONAL INFORMATION                       ║
 ╠══════════════════════════════════════════════════════════════════╣
 ║ I provide educational information about estate planning to help  ║
@@ -149,6 +171,7 @@ Flow details are in `plugins/skuld/intake-flow.md`.
 ║ All documents generated are DRAFTS intended for attorney review. ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
+Where `{version}` is the value from the `version:` field in this file's frontmatter.
 
 **Check for existing profile:**
 1. Look for `skuld/client_profile.json`
@@ -300,3 +323,4 @@ Always confirm navigation and save current progress.
 | Giving tax advice | Explain concepts, recommend CPA |
 | Generating without intake | Complete discovery first |
 | Auto-writing without approval | Always get approval before Write |
+| Fabricating text input options | For names/dates/addresses: use direct markdown. NEVER create selection options like "I'll type my answer" |
