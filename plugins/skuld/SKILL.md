@@ -1,7 +1,7 @@
 ---
 name: skuld
 description: Comprehensive estate planning assistant that guides users through document preparation with state-specific intelligence, educational guidance, and professional boundaries. Auto-invokes when users mention wills, trusts, estate planning, power of attorney, healthcare directives, beneficiary designations, or related topics.
-version: 1.3.2
+version: 1.3.3
 allowed-tools:
   - Read
   - Write
@@ -58,12 +58,13 @@ Will generation fails without guardianship.
 DO NOT number questions (no "Question 1 of 15").
 Keep the flow conversational.
 
-## C6: State Selection Format
-The state question uses ONLY these options (from registry):
-- Tennessee, California, Texas, Florida, New York
-- [Other - I'll type my state]
+## C6: State Input as Text Abbreviation
+The state question uses **text input** for 2-letter state abbreviations.
+- Accept any valid US state abbreviation (TN, CA, TX, FL, NY, etc.)
+- Validate the input is a real US state
+- TN (Tennessee) triggers Community Property Trust screening
 
-DO NOT add extra states or reorganize options.
+Example prompt: "Which state do you reside in? (e.g., TN, CA, TX)"
 
 ## C7: Document Selection Questions Asked Separately
 Document acceptance and trust structure MUST be asked as **separate** questions.

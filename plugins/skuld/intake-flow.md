@@ -141,16 +141,14 @@ Save to: `relationship_duration`
 
 ### 1.3 State of Residence
 
-**Ask:** `state_of_residence` (from registry, type: numbered_select — C6, C10 apply)
+**Direct prompt:** `state_of_residence` (from registry, type: text — C6, C8 apply)
+
+Which state do you reside in? (e.g., TN, CA, TX)
 
 **[STOP - Wait for response]**
 
-**[IF state == OTHER]**
-**Direct prompt:**
-Please type your state of residence.
-
-**[STOP - Wait for response]**
-**[/IF]**
+Validate the response is a 2-letter US state abbreviation.
+If invalid, ask again with clarification.
 
 Launch estate-state-lookup agent to load state requirements.
 

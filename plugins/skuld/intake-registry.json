@@ -35,18 +35,12 @@
     "state_of_residence": {
       "id": "state_of_residence",
       "phase": 1,
-      "type": "numbered_select",
+      "type": "text",
       "question_text": "Which state do you reside in?",
-      "options": [
-        { "value": "TN", "label": "Tennessee" },
-        { "value": "CA", "label": "California" },
-        { "value": "TX", "label": "Texas" },
-        { "value": "FL", "label": "Florida" },
-        { "value": "NY", "label": "New York" },
-        { "value": "OTHER", "label": "Other (I'll type my state)" }
-      ],
-      "constraints": ["C6", "C10"],
-      "save_to": "personal.state_of_residence"
+      "example": "TN, CA, TX, FL, NY, etc.",
+      "constraints": ["C8"],
+      "save_to": "personal.state_of_residence",
+      "note": "Accept 2-letter state abbreviation. Validate against US states. TN triggers CPT screening."
     },
 
     "has_children": {
