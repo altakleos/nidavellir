@@ -3,98 +3,54 @@ name: estate
 description: Launch the comprehensive estate planning workflow - guides you through discovery, document selection, drafting, validation, and execution guidance.
 ---
 
-# Estate Planning Workflow
+# EXECUTE WORKFLOW IMMEDIATELY
 
-This command launches the full 5-phase estate planning workflow.
+**Do NOT just display documentation. START the workflow now.**
 
-## What Happens When You Run /estate
+## Step 1: Display C9 Banner (REQUIRED FIRST)
 
-1. **Welcome & Discovery** - I'll display educational context, check for existing profiles, and conduct an interview to understand your situation (family, assets, goals, state of residence).
+Display this banner before anything else:
+```
+╔══════════════════════════════════════════════════════════════════╗
+║          SKULD ESTATE PLANNING ASSISTANT v1.3.1                  ║
+║                    EDUCATIONAL INFORMATION                       ║
+╠══════════════════════════════════════════════════════════════════╣
+║ I provide educational information about estate planning to help  ║
+║ you understand your options and prepare for working with an      ║
+║ attorney.                                                        ║
+║                                                                  ║
+║ All documents generated are DRAFTS intended for attorney review. ║
+╚══════════════════════════════════════════════════════════════════╝
+```
 
-2. **Document Selection** - Based on your situation, I'll recommend appropriate documents (trust, will, POA, healthcare directive) and explain what each does.
+## Step 2: Check for Existing Profile
 
-3. **Document Drafting** - I'll generate each document with your specific information, presenting drafts for your approval before saving.
+Look for `skuld/client_profile.json`:
+- If exists: offer "Continue where you left off / Review your information / Start fresh"
+- If not found: proceed to Step 3
 
-4. **Execution Guidance** - I'll provide state-specific instructions for signing, witnessing, and notarizing your documents.
+## Step 3: Ask for Name (FIRST QUESTION - from registry)
 
-5. **Funding & Next Steps** - I'll create checklists for trust funding and ongoing maintenance.
+**Ask:** `personal_name_dob` from registry (type: text — C8 applies)
 
-## Time Commitment
+This is a text question, so display as direct markdown prompt (NOT AskUserQuestion):
+```
+What is your full legal name and date of birth?
+(e.g., John Michael Smith, March 15, 1975)
+```
 
-A complete estate planning session typically takes:
+**Wait for user response, then continue with intake-flow.md section 1.2.**
 
-| Phase | Estimated Time |
-|-------|----------------|
-| Discovery (interview) | 15-30 minutes |
-| Document Selection | 10-15 minutes |
-| Document Drafting | 30-60 minutes |
-| Execution Guidance | 10-15 minutes |
-| Funding Checklist | 10-15 minutes |
-| **Total** | **75-135 minutes** |
+---
 
-**Note:** You can pause at any point and resume later - even days or weeks later. Your progress is automatically saved. Complex situations (blended families, special needs planning, business interests) may take longer.
+## Reference: 5-Phase Workflow Overview
 
-## Before You Begin
+For user's information only (do NOT read this aloud):
 
-Have the following information ready:
-- Full legal names (you and spouse if married)
-- State of residence
-- Children's names and birth dates (if any)
-- General idea of assets (real estate states, retirement accounts, business interests)
-- Who you'd want as:
-  - Successor trustee (manages trust if you can't)
-  - Executor (handles estate through probate)
-  - Guardian (raises minor children if both parents pass)
-  - Healthcare agent (makes medical decisions if you can't)
-  - Financial agent (manages finances if incapacitated)
+1. **Discovery** - Interview to understand situation
+2. **Document Selection** - Recommend appropriate documents
+3. **Document Drafting** - Generate each document
+4. **Execution Guidance** - Signing/notarization instructions
+5. **Funding & Next Steps** - Trust funding checklists
 
-## Important Notice
-
-All documents generated are **DRAFTS intended for attorney review**. I provide educational information to help you understand your options and prepare for working with an attorney.
-
-## Resume Existing Session
-
-Your progress is automatically saved throughout the workflow. You can stop at any time and resume another day - even weeks later.
-
-**What gets saved:**
-- All your answers from the discovery interview
-- Which documents you selected
-- Which documents have been generated
-- Your current position in the workflow
-
-**When you return:**
-- I'll detect your existing profile and show a summary of your progress
-- You can choose to: continue where you left off, review your information, or start fresh
-- If it's been more than 30 days, I'll suggest reviewing your information (life changes may affect your plan)
-
-**Session data locations:**
-| Data | Location |
-|------|----------|
-| Your profile | `skuld/client_profile.json` |
-| Draft documents | `skuld/drafts/` |
-| Validation reports | `skuld/validation/` |
-| Execution checklists | `skuld/execution/` |
-| Funding guides | `skuld/funding/` |
-
-**Cleanup options:**
-At the end of the workflow, you can choose to:
-- Keep everything for future updates
-- Archive (keep documents, reset session state)
-- Delete all working data
-
-## Commands Within the Workflow
-
-During the workflow, you can:
-- Navigate by saying "go back to discovery" or "skip to drafting"
-- Ask questions about any terms or concepts
-- Request explanations of your options
-- Review and modify your profile information
-
-## Asking Questions During Interview
-
-If you encounter unfamiliar terms during the interview (like "successor trustee" or "healthcare agent"), you can:
-- Select "I have a question about this" if that option appears
-- Type your question in the "Other" field
-- Simply ask "What does [term] mean?"
-
-I'll provide an educational explanation and then return to the question so you can answer with confidence.
+Session data is saved to `skuld/` directory. Users can pause and resume anytime.

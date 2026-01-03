@@ -17,9 +17,13 @@ This document defines the conditional flow for asking questions during the estat
 
 ### 1.1 Personal Basics
 
-**Direct prompt (text input):**
+**Ask:** `personal_name_dob` (from registry, type: text — C8 applies)
+
+Display as direct markdown prompt:
+```
 What is your full legal name and date of birth?
 (e.g., John Michael Smith, March 15, 1975)
+```
 
 **[STOP - Wait for response]**
 

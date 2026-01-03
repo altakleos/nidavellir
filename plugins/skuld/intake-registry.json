@@ -3,6 +3,17 @@
   "version": "2026-01-02",
   "description": "Single source of truth for all Skuld intake questions. Claude MUST read this file before asking any selection question.",
   "questions": {
+    "personal_name_dob": {
+      "id": "personal_name_dob",
+      "phase": 1,
+      "type": "text",
+      "question_text": "What is your full legal name and date of birth?",
+      "example": "John Michael Smith, March 15, 1975",
+      "save_to": ["personal.full_name", "personal.date_of_birth"],
+      "constraints": ["C8"],
+      "note": "FIRST question. Use direct markdown prompt, NOT AskUserQuestion."
+    },
+
     "marital_status": {
       "id": "marital_status",
       "phase": 1,

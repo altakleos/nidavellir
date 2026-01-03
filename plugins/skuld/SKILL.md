@@ -91,8 +91,21 @@ AskUserQuestion with options: "I'll type my name", "Skip for now"
 ```
 
 ## C9: Educational Disclaimer with Version Required First
-On `/estate` invocation, display the disclaimer box with version BEFORE any questions.
-Do not skip, abbreviate, or delay the disclaimer.
+On `/estate` invocation, display this EXACT banner BEFORE any questions:
+```
+╔══════════════════════════════════════════════════════════════════╗
+║          SKULD ESTATE PLANNING ASSISTANT v{version}              ║
+║                    EDUCATIONAL INFORMATION                       ║
+╠══════════════════════════════════════════════════════════════════╣
+║ I provide educational information about estate planning to help  ║
+║ you understand your options and prepare for working with an      ║
+║ attorney.                                                        ║
+║                                                                  ║
+║ All documents generated are DRAFTS intended for attorney review. ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+Where `{version}` is from the frontmatter `version:` field (currently 1.3.1).
+Do not skip, abbreviate, or delay this banner.
 
 ---
 
