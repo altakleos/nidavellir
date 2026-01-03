@@ -398,6 +398,120 @@ designed to supplement, not replace, any government benefits...
 [/IF]
 ```
 
+### Article VII-A: Residence Provisions
+```
+[IF residence_planning_needed]
+## PRIMARY RESIDENCE PROVISIONS
+
+### Designation of Primary Residence
+The Grantors designate the real property commonly known as [PRIMARY_RESIDENCE_ADDRESS]
+as the "Primary Residence" for purposes of this Article.
+
+[IF residence_disposition == "spouse_life_estate"]
+### Life Estate for Surviving Spouse
+
+Upon the death of the first Grantor to die, the surviving Grantor shall have the
+exclusive right to occupy and use the Primary Residence for [his/her] lifetime,
+rent-free. This right of occupancy includes reasonable use of common areas,
+grounds, and appurtenances.
+
+**Responsibilities During Occupancy:**
+The surviving Grantor shall be responsible for:
+- Day-to-day maintenance and repairs
+- Utilities and ordinary operating expenses
+- Keeping the property adequately insured
+
+The Trust shall pay:
+- Property taxes
+- Major structural repairs
+- Hazard insurance premiums
+
+**Termination of Life Estate:**
+The life estate shall terminate upon the earliest of:
+- Death of the surviving Grantor
+- Permanent relocation to a care facility for more than [180] consecutive days
+- Written waiver delivered to the Trustee
+
+Upon termination, the Primary Residence shall be distributed per Article [DISTRIBUTION_ARTICLE].
+
+[[ ATTORNEY REVIEW: Verify life estate provisions comply with state property law ]]
+[[ ATTORNEY REVIEW: Consider Medicaid look-back implications for life estate ]]
+[/IF]
+
+[IF residence_disposition == "kept_in_trust"]
+### Residence Held in Trust
+
+The Primary Residence shall continue to be held in this Trust following the
+death of the Grantor(s). The Trustee shall have discretion regarding:
+- Permitting beneficiaries to occupy the property
+- Renting the property for income
+- Timing of sale when in the best interests of the beneficiaries
+
+[/IF]
+
+[IF residence_sale_restriction == "time_limited"]
+### Time-Limited Sale Restriction
+
+The Trustee shall NOT sell, transfer, or dispose of the Primary Residence for
+a period of [RESTRICTION_YEARS] years following the death of the last Grantor,
+EXCEPT:
+- If all adult beneficiaries with a current or future interest unanimously
+  consent in writing; or
+- If retention would cause material waste, significant financial burden, or
+  substantial depreciation of the property.
+
+After the restriction period expires, the Trustee may sell the property in
+accordance with ordinary fiduciary duties.
+
+[[ ATTORNEY REVIEW: Time-limited restrictions are generally enforceable.
+Verify state law on restraints on alienation. ]]
+[/IF]
+
+[IF residence_sale_restriction == "consent_required"]
+### Unanimous Consent Required for Sale
+
+The Trustee shall NOT sell, transfer, or dispose of the Primary Residence
+without the prior written consent of ALL beneficiaries with a current or
+remainder interest in the property, EXCEPT:
+- If the property suffers material waste that cannot be remedied without sale; or
+- If retention creates undue financial burden on the Trust; or
+- If ordered by a court of competent jurisdiction.
+
+For beneficiaries who are minors, consent shall be given by their legal guardian
+after court approval if required by state law.
+
+[[ ATTORNEY REVIEW: Verify unanimous consent requirement is enforceable under state law ]]
+[[ ATTORNEY REVIEW: Consider whether court approval mechanism is needed for minor beneficiaries ]]
+[/IF]
+
+[IF residence_sale_restriction == "trustee_discretion"]
+### Trustee Discretion on Residence
+
+The Trustee shall have full discretion to sell, retain, lease, or otherwise
+manage the Primary Residence in accordance with ordinary fiduciary duties.
+In exercising this discretion, the Trustee should consider:
+- The wishes of beneficiaries currently occupying the property
+- The financial burden of maintaining the property
+- Market conditions and potential appreciation
+- The overall best interests of all beneficiaries
+
+[/IF]
+
+[IF residence_disposition == "snt_housing"]
+### Residence Reserved for Special Needs Beneficiary
+
+The Primary Residence shall be held for the benefit of [SPECIAL_NEEDS_CHILD_NAME]
+as provided in the Special Needs Trust provisions of this document and any
+separate Special Needs Trust instrument. The housing provisions in the Special
+Needs Trust shall govern the use, maintenance, and ultimate disposition of
+this property.
+
+[[ ATTORNEY REVIEW: Ensure coordination between main trust residence provisions
+and SNT housing provisions to avoid conflicts ]]
+[/IF]
+[/IF]
+```
+
 ### Article VIII: Trustee Provisions
 - Initial trustee
 - Successor trustee chain

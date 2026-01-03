@@ -377,6 +377,160 @@ for government benefits and shall consult with appropriate professionals when
 necessary.
 ```
 
+### Article IV-A: Housing Provisions
+
+```
+[IF snt_housing_needed]
+ARTICLE IV-A - HOUSING FOR BENEFICIARY
+
+The Settlor(s) recognize that stable, appropriate housing is essential to the
+Beneficiary's wellbeing and quality of life. This Article addresses the
+Beneficiary's housing needs while preserving government benefit eligibility.
+
+[IF snt_housing_provision IN ("family_home", "both")]
+4A.1 Right of Occupancy.
+
+   (a) Designation. The real property commonly known as [PROPERTY_ADDRESS]
+       (the "Residence") shall be available for the Beneficiary's use.
+
+   (b) Right of Occupancy. The Beneficiary shall have the right to occupy
+       and use the Residence for so long as:
+       (i)   The Beneficiary is alive and capable of residing there;
+       (ii)  The Residence remains suitable for the Beneficiary's needs; and
+       (iii) Continued occupancy is in the Beneficiary's best interests.
+
+   (c) Nature of Interest. This is a right of occupancy only, NOT an ownership
+       interest. The Beneficiary cannot sell, mortgage, encumber, or transfer
+       this right. This right is personal to the Beneficiary and terminates
+       upon the Beneficiary's death.
+
+   (d) Modifications. The Trustee is authorized to make modifications to the
+       Residence for accessibility, safety, or the Beneficiary's specific
+       needs, including but not limited to:
+       - Wheelchair ramps and accessibility features
+       - Medical equipment installations
+       - Safety modifications
+       - Environmental controls
+
+[[ ATTORNEY REVIEW: Verify right of occupancy structure does not create
+countable asset for SSI purposes. Consider whether legal title should be
+in trust vs. granting use rights only. ]]
+[/IF]
+
+[IF snt_housing_provision IN ("housing_fund", "both")]
+4A.2 Housing Fund Authorization.
+
+   (a) Housing Expenses. The Trustee is authorized to use Trust assets for
+       the Beneficiary's housing needs, including but not limited to:
+       - Rent or mortgage payments
+       - Property taxes and assessments
+       - Homeowner's or renter's insurance
+       - Utilities (electricity, gas, water, internet)
+       - Maintenance and repairs
+       - Accessibility modifications
+       - Home health equipment installations
+       - Alternative housing if current residence becomes unsuitable
+
+   (b) Housing Search. If the Beneficiary needs different housing, the Trustee
+       may pay for housing search, deposits, moving expenses, and establishment
+       costs.
+
+   (c) ISM Awareness. The Trustee acknowledges that payment of shelter costs
+       may reduce the Beneficiary's SSI benefits under In-Kind Support and
+       Maintenance (ISM) rules. The Trustee should:
+       - Consult with a benefits specialist before establishing regular
+         housing payments;
+       - Document that housing stability outweighs any SSI reduction;
+       - Consider using the Beneficiary's ABLE account for housing expenses
+         when possible (reduces ISM impact for first $100,000).
+
+╔═══════════════════════════════════════════════════════════════╗
+║        TRUSTEE NOTE: IN-KIND SUPPORT AND MAINTENANCE          ║
+╠═══════════════════════════════════════════════════════════════╣
+║ When this Trust pays for food or shelter, it may reduce the   ║
+║ Beneficiary's SSI benefits by up to 1/3 plus $20/month (PMV). ║
+║                                                               ║
+║ The maximum 2024 SSI reduction for ISM is approximately $330. ║
+║ If housing stability is worth more than this amount to the    ║
+║ Beneficiary, the distribution may still be appropriate.       ║
+║                                                               ║
+║ STRATEGIES TO REDUCE ISM IMPACT:                              ║
+║ • Use ABLE account for first $100K of housing expenses        ║
+║ • Pay property taxes/insurance directly (may not count as ISM)║
+║ • Consider group home or supported living arrangements        ║
+║ • Consult benefits specialist for optimal structuring         ║
+╚═══════════════════════════════════════════════════════════════╝
+
+[[ ATTORNEY REVIEW: Consider whether housing should be structured as
+group home contribution, which may have different SSI treatment than
+direct shelter payments. ]]
+[/IF]
+
+4A.3 Expense Allocation.
+
+[IF snt_housing_expenses == "snt"]
+   All housing expenses related to the Residence shall be paid from this Trust.
+   The Trustee acknowledges the potential ISM impact on the Beneficiary's SSI
+   benefits and has determined that housing stability outweighs any benefit
+   reduction.
+[/IF]
+
+[IF snt_housing_expenses == "main_trust"]
+   Housing expenses shall be paid from the Settlor's main family trust, NOT
+   from this Special Needs Trust, to minimize ISM impact on the Beneficiary's
+   SSI benefits. This SNT shall pay only for beneficiary-specific costs such
+   as accessibility modifications or medical equipment.
+[/IF]
+
+[IF snt_housing_expenses == "remaindermen"]
+   Major housing expenses (property taxes, insurance, capital repairs) shall
+   be paid by the remainder beneficiaries as future owners of the property.
+   This SNT shall pay only for beneficiary-specific costs (accessibility
+   modifications, medical equipment, personal attendant housing).
+
+   The Trustee shall coordinate with remainder beneficiaries regarding expense
+   sharing and may enter into agreements to memorialize this arrangement.
+
+[[ ATTORNEY REVIEW: Consider formal agreement between SNT and remainder
+beneficiaries for expense allocation to prevent future disputes. ]]
+[/IF]
+
+4A.4 Termination of Housing Right.
+
+   The Beneficiary's housing right terminates upon the earliest of:
+   (a) Death of the Beneficiary;
+   (b) Permanent placement in a care facility where the Beneficiary resides
+       for more than [180] consecutive days;
+   (c) A determination by the Trustee that the Residence is no longer suitable
+       or safe for the Beneficiary's needs; or
+   (d) Written request by the Beneficiary (if competent) to relinquish the right.
+
+4A.5 Remainder Distribution.
+
+   Upon termination of the Beneficiary's housing right:
+
+[IF snt_housing_remainder == "siblings"]
+   The Residence shall be distributed to the Beneficiary's siblings, in equal
+   shares, or to their descendants by right of representation.
+[/IF]
+
+[IF snt_housing_remainder == "snt_remaindermen"]
+   The Residence shall be distributed to the remainder beneficiaries named in
+   Article VII of this Trust, in the same shares as other Trust assets.
+[/IF]
+
+[IF snt_housing_remainder == "sell_distribute"]
+   The Trustee shall sell the Residence at fair market value and distribute
+   the proceeds per the remainder provisions in Article VII of this Trust.
+[/IF]
+
+[[ ATTORNEY REVIEW: Verify housing remainder provisions are consistent with
+Article VII remainder beneficiaries. Consider whether sale or in-kind
+distribution is more appropriate for tax purposes. ]]
+
+[/IF]
+```
+
 ### Article V: ABLE Account Coordination
 
 ```

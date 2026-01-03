@@ -1,7 +1,7 @@
 ---
 name: skuld
 description: Comprehensive estate planning assistant that guides users through document preparation with state-specific intelligence, educational guidance, and professional boundaries. Auto-invokes when users mention wills, trusts, estate planning, power of attorney, healthcare directives, beneficiary designations, or related topics.
-version: 1.3.3
+version: 1.3.4
 allowed-tools:
   - Read
   - Write

@@ -741,6 +741,98 @@
         { "value": "help", "label": "I have a question about distribution options" }
       ],
       "save_to": "distribution.pattern"
+    },
+
+    "spendthrift_preference": {
+      "id": "spendthrift_preference",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Should your trust protect beneficiaries' inheritance from creditors and lawsuits?",
+      "options": [
+        { "value": "yes", "label": "Yes (recommended) - include spendthrift protection" },
+        { "value": "no", "label": "No - beneficiaries have full control" }
+      ],
+      "sets_flags": ["include_spendthrift_clause"],
+      "note": "Most attorneys recommend spendthrift clauses. Sets flag for existing template provision."
+    },
+
+    "residence_disposition": {
+      "id": "residence_disposition",
+      "phase": 1,
+      "type": "numbered_select",
+      "question_text": "What should happen to your primary residence after your death?",
+      "options": [
+        { "value": "spouse_life_estate", "label": "Spouse can live there for life, then to children" },
+        { "value": "beneficiaries_outright", "label": "Distributed to beneficiaries (may be sold)" },
+        { "value": "kept_in_trust", "label": "Held in trust (trustee decides when to sell)" },
+        { "value": "snt_housing", "label": "Reserved for special needs child to live in" },
+        { "value": "standard", "label": "Follow standard trust distribution terms" }
+      ],
+      "condition": "has_real_estate == true",
+      "constraints": ["C10"],
+      "sets_flags": ["residence_planning_needed"],
+      "save_to": "residence.disposition"
+    },
+
+    "residence_sale_restriction": {
+      "id": "residence_sale_restriction",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Should there be restrictions on selling the residence?",
+      "options": [
+        { "value": "none", "label": "No restrictions" },
+        { "value": "time_limited", "label": "Cannot sell for a specific number of years" },
+        { "value": "consent_required", "label": "All beneficiaries must agree to sell" },
+        { "value": "trustee_discretion", "label": "Trustee decides (safest legally)" }
+      ],
+      "condition": "residence_disposition IN (beneficiaries_outright, kept_in_trust)",
+      "save_to": "residence.sale_restriction"
+    },
+
+    "snt_housing_provision": {
+      "id": "snt_housing_provision",
+      "phase": 1,
+      "type": "select",
+      "question_text": "How should [child_name]'s housing be handled?",
+      "options": [
+        { "value": "family_home", "label": "Right to live in family home" },
+        { "value": "housing_fund", "label": "Trust funds housing costs" },
+        { "value": "both", "label": "Both family home + housing fund" },
+        { "value": "trustee_discretion", "label": "Trustee decides based on needs" }
+      ],
+      "condition": "child.has_special_needs == true",
+      "sets_flags": ["snt_housing_needed"],
+      "save_to": "snt.housing_provision",
+      "note": "Asked for each special needs child. Substitute [child_name]."
+    },
+
+    "snt_housing_expenses": {
+      "id": "snt_housing_expenses",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Who pays property taxes, insurance, and repairs on [child_name]'s housing?",
+      "options": [
+        { "value": "snt", "label": "Special Needs Trust (may reduce SSI benefits)" },
+        { "value": "main_trust", "label": "Main family trust" },
+        { "value": "remaindermen", "label": "Future owners (siblings)" }
+      ],
+      "condition": "snt_housing_provision IN (family_home, both)",
+      "save_to": "snt.housing_expenses",
+      "note": "ISM warning required - shelter payments may reduce SSI."
+    },
+
+    "snt_housing_remainder": {
+      "id": "snt_housing_remainder",
+      "phase": 1,
+      "type": "select",
+      "question_text": "When [child_name] no longer needs the housing, who receives the property?",
+      "options": [
+        { "value": "siblings", "label": "Siblings equally" },
+        { "value": "snt_remaindermen", "label": "SNT remainder beneficiaries" },
+        { "value": "sell_distribute", "label": "Sell and distribute per trust terms" }
+      ],
+      "condition": "snt_housing_provision IN (family_home, both)",
+      "save_to": "snt.housing_remainder"
     }
   }
 }

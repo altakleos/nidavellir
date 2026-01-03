@@ -318,6 +318,38 @@ For each child with special needs:
 
 **[STOP - Wait for response]**
 
+### 1.5.4 Special Needs Housing
+
+**Ask:** `snt_housing_provision` (from registry) — substitute `[child_name]`
+
+**[STOP - Wait for response]**
+
+**[IF snt_housing_provision IN (family_home, both)]**
+
+Display ISM warning:
+```
+╔═══════════════════════════════════════════════════════════════╗
+║          IMPORTANT: Housing & Government Benefits             ║
+╠═══════════════════════════════════════════════════════════════╣
+║ If the trust pays housing costs (rent, mortgage, taxes), it   ║
+║ may reduce [child_name]'s SSI benefits under "In-Kind         ║
+║ Support and Maintenance" (ISM) rules.                         ║
+║                                                               ║
+║ A benefits specialist can help structure payments to          ║
+║ minimize impact. This is a common and manageable issue.       ║
+╚═══════════════════════════════════════════════════════════════╝
+```
+
+**Ask:** `snt_housing_expenses` (from registry) — substitute `[child_name]`
+
+**[STOP - Wait for response]**
+
+**Ask:** `snt_housing_remainder` (from registry) — substitute `[child_name]`
+
+**[STOP - Wait for response]**
+
+**[/IF]**
+
 **[/IF]**
 
 **[/IF]**
@@ -467,6 +499,34 @@ For each child with special needs:
 **[/IF]**
 
 **[/IF]**
+
+---
+
+### 1.13 Residence Provisions
+
+**[IF has_real_estate == true]**
+
+**Ask:** `residence_disposition` (from registry, type: numbered_select — C10 applies)
+
+**[STOP - Wait for response]**
+
+**[IF residence_disposition IN (beneficiaries_outright, kept_in_trust)]**
+
+**Ask:** `residence_sale_restriction` (from registry)
+
+**[STOP - Wait for response]**
+
+**[/IF]**
+
+**[/IF]**
+
+---
+
+### 1.14 Spendthrift Protection
+
+**Ask:** `spendthrift_preference` (from registry)
+
+**[STOP - Wait for response]**
 
 ---
 
