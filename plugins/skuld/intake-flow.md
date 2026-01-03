@@ -7,9 +7,40 @@ This document defines the conditional flow for asking questions during the estat
 **CRITICAL: Before asking ANY selection question:**
 1. Read `plugins/skuld/intake-registry.json`
 2. Find the question by its ID
-3. Use `AskUserQuestion` with **EXACT** options from JSON
+3. Check the question `type`:
+   - `select` / `multi_select` → Use `AskUserQuestion` (2-4 options only)
+   - `numbered_select` / `numbered_multi_select` → Use numbered markdown prompt (C10)
+   - `text` → Use direct markdown prompt (C8)
 4. **NEVER** modify, invent, or "improve" the options
 5. Wait for **[STOP]** before proceeding to the next question
+
+### Numbered Selection Format (C10)
+
+For `numbered_select` questions, display:
+```
+[Question text]
+
+1. [Option 1]
+2. [Option 2]
+...
+N. [Option N]
+
+Enter a number (1-N):
+```
+
+For `numbered_multi_select`, display:
+```
+[Question text]
+
+1. [Option 1]
+2. [Option 2]
+...
+N. [Option N]
+
+Enter numbers separated by commas (e.g., 1,3):
+```
+
+**Validation:** If invalid input, re-prompt: "Please enter a number between 1 and N"
 
 ---
 
@@ -33,7 +64,7 @@ Parse name and DOB. Save to: `personal.full_name`, `personal.date_of_birth`
 
 ### 1.2 Marital Status
 
-**Ask:** `marital_status` (from registry)
+**Ask:** `marital_status` (from registry, type: numbered_select — C10 applies)
 
 **[STOP - Wait for response]**
 
@@ -110,7 +141,7 @@ Save to: `relationship_duration`
 
 ### 1.3 State of Residence
 
-**Ask:** `state_of_residence` (from registry) — C6 constraint applies
+**Ask:** `state_of_residence` (from registry, type: numbered_select — C6, C10 apply)
 
 **[STOP - Wait for response]**
 
@@ -153,7 +184,7 @@ Display CPT considerations warning box (from SKILL.md)
 
 **[STOP - Wait for response]**
 
-**Ask:** `current_asset_titling` (from registry)
+**Ask:** `current_asset_titling` (from registry, type: numbered_select — C10 applies)
 
 **[STOP - Wait for response]**
 
@@ -265,7 +296,7 @@ For each child with special needs:
 
 **[STOP - Wait for response]**
 
-**Ask:** `government_benefits_status` (from registry) — multi-select, substitute `[child_name]`
+**Ask:** `government_benefits_status` (from registry, type: numbered_multi_select — C10 applies) — substitute `[child_name]`
 
 **[STOP - Wait for response]**
 
@@ -377,7 +408,7 @@ For each child with special needs:
 
 **[IF has_business == true]**
 
-**Ask:** `business_entity_type` (from registry)
+**Ask:** `business_entity_type` (from registry, type: numbered_select — C10 applies)
 
 **[STOP - Wait for response]**
 

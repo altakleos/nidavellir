@@ -17,8 +17,9 @@
     "marital_status": {
       "id": "marital_status",
       "phase": 1,
-      "type": "select",
+      "type": "numbered_select",
       "question_text": "What is your marital status?",
+      "constraints": ["C10"],
       "options": [
         { "value": "single", "label": "Single (never married)" },
         { "value": "married", "label": "Married" },
@@ -34,7 +35,7 @@
     "state_of_residence": {
       "id": "state_of_residence",
       "phase": 1,
-      "type": "select",
+      "type": "numbered_select",
       "question_text": "Which state do you reside in?",
       "options": [
         { "value": "TN", "label": "Tennessee" },
@@ -42,9 +43,9 @@
         { "value": "TX", "label": "Texas" },
         { "value": "FL", "label": "Florida" },
         { "value": "NY", "label": "New York" },
-        { "value": "OTHER", "label": "[Other - I'll type my state]" }
+        { "value": "OTHER", "label": "Other (I'll type my state)" }
       ],
-      "constraints": ["C6"],
+      "constraints": ["C6", "C10"],
       "save_to": "personal.state_of_residence"
     },
 
@@ -276,7 +277,7 @@
     "government_benefits_status": {
       "id": "government_benefits_status",
       "phase": 1,
-      "type": "multi_select",
+      "type": "numbered_multi_select",
       "question_text": "Does [child_name] currently receive any government benefits? (select all that apply)",
       "options": [
         { "value": "ssi", "label": "SSI (Supplemental Security Income)" },
@@ -285,6 +286,7 @@
         { "value": "none", "label": "None currently" },
         { "value": "unsure", "label": "Not sure" }
       ],
+      "constraints": ["C10"],
       "condition": "child.has_special_needs == true",
       "sets_flags": ["receives_government_benefits"]
     },
@@ -463,7 +465,7 @@
     "business_entity_type": {
       "id": "business_entity_type",
       "phase": 1,
-      "type": "select",
+      "type": "numbered_select",
       "question_text": "What type of business entity?",
       "options": [
         { "value": "sole_prop", "label": "Sole proprietorship" },
@@ -474,6 +476,7 @@
         { "value": "c_corp", "label": "C-Corporation" },
         { "value": "multiple", "label": "Multiple entities" }
       ],
+      "constraints": ["C10"],
       "condition": "has_business == true",
       "save_to": "business.entity_type"
     },
@@ -537,7 +540,7 @@
     "current_asset_titling": {
       "id": "current_asset_titling",
       "phase": 1,
-      "type": "select",
+      "type": "numbered_select",
       "question_text": "How are your major assets currently titled?",
       "options": [
         { "value": "joint", "label": "Joint tenancy with spouse" },
@@ -547,6 +550,7 @@
         { "value": "trust", "label": "Already in a trust" },
         { "value": "unsure", "label": "Not sure" }
       ],
+      "constraints": ["C10"],
       "condition": "state == TN AND has_spouse == true",
       "save_to": "assets.current_titling_strategy"
     },
@@ -718,7 +722,7 @@
     "executor_preferences": {
       "id": "executor_preferences",
       "phase": 1,
-      "type": "select",
+      "type": "numbered_select",
       "question_text": "Who should serve as executor of your will?",
       "options": [
         { "value": "spouse", "label": "Spouse" },
@@ -727,6 +731,7 @@
         { "value": "professional", "label": "Professional (bank, attorney, trust company)" },
         { "value": "other", "label": "Other person (I'll provide the name)" }
       ],
+      "constraints": ["C10"],
       "save_to": "agents.executor"
     },
 

@@ -1,7 +1,7 @@
 ---
 name: skuld
 description: Comprehensive estate planning assistant that guides users through document preparation with state-specific intelligence, educational guidance, and professional boundaries. Auto-invokes when users mention wills, trusts, estate planning, power of attorney, healthcare directives, beneficiary designations, or related topics.
-version: 1.3.1
+version: 1.3.2
 allowed-tools:
   - Read
   - Write
@@ -107,6 +107,30 @@ On `/estate` invocation, display this EXACT banner BEFORE any questions:
 Where `{version}` is from the frontmatter `version:` field.
 Do not skip, abbreviate, or delay this banner.
 
+## C10: Numbered Selection for 5+ Options
+Questions with 5 or more options MUST use numbered markdown selection, NOT AskUserQuestion.
+
+Display format:
+```
+[Question text]
+
+1. [Option 1]
+2. [Option 2]
+...
+N. [Option N]
+
+Enter a number (1-N):
+```
+
+Validation:
+- If user enters invalid number, re-prompt: "Please enter a number between 1 and N"
+- Map number back to option value for storage
+
+For multi-select numbered questions, prompt:
+```
+Enter numbers separated by commas (e.g., 1,3,4):
+```
+
 ---
 
 # Estate Planning Assistant
@@ -134,8 +158,10 @@ You are an intelligent paralegal assistant helping non-technical legal layperson
 
 | type | Tool | Description |
 |------|------|-------------|
-| `select` | AskUserQuestion | Single choice from options |
-| `multi_select` | AskUserQuestion with `multiSelect: true` | Multiple choices allowed |
+| `select` | AskUserQuestion | Single choice (2-4 options) |
+| `multi_select` | AskUserQuestion with `multiSelect: true` | Multiple choices (2-4 options) |
+| `numbered_select` | Direct markdown prompt | Single choice (5+ options) — C10 |
+| `numbered_multi_select` | Direct markdown prompt | Multiple choices (5+ options) — C10 |
 | `text` | Direct markdown prompt | Free-form text input |
 | `confirm` | AskUserQuestion | Yes/No confirmation |
 
