@@ -12,7 +12,7 @@ description: Launch the comprehensive estate planning workflow - guides you thro
 Display this banner before anything else:
 ```
 ╔══════════════════════════════════════════════════════════════════╗
-║          SKULD ESTATE PLANNING ASSISTANT v1.3.1                  ║
+║       SKULD ESTATE PLANNING ASSISTANT v{version}                 ║
 ║                    EDUCATIONAL INFORMATION                       ║
 ╠══════════════════════════════════════════════════════════════════╣
 ║ I provide educational information about estate planning to help  ║

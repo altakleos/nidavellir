@@ -104,7 +104,7 @@ On `/estate` invocation, display this EXACT banner BEFORE any questions:
 ║ All documents generated are DRAFTS intended for attorney review. ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
-Where `{version}` is from the frontmatter `version:` field (currently 1.3.1).
+Where `{version}` is from the frontmatter `version:` field.
 Do not skip, abbreviate, or delay this banner.
 
 ---
