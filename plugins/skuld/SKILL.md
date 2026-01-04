@@ -1,7 +1,7 @@
 ---
 name: skuld
 description: Comprehensive estate planning assistant that guides users through document preparation with state-specific intelligence, educational guidance, and professional boundaries. Auto-invokes when users mention wills, trusts, estate planning, power of attorney, healthcare directives, beneficiary designations, or related topics.
-version: 1.3.5
+version: 1.3.6
 allowed-tools:
   - Read
   - Write
@@ -364,3 +364,70 @@ Always confirm navigation and save current progress.
 | Generating without intake | Complete discovery first |
 | Auto-writing without approval | Always get approval before Write |
 | Fabricating text input options | For names/dates/addresses: use direct markdown. NEVER create selection options like "I'll type my answer" |
+
+---
+
+## Quick Commands
+
+### `/skuld:ask [question]`
+
+Ask estate planning questions without starting the full workflow. Provides educational answers using curated intelligence modules with optional profile-based personalization.
+
+**Scope:**
+- Glossary/terminology explanations
+- Concept comparisons (trust vs will)
+- Tax education (with CPA recommendation)
+- Profile-aware personalization (if profile exists)
+
+**Not for** (use `/skuld:lookup` instead):
+- State-specific execution requirements
+- Witness/notarization rules
+- Probate thresholds
+
+**Examples:**
+```
+/skuld:ask What is a pour-over will?
+/skuld:ask How does step-up in basis work?
+/skuld:ask Trust vs will - what's the difference?
+```
+
+**Flags:**
+- `--no-context`: Answer without using profile data
+
+**Read-Before-Generate Protocol:**
+This command MUST read intelligence modules before answering. Every response cites sources.
+
+**Profile Context:**
+- Automatically loads `skuld/client_profile.json` if it exists
+- Validates before using (requires `state`, `marital_status` at minimum)
+- Discloses profile usage in response footer
+- Use `--no-context` to disable personalization
+
+### `/skuld:lookup [state]`
+
+Quick lookup of state-specific estate planning requirements. See `commands/lookup.md`.
+
+**Scope:**
+- Execution requirements (witness counts, notarization)
+- State tax information
+- Property type (community vs common law)
+- State-specific warnings
+
+**Examples:**
+```
+/skuld:lookup TN
+/skuld:lookup California
+```
+
+### Command Scope Boundaries
+
+| `/skuld:ask` | `/skuld:lookup` |
+|--------------|-----------------|
+| Conceptual questions | State requirements |
+| "What is a pour-over will?" | "TN witness requirements" |
+| "How does step-up work?" | "CA execution rules" |
+| "Trust vs will differences?" | "FL probate threshold" |
+| Profile-aware personalization | State-only lookup |
+
+**Routing Rule:** If a question matches state requirement patterns (e.g., "how many witnesses in TN"), respond with:
+> For state-specific execution requirements, use `/skuld:lookup [STATE]`.
