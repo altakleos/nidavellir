@@ -47,7 +47,7 @@ Generate SKILL.md content tailored to user context:
 **Frontmatter Generation:**
 ```yaml
 ---
-name: [descriptive-kebab-case-name]
+name: [pluginname]:[skill-name]  # Example: skuld:estate, eitri:forge - prefix enables namespace isolation
 description: [Clear value proposition in user's terminology]
 version: 1.0.0
 author: [User or team name]

@@ -108,7 +108,7 @@ Ensure generated content is syntactically correct:
 **YAML Frontmatter:**
 ```yaml
 Required fields present?
-- name: [kebab-case validation]
+- name: [pluginname:kebab-case format, colon allowed for namespace prefix]
 - description: [not empty, actionable for agents]
 - version: [semver format]
 

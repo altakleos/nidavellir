@@ -1,7 +1,7 @@
 ---
 name: eitri
 description: I create precisely optimized Claude Code extensions (skills, agents, suites, hooks, MCP servers, or hybrid solutions) through deep contextual understanding and adaptive intelligence
-version: 1.9.1
+version: 1.9.2
 allowed-tools:
   - Read
   - Glob

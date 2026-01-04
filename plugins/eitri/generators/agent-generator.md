@@ -75,7 +75,7 @@ Create comprehensive YAML frontmatter:
 
 ```yaml
 ---
-name: [descriptive-kebab-case]
+name: [pluginname]:[agent-name]  # Example: skuld:trust-generator, eitri:validate - prefix for namespace isolation
 description: [Optimized auto-discovery description]
 tools: [Context-calibrated tool list]
 model: [sonnet|opus|haiku based on complexity]
@@ -116,7 +116,7 @@ When domain research indicates the agent needs intake coordination, I generate h
 
 ```yaml
 ---
-name: [agent-name]
+name: [pluginname]:[agent-name]  # Use pluginname: prefix for namespace isolation
 description: [description]
 # ... standard fields ...
 
