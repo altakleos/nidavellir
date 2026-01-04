@@ -344,6 +344,114 @@ When funding real estate into revocable trust:
 - Deed of trust used (not mortgage)
 - Trust funding generally doesn't trigger due-on-sale clause (per Garn-St. Germain Act)
 
+## TBE vs Trust Transfer Decision
+
+Tennessee married couples with TBE-titled homes face a significant decision when creating a revocable trust: whether to transfer the home into the trust.
+
+### The Tradeoff
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║               TBE HOME: KEEP vs TRANSFER TO TRUST                ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║  KEEP IN TBE:                     TRANSFER TO TRUST:             ║
+║  ✅ Creditor protection           ✅ Incapacity planning         ║
+║  ✅ Survivorship (1st death)      ✅ Probate avoidance (both)    ║
+║  ❌ No incapacity planning        ✅ Distribution control        ║
+║  ❌ 2nd death still needs plan    ❌ Loses TBE protection        ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+### Decision Matrix
+
+| Factor | Keep TBE | Transfer to Trust | Hybrid Approach |
+|--------|----------|-------------------|-----------------|
+| **High liability profession** | ✅ Strong choice | ❌ Avoid | ✅ Good |
+| **Blended family** | ❌ Risky | ✅ Recommended | ⚠️ Depends |
+| **High appreciation + CPT** | ⚠️ Loses step-up | ✅ Best | ⚠️ Partial |
+| **Simple estate, low liability** | Either works | Either works | Not needed |
+
+### Recommendation Logic
+
+**1. High Liability + Not Blended → Keep TBE**
+- Creditor protection is paramount for doctors, attorneys, business owners
+- TBE shields home from individual creditors
+- Use pour-over will or TOD deed for second death planning
+- Can still have trust for other assets
+
+**2. Blended Family → Transfer to Trust**
+- TBE survivorship can accidentally disinherit children from prior marriage
+- When first spouse dies, survivor owns 100% outright
+- Survivor can leave home to anyone—excluding first-to-die's children
+- Trust with life estate provisions protects everyone's interests
+
+**3. CPT Elected + High Appreciation + Low Liability → Transfer to CPT Trust**
+- Double step-up in basis can save substantial capital gains tax
+- Creditor protection less critical if low-risk profession
+- If $400K+ appreciation, tax savings may justify transfer
+
+**4. Otherwise → Discuss with Attorney**
+- Multiple valid approaches for each situation
+- Personal priorities determine best choice
+- Attorney can evaluate specific circumstances
+
+### Hybrid Strategies
+
+**TBE + Pour-Over Will:**
+```
+During Both Lives:    Home in TBE (creditor protection)
+At First Death:       Survivor owns outright (TBE survivorship)
+Survivor Then:        Either funds to trust OR records TOD deed
+At Second Death:      Home passes per trust/TOD
+```
+- Best of both: creditor protection during life + probate avoidance at death
+
+**TBE for Home + CPT for Investments:**
+```
+Home:        Keep in TBE (maximum creditor protection)
+Investments: Transfer to CPT trust (get double step-up)
+Result:      Protected home + tax-efficient investments
+```
+- Ideal for high-liability professions with appreciated portfolios
+
+**Life Estate + Remainder:**
+```
+Trust provides:       Surviving spouse lives in home for life
+At Survivor's Death:  Home to first-to-die's children (or shared)
+Protection:           Neither spouse can sell/mortgage unilaterally
+```
+- Protects blended family children while honoring survivor's housing
+
+### Attorney Review Triggers
+
+Flag for attorney review when:
+
+| Situation | Concern |
+|-----------|---------|
+| High liability profession + chooses transfer | Verify understands loss of TBE protection |
+| Blended family + chooses keep TBE | Risk of disinheriting children needs discussion |
+| CPT elected but keeping home out of trust | May lose step-up benefit on largest asset |
+| Pending claims or litigation mentioned | Timing of transfer is critical |
+| Federal debt concerns | TBE does NOT protect from IRS liens |
+
+### Important Notes
+
+**TBE Protection Limits:**
+- Only protects from ONE spouse's individual creditors
+- Does NOT protect from:
+  - Joint debts (co-signed by both)
+  - Federal tax liens (IRS)
+  - Debts where both spouses are liable
+- Protection ends at divorce (converts to tenancy in common)
+
+**CPT + TBE Are Mutually Exclusive:**
+- Community property trust requires trust funding
+- TBE requires property to remain in spouses' names
+- For any given asset, must choose one or the other
+- Hybrid approach: TBE for home, CPT for other appreciated assets
+
 ## Common Pitfalls
 
 ### For All Tennessee Residents

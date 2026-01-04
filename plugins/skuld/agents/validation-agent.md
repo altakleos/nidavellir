@@ -272,6 +272,83 @@ Common required placeholders:
 - Tax planning provisions (if HNW)
 ```
 
+### 11. TBE Home Decision Consistency (High - Tennessee only)
+
+**Check**: TBE home decision aligns with liability profile and family situation
+
+```
+if state == TN AND current_asset_titling == tbe:
+
+  if cpt_liability_profession == yes:
+    if tbe_transfer_decision == "transfer_now":
+      WARNING: "High liability profession but transferring TBE home.
+                Verify client understands loss of creditor protection.
+                [[ ATTORNEY REVIEW: Evaluate TBE vs trust for liability ]]"
+
+  if blended_family == true:
+    if tbe_transfer_decision IN ["keep_tbe", "tbe_pourover", "tod_approach"]:
+      WARNING: "Blended family keeping TBE. First-to-die's children
+                have no claim to home. Survivor could leave to new spouse's
+                children. Verify client understands disinheritance risk.
+                [[ ATTORNEY REVIEW: Blended family home protection ]]"
+
+  if cpt_election == yes AND tbe_transfer_decision IN ["keep_tbe", "tod_approach"]:
+    if high_appreciation_home == true:
+      WARNING: "CPT elected but keeping home out of trust. May lose
+                significant step-up benefit on appreciated home.
+                [[ ATTORNEY REVIEW: Evaluate CPT inclusion for home ]]"
+```
+
+**Warning Messages:**
+
+**High liability + transfer:**
+```
+⚠️ TBE Creditor Protection Warning
+
+You indicated a high-liability profession (doctor, attorney, business owner)
+but chose to transfer your TBE home to the trust.
+
+TBE provides the strongest creditor protection for your home. Transferring
+to trust removes this protection.
+
+Verify you understand this tradeoff. Consider keeping home in TBE and using
+TOD deed or pour-over will for probate avoidance at second death.
+
+[[ ATTORNEY REVIEW: Evaluate TBE vs trust for liability exposure ]]
+```
+
+**Blended family + keep TBE:**
+```
+⚠️ Blended Family TBE Survivorship Warning
+
+You have a blended family but chose to keep the home in TBE.
+
+With TBE, when one spouse dies, the survivor owns 100% outright.
+The survivor can then leave the home to ANYONE - potentially
+excluding the first-to-die's children entirely.
+
+If you want to protect your children's inheritance interest in the home,
+consider transferring to trust with life estate + remainder provisions.
+
+[[ ATTORNEY REVIEW: Blended family home protection planning ]]
+```
+
+**CPT elected but home kept out:**
+```
+⚠️ CPT Step-Up Benefit Warning
+
+You elected Community Property Trust for the double step-up in basis,
+but chose to keep the home in TBE rather than transferring to trust.
+
+With $[APPRECIATION]+ appreciation on your home, you may lose
+significant capital gains tax savings by keeping it outside CPT.
+
+Consider transferring home to CPT trust, or verify the creditor
+protection benefit outweighs the tax savings.
+
+[[ ATTORNEY REVIEW: Evaluate CPT inclusion for home ]]
+```
+
 ## Validation Report Format
 
 Generate comprehensive report:

@@ -502,6 +502,105 @@ Display ISM warning:
 
 ---
 
+### 1.12.1 Tennessee TBE Home Strategy
+
+**[IF state == TN AND marital_status == married AND current_asset_titling == tbe]**
+
+Display TBE context box:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║           YOUR HOME IS TITLED AS TENANCY BY ENTIRETY              ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ This provides:                                                     ║
+║ ✅ Strongest creditor protection from individual debts            ║
+║ ✅ Automatic survivorship (avoids probate on first death)         ║
+║                                                                    ║
+║ But TBE does NOT:                                                 ║
+║ ❌ Provide incapacity planning (trust does)                       ║
+║ ❌ Avoid probate on second death (trust or TOD deed does)         ║
+║ ❌ Provide double step-up in basis (CPT does, but loses TBE)      ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+**[IF cpt_liability_profession == yes]**
+
+Display liability warning:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║        ⚠️ HIGH LIABILITY PROFESSION - TBE IS VALUABLE             ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ You indicated high liability exposure (doctor/attorney/business). ║
+║                                                                    ║
+║ TBE protects your home from YOUR individual creditors.            ║
+║ If you transfer to trust, this protection may be lost.            ║
+║                                                                    ║
+║ RECOMMENDATION: Consider keeping TBE during your lives.           ║
+║                                                                    ║
+║ [[ ATTORNEY REVIEW: Evaluate TBE vs trust for liability ]]        ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+**[/IF]**
+
+**[IF blended_family == true]**
+
+Display blended family warning:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║        ⚠️ BLENDED FAMILY - TBE SURVIVORSHIP WARNING               ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ With TBE, when one spouse dies, the other owns the home 100%.     ║
+║                                                                    ║
+║ The surviving spouse can leave it to ANYONE - potentially         ║
+║ excluding the first-to-die's children entirely.                   ║
+║                                                                    ║
+║ If you want to protect your children's inheritance:               ║
+║ • Consider transferring to trust with life estate provisions      ║
+║ • Or use life insurance to compensate                             ║
+║                                                                    ║
+║ [[ ATTORNEY REVIEW: Blended family home protection ]]             ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+**Ask:** `tbe_blended_home_plan` (from registry)
+
+**[STOP - Wait for response]**
+
+**[/IF]**
+
+**[IF cpt_election == yes]**
+
+Display CPT/TBE interaction:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║           CPT + TBE ARE MUTUALLY EXCLUSIVE                        ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ You elected Community Property Trust for the double step-up.      ║
+║                                                                    ║
+║ For your home, you must choose:                                   ║
+║                                                                    ║
+║ KEEP TBE:                                                         ║
+║ ✅ Creditor protection       ❌ Only 50% step-up at death         ║
+║                                                                    ║
+║ TRANSFER TO CPT:                                                  ║
+║ ✅ 100% step-up at death     ❌ Loses TBE creditor protection     ║
+║                                                                    ║
+║ HYBRID: Keep home in TBE, put other assets in CPT                 ║
+║ ✅ Creditor protection for home                                   ║
+║ ✅ Double step-up on investments                                  ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+**Ask:** `tbe_home_appreciation` (from registry)
+
+**[STOP - Wait for response]**
+
+**[/IF]**
+
+**[/IF]**
+
+---
+
 ### 1.13 Residence Provisions
 
 **[IF has_real_estate == true]**
@@ -592,6 +691,58 @@ also providing for the surviving spouse through QTIP provisions.
 ---
 
 ### 2.4 Conditional Follow-up Questions
+
+**[IF state == TN AND current_asset_titling == tbe]**
+
+Display recommendation based on collected data:
+
+**[IF cpt_liability_profession == yes AND blended_family != true]**
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║        RECOMMENDATION: KEEP HOME IN TBE                           ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ Based on your liability exposure, we recommend keeping your home  ║
+║ in Tenancy by Entirety for creditor protection.                   ║
+║                                                                    ║
+║ For probate avoidance at second death, consider:                  ║
+║ • Pour-over will (home transfers to trust at death)               ║
+║ • Surviving spouse uses TOD deed                                  ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+**[/IF]**
+
+**[IF blended_family == true AND tbe_blended_home_plan == transfer_to_trust]**
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║        RECOMMENDATION: TRANSFER HOME TO TRUST                     ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ To protect your children's inheritance in your blended family,    ║
+║ we recommend transferring your home to the trust.                 ║
+║                                                                    ║
+║ This allows you to specify life estate for surviving spouse       ║
+║ with remainder to your children.                                  ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+**[/IF]**
+
+**[IF cpt_election == yes AND high_appreciation_home == true AND cpt_liability_profession != yes]**
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║        RECOMMENDATION: TRANSFER HOME TO CPT TRUST                 ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ Your home has significant appreciation and you elected CPT.       ║
+║ Transferring to your Community Property Trust provides the        ║
+║ double step-up in basis, potentially saving substantial           ║
+║ capital gains tax for your heirs.                                 ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+**[/IF]**
+
+**Ask:** `tbe_transfer_decision` (from registry)
+
+**[STOP - Wait for response]**
+
+**[/IF]**
 
 **[IF state == TN AND creating_trust == true]**
 

@@ -549,6 +549,57 @@
       "save_to": "assets.current_titling_strategy"
     },
 
+    "tbe_home_appreciation": {
+      "id": "tbe_home_appreciation",
+      "phase": 1,
+      "type": "numbered_select",
+      "question_text": "How much has your home appreciated since purchase?",
+      "options": [
+        { "value": "minimal", "label": "Less than $100,000" },
+        { "value": "moderate", "label": "$100,000 - $300,000" },
+        { "value": "significant", "label": "$300,000 - $500,000" },
+        { "value": "substantial", "label": "Over $500,000" },
+        { "value": "unsure", "label": "Not sure" }
+      ],
+      "constraints": ["C10"],
+      "condition": "state == TN AND current_asset_titling == tbe AND cpt_election IN (yes, discussing)",
+      "sets_flags": ["high_appreciation_home"],
+      "save_to": "real_estate.primary_residence.appreciation",
+      "note": "Only asked if CPT elected - determines step-up benefit value"
+    },
+
+    "tbe_blended_home_plan": {
+      "id": "tbe_blended_home_plan",
+      "phase": 1,
+      "type": "select",
+      "question_text": "With TBE, the surviving spouse owns the home outright. How do you want to handle this?",
+      "options": [
+        { "value": "accept_survivorship", "label": "That's fine - we trust each other" },
+        { "value": "life_estate", "label": "Survivor lives there for life, then to first-to-die's children" },
+        { "value": "transfer_to_trust", "label": "Transfer to trust now for control over distribution" }
+      ],
+      "condition": "state == TN AND current_asset_titling == tbe AND blended_family == true",
+      "save_to": "real_estate.tbe_blended_plan",
+      "note": "Critical - TBE survivorship can accidentally disinherit children"
+    },
+
+    "tbe_transfer_decision": {
+      "id": "tbe_transfer_decision",
+      "phase": 2,
+      "type": "numbered_select",
+      "question_text": "Based on your situation, how would you like to handle your TBE home?",
+      "options": [
+        { "value": "keep_tbe", "label": "Keep in TBE (preserves creditor protection)" },
+        { "value": "transfer_now", "label": "Transfer to trust now" },
+        { "value": "tbe_pourover", "label": "Keep TBE during life, transfer via pour-over at death" },
+        { "value": "tod_approach", "label": "Keep TBE, surviving spouse uses TOD deed" },
+        { "value": "attorney_review", "label": "Discuss with attorney first" }
+      ],
+      "constraints": ["C10"],
+      "condition": "state == TN AND current_asset_titling == tbe",
+      "save_to": "real_estate.tbe_transfer_decision"
+    },
+
     "session_timeout_proceed": {
       "id": "session_timeout_proceed",
       "phase": 1,
