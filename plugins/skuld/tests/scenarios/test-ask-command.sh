@@ -32,8 +32,8 @@ else
   FAILED=$((FAILED + 1))
 fi
 
-# Test 3: Command references read-before-generate protocol
-assert_contains "$ask_content" "Read-Before-Generate" "Command references read-before-generate protocol"
+# Test 3: Command has response flow (agents read before generating)
+assert_contains "$ask_content" "Response Flow" "Command has response flow with agent invocation"
 
 # Test 4: Command references profile validation
 assert_contains "$ask_content" "client_profile.json" "Command references profile validation"
@@ -119,31 +119,31 @@ assert_contains "$ask_content" "Edge Cases" "Command has edge cases section"
 # Test 19: Command profile context disclosure
 assert_contains "$ask_content" "Profile context" "Command has profile context disclosure"
 
-# Test 20: Command has plugin root discovery
-if [[ "$ask_content" == *"Locate Plugin Root"* ]] || [[ "$ask_content" == *"plugin_root"* ]]; then
-  echo -e "${GREEN}✓${NC} Command has plugin root discovery protocol"
+# Test 20: Command uses agent-based approach
+if [[ "$ask_content" == *"Agent-Based"* ]] || [[ "$ask_content" == *"subagent_type"* ]]; then
+  echo -e "${GREEN}✓${NC} Command uses agent-based approach"
   PASSED=$((PASSED + 1))
 else
-  echo -e "${RED}✗${NC} Command should have plugin root discovery protocol"
+  echo -e "${RED}✗${NC} Command should use agent-based approach"
   FAILED=$((FAILED + 1))
 fi
 
-# Test 21: Command explains Glob-based discovery
-if [[ "$ask_content" == *"Glob"* ]] && [[ "$ask_content" == *"core-terms.md"* ]]; then
-  echo -e "${GREEN}✓${NC} Command explains Glob-based plugin discovery"
+# Test 21: Command references estate-glossary agent
+if [[ "$ask_content" == *"estate-glossary"* ]]; then
+  echo -e "${GREEN}✓${NC} Command references estate-glossary agent"
   PASSED=$((PASSED + 1))
 else
-  echo -e "${RED}✗${NC} Command should explain Glob-based plugin discovery"
+  echo -e "${RED}✗${NC} Command should reference estate-glossary agent"
   FAILED=$((FAILED + 1))
 fi
 
 # Test 22: Version consistency check
 skill_version=$(grep -o 'version: [0-9.]*' "$SKILL" | head -1 | cut -d' ' -f2)
-if [[ "$skill_version" == "1.3.7" ]]; then
-  echo -e "${GREEN}✓${NC} SKILL.md version is 1.3.7"
+if [[ "$skill_version" == "1.3.8" ]]; then
+  echo -e "${GREEN}✓${NC} SKILL.md version is 1.3.8"
   PASSED=$((PASSED + 1))
 else
-  echo -e "${RED}✗${NC} SKILL.md version should be 1.3.7, found: $skill_version"
+  echo -e "${RED}✗${NC} SKILL.md version should be 1.3.8, found: $skill_version"
   FAILED=$((FAILED + 1))
 fi
 

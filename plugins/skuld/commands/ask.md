@@ -84,77 +84,58 @@ Every profile-personalized response includes:
 
 ---
 
-## Read-Before-Generate Protocol (CRITICAL)
+## Answering Questions (Agent-Based)
 
-**BEFORE generating ANY factual answer:**
+This command uses the same agent pattern as `/skuld:estate` for reliable file access.
 
-### Step 0: Locate Plugin Root (REQUIRED FIRST)
+**DO NOT attempt direct file discovery.** The intelligence modules are bundled with the plugin installation. Agents execute within the plugin context, so relative paths resolve automatically.
 
-The intelligence modules are part of the skuld plugin installation, NOT the user's project.
-You MUST find the plugin root before reading any modules.
+### Agent Invocation Pattern
 
-**Discovery Method:**
+Use the Task tool to invoke skuld agents:
+
+| Question Type | Agent to Invoke | Agent Reads |
+|---------------|-----------------|-------------|
+| Terminology (grantor, probate, etc.) | `skuld:estate-glossary` | `intelligence/glossary/*.md` |
+| State requirements | `skuld:estate-state-lookup` | `intelligence/state-laws/[STATE].md` |
+| Tax concepts | `skuld:estate-glossary` | `intelligence/glossary/tax-terms.md` |
+| Specialized topics | `skuld:estate-glossary` | `intelligence/specialized/*.md` |
+
+### How to Invoke Agents
+
 ```
-1. Use Glob to find: **/plugins/skuld/intelligence/glossary/core-terms.md
-   OR: **/skuld/intelligence/glossary/core-terms.md
-2. Extract the plugin root from the found path
-3. Use this root for ALL subsequent module reads
+Task tool with:
+- subagent_type: "skuld:estate-glossary" or "skuld:estate-state-lookup"
+- prompt: The user's question with context
 ```
 
-**Example:**
-- Glob finds: `/home/user/.claude/plugins/skuld/intelligence/glossary/core-terms.md`
-- Plugin root is: `/home/user/.claude/plugins/skuld/`
-- Read modules from: `{plugin_root}/intelligence/...`
+The agent will:
+1. Load the appropriate intelligence modules (paths resolve within plugin context)
+2. Return the explanation with source citations
+3. Handle caching and deduplication
 
-**If no plugin installation found:**
-- Check common locations: `~/.claude/plugins/skuld/`, `./plugins/skuld/`
-- If still not found, answer with general knowledge but note: "Curated intelligence modules not found in this environment."
+### Response Flow
 
-### Step 1-5: Generate Answer
+1. Parse user question for topic markers
+2. **Invoke appropriate agent** via Task tool
+3. Agent returns explanation with citations
+4. Add profile personalization (if available)
+5. Format response with disclaimer footer
 
-1. Parse question for topic markers
-2. Identify required intelligence modules (see matrix below)
-3. **READ all relevant modules** from `{plugin_root}/intelligence/...`
-4. Answer **ONLY from loaded content**
-5. **CITE sources** in response (use relative path from plugin root)
-6. If no module matches → "I don't have curated information on [topic]. Consider consulting an estate planning attorney."
+### Glossary Module Index (for agent context)
 
-### Module Selection Matrix
+When invoking `estate-glossary`, include relevant topic hints:
 
-All paths are relative to `{plugin_root}/`:
-
-| Question Contains | Load These Modules |
-|-------------------|-------------------|
-| Legal term (probate, trustee, etc.) | `intelligence/glossary/*.md` (relevant file) |
-| State name | `intelligence/state-laws/[STATE].md` |
-| Tax, exemption, basis, gift | `intelligence/tax/*.md` |
-| Step-up, capital gains | `intelligence/tax/basis-and-step-up.md` |
-| Blended family, stepchildren | `intelligence/specialized/blended-family.md` |
-| Special needs, ABLE, SNT, disability | `intelligence/specialized/special-needs-trust.md` |
-| Business, succession, LLC, partnership | `intelligence/specialized/business-succession.md` |
-| Digital, crypto, online accounts | `intelligence/specialized/digital-assets.md` |
-| High net worth, estate tax planning | `intelligence/specialized/high-net-worth.md` |
-| Community property, common law | `intelligence/concepts/*.md` |
-| Trust vs will, comparison | Multiple glossary files for comparison |
-
-### Glossary File Index
-
-All paths relative to `{plugin_root}/intelligence/`:
-
-| Topic Area | File |
-|------------|------|
-| Core concepts (trust, will, probate) | `glossary/core-terms.md` |
-| Trust-specific terms | `glossary/trust-terms.md` |
-| Beneficiary designations | `glossary/beneficiary-terms.md` |
-| POA terms | `glossary/poa-terms.md` |
-| Healthcare directive terms | `glossary/healthcare-terms.md` |
-| Property/titling terms | `glossary/property-terms.md` |
-| Execution (signing, witnesses) | `glossary/execution-terms.md` |
-| Tax terms | `glossary/tax-terms.md` |
-| Administration terms | `glossary/administration-terms.md` |
-| Guardianship terms | `glossary/guardianship-terms.md` |
-| Special needs terms | `glossary/special-needs-terms.md` |
-| State-specific terms | `glossary/state-specific-terms.md` |
+| Topic Area | Hint to Include |
+|------------|-----------------|
+| Core concepts (trust, will, probate) | "core terms" |
+| Trust-specific terms | "trust terms" |
+| Beneficiary designations | "beneficiary terms" |
+| POA terms | "power of attorney" |
+| Healthcare directive terms | "healthcare terms" |
+| Property/titling terms | "property terms" |
+| Tax terms | "tax concepts" |
+| Special needs terms | "special needs" |
 
 ---
 
