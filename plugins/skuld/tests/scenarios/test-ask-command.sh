@@ -119,13 +119,31 @@ assert_contains "$ask_content" "Edge Cases" "Command has edge cases section"
 # Test 19: Command profile context disclosure
 assert_contains "$ask_content" "Profile context" "Command has profile context disclosure"
 
-# Test 20: Version consistency check
-skill_version=$(grep -o 'version: [0-9.]*' "$SKILL" | head -1 | cut -d' ' -f2)
-if [[ "$skill_version" == "1.3.6" ]]; then
-  echo -e "${GREEN}✓${NC} SKILL.md version is 1.3.6"
+# Test 20: Command has plugin root discovery
+if [[ "$ask_content" == *"Locate Plugin Root"* ]] || [[ "$ask_content" == *"plugin_root"* ]]; then
+  echo -e "${GREEN}✓${NC} Command has plugin root discovery protocol"
   PASSED=$((PASSED + 1))
 else
-  echo -e "${RED}✗${NC} SKILL.md version should be 1.3.6, found: $skill_version"
+  echo -e "${RED}✗${NC} Command should have plugin root discovery protocol"
+  FAILED=$((FAILED + 1))
+fi
+
+# Test 21: Command explains Glob-based discovery
+if [[ "$ask_content" == *"Glob"* ]] && [[ "$ask_content" == *"core-terms.md"* ]]; then
+  echo -e "${GREEN}✓${NC} Command explains Glob-based plugin discovery"
+  PASSED=$((PASSED + 1))
+else
+  echo -e "${RED}✗${NC} Command should explain Glob-based plugin discovery"
+  FAILED=$((FAILED + 1))
+fi
+
+# Test 22: Version consistency check
+skill_version=$(grep -o 'version: [0-9.]*' "$SKILL" | head -1 | cut -d' ' -f2)
+if [[ "$skill_version" == "1.3.7" ]]; then
+  echo -e "${GREEN}✓${NC} SKILL.md version is 1.3.7"
+  PASSED=$((PASSED + 1))
+else
+  echo -e "${RED}✗${NC} SKILL.md version should be 1.3.7, found: $skill_version"
   FAILED=$((FAILED + 1))
 fi
 

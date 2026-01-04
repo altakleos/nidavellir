@@ -88,14 +88,40 @@ Every profile-personalized response includes:
 
 **BEFORE generating ANY factual answer:**
 
+### Step 0: Locate Plugin Root (REQUIRED FIRST)
+
+The intelligence modules are part of the skuld plugin installation, NOT the user's project.
+You MUST find the plugin root before reading any modules.
+
+**Discovery Method:**
+```
+1. Use Glob to find: **/plugins/skuld/intelligence/glossary/core-terms.md
+   OR: **/skuld/intelligence/glossary/core-terms.md
+2. Extract the plugin root from the found path
+3. Use this root for ALL subsequent module reads
+```
+
+**Example:**
+- Glob finds: `/home/user/.claude/plugins/skuld/intelligence/glossary/core-terms.md`
+- Plugin root is: `/home/user/.claude/plugins/skuld/`
+- Read modules from: `{plugin_root}/intelligence/...`
+
+**If no plugin installation found:**
+- Check common locations: `~/.claude/plugins/skuld/`, `./plugins/skuld/`
+- If still not found, answer with general knowledge but note: "Curated intelligence modules not found in this environment."
+
+### Step 1-5: Generate Answer
+
 1. Parse question for topic markers
-2. Identify required intelligence modules
-3. **READ all relevant modules** using Read tool
+2. Identify required intelligence modules (see matrix below)
+3. **READ all relevant modules** from `{plugin_root}/intelligence/...`
 4. Answer **ONLY from loaded content**
-5. **CITE sources** in response
+5. **CITE sources** in response (use relative path from plugin root)
 6. If no module matches → "I don't have curated information on [topic]. Consider consulting an estate planning attorney."
 
 ### Module Selection Matrix
+
+All paths are relative to `{plugin_root}/`:
 
 | Question Contains | Load These Modules |
 |-------------------|-------------------|
@@ -112,6 +138,8 @@ Every profile-personalized response includes:
 | Trust vs will, comparison | Multiple glossary files for comparison |
 
 ### Glossary File Index
+
+All paths relative to `{plugin_root}/intelligence/`:
 
 | Topic Area | File |
 |------------|------|
