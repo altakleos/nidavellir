@@ -272,6 +272,268 @@ COST BASIS NOTE:
 - Request cost basis report after transfer
 ```
 
+#### Institution-Specific Process Guides
+
+**Include specific guidance for major financial institutions:**
+
+```
+FIDELITY INVESTMENTS:
+
+Website: fidelity.com → "Accounts & Trade" → "Account Features" → "Trust Registration"
+
+Process:
+1. Log in to Fidelity.com or call 800-343-3548
+2. Request "Transfer of Assets to Trust" form
+3. Required documents:
+   - Certificate of Trust (preferred) OR
+   - First and last pages of trust + all signature pages
+   - Photo ID for all trustees
+4. Submit via:
+   - Upload through secure message center
+   - Mail to: Fidelity Investments, PO Box 770001, Cincinnati, OH 45277-0045
+   - Fax to: 866-521-5765
+
+Timeline: 5-10 business days after receipt of complete documents
+Online tracking: Yes, via account messages
+
+Form name: "Account Re-Registration Request - Transfer to Trust"
+```
+
+```
+CHARLES SCHWAB:
+
+Website: schwab.com → "Service" → "Forms" → search "Trust"
+
+Process:
+1. Log in to Schwab.com or call 800-435-4000
+2. Request "Trust Account Application & Agreement"
+3. Required documents:
+   - Schwab's Trust Certification form (they provide)
+   - OR Certificate of Trust
+   - Photo ID for trustees
+4. Submit via:
+   - Upload through Schwab.com message center
+   - Mail to: Charles Schwab & Co., Attn: Account Transfer, PO Box 628290, Orlando, FL 32862-8290
+   - In-person at local branch
+
+Timeline: 7-14 business days
+Online tracking: Yes, via account messages
+
+Note: Schwab often prefers their own Trust Certification form over generic Certificates of Trust
+```
+
+```
+VANGUARD:
+
+Website: vanguard.com → "My Accounts" → "Account Maintenance" → "Change Registration"
+
+Process:
+1. Log in to Vanguard.com or call 800-662-7447
+2. For brokerage accounts: Complete online re-registration
+3. For mutual fund accounts: May need paper form
+4. Required documents:
+   - Vanguard Trust Registration Form
+   - Trust Agreement (full copy required by Vanguard)
+   - Photo ID for trustees
+
+⚠️ NOTE: Vanguard typically requires FULL trust document, not just Certificate of Trust
+
+Submit via:
+   - Upload through secure message center (brokerage)
+   - Mail to: Vanguard, PO Box 982901, El Paso, TX 79998-2901
+
+Timeline: 10-15 business days (Vanguard tends to be slower)
+Online tracking: Yes, check transaction history
+```
+
+```
+TD AMERITRADE / SCHWAB MERGER:
+
+As of 2024, TD Ameritrade has merged with Schwab.
+
+- Existing TDA accounts: Use TDA process until migration
+- New accounts: Open directly at Schwab
+- Migration timeline varies by account
+
+Call 800-669-3900 for current TDA process
+```
+
+```
+EDWARD JONES:
+
+Process:
+1. Contact your local Edward Jones financial advisor
+2. They handle paperwork in person
+3. Required documents:
+   - Full trust agreement (they keep a copy)
+   - Photo ID for all trustees
+4. In-person meeting typically required
+
+Timeline: 7-10 business days
+Note: Edward Jones prefers to review full trust document with advisor present
+```
+
+```
+E*TRADE / MORGAN STANLEY:
+
+Website: etrade.com → "Accounts" → "Documents & Forms" → "Trust Account"
+
+Process:
+1. Log in to E*TRADE.com or call 800-387-2331
+2. Request "Trust Account Application"
+3. Required documents:
+   - E*TRADE Trust Certification Form
+   - OR Certificate of Trust + trust pages (first, signature, trustee powers)
+   - Photo ID
+
+Submit via:
+   - Upload through Document Center
+   - Mail to: E*TRADE Securities LLC, PO Box 484, Jersey City, NJ 07303-0484
+
+Timeline: 5-10 business days
+Note: Morgan Stanley integration may affect process - verify current requirements
+```
+
+#### Re-Titling Request Letter Templates
+
+**Include these templates in the generated checklist:**
+
+```markdown
+### Sample Letter: Bank Account Re-Titling Request
+
+[DATE]
+
+[BANK NAME]
+[BRANCH ADDRESS]
+
+Re: Request to Re-Title Account(s) to Living Trust
+
+Dear Sir or Madam:
+
+I am writing to request that the following account(s) be re-titled in the name
+of my revocable living trust:
+
+Current Account Information:
+- Account Number: [ACCOUNT_NUMBER]
+- Current Title: [CURRENT_TITLE]
+- Account Type: Checking / Savings / Money Market
+
+New Title Request:
+[TRUSTEE_NAME], Trustee of the [TRUST_NAME], dated [TRUST_DATE]
+
+I have enclosed the following documents as required:
+- [ ] Certificate of Trust
+- [ ] Copy of photo ID for all trustees
+- [ ] Current account statement
+
+Please confirm re-titling in writing once complete. If you require any additional
+documentation, please contact me at [PHONE] or [EMAIL].
+
+Thank you for your assistance.
+
+Sincerely,
+
+_________________________
+[TRUSTEE_NAME], Trustee
+
+Enclosures:
+- Certificate of Trust
+- Photo ID copy
+```
+
+```markdown
+### Sample Letter: Brokerage Account Re-Registration Request
+
+[DATE]
+
+[BROKERAGE FIRM]
+[ADDRESS]
+
+Re: Account Re-Registration to Living Trust
+Account Number: [ACCOUNT_NUMBER]
+
+Dear Transfer Department:
+
+I hereby request that the above-referenced account be re-registered from my
+individual name to my revocable living trust as follows:
+
+FROM: [CURRENT_ACCOUNT_HOLDER_NAME]
+
+TO: [TRUSTEE_NAME], Trustee
+    [TRUST_NAME]
+    Dated: [TRUST_DATE]
+    Tax ID: [TRUST_TAX_ID or SSN]
+
+I understand that:
+1. This is a non-taxable transfer for a revocable grantor trust
+2. Cost basis will transfer with the securities
+3. The trust uses my Social Security Number for tax reporting
+
+Enclosed please find:
+- [ ] Your firm's Trust Account Application/Re-Registration Form (completed)
+- [ ] Certificate of Trust
+- [ ] Copy of photo ID for all trustees
+- [ ] [Any additional required documents]
+
+Please confirm this re-registration in writing and update my online access
+accordingly. Contact me at [PHONE] or [EMAIL] with any questions.
+
+Sincerely,
+
+_________________________
+[NAME], Trustee
+
+Enclosures: [List all]
+```
+
+```markdown
+### Sample Letter: Insurance Beneficiary Change Request
+
+[DATE]
+
+[INSURANCE COMPANY]
+[ADDRESS]
+
+Re: Beneficiary Designation Change
+Policy Number: [POLICY_NUMBER]
+Insured: [INSURED_NAME]
+
+Dear Beneficiary Services:
+
+I hereby request a change to the beneficiary designation on the above-referenced
+life insurance policy as follows:
+
+PRIMARY BENEFICIARY:
+[IF spouse]
+Name: [SPOUSE_FULL_LEGAL_NAME]
+Relationship: Spouse
+Date of Birth: [DOB]
+SSN: [SSN_LAST_4 or "to be provided on phone"]
+Share: 100%
+[/IF spouse]
+
+[IF trust as primary]
+Name: [TRUST_NAME], dated [TRUST_DATE]
+Tax ID: [TRUST_TAX_ID or Grantor SSN]
+Share: 100%
+[/IF trust as primary]
+
+CONTINGENT BENEFICIARY:
+Name: [TRUST_NAME], dated [TRUST_DATE]
+OR
+Names: [CHILDREN_NAMES], equally, per stirpes
+
+I have enclosed your beneficiary change form. Please confirm this change in
+writing once processed.
+
+Sincerely,
+
+_________________________
+[POLICY_OWNER_NAME]
+
+Enclosure: Completed Beneficiary Change Form
+```
+
 ### Retirement Account Handling
 
 **CRITICAL:** Retirement accounts should generally NOT be transferred to the trust.
@@ -816,6 +1078,74 @@ The following situations warrant attorney assistance:
 | CPA | Tax implications questions | Tax planning |
 | Financial Advisor | Beneficiary strategy, retirement accounts | Investment coordination |
 | Title Company | Real estate transfers | Deed preparation (optional) |
+```
+
+### Section 8: Common Funding Mistakes to Avoid
+
+```markdown
+## Common Funding Mistakes to Avoid
+
+### Critical Errors
+
+| Mistake | Consequence | Prevention |
+|---------|-------------|------------|
+| **Transferring retirement accounts to trust** | Immediate taxation of entire balance | NEVER change title - only update beneficiaries |
+| **Not recording deed** | Property not in trust; goes through probate | Record deed within 7-14 days of signing |
+| **Missing state forms** | Property tax reassessment, penalties | Check state requirements; file BOE-502-A in CA |
+| **Forgetting to fund trust** | Trust is empty; probate required anyway | Start funding immediately after signing |
+| **Wrong account title format** | Bank/broker may reject; creates confusion | Use exact format: "[Trustee], Trustee of [Trust Name], dated [Date]" |
+
+### Timing Errors
+
+| Mistake | Consequence | Prevention |
+|---------|-------------|------------|
+| **Funding before trust signed** | Invalid transfer; must re-do | Sign trust FIRST, then fund |
+| **Waiting too long to fund** | May become incapacitated before complete | Complete high-priority assets within 30 days |
+| **Not updating after new assets** | New accounts/property not in trust | Annual review; update after major purchases |
+| **Forgetting refinanced mortgage** | New deed may have removed trust titling | Verify trust titling after any refinance |
+
+### Account-Specific Errors
+
+| Mistake | Consequence | Prevention |
+|---------|-------------|------------|
+| **Naming trust as IRA beneficiary without planning** | May accelerate required distributions | Consult advisor about SECURE Act implications |
+| **Old beneficiaries on retirement accounts** | Ex-spouse or deceased person still named | Audit ALL beneficiary designations |
+| **POD/TOD designations conflicting with trust** | Confusion; may override trust terms | Remove POD/TOD when funding to trust |
+| **Joint account confusion** | Survivor owns 100%; not in trust | Re-title joint accounts into trust or verify JTWROS |
+
+### Real Estate Errors
+
+| Mistake | Consequence | Prevention |
+|---------|-------------|------------|
+| **Incomplete legal description** | Deed rejected or clouds title | Copy EXACT legal description from current deed |
+| **Not notifying mortgage lender** | Potential (unlikely) loan acceleration | Send courtesy notice with Garn-St. Germain reference |
+| **Missing spouse signature** | Invalid transfer of jointly-owned property | BOTH spouses must sign deed |
+| **Recording wrong deed type** | May not transfer as intended | Verify deed type appropriate for your state |
+
+### Follow-Up Errors
+
+| Mistake | Consequence | Prevention |
+|---------|-------------|------------|
+| **Not verifying re-titling completed** | Assumed funded but not actually done | Get written confirmation from each institution |
+| **Not updating insurance** | Claim issues if trust owns property | Add trust as additional insured |
+| **Losing track of funded assets** | Confusion at death about what's in trust | Maintain asset schedule in trust binder |
+| **Not updating after life changes** | New assets acquired not funded | Review funding annually or after major changes |
+
+### Funding Verification Checklist
+
+Before considering trust funding complete:
+
+- [ ] All real estate deeds recorded (verify with county records)
+- [ ] All bank accounts re-titled (obtain statements showing new title)
+- [ ] All brokerage accounts re-titled (obtain statements showing new title)
+- [ ] Retirement account beneficiaries updated (keep copies of submitted forms)
+- [ ] Life insurance beneficiaries updated (keep copies of submitted forms)
+- [ ] Business interests transferred (if applicable)
+- [ ] Personal property assignment signed
+- [ ] All state-required forms filed (keep receipts/confirmations)
+- [ ] Insurance updated to reflect trust ownership of property
+- [ ] Digital inventory created and access documented
+- [ ] Schedule of assets in trust binder updated
 ```
 
 ## File Writing Protocol

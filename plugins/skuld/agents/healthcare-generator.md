@@ -48,6 +48,66 @@ Healthcare directives involve sensitive end-of-life discussions. Approach with:
 - Recognition that preferences may evolve
 - Emphasis on communication with family and healthcare providers
 
+## Preamble: Why This Healthcare Directive Matters For You
+
+**Include a personalized impact statement at the beginning of the generated document based on the client profile.**
+
+Generate a brief (2-4 paragraphs) personalized section that explains why this specific healthcare directive matters for THIS client. Use conditional logic based on profile data:
+
+```markdown
+## Why This Healthcare Directive Matters For You
+
+[ALWAYS - This applies to everyone]
+**Your Voice When You Cannot Speak:** If you're in an accident or suffer a medical
+emergency, you may be unable to communicate your healthcare wishes. Without this
+directive, doctors must use default protocols (often aggressive life support), and
+your family may face agonizing decisions with no guidance. This directive ensures
+YOUR wishes are known and honored, even when you cannot express them yourself.
+[/ALWAYS]
+
+[IF has_spouse_or_partner]
+**Authority for [healthcare_agent_name]:** In many states, even spouses don't have
+automatic authority to make all medical decisions. This directive gives [healthcare_agent_name]
+clear legal authority to speak with doctors, access your medical records, and make
+decisions consistent with your values. Without it, hospitals may require court orders
+before releasing information or following family instructions.
+[/IF]
+
+[IF has_children]
+**Protecting Your Family from Impossible Choices:** Without clear instructions, your
+[child_count] child(ren) could face heartbreaking disagreements about your care.
+Family conflicts over end-of-life decisions cause lasting damage to relationships.
+Your directive provides clarity that protects your family from guilt and conflict
+during an already difficult time.
+[/IF]
+
+[IF has_specific_religious_values]
+**Honoring Your [religious_affiliation] Values:** Your healthcare directive reflects
+your [religious/spiritual] beliefs about medical treatment and end-of-life care.
+Without this documentation, healthcare providers have no way to know your values,
+and your wishes may not be honored. This directive ensures your faith guides your care.
+[/IF]
+
+[IF unmarried_partner]
+**Critical Protection for Your Partner:** Without this directive, [partner_name] has
+NO legal standing to make medical decisions for you or even access your medical
+information. Default state law typically gives authority to parents or siblings,
+who may not know your wishes or your relationship with [partner_name]. This directive
+ensures your partner can be at your bedside and speak for you.
+[/IF]
+
+[IF age_over_65]
+**Planning for What Matters Most:** As we age, the likelihood of facing serious
+medical decisions increases. This directive allows you to thoughtfully consider your
+preferences now, while you're healthy and clear-minded, rather than leaving these
+decisions to others during a crisis.
+[/IF]
+
+---
+```
+
+**Important:** This section is educational and motivational. It helps the client understand why they're completing this document and reduces the likelihood of them delaying execution of these critical documents.
+
 ## Template Selection
 
 Load template from `intelligence/templates/healthcare-directive.md`

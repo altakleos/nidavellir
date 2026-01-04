@@ -139,7 +139,87 @@ Load appropriate template from `intelligence/templates/`:
 
 ## Document Structure
 
-Generate trust with these articles:
+Generate trust with these sections:
+
+### Preamble: Why This Trust Matters For You
+
+**Include a personalized "Why This Trust Matters For You" section at the beginning of every trust document.** This section helps users understand the specific benefits of their trust based on their profile.
+
+Generate this section by evaluating the client profile and including ALL applicable statements:
+
+```markdown
+## Why This Trust Matters For You
+
+[IF owns_real_estate]
+**Probate Avoidance for Your Property:** Your trust holds your [property_description]
+in [state]. Without this trust, your property would go through probate - a public
+court process that typically takes 6-18 months and costs [estimated_probate_cost]
+(approximately 3-5% of property value in [state]). With this trust, your property
+passes directly to your beneficiaries without court involvement.
+[/IF]
+
+[IF has_minor_children]
+**Protection for Your Children:** While this trust doesn't name guardians (that's
+in your will), it ensures that any inheritance for your [child_count] minor
+child(ren) is managed by your chosen trustee until they reach the age you've
+specified. Without this, a court would appoint someone to manage their inheritance,
+with ongoing court supervision and fees.
+[/IF]
+
+[IF marital_status == married AND trust_type == joint]
+**Seamless Transition for Your Spouse:** If something happens to you, your spouse
+[spouse_name] continues as trustee without any court involvement, paperwork delays,
+or legal fees. They can immediately access all trust assets for bills, expenses,
+and ongoing life needs.
+[/IF]
+
+[IF blended_family == true]
+**Protecting All Your Children:** As a blended family, your trust includes specific
+provisions ensuring that your children from [prior/current] relationships receive
+their intended inheritance. The [QTIP/separate trust] structure prevents
+accidental disinheritance if your spouse remarries or changes their estate plan.
+[/IF]
+
+[IF state IN community_property_states]
+**Tax Advantage in [State]:** As a community property state, [state] allows a
+"double step-up" in basis when one spouse dies. This means your heirs could
+save significant capital gains tax on appreciated assets.
+[/IF]
+
+[IF state == "TN" AND cpt_election == true]
+**Tennessee Community Property Trust Benefit:** Your election to use Tennessee's
+Community Property Trust allows you to receive the "double step-up" in basis
+benefit even though Tennessee is not a traditional community property state.
+This could save your family significant capital gains taxes on appreciated assets.
+[/IF]
+
+[IF special_needs_beneficiary == true]
+**Protecting [SNT Beneficiary Name]'s Benefits:** Your trust includes provisions
+ensuring that [beneficiary_name]'s inheritance flows to a Special Needs Trust,
+preserving their eligibility for SSI, Medicaid, and other government benefits
+while still providing supplemental support.
+[/IF]
+
+[IF total_assets > state_probate_threshold]
+**Significant Probate Savings:** With assets of approximately [asset_range],
+your estate would face probate costs of [estimated_cost] without this trust.
+Your trust eliminates these costs and the 6-18 month delay.
+[/IF]
+
+**Privacy Protection:** Unlike a will (which becomes public record in probate),
+your trust remains private. The details of your assets and beneficiaries are
+never filed with any court.
+
+**Incapacity Protection:** If you become unable to manage your affairs, your
+successor trustee ([successor_trustee_name]) can immediately step in to manage
+trust assets without court involvement. Without this trust, your family would
+need to petition for conservatorship - a process costing $5,000-15,000+ and
+taking 2-4 months.
+```
+
+**Implementation Note:** Include only the statements that apply to this specific client. Do not include sections for conditions that don't match their profile.
+
+---
 
 ### Article I: Trust Name and Declaration
 ```

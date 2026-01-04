@@ -631,6 +631,26 @@ Display CPT/TBE interaction:
 
 ## Phase 2: Document Selection
 
+### Decision Support Resources
+
+Before presenting recommendations, the coordinator should be prepared to answer comparison questions. Reference these decision support modules:
+
+| Question Type | Resource |
+|--------------|----------|
+| "Should I get a trust or just a will?" | `intelligence/decision-support/trust-vs-will.md` |
+| "Joint trust vs. separate trusts?" | `intelligence/decision-support/joint-vs-separate-trust.md` |
+| "TOD deed vs. trust funding for property?" | `intelligence/decision-support/tod-deed-vs-trust-funding.md` |
+| "What happens if I don't do this?" | `intelligence/decision-support/consequences-of-inaction.md` |
+| "Which documents matter most for me?" | `intelligence/decision-support/document-priority-matrix.md` |
+
+**When user asks comparison questions:**
+1. Load the relevant decision support file
+2. Use the comparison matrix to explain trade-offs
+3. Personalize based on user's profile (state, family situation, assets)
+4. Don't recommend - present options and let user decide
+
+---
+
 ### 2.1 Present Recommendations
 
 Display recommendations table based on collected profile data.
@@ -834,6 +854,108 @@ IF trust_generated == true
 - Retirement: Beneficiary designation only (NO title transfer)
 - Life insurance: Beneficiary form update
 - Business: Buy-sell review, operating agreement
+
+---
+
+## Progress Tracking Display
+
+After completing each phase, display progress to user. This helps them understand where they are in the process and what remains.
+
+### Progress Display Template
+
+```
+┌─────────────────────────────────────────────────┐
+│  Estate Plan Progress                           │
+├─────────────────────────────────────────────────┤
+│  {progress_bar}                                 │
+│                                                 │
+│  {phase_status_list}                            │
+│                                                 │
+│  Documents: {completed}/{total}                 │
+│  Estimated remaining: {time_estimate}           │
+└─────────────────────────────────────────────────┘
+```
+
+### Phase Status Indicators
+
+| Symbol | Meaning |
+|--------|---------|
+| ✓ | Phase complete |
+| → | Current phase (in progress) |
+| ◷ | Pending (not started) |
+| • | Document within phase |
+
+### Example Progress Display (After Phase 2)
+
+```
+┌─────────────────────────────────────────────────┐
+│  Estate Plan Progress: ████████░░░░ 40%         │
+├─────────────────────────────────────────────────┤
+│  ✓ Phase 1: Discovery (complete)                │
+│  ✓ Phase 2: Document Selection (complete)       │
+│  → Phase 3: Document Drafting                   │
+│    • Trust: ◷ Pending                           │
+│    • Will: ◷ Pending                            │
+│    • POA: ◷ Pending                             │
+│    • Healthcare: ◷ Pending                      │
+│  ○ Phase 4: Execution Guidance                  │
+│  ○ Phase 5: Funding Checklist                   │
+│                                                 │
+│  Documents: 0/4 drafted                         │
+│  Estimated remaining: 10-15 minutes             │
+└─────────────────────────────────────────────────┘
+```
+
+### Example Progress Display (After Phase 3)
+
+```
+┌─────────────────────────────────────────────────┐
+│  Estate Plan Progress: ████████████░░ 80%       │
+├─────────────────────────────────────────────────┤
+│  ✓ Phase 1: Discovery (complete)                │
+│  ✓ Phase 2: Document Selection (complete)       │
+│  ✓ Phase 3: Document Drafting (complete)        │
+│    • Trust: ✓ Generated                         │
+│    • Will: ✓ Generated                          │
+│    • POA: ✓ Generated                           │
+│    • Healthcare: ✓ Generated                    │
+│  → Phase 4: Execution Guidance                  │
+│  ○ Phase 5: Funding Checklist                   │
+│                                                 │
+│  Documents: 4/4 drafted                         │
+│  Estimated remaining: 2-3 minutes               │
+└─────────────────────────────────────────────────┘
+```
+
+### When to Display Progress
+
+Display progress summary:
+- After completing Phase 1 (Discovery)
+- After completing Phase 2 (Document Selection)
+- After each document is generated in Phase 3
+- After Phase 3 validation completes
+- After Phase 4 (Execution Guidance) completes
+- After Phase 5 (Funding Checklist) completes
+
+### Progress State Variables
+
+Track these values in `client_profile.json` under `progress` key:
+
+```json
+{
+  "progress": {
+    "phase": 3,
+    "phase_1_complete": true,
+    "phase_2_complete": true,
+    "phase_3_complete": false,
+    "documents_selected": ["trust", "will", "poa", "healthcare"],
+    "documents_generated": ["trust", "will"],
+    "documents_validated": false,
+    "phase_4_complete": false,
+    "phase_5_complete": false
+  }
+}
+```
 
 ---
 

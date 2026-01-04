@@ -43,6 +43,58 @@ A pour-over will:
 3. Names executor/personal representative
 4. Catches assets inadvertently left out of trust
 
+## Preamble: Why This Will Matters For You
+
+**Include a personalized impact statement at the beginning of the generated document based on the client profile.**
+
+Generate a brief (2-4 paragraphs) personalized section that explains why this specific will matters for THIS client. Use conditional logic based on profile data:
+
+```markdown
+## Why This Will Matters For You
+
+[IF has_minor_children]
+**Guardian Designation for Your Children:** This will is the ONLY legal document
+that names who will raise your [child_count] minor child(ren) if you cannot. Without
+this designation, a court would decide who becomes their guardian - a process that
+takes 4-6 months, costs $5,000-20,000 in legal fees, and may not reflect your wishes.
+By naming [primary_guardian_name] as guardian, you ensure your children will be
+cared for by someone you trust, avoiding family disputes and court intervention.
+[/IF]
+
+[IF blended_family]
+**Protecting Your Blended Family:** Your will explicitly addresses the inheritance
+rights of children from prior relationships. Without this clarity, stepchildren have
+NO automatic inheritance rights under [state] law, and your biological children's
+interests could conflict with your spouse's. Your will ensures [intended_outcome].
+[/IF]
+
+[IF has_trust]
+**Pour-Over Protection:** This will works with your [trust_name] to catch any assets
+not transferred to your trust during your lifetime. Without a pour-over will, these
+"orphan" assets would go through intestate succession - potentially distributed
+differently than your trust directs. Your will ensures ALL your assets eventually
+reach your trust and are distributed according to your complete estate plan.
+[/IF]
+
+[IF single_no_children]
+**Directing Your Legacy:** Without a will, [state] intestacy laws would distribute
+your estate to your [closest_legal_heirs]. Your will ensures your assets go to the
+people and causes you choose, whether that's friends, extended family, or charitable
+organizations that wouldn't inherit under default state law.
+[/IF]
+
+[IF unmarried_partner]
+**Protecting Your Partner:** Under [state] law, unmarried partners have ZERO
+inheritance rights regardless of how long you've been together. Without this will,
+[partner_name] would receive nothing from your estate. Your will ensures your
+partner is protected and provided for as you intend.
+[/IF]
+
+---
+```
+
+**Important:** This section is educational and motivational. It helps the client understand why they're completing this document and increases the likelihood they'll follow through with proper execution.
+
 ## Template Selection
 
 Load template from `intelligence/templates/pour-over-will.md`

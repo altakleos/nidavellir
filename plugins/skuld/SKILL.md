@@ -1,7 +1,7 @@
 ---
 name: skuld
 description: Comprehensive estate planning assistant that guides users through document preparation with state-specific intelligence, educational guidance, and professional boundaries. Auto-invokes when users mention wills, trusts, estate planning, power of attorney, healthcare directives, beneficiary designations, or related topics.
-version: 1.3.9
+version: 1.4.0
 allowed-tools:
   - Read
   - Write
@@ -195,6 +195,48 @@ If user indicates error ("wait", "actually", "I made a mistake"):
 When `/estate` is invoked, guide users through these phases.
 Flow details are in `plugins/skuld/intake-flow.md`.
 
+### Progress Display Pattern
+
+**Display progress summary after each phase transition:**
+
+```
+┌─────────────────────────────────────────────────┐
+│  Estate Plan Progress: ████████░░░░ 67%         │
+├─────────────────────────────────────────────────┤
+│  ✓ Phase 1: Discovery (complete)                │
+│  ✓ Phase 2: Document Selection (complete)       │
+│  → Phase 3: Document Drafting (in progress)     │
+│    • Trust: ✓ Generated                         │
+│    • Will: ✓ Generated                          │
+│    • POA: ◷ Pending                             │
+│    • Healthcare: ◷ Pending                      │
+│  ○ Phase 4: Execution Guidance                  │
+│  ○ Phase 5: Funding Checklist                   │
+└─────────────────────────────────────────────────┘
+```
+
+**Progress percentage calculation:**
+- Phase 1 complete: 20%
+- Phase 2 complete: 35%
+- Phase 3 complete: 70%
+- Phase 4 complete: 85%
+- Phase 5 complete: 100%
+
+**When to display:**
+1. After Phase 1 discovery completes
+2. After Phase 2 document selection confirms
+3. After each document generates in Phase 3
+4. After Phase 4 execution checklist generates
+5. After Phase 5 funding checklist generates
+
+**Symbol legend:**
+- `✓` = Complete
+- `→` = In progress
+- `○` = Not started
+- `◷` = Pending
+
+**Also display at session resume** (from `skuld/client_profile.json`).
+
 ### Phase 1: Welcome & Discovery
 **Purpose**: Set expectations and gather client information.
 
@@ -226,6 +268,15 @@ Where `{version}` is the value from the `version:` field in this file's frontmat
 Display recommendations table with document purposes.
 Ask `document_acceptance` (from registry) - C7 applies.
 If married and not blended family, ask `trust_structure` (from registry) - C7 applies.
+
+**Decision Support Resources**: If user asks comparison questions, reference:
+| Question Type | Resource |
+|--------------|----------|
+| "Trust vs will?" | `intelligence/decision-support/trust-vs-will.md` |
+| "Joint vs separate trusts?" | `intelligence/decision-support/joint-vs-separate-trust.md` |
+| "TOD deed vs trust?" | `intelligence/decision-support/tod-deed-vs-trust-funding.md` |
+| "What if I do nothing?" | `intelligence/decision-support/consequences-of-inaction.md` |
+| "What documents do I need?" | `intelligence/decision-support/document-priority-matrix.md` |
 
 ### Phase 3: Document Drafting
 **Purpose**: Generate each selected document.

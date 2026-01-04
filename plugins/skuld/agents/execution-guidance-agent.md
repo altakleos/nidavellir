@@ -179,26 +179,78 @@ Duration estimation:
 - Add 15 minutes if 3+ documents
 - Add 10 minutes if spouse signing separately
 
-### Section 2: Pre-Signing Preparation
+### Section 2: Pre-Signing Preparation (Detailed)
 
 ```markdown
 ## Pre-Signing Preparation
 
-### Documents to Bring
-- [ ] All generated documents (printed, reviewed)
-- [ ] Valid photo ID for all signers
-- [ ] Photo ID for all witnesses
-{IF notary_required}
-- [ ] Know notary's availability and fee
+### What to Bring Checklist
+
+#### Documents
+- [ ] All generated documents (printed single-sided for easier signing)
+- [ ] Extra copies of each document (for witnesses to review)
+- [ ] This execution checklist (printed)
+{IF trust_generated}
+- [ ] Trust funding checklist (for reference)
 {ENDIF}
 
-### People to Arrange
-- [ ] {MIN_WITNESSES} witness(es) meeting all requirements
+#### Identification
+- [ ] **Primary signer**: Valid government-issued photo ID (driver's license, passport, state ID)
 {IF married}
-- [ ] Both spouses available simultaneously (recommended)
+- [ ] **Spouse**: Valid government-issued photo ID
 {ENDIF}
+- [ ] **Each witness**: Photo ID (notary may request)
 {IF notary_required}
-- [ ] Notary public (mobile notary, bank, UPS store)
+- [ ] Confirm ID is not expired (notaries cannot accept expired IDs)
+{ENDIF}
+
+#### Signing Supplies
+- [ ] **Blue ink pens** (2-3 pens) - Blue distinguishes original from photocopy
+- [ ] Black ink pen (backup - some institutions prefer black)
+- [ ] Correction fluid/tape is NOT allowed - bring extra copies instead
+- [ ] Paper clips (NOT staples - documents may need to be copied)
+- [ ] Post-it notes to mark signature lines
+
+#### Environment
+- [ ] Table large enough for documents and all signers
+- [ ] Adequate lighting
+- [ ] Quiet private space (no interruptions during signing)
+- [ ] Water/refreshments (signing takes 30-60 minutes)
+
+### People to Arrange
+
+#### Witnesses ({MIN_WITNESSES} required)
+- [ ] Witness 1: ________________________________
+      Phone: _______________ Confirmed: [ ]
+- [ ] Witness 2: ________________________________
+      Phone: _______________ Confirmed: [ ]
+{IF MIN_WITNESSES > 2}
+- [ ] Witness 3: ________________________________
+      Phone: _______________ Confirmed: [ ]
+{ENDIF}
+
+{IF married}
+**Note:** Both spouses should sign at the same time if possible. This ensures:
+- Trust is dated before both wills
+- Witnesses see both signatures
+- More efficient use of notary time
+{ENDIF}
+
+{IF notary_required}
+#### Notary Arrangements
+- [ ] Notary public scheduled
+      Name/Service: ________________________________
+      Date/Time: _______________
+      Location: ________________________________
+      Fee: $_______ (typical: $5-25 per notarization)
+
+**Where to find a notary:**
+1. Your bank (often free for account holders)
+2. UPS Store, FedEx Office, shipping stores
+3. Mobile notary services (they come to you - $50-150 total)
+4. Attorney's office
+5. Real estate offices
+6. AAA offices (for members)
 {ENDIF}
 
 ### Witness Requirements ({STATE})
@@ -206,12 +258,39 @@ Duration estimation:
 **{DOCUMENT_TYPE}**: {witness_restrictions_from_state_file}
 {ENDFOR}
 
-### Recommended Witness Characteristics
+### Witness Selection Guide
+
+**Ideal Witnesses:**
 - 18+ years of age
 - Not named as beneficiary in ANY document
-- Not named as agent/executor/trustee
-- Mentally competent to testify about signing
-- Preferably not family members (cleaner for court if challenged)
+- Not named as agent, executor, trustee, or guardian
+- Mentally competent to testify about signing if needed
+- Preferably not family members (cleaner if document challenged)
+- Available to testify in court years later if needed
+
+**Good Witness Options:**
+- Neighbors
+- Coworkers
+- Friends (not receiving inheritance)
+- Notary's staff (if permitted by state)
+- Professional witnesses (some notary services provide)
+
+**Avoid Using as Witnesses:**
+- Anyone named in documents as beneficiary, agent, or fiduciary
+- Minor children
+- People with close financial relationships to signers
+- Healthcare providers (for healthcare directive)
+- People who may have difficulty being located later
+
+### Day-Before Preparation
+
+- [ ] Read through all documents one final time
+- [ ] Confirm all names spelled correctly
+- [ ] Mark all signature/initial lines with sticky notes
+- [ ] Confirm witness availability
+- [ ] Confirm notary appointment
+- [ ] Prepare IDs and supplies
+- [ ] Review this checklist
 ```
 
 ### Section 3: Signing Ceremony Steps
@@ -321,21 +400,173 @@ Repeat Steps 3-5 for {SPOUSE}'s individual documents:
 
 ### Immediate (Same Day)
 
-#### Document Storage
-- [ ] Place original documents in fireproof safe or safe deposit box
-- [ ] Store at: _________________________________
-- [ ] Inform successor trustee/executor of location
+#### Verify All Signatures Complete
+- [ ] All signature lines signed (no blanks)
+- [ ] All initial lines initialed
+- [ ] Witness signatures complete with printed names and addresses
+- [ ] Notary acknowledgments complete with seal and expiration date
+- [ ] Dates filled in correctly
+- [ ] No white-out or corrections (if corrections made, documents may need re-signing)
 
-#### Copies to Distribute
-{FOR each agent/fiduciary}
-- [ ] {ROLE}: {NAME} - provide copy of {relevant_document}
-{ENDFOR}
+#### Document Storage Guide
+
+**Where to Store Original Documents:**
+
+| Storage Option | Pros | Cons | Best For |
+|----------------|------|------|----------|
+| **Home fireproof safe** | Immediate access, no annual fee | Fire/flood risk, can be stolen | Most families |
+| **Bank safe deposit box** | Secure, fire/flood proof | Limited access hours, inaccessible at death until probate | High-value estates |
+| **Attorney's office** | Professional storage | Fee may apply, attorney may retire | Complex estates |
+| **Trust company** | Professional management | Higher fees | High net worth |
+
+**CRITICAL: Safe Deposit Box Warning**
+⚠️ In many states, a safe deposit box is SEALED upon death until probate opens. This means:
+- Healthcare directive CANNOT be accessed in emergency
+- POA is useless (you're incapacitated, can't open box)
+- Will inaccessible until court order obtained
+
+**Recommended Approach:**
+1. Store ORIGINALS in home fireproof safe
+2. Give CERTIFIED COPIES to key people
+3. Tell executor/trustee exactly where originals are located
+4. DO NOT put healthcare directive only in safe deposit box
+
+**Document Storage Record:**
+
+| Document | Original Location | Copy 1 Location | Copy 2 Location |
+|----------|------------------|-----------------|-----------------|
+| Trust | _________________ | ________________ | ________________ |
+| Will (Client) | _________________ | ________________ | ________________ |
+{IF married}
+| Will (Spouse) | _________________ | ________________ | ________________ |
+{ENDIF}
+| POA (Client) | _________________ | ________________ | ________________ |
+{IF married}
+| POA (Spouse) | _________________ | ________________ | ________________ |
+{ENDIF}
+| Healthcare (Client) | _________________ | ________________ | ________________ |
+{IF married}
+| Healthcare (Spouse) | _________________ | ________________ | ________________ |
+{ENDIF}
+{IF tod_deed}
+| TOD Deed | _________________ | Recorded copy: __ | ________________ |
+{ENDIF}
+| Certificate of Trust | _________________ | ________________ | ________________ |
+
+- [ ] Original storage location documented: ________________________________
+- [ ] Successor trustee/executor informed of location
+- [ ] Backup access plan in place (what if you're incapacitated AND spouse unavailable?)
+
+#### Copies to Distribute (Immediately)
+
+**Priority 1: Healthcare Documents (Distribute Today)**
+
+These documents must be accessible in an emergency:
 
 {IF healthcare in documents}
-- [ ] Primary care physician - healthcare directive copy
-- [ ] Hospital (if known) - healthcare directive copy
-- [ ] Healthcare agent - healthcare directive copy
+| Recipient | Document | Delivery Method | Confirmed |
+|-----------|----------|-----------------|-----------|
+| {HEALTHCARE_AGENT} | Healthcare Directive + HIPAA | Hand deliver or email PDF | [ ] |
+| {SUCCESSOR_HEALTHCARE_AGENT} | Healthcare Directive + HIPAA | Mail or email PDF | [ ] |
+| Primary care physician | Healthcare Directive | Fax or patient portal | [ ] |
+| Specialist (if regular) | Healthcare Directive | Fax or patient portal | [ ] |
+| Local hospital | Healthcare Directive | Drop off at admissions | [ ] |
+{IF married}
+| Spouse | All healthcare documents | Already have copy | [ ] |
 {ENDIF}
+{ENDIF}
+
+**Priority 2: Financial Documents (Within 1 Week)**
+
+| Recipient | Document | Purpose | Confirmed |
+|-----------|----------|---------|-----------|
+| {POA_AGENT} | Financial POA | Know they're named, where original is | [ ] |
+| {SUCCESSOR_POA_AGENT} | Financial POA (copy) | Backup awareness | [ ] |
+| {EXECUTOR} | Will (copy) | Know location of original | [ ] |
+| {SUCCESSOR_TRUSTEE} | Trust summary | Know they're named, key provisions | [ ] |
+
+**Priority 3: General Awareness (Within 30 Days)**
+
+| Recipient | What to Tell Them | Confirmed |
+|-----------|------------------|-----------|
+| Adult children | "We have updated estate documents. Executor is [NAME]." | [ ] |
+| Siblings (if involved) | "We've done estate planning. [NAME] is executor." | [ ] |
+| Close family | General awareness only - no need for details | [ ] |
+
+### Family Notification Templates
+
+#### Template 1: Healthcare Agent Notification
+
+> Dear [HEALTHCARE_AGENT_NAME],
+>
+> I want you to know that I've named you as my Healthcare Agent in my new
+> Healthcare Directive. This means if I'm ever unable to make medical decisions
+> for myself, you would have the authority to make them on my behalf.
+>
+> I'm attaching a copy of the document for your records. Please review the
+> "Guidance for My Agent" section on page [X] - it explains my values and
+> preferences regarding medical treatment.
+>
+> The original is stored [LOCATION]. [SUCCESSOR_NAME] is named as backup
+> if you're unavailable.
+>
+> I'd like to discuss this with you to answer any questions. Can we schedule
+> a time to talk?
+>
+> Thank you for agreeing to serve in this important role.
+
+#### Template 2: Financial POA Agent Notification
+
+> Dear [POA_AGENT_NAME],
+>
+> I've named you as my Agent under a new Durable Power of Attorney for
+> financial matters. This document allows you to manage my finances if I
+> become incapacitated and unable to do so myself.
+>
+> The POA is effective [immediately/upon my incapacity - per document].
+>
+> Key information:
+> - Original document location: [LOCATION]
+> - Backup agent: [SUCCESSOR_NAME]
+> - My primary bank: [BANK]
+> - My financial advisor: [ADVISOR] at [FIRM]
+>
+> I'm NOT expecting you to need this anytime soon, but wanted you to have
+> a copy and know the details in case the situation ever arises.
+>
+> [Attached: Copy of POA]
+
+#### Template 3: Executor/Successor Trustee Notification
+
+> Dear [FIDUCIARY_NAME],
+>
+> I've completed new estate planning documents and named you as [Executor
+> of my Will / Successor Trustee of my Trust].
+>
+> While I hope this won't be needed for many years, I want you to know:
+>
+> **Document Locations:**
+> - Trust: [LOCATION]
+> - Will: [LOCATION]
+> - Other documents: [LOCATION]
+>
+> **Key Contacts:**
+> - Attorney: [NAME, PHONE] (if used)
+> - Accountant: [NAME, PHONE]
+> - Financial Advisor: [NAME, PHONE]
+>
+> **My Assets Include:** (general awareness)
+> - Home at [ADDRESS]
+> - Bank accounts at [BANKS]
+> - Retirement accounts at [INSTITUTIONS]
+> - [Other major assets]
+>
+> I've tried to make this as straightforward as possible. The [trust/will]
+> contains clear instructions.
+>
+> [BACKUP_NAME] is named as your backup if you're unable to serve.
+>
+> Please keep this information confidential but accessible if needed.
 
 ### Within 7 Days
 
@@ -462,6 +693,64 @@ Business interests require coordination:
 {ENDIF}
 
 {STATE-SPECIFIC content from state file "Common Pitfalls" or "Special Considerations" sections}
+```
+
+### Section 7: Common Mistakes to Avoid
+
+```markdown
+## Common Mistakes to Avoid
+
+### Signing Errors
+
+| Mistake | Consequence | Prevention |
+|---------|-------------|------------|
+| **Signing out of order** | Will references wrong trust date | Sign trust FIRST, note date, then will |
+| **Missing initials** | May invalidate pages | Check EVERY page before leaving |
+| **Using white-out** | Document may be rejected | Reprint and start over |
+| **Witnesses didn't see signing** | Invalid execution | Witnesses must WATCH you sign |
+| **Expired ID** | Notary cannot proceed | Check ID expiration beforehand |
+| **Signing with wrong name** | Document may not match other records | Use consistent legal name throughout |
+
+### Witness Errors
+
+| Mistake | Consequence | Prevention |
+|---------|-------------|------------|
+| **Beneficiary as witness** | May void that person's inheritance (some states) | Use neutral witnesses |
+| **Healthcare agent as witness** | May invalidate healthcare directive | Healthcare agent should NOT witness |
+| **Witnesses didn't see each other sign** | May invalidate attestation | All witnesses sign together |
+| **Witness can't be located later** | Problems if will contested | Get full addresses, keep contact info |
+
+### Post-Signing Errors
+
+| Mistake | Consequence | Prevention |
+|---------|-------------|------------|
+| **Not recording deed** | TOD deed ineffective at death | Record immediately after signing |
+| **Keeping originals in safe deposit box only** | Inaccessible during incapacity or at death | Store originals at home, give copies to agents |
+| **Never telling anyone about documents** | No one knows where to find them | Notify key people per templates above |
+| **Not updating beneficiaries** | Beneficiaries override trust/will | Review retirement accounts, life insurance |
+| **Forgetting to fund trust** | Assets go through probate anyway | Complete funding checklist immediately |
+
+### Document Errors
+
+| Mistake | Consequence | Prevention |
+|---------|-------------|------------|
+| **Old documents still valid** | Conflicting instructions | Destroy or clearly mark old documents "REVOKED" |
+| **Inconsistent names** | Confusion about identity | Use exact legal name on ALL documents |
+| **Generic agent names** | Uncertainty about who serves | Full legal names with relationships |
+| **Unclear succession** | Dispute about who serves next | Name 2-3 successors in clear order |
+
+### Critical Reminder Checklist
+
+Before considering your estate plan "done":
+
+- [ ] All documents signed properly with witnesses/notary as required
+- [ ] TOD deed recorded (if applicable)
+- [ ] Originals stored safely but ACCESSIBLY
+- [ ] Healthcare directive distributed to doctors and agents
+- [ ] Key fiduciaries notified they're named
+- [ ] Trust funding started (assets titled in trust name)
+- [ ] Beneficiary designations reviewed on retirement accounts/insurance
+- [ ] Calendar reminder set for 3-year review
 ```
 
 ## File Writing Protocol

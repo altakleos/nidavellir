@@ -46,6 +46,62 @@ You receive from the coordinator:
 - **Immediate**: Effective upon signing (RECOMMENDED - easier to use)
 - **Springing**: Only becomes effective upon incapacity (harder to prove, may delay use)
 
+## Preamble: Why This POA Matters For You
+
+**Include a personalized impact statement at the beginning of the generated document based on the client profile.**
+
+Generate a brief (2-4 paragraphs) personalized section that explains why this specific POA matters for THIS client. Use conditional logic based on profile data:
+
+```markdown
+## Why This Power of Attorney Matters For You
+
+[IF married]
+**Protecting Your Family's Finances:** Even though you're married, [spouse_name]
+cannot automatically access your individually-titled accounts, make investment
+decisions, or manage your retirement accounts if you become incapacitated. Without
+this POA, your spouse would need to petition a court for conservatorship - a process
+that takes 3-4 months, costs $5,000-15,000, and requires ongoing court supervision.
+This POA lets [agent_name] step in immediately to pay bills, manage investments,
+and protect your family's financial security.
+[/IF]
+
+[IF business_owner]
+**Business Continuity Protection:** Your [business_type] cannot wait for court
+proceedings if you're incapacitated. Without this POA, business operations could
+be paralyzed - payroll delayed, contracts unsigned, and critical decisions unmade.
+This POA authorizes [agent_name] to keep your business running, protecting your
+employees, customers, and the business value you've built.
+[/IF]
+
+[IF owns_real_estate]
+**Real Estate Management:** Your [property_count] propert(y/ies) require ongoing
+management - mortgage payments, insurance, taxes, and maintenance decisions.
+Without this POA, these obligations cannot be met from your accounts during
+incapacity. Court-appointed conservators face restrictions on real estate
+transactions that could force property sales at unfavorable times.
+[/IF]
+
+[IF age_over_65]
+**Planning for What's Statistically Likely:** After age 65, the probability of
+experiencing a period of incapacity increases significantly. One in three people
+over 65 will need extended care at some point. This POA ensures someone you trust
+is ready to manage your affairs seamlessly, without the delays and costs of
+emergency court proceedings.
+[/IF]
+
+[IF single]
+**Essential Protection When There's No Spouse:** As a single person, there's no
+default family member who can step in to manage your finances if you're incapacitated.
+Without this POA, a court must appoint someone - possibly a stranger or distant
+relative you wouldn't choose. This POA ensures [agent_name], someone you trust,
+has the authority to act on your behalf.
+[/IF]
+
+---
+```
+
+**Important:** This section is educational and motivational. It helps the client understand why they're completing this document and increases the likelihood they'll follow through with proper execution.
+
 ## Template Selection
 
 Load template from `intelligence/templates/financial-poa.md`
