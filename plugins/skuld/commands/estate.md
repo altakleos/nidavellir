@@ -1,5 +1,5 @@
 ---
-name: estate
+name: skuld:estate
 description: Launch the comprehensive estate planning workflow - guides you through discovery, document selection, drafting, validation, and execution guidance.
 ---
 

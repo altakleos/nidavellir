@@ -1,5 +1,5 @@
 ---
-name: estate:lookup
+name: skuld:lookup
 description: Quick lookup of state-specific estate planning requirements without starting the full workflow.
 ---
 
