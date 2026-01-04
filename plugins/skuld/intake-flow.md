@@ -771,15 +771,69 @@ This phase does not involve intake questions from the registry.
 
 ## Phase 4: Execution Guidance
 
-See SKILL.md for Phase 4 workflow.
-This phase does not involve intake questions from the registry.
+**No intake questions required** - Phase 4 uses data already collected.
+
+**Automatic invocation** after successful Phase 3B validation:
+
+```
+IF validation_status == "success" OR validation_status == "warnings_only":
+  INVOKE execution-guidance-agent
+    WITH client_profile
+    WITH document_metadata (all generated documents)
+    WITH complexity_flags
+
+  DISPLAY to user:
+    - Signing requirements summary
+    - Witness count needed
+    - Notarization requirements
+    - Estimated signing duration
+    - Link to full checklist
+```
+
+**State-specific variations handled by agent** (not intake):
+- Witness requirements per document type
+- Notarization vs self-proving options
+- Recording requirements for deeds
+- Attorney consultation triggers
 
 ---
 
 ## Phase 5: Funding & Next Steps
 
-See SKILL.md for Phase 5 workflow.
-This phase does not involve intake questions from the registry.
+**Conditional invocation** based on intake data:
+
+```
+IF trust_generated == true
+   AND trust_funding_needs IN ["real_estate", "accounts", "both"]:
+
+  INVOKE funding-checklist-agent
+    WITH client_profile
+    WITH trust_metadata
+    WITH asset_inventory:
+      - financial_assets
+      - other_assets
+      - life_insurance_value (if provided)
+      - retirement_value (if provided)
+      - business_entity_type (if provided)
+
+  DISPLAY to user:
+    - Assets to fund summary
+    - Recording requirements (if real estate)
+    - Timeline estimate
+    - Link to full checklist
+```
+
+**Skip Phase 5 when**:
+- No trust generated (will-only estate plan)
+- `trust_funding_needs` == "later"
+- User explicitly declines funding guidance
+
+**Asset-type specific flows** (handled by agent):
+- Real estate: Deed prep → lender contact → recording → forms
+- Bank accounts: Certificate of Trust → re-titling
+- Retirement: Beneficiary designation only (NO title transfer)
+- Life insurance: Beneficiary form update
+- Business: Buy-sell review, operating agreement
 
 ---
 

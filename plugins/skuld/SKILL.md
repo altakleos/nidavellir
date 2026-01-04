@@ -241,16 +241,61 @@ Sub-phases: 3A (Generation), 3B (Validation), 3C (User Review)
 Invoke `estate-validation` agent for cross-document checks.
 
 ### Phase 4: Execution Guidance
-**Purpose**: Provide signing and notarization instructions.
 
-Generate execution checklist with state-specific requirements.
-Write to `skuld/execution/signing-checklist-[DATE].md`
+**Purpose**: Generate personalized signing and notarization checklist.
+
+**Triggers**: Automatically after Phase 3B validation completes successfully.
+
+**Agent**: `execution-guidance` (execution-guidance-agent.md)
+
+**Inputs**:
+- `client_profile.state_of_residence`
+- `document_metadata` from all Phase 3A generators
+- `complexity_flags` from validation-agent
+
+**Process**:
+1. Load state file: `intelligence/state-laws/[STATE].md`
+2. Extract execution requirements (witnesses, notarization, special requirements)
+3. Extract attorney requirements section
+4. Determine signing sequence based on document types generated
+5. Generate consolidated checklist
+
+**Output**: `skuld/execution/checklist-[STATE]-[DATE]-v{N}.md`
+
+**Coordinator displays**: Summary with signing requirements and link to checklist.
+
+---
 
 ### Phase 5: Funding & Next Steps
-**Purpose**: Ensure trust is properly funded.
 
-Generate funding checklist for asset transfers.
-Write to `skuld/funding/funding-checklist-[DATE].md`
+**Purpose**: Generate asset transfer instructions for trust funding.
+
+**Triggers**: After Phase 4, only if trust was generated AND `trust_funding_needs` != "later"
+
+**Agent**: `funding-checklist` (funding-checklist-agent.md)
+
+**Inputs**:
+- `client_profile` (state, marital status)
+- `trust_metadata` (name, trustees) from trust generator
+- Asset inventory from intake:
+  - `financial_assets`
+  - `other_assets`
+  - Real estate details (if applicable)
+  - `retirement_beneficiaries`
+  - `life_insurance_beneficiary`
+
+**Process**:
+1. Load state file: `intelligence/state-laws/[STATE].md`
+2. Extract recording requirements and fees
+3. For each asset type in inventory:
+   - Load relevant guidance
+   - Generate asset-specific funding steps
+4. Calculate timeline based on asset complexity
+5. Identify attorney consultation triggers
+
+**Output**: `skuld/funding/checklist-[STATE]-[DATE]-v{N}.md`
+
+**Coordinator displays**: Summary with assets to fund, timeline, and link to checklist.
 
 ---
 
@@ -292,6 +337,12 @@ All generators write to `skuld/drafts/` and return metadata only.
 |-------|---------|
 | **estate-validation** | Cross-document consistency checks |
 | **document-sync-fixer** | Applies corrections for `patch` issues |
+
+### Execution & Funding Agents (Phase 4/5)
+| Agent | Output Pattern | Purpose |
+|-------|----------------|---------|
+| **execution-guidance** | `skuld/execution/checklist-{STATE}-{DATE}-v{N}.md` | Signing ceremony instructions with state-specific requirements |
+| **funding-checklist** | `skuld/funding/checklist-{STATE}-{DATE}-v{N}.md` | Asset-by-asset trust funding instructions |
 
 ---
 

@@ -137,13 +137,16 @@ else
   FAILED=$((FAILED + 1))
 fi
 
-# Test 22: Version consistency check
+# Test 22: Version consistency check (SKILL.md, plugin.json, marketplace.json should match)
 skill_version=$(grep -o 'version: [0-9.]*' "$SKILL" | head -1 | cut -d' ' -f2)
-if [[ "$skill_version" == "1.3.8" ]]; then
-  echo -e "${GREEN}✓${NC} SKILL.md version is 1.3.8"
+plugin_version=$(jq -r '.version' "$REPO_ROOT/plugins/skuld/.claude-plugin/plugin.json")
+marketplace_version=$(jq -r '.plugins[] | select(.name == "skuld") | .version' "$REPO_ROOT/.claude-plugin/marketplace.json")
+
+if [[ -n "$skill_version" ]] && [[ "$skill_version" == "$plugin_version" ]] && [[ "$skill_version" == "$marketplace_version" ]]; then
+  echo -e "${GREEN}✓${NC} Version consistency: SKILL.md, plugin.json, marketplace.json all v$skill_version"
   PASSED=$((PASSED + 1))
 else
-  echo -e "${RED}✗${NC} SKILL.md version should be 1.3.8, found: $skill_version"
+  echo -e "${RED}✗${NC} Version mismatch: SKILL.md=$skill_version, plugin.json=$plugin_version, marketplace.json=$marketplace_version"
   FAILED=$((FAILED + 1))
 fi
 
