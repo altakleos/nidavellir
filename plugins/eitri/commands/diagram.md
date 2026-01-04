@@ -1,5 +1,5 @@
 ---
-name: diagram
+name: eitri:diagram
 description: Generate visual architecture diagrams for Eitri extensions including suites, hybrids, and agent relationships
 ---
 

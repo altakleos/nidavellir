@@ -43,7 +43,7 @@ With `strict: false` in marketplace.json:
 Use only official frontmatter fields (per Claude Code specification):
 
 **Required:**
-- `name` - max 64 chars, lowercase/numbers/hyphens only
+- `name` - max 64 chars, lowercase/numbers/hyphens/colons (use `pluginname:command` format for commands)
 - `description` - max 1024 chars
 
 **Optional:**

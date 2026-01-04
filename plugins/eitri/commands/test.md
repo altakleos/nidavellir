@@ -1,5 +1,5 @@
 ---
-name: test
+name: eitri:test
 description: Test and simulate Eitri-generated extensions in a safe sandbox environment before deployment
 ---
 

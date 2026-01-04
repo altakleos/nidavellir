@@ -1,5 +1,5 @@
 ---
-name: template
+name: eitri:template
 description: Quick-start extension creation from pre-built templates and common patterns
 ---
 

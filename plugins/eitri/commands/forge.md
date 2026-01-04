@@ -1,5 +1,5 @@
 ---
-name: forge
+name: eitri:forge
 description: Launch Eitri to intelligently create Claude Code extensions (skills, agents, suites, or hybrids) through natural conversation
 ---
 

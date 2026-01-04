@@ -1,5 +1,5 @@
 ---
-name: publish
+name: eitri:publish
 description: Publish extensions to Claude Code marketplaces with guided workflow
 ---
 

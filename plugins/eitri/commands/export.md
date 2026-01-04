@@ -1,5 +1,5 @@
 ---
-name: export
+name: eitri:export
 description: Export Eitri extensions to Agent Skills standard format for cross-platform compatibility
 ---
 

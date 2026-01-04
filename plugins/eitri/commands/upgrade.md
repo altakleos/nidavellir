@@ -1,5 +1,5 @@
 ---
-name: upgrade
+name: eitri:upgrade
 description: Upgrade existing Claude Code extensions with new features, fixes, or version bumps
 ---
 

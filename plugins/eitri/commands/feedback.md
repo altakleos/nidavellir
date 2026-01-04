@@ -1,5 +1,5 @@
 ---
-name: feedback
+name: eitri:feedback
 description: Provide feedback on Eitri-generated extensions to improve future recommendations
 ---
 

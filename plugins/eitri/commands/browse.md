@@ -1,5 +1,5 @@
 ---
-name: browse
+name: eitri:browse
 description: Browse and discover templates from local filesystem (built-in, user, and project templates)
 ---
 

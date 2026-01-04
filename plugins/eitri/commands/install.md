@@ -1,5 +1,5 @@
 ---
-name: install
+name: eitri:install
 description: Install a forged extension to your Claude Code environment (local project or user-wide)
 ---
 

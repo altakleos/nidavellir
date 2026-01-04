@@ -101,7 +101,7 @@ Your `.claude-plugin/plugin.json` must validate against `/schemas/plugin.schema.
 ```
 
 **Required Fields:**
-- `name`: lowercase, hyphens allowed, no spaces
+- `name`: lowercase, hyphens/colons allowed, no spaces (commands use `pluginname:command` format)
 - `version`: Semantic versioning (MAJOR.MINOR.PATCH)
 - `description`: 10-500 characters
 - `author.name` and `author.email`

@@ -113,9 +113,9 @@ Required fields:
 **I do**:
 1. Locate the plugin
 2. Ask what the command should do
-3. Ask for command name (suggest based on plugin name)
+3. Ask for command name (use `pluginname:commandname` format, e.g., `eitri:validate`)
 4. Create `commands/[command-name].md` at plugin root (NOT .claude-plugin/)
-5. Generate proper command markdown with frontmatter
+5. Generate proper command markdown with frontmatter (name field uses `pluginname:command` format)
 6. Validate placement is correct
 7. Stage changes
 

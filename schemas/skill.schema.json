@@ -8,8 +8,8 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "Skill name (lowercase, numbers, hyphens only)",
-      "pattern": "^[a-z0-9-]+$",
+      "description": "Skill name (lowercase, numbers, hyphens, colons for plugin:command format)",
+      "pattern": "^[a-z0-9:-]+$",
       "minLength": 1,
       "maxLength": 64
     },

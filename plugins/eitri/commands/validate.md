@@ -1,5 +1,5 @@
 ---
-name: validate
+name: eitri:validate
 description: Validate Claude Code extensions (skills, agents, plugins) for specification compliance and common issues
 ---
 

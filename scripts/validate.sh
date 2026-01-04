@@ -164,8 +164,8 @@ validate_skill_md() {
     # Check name format and length (max 64 chars)
     local name=$(echo "$frontmatter" | grep "^name:" | sed 's/^name: *//')
     if [[ -n "$name" ]]; then
-        if ! [[ "$name" =~ ^[a-z0-9-]+$ ]]; then
-            echo -e "${RED}  ✗ Invalid name format: $name (use lowercase, numbers, hyphens only)${NC}"
+        if ! [[ "$name" =~ ^[a-z0-9:-]+$ ]]; then
+            echo -e "${RED}  ✗ Invalid name format: $name (use lowercase, numbers, hyphens, colons)${NC}"
             ERRORS=$((ERRORS + 1))
         fi
         if [[ ${#name} -gt 64 ]]; then

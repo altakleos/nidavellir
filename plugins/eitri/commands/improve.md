@@ -1,5 +1,5 @@
 ---
-name: improve
+name: eitri:improve
 description: Optimize extension prompts based on collected feedback
 ---
 
