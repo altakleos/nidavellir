@@ -629,6 +629,98 @@ Display CPT/TBE interaction:
 
 ---
 
+### 1.15 Distribution Preferences
+
+**[IF has_children == true]**
+
+**Ask:** `distribution_preferences` (from registry)
+
+**[STOP - Wait for response]**
+
+**[IF distribution.pattern IN (all_at_once, staggered)]**
+
+**Ask:** `distribution_age_schedule` (from registry, type: numbered_select — C10 applies)
+
+**[STOP - Wait for response]**
+
+**[IF distribution.age_schedule == custom]**
+
+**Ask:** `distribution_custom_ages` (from registry, type: text)
+
+**[STOP - Wait for response]**
+
+**[/IF]**
+
+**[/IF]**
+
+**[IF children_count > 1]**
+
+**Ask:** `distribution_equality` (from registry)
+
+**[STOP - Wait for response]**
+
+**[IF distribution.equality == unequal]**
+
+**Ask:** `distribution_per_child_shares` (from registry, type: per_child)
+
+For each child, prompt:
+```
+What percentage should [child_name] receive?
+```
+
+Validate that all percentages total exactly 100%.
+
+**[STOP - Wait for response]**
+
+**[/IF]**
+
+**[/IF]**
+
+**Ask:** `distribution_method` (from registry, type: numbered_select — C10 applies)
+
+**[STOP - Wait for response]**
+
+**[IF distribution.method == help]**
+
+Display per stirpes vs per capita explanation:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║        PER STIRPES vs. PER CAPITA DISTRIBUTION                     ║
+╠═══════════════════════════════════════════════════════════════════╣
+║                                                                    ║
+║  PER STIRPES ("by the branch"):                                    ║
+║  If a child predeceases you, their share goes to THEIR children    ║
+║  (your grandchildren).                                             ║
+║                                                                    ║
+║  Example: You have 3 children. Child A dies before you, leaving    ║
+║  2 grandchildren. Result:                                          ║
+║  • Child B: 1/3                                                    ║
+║  • Child C: 1/3                                                    ║
+║  • Grandchild 1: 1/6 (half of Child A's share)                     ║
+║  • Grandchild 2: 1/6 (half of Child A's share)                     ║
+║                                                                    ║
+║  PER CAPITA ("by the head"):                                       ║
+║  If a child predeceases you, their share is divided among the      ║
+║  SURVIVING children only. Grandchildren receive nothing.           ║
+║                                                                    ║
+║  Example: Same scenario. Result:                                   ║
+║  • Child B: 1/2                                                    ║
+║  • Child C: 1/2                                                    ║
+║  • Grandchild 1: Nothing                                           ║
+║  • Grandchild 2: Nothing                                           ║
+║                                                                    ║
+║  MOST COMMON: Per stirpes is chosen by ~85% of families.           ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+Re-ask `distribution_method` after explanation.
+
+**[/IF]**
+
+**[/IF]**
+
+---
+
 ## Phase 2: Document Selection
 
 ### Decision Support Resources
@@ -642,6 +734,9 @@ Before presenting recommendations, the coordinator should be prepared to answer 
 | "TOD deed vs. trust funding for property?" | `intelligence/decision-support/tod-deed-vs-trust-funding.md` |
 | "What happens if I don't do this?" | `intelligence/decision-support/consequences-of-inaction.md` |
 | "Which documents matter most for me?" | `intelligence/decision-support/document-priority-matrix.md` |
+| "At what ages should my children inherit?" | `intelligence/decision-support/distribution-strategy.md` |
+| "Should all children get equal shares?" | `intelligence/decision-support/distribution-strategy.md` |
+| "What is per stirpes vs per capita?" | `intelligence/decision-support/distribution-strategy.md` |
 
 **When user asks comparison questions:**
 1. Load the relevant decision support file

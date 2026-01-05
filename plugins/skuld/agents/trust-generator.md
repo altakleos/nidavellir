@@ -20,8 +20,13 @@ requires_intake:
   - relationship_status
   - state_of_residence
   - children_inventory
-optional_intake:
   - distribution_preferences
+  - distribution_age_schedule
+  - distribution_method
+optional_intake:
+  - distribution_custom_ages
+  - distribution_equality
+  - distribution_child_shares
   - qdot_planning
   - blended_family_preferences
 progressive_unlock:
@@ -395,15 +400,70 @@ For each child who is under age [FIRST_DISTRIBUTION_AGE] at the time of
 distribution, that child's share shall be held in a separate trust...
 
 ### Distribution Schedule
-[Based on distribution_preferences]
-- All at once: 100% at age [AGE]
-- Staggered: [PERCENTAGE]% at age [AGE], [PERCENTAGE]% at age [AGE], remainder at age [AGE]
+[SWITCH distribution.age_schedule]
+  [CASE all_at_once_25]
+  The Trustee shall distribute 100% of the beneficiary's share upon
+  the beneficiary reaching age 25.
+
+  [CASE staggered_standard]
+  The Trustee shall distribute to each beneficiary:
+  - One-third (1/3) upon reaching age 25
+  - One-half (1/2) of the remaining balance upon reaching age 30
+  - The entire remaining balance upon reaching age 35
+
+  [CASE staggered_later]
+  The Trustee shall distribute to each beneficiary:
+  - One-third (1/3) upon reaching age 30
+  - One-half (1/2) of the remaining balance upon reaching age 35
+  - The entire remaining balance upon reaching age 40
+
+  [CASE staggered_earlier]
+  The Trustee shall distribute to each beneficiary:
+  - One-third (1/3) upon reaching age 21
+  - One-half (1/2) of the remaining balance upon reaching age 25
+  - The entire remaining balance upon reaching age 30
+
+  [CASE custom]
+  The Trustee shall distribute to each beneficiary according to the
+  following schedule: [distribution.custom_ages]
+
+  [DEFAULT]
+  The Trustee shall distribute to each beneficiary:
+  - One-third (1/3) upon reaching age 25
+  - One-half (1/2) of the remaining balance upon reaching age 30
+  - The entire remaining balance upon reaching age 35
+[/SWITCH]
+
+[[ ATTORNEY REVIEW: Confirm distribution ages are appropriate for beneficiaries ]]
+
+### Share Allocation
+[IF distribution.equality == "unequal"]
+## Differentiated Share Distribution
+
+The Trust Estate shall be distributed to the following beneficiaries
+in the following shares (totaling 100%):
+
+[FOR each child in distribution.child_shares]
+- [CHILD_NAME]: [PERCENTAGE]%
+[/FOR]
+
+This unequal distribution is intentional and reflects the Grantor's
+specific wishes.
+
+[[ ATTORNEY REVIEW: Verify per-child share percentages total exactly 100% ]]
+[[ ATTORNEY REVIEW: Consider including explanation of unequal distribution to prevent disputes ]]
+[ELSE]
+The Trust Estate shall be distributed in equal shares to the then-living
+beneficiaries as set forth in this Article.
+[/IF]
 
 ### HEMS Standard
-[IF include_hems_standard]
+[IF include_hems_standard OR distribution.pattern == "discretionary"]
 The Trustee may distribute to or for the benefit of the beneficiary
 such amounts of income and principal as the Trustee deems necessary
-for the beneficiary's health, education, maintenance, and support...
+for the beneficiary's health, education, maintenance, and support
+(the "HEMS" standard), taking into account the beneficiary's other
+available resources known to the Trustee...
 [/IF]
 
 ### Spendthrift Provision
@@ -418,50 +478,54 @@ encumber any interest in this Trust...
 
 **[IF has_children]**
 
+**Distribution method is captured during intake via `distribution.method`.**
+
+**Include in trust document based on intake selection:**
 ```
-╔══════════════════════════════════════════════════════════════════╗
-║        DISTRIBUTION IF A BENEFICIARY PREDECEASES YOU            ║
-╠══════════════════════════════════════════════════════════════════╣
-║ What should happen to a child's share if they die before you?   ║
-╚══════════════════════════════════════════════════════════════════╝
-```
+### Distribution Method for Predeceased Beneficiaries
 
-SKULD: If a beneficiary (e.g., one of your children) predeceases you, how should their share be distributed?
+[IF distribution.method == "per_stirpes"]
+All distributions to beneficiaries under this Trust shall be made in equal
+shares, per stirpes, meaning if any beneficiary predeceases the distribution,
+that beneficiary's share shall pass to their then-living descendants, by
+right of representation. If a beneficiary dies without living descendants,
+that beneficiary's share shall be divided equally among the remaining
+beneficiaries or their descendants, per stirpes.
 
-**Option A: Per Stirpes (to their descendants)**
-- Their share passes to THEIR children (your grandchildren)
-- Example: If your son dies, his 1/3 share goes to his children
-- Most common choice for family beneficiaries
-- Keeps the inheritance in that "branch" of the family
+Example: If Grantor has three children and one child predeceases leaving
+two grandchildren, the distribution would be:
+- Living Child 1: 1/3
+- Living Child 2: 1/3
+- Grandchild A (from deceased child): 1/6
+- Grandchild B (from deceased child): 1/6
 
-**Option B: Per Capita (to surviving beneficiaries)**
-- Their share is divided among remaining beneficiaries
-- Example: If one of three children dies, the other two each get 1/2
-- Works when you prefer assets stay with living beneficiaries
-- May exclude grandchildren if parent predeceases
+[ELSIF distribution.method == "per_capita"]
+All distributions to beneficiaries under this Trust shall be made in equal
+shares among the then-living beneficiaries only. The share of any beneficiary
+who predeceases the distribution shall be divided equally among the surviving
+beneficiaries. Descendants of predeceased beneficiaries shall not take by
+representation.
 
-**Option C: Per Capita at Each Generation**
-- First divides equally at the first generation with survivors
-- Then pools deceased members' shares for equal division at next level
-- More complex but treats all grandchildren equally
+Example: If Grantor has three children and one child predeceases, the
+distribution would be:
+- Living Child 1: 1/2
+- Living Child 2: 1/2
+- Grandchildren of deceased child: Nothing
 
-[Save to: `distribution_method: per_stirpes|per_capita|per_capita_each_generation`]
+[ELSIF distribution.method == "per_capita_each_generation"]
+All distributions to beneficiaries under this Trust shall be made per capita
+at each generation, meaning the shares shall be divided into equal portions
+based on the number of living members and deceased members with living
+descendants at each generational level.
 
-**Include in trust document based on selection:**
-```
-[IF distribution_method == "per_stirpes"]
-... in equal shares, per stirpes, meaning if any beneficiary predeceases
-the distribution, that beneficiary's share shall pass to their then-living
-descendants, by right of representation.
-[ELSIF distribution_method == "per_capita"]
-... in equal shares among the then-living beneficiaries. The share of any
-beneficiary who predeceases the distribution shall be divided equally among
-the surviving beneficiaries.
-[ELSIF distribution_method == "per_capita_each_generation"]
-... per capita at each generation, meaning the shares shall be divided into
-equal portions based on the number of living members and deceased members
-with living descendants at each generational level.
+[DEFAULT]
+All distributions to beneficiaries under this Trust shall be made in equal
+shares, per stirpes, meaning if any beneficiary predeceases the distribution,
+that beneficiary's share shall pass to their then-living descendants, by
+right of representation.
 [/IF]
+
+[[ ATTORNEY REVIEW: Confirm distribution method matches client's intent ]]
 ```
 **[/IF]**
 

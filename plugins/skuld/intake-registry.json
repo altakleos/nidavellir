@@ -791,7 +791,78 @@
         { "value": "discretionary", "label": "Trustee discretion with HEMS standard" },
         { "value": "help", "label": "I have a question about distribution options" }
       ],
+      "condition": "has_children == true",
       "save_to": "distribution.pattern"
+    },
+
+    "distribution_age_schedule": {
+      "id": "distribution_age_schedule",
+      "phase": 1,
+      "type": "numbered_select",
+      "question_text": "At what ages should children receive their inheritance?",
+      "options": [
+        { "value": "all_at_once_25", "label": "All at once at age 25" },
+        { "value": "staggered_standard", "label": "Staggered: 1/3 at 25, 1/3 at 30, remainder at 35 (Recommended)" },
+        { "value": "staggered_later", "label": "Staggered later: 1/3 at 30, 1/3 at 35, remainder at 40" },
+        { "value": "staggered_earlier", "label": "Staggered earlier: 1/3 at 21, 1/3 at 25, remainder at 30" },
+        { "value": "custom", "label": "Custom ages (I'll specify)" },
+        { "value": "help", "label": "Help me understand the options" }
+      ],
+      "constraints": ["C10"],
+      "condition": "has_children == true AND distribution.pattern IN (all_at_once, staggered)",
+      "save_to": "distribution.age_schedule",
+      "note": "Only shown if user chose all_at_once or staggered distribution pattern."
+    },
+
+    "distribution_custom_ages": {
+      "id": "distribution_custom_ages",
+      "phase": 1,
+      "type": "text",
+      "question_text": "Specify your custom distribution ages (e.g., '1/3 at 28, 1/3 at 32, remainder at 38'):",
+      "example": "1/3 at 28, 1/3 at 32, remainder at 38",
+      "condition": "distribution.age_schedule == custom",
+      "save_to": "distribution.custom_ages"
+    },
+
+    "distribution_equality": {
+      "id": "distribution_equality",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Should all children inherit equal shares?",
+      "options": [
+        { "value": "equal", "label": "Yes, equal shares to all children (Recommended)" },
+        { "value": "unequal", "label": "No, I want different percentages for each child" }
+      ],
+      "condition": "has_children == true AND children_count > 1",
+      "save_to": "distribution.equality",
+      "note": "Only asked when there are multiple children."
+    },
+
+    "distribution_per_child_shares": {
+      "id": "distribution_per_child_shares",
+      "phase": 1,
+      "type": "per_child",
+      "question_text": "What percentage should each child receive? (Must total 100%)",
+      "condition": "distribution.equality == unequal",
+      "save_to": "distribution.child_shares",
+      "validation": "sum_equals_100",
+      "note": "Dynamically generates inputs for each child. Validates total equals 100%."
+    },
+
+    "distribution_method": {
+      "id": "distribution_method",
+      "phase": 1,
+      "type": "numbered_select",
+      "question_text": "If a child passes away before receiving their inheritance, what happens to their share?",
+      "options": [
+        { "value": "per_stirpes", "label": "To their children (your grandchildren) - Per Stirpes (Recommended)" },
+        { "value": "per_capita", "label": "Split among surviving children - Per Capita" },
+        { "value": "help", "label": "Help me understand the difference" }
+      ],
+      "constraints": ["C10"],
+      "condition": "has_children == true",
+      "save_to": "distribution.method",
+      "note": "Per stirpes is most common; keeps inheritance in each child's 'branch'."
     },
 
     "spendthrift_preference": {
