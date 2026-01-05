@@ -165,9 +165,9 @@ fi
 dist_method=$(jq '.questions.distribution_method // null' "$REGISTRY")
 assert_not_empty "$dist_method" "distribution_method question exists"
 
-# Test 21: distribution_method uses numbered_select (C10)
+# Test 21: distribution_method uses select (only 3 options, C10 requires 5+ for numbered_select)
 method_type=$(jq -r '.questions.distribution_method.type // ""' "$REGISTRY")
-assert_eq "$method_type" "numbered_select" "distribution_method uses numbered_select (C10)"
+assert_eq "$method_type" "select" "distribution_method uses select (3 options < 5 threshold)"
 
 # Test 22: distribution_method has per_stirpes and per_capita options
 method_opts=$(jq -r '[.questions.distribution_method.options[].value] | join(",")' "$REGISTRY")

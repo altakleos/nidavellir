@@ -15,12 +15,15 @@ output_path_pattern: skuld/drafts/tod-{county-slug}-{DATE}-v{N}.md
 output_format: metadata
 triggers_on:
   state_of_residence: "TN"
-  has_real_estate: true
+  has_tn_real_estate: true
   wants_tod_deed: true
 requires_intake:
-  - tn_real_estate_details
+  - tod_interest
   - tod_beneficiary_selection
 optional_intake:
+  - tod_property_count
+  - tod_incapacity_concern
+  - tod_distribution_complexity
   - property_legal_description
 ---
 

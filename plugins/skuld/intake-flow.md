@@ -490,11 +490,147 @@ Display ISM warning:
 
 **[STOP - Wait for response]**
 
-**[IF wants_tod_deed == true]**
+**[IF has_tn_real_estate == true]**
 
-**Ask:** `tod_beneficiary_selection` (from registry)
+**Ask:** `tod_interest` (from registry)
 
 **[STOP - Wait for response]**
+
+**[IF tod_interest == help]**
+
+Display TOD explanation box:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║           WHAT IS A TRANSFER-ON-DEATH (TOD) DEED?                 ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ A TOD deed transfers your property automatically at death,        ║
+║ WITHOUT probate, while you keep full ownership during life.       ║
+║                                                                    ║
+║ ✅ Avoids probate ($3,000-10,000+ in Tennessee)                   ║
+║ ✅ You stay in full control - can sell, refinance, change mind    ║
+║ ✅ Simple and inexpensive ($50-200 to record)                     ║
+║                                                                    ║
+║ ⚠️ Does NOT help during incapacity (trust does)                   ║
+║ ⚠️ Simple transfer only (no conditions like age requirements)     ║
+║                                                                    ║
+║ Tennessee TOD deeds effective July 1, 2025.                       ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+Re-ask `tod_interest`
+
+**[STOP - Wait for response]**
+
+**[/IF]**
+
+**[IF tod_interest == yes]**
+
+**Ask:** `tod_property_count` (from registry)
+
+**[STOP - Wait for response]**
+
+**[IF tod_property_count == four_plus]**
+
+Display multiple property warning:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║   MULTIPLE PROPERTIES - TRUST MAY BE MORE EFFICIENT               ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ With 4+ properties, each would need a separate TOD deed.          ║
+║ A revocable trust may be more efficient:                          ║
+║ • One trust holds all properties                                  ║
+║ • One deed per property to transfer into trust                    ║
+║ • Provides incapacity protection TOD deeds don't                  ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+**[/IF]**
+
+**Ask:** `tod_incapacity_concern` (from registry)
+
+**[STOP - Wait for response]**
+
+**[IF tod_incapacity_concern == very_important]**
+
+Display incapacity warning:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║   ⚠️ TOD DEEDS DO NOT PROVIDE INCAPACITY PROTECTION               ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ If incapacity planning is important, a revocable trust is better: ║
+║                                                                    ║
+║ TOD Deed:                                                         ║
+║ ❌ If you become incapacitated, property is "stuck"               ║
+║ ❌ Court-appointed conservator needed to manage/sell              ║
+║                                                                    ║
+║ Trust:                                                            ║
+║ ✅ Successor trustee takes over seamlessly                        ║
+║ ✅ Can sell, refinance, or manage without court                   ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+**[/IF]**
+
+**Ask:** `tod_distribution_complexity` (from registry)
+
+**[STOP - Wait for response]**
+
+**[IF tod_distribution_complexity == snt]**
+
+Display SNT warning and skip TOD:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║   🚫 TOD NOT RECOMMENDED - SPECIAL NEEDS BENEFICIARY              ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ Direct transfer via TOD could disqualify beneficiary from         ║
+║ government benefits (SSI, Medicaid).                              ║
+║                                                                    ║
+║ Use Special Needs Trust instead - protects benefits while         ║
+║ providing for your loved one.                                     ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+Set: `tod_recommendation: not_recommended`
+
+**[ELSE IF tod_distribution_complexity == conditional]**
+
+Display complexity warning:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║   COMPLEX DISTRIBUTION - TRUST RECOMMENDED                        ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ TOD deeds provide simple transfers: property to beneficiary.      ║
+║                                                                    ║
+║ Your distribution wishes require a trust because:                 ║
+║ • Life estates ("spouse for life, then children") need trust      ║
+║ • Age restrictions need trust language                            ║
+║ • Complex conditions need trust provisions                        ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+Set: `tod_recommendation: not_recommended`
+
+**[ELSE]**
+
+Evaluate TOD recommendation based on collected answers:
+
+**[IF tod_property_count == one AND tod_incapacity_concern != very_important AND creating_trust != true]**
+
+Set: `tod_recommendation: recommended`
+
+**[ELSE IF creating_trust == true]**
+
+Set: `tod_recommendation: optional`
+
+**[ELSE]**
+
+Set: `tod_recommendation: optional`
+
+**[/IF]**
+
+**[/IF]**
+
+**[/IF]**
 
 **[/IF]**
 
@@ -774,6 +910,88 @@ Then re-ask `document_acceptance`.
 **[IF document_acceptance == customize]**
 Present document list with checkboxes.
 Let user select which to include.
+**[/IF]**
+
+---
+
+### 2.2.1 TOD Deed Decision (if applicable)
+
+**[IF state == TN AND has_tn_real_estate == true AND tod_recommendation != not_recommended]**
+
+**[IF tod_recommendation == recommended]**
+
+Display recommendation:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║   ✅ RECOMMENDED: TOD DEED FOR YOUR SITUATION                     ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ Based on your answers:                                            ║
+║ • Single property                                                 ║
+║ • Simple distribution to spouse/children                          ║
+║ • No trust being created                                          ║
+║                                                                    ║
+║ A TOD deed is a good fit:                                         ║
+║ ✅ Avoids probate on your property                                ║
+║ ✅ You keep full control during your lifetime                     ║
+║ ✅ Simpler and less expensive than creating a trust               ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+**[/IF]**
+
+**[IF tod_recommendation == optional AND creating_trust == true]**
+
+Display comparison:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║   OPTION: TOD DEED OR TRUST FUNDING                               ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ Since you're creating a trust, you have two options:              ║
+║                                                                    ║
+║ OPTION 1: Fund property TO your trust (recommended)               ║
+║ ✅ Trust provides incapacity protection                           ║
+║ ✅ All assets under one coordinated plan                          ║
+║                                                                    ║
+║ OPTION 2: Use TOD deed (property stays in your name)              ║
+║ ✅ No lender notification needed                                  ║
+║ ✅ Easy to record                                                 ║
+║ ❌ No incapacity protection for this property                     ║
+║                                                                    ║
+║ Most attorneys recommend trust funding.                           ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+**[/IF]**
+
+**Ask:** `tod_proceed` (from registry)
+
+**[STOP - Wait for response]**
+
+**[IF tod_proceed == yes]**
+
+Set: `wants_tod_deed: true`
+
+**Ask:** `tod_beneficiary_selection` (from registry)
+
+**[STOP - Wait for response]**
+
+**[/IF]**
+
+**[IF tod_proceed == more_info]**
+
+Load `intelligence/decision-support/tod-deed-vs-trust-funding.md`
+
+Display condensed comparison including:
+- Quick answer table
+- Cost comparison
+- Decision framework
+
+Re-ask `tod_proceed`
+
+**[STOP - Wait for response]**
+
+**[/IF]**
+
 **[/IF]**
 
 ---

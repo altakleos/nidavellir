@@ -680,6 +680,78 @@
       "sets_flags": ["has_tn_real_estate"]
     },
 
+    "tod_interest": {
+      "id": "tod_interest",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Would you like to consider a Transfer-on-Death (TOD) deed for your Tennessee real estate? This allows property to pass without probate while you keep full control during your lifetime.",
+      "options": [
+        { "value": "yes", "label": "Yes, I'd like to learn more" },
+        { "value": "no", "label": "No, I'll handle property through my trust or will" },
+        { "value": "help", "label": "What is a TOD deed?" }
+      ],
+      "condition": "state == TN AND has_tn_real_estate == true",
+      "save_to": "tod.interest",
+      "sets_flags": ["wants_tod_evaluation"]
+    },
+
+    "tod_property_count": {
+      "id": "tod_property_count",
+      "phase": 1,
+      "type": "select",
+      "question_text": "How many Tennessee properties do you own?",
+      "options": [
+        { "value": "one", "label": "One property (my primary residence)" },
+        { "value": "two_three", "label": "2-3 properties" },
+        { "value": "four_plus", "label": "4 or more properties" }
+      ],
+      "condition": "wants_tod_evaluation == true",
+      "save_to": "tod.property_count"
+    },
+
+    "tod_incapacity_concern": {
+      "id": "tod_incapacity_concern",
+      "phase": 1,
+      "type": "select",
+      "question_text": "How important is having someone manage your property if you become incapacitated?",
+      "options": [
+        { "value": "very_important", "label": "Very important - I want seamless management" },
+        { "value": "somewhat", "label": "Somewhat important" },
+        { "value": "not_important", "label": "Not a concern - I have other arrangements" }
+      ],
+      "condition": "wants_tod_evaluation == true",
+      "save_to": "tod.incapacity_concern"
+    },
+
+    "tod_distribution_complexity": {
+      "id": "tod_distribution_complexity",
+      "phase": 1,
+      "type": "select",
+      "question_text": "How should your Tennessee property be distributed?",
+      "options": [
+        { "value": "simple", "label": "Simple - to spouse or children equally" },
+        { "value": "conditional", "label": "Conditional - age restrictions, life estate, or other conditions" },
+        { "value": "snt", "label": "Special needs beneficiary is involved" }
+      ],
+      "condition": "wants_tod_evaluation == true",
+      "save_to": "tod.distribution_complexity"
+    },
+
+    "tod_proceed": {
+      "id": "tod_proceed",
+      "phase": 2,
+      "type": "select",
+      "question_text": "Would you like to include a Transfer-on-Death Deed for your Tennessee property?",
+      "options": [
+        { "value": "yes", "label": "Yes, include TOD deed" },
+        { "value": "no", "label": "No, I'll fund property to my trust instead" },
+        { "value": "more_info", "label": "I'd like more information first" }
+      ],
+      "condition": "state == TN AND has_tn_real_estate == true AND tod_recommendation != not_recommended",
+      "save_to": "tod.proceed",
+      "sets_flags": ["wants_tod_deed"]
+    },
+
     "tod_beneficiary_selection": {
       "id": "tod_beneficiary_selection",
       "phase": 1,
@@ -852,14 +924,13 @@
     "distribution_method": {
       "id": "distribution_method",
       "phase": 1,
-      "type": "numbered_select",
+      "type": "select",
       "question_text": "If a child passes away before receiving their inheritance, what happens to their share?",
       "options": [
         { "value": "per_stirpes", "label": "To their children (your grandchildren) - Per Stirpes (Recommended)" },
         { "value": "per_capita", "label": "Split among surviving children - Per Capita" },
         { "value": "help", "label": "Help me understand the difference" }
       ],
-      "constraints": ["C10"],
       "condition": "has_children == true",
       "save_to": "distribution.method",
       "note": "Per stirpes is most common; keeps inheritance in each child's 'branch'."
