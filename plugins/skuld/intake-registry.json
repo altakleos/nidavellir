@@ -130,7 +130,8 @@
       "question_text": "Would you like your partner to serve as your healthcare agent? This allows them to make medical decisions if you're incapacitated and ensures hospital visitation rights.",
       "options": [
         { "value": "yes", "label": "Yes, I want them as my healthcare agent" },
-        { "value": "no", "label": "No, I'll designate someone else for healthcare decisions" }
+        { "value": "no", "label": "No, I'll designate someone else" },
+        { "value": "help", "label": "What does a healthcare agent do?" }
       ],
       "condition": "partner_included != no"
     },
@@ -142,7 +143,8 @@
       "question_text": "Would you like your partner to serve as your financial agent (Power of Attorney)? This allows them to manage your finances if you're incapacitated.",
       "options": [
         { "value": "yes", "label": "Yes, I want them as my financial agent" },
-        { "value": "no", "label": "No, I'll designate someone else for financial decisions" }
+        { "value": "no", "label": "No, I'll designate someone else" },
+        { "value": "help", "label": "What does a financial agent do?" }
       ],
       "condition": "partner_included != no"
     },
@@ -633,24 +635,28 @@
       "phase": 2,
       "type": "select",
       "question_text": "Would you like me to generate a Beneficiary Designation Coordination Checklist for your retirement accounts and life insurance policies?",
+      "preamble": "This checklist helps ensure your retirement accounts and life insurance coordinate with your estate plan.",
       "options": [
-        { "value": "yes", "label": "Yes (recommended)" },
-        { "value": "no", "label": "No, I'll handle this separately" }
+        { "value": "yes", "label": "Yes, generate the checklist" },
+        { "value": "no", "label": "No, I'll handle this separately" },
+        { "value": "later", "label": "I'll decide on this later" }
       ],
-      "condition": "retirement_heavy_estate == true"
+      "condition": "retirement_heavy_estate == true",
+      "note": "Display preamble before asking."
     },
 
     "document_acceptance": {
       "id": "document_acceptance",
       "phase": 2,
       "type": "select",
-      "question_text": "Would you like to proceed with these recommended documents?",
+      "question_text": "Based on the documents shown above, how would you like to proceed?",
       "options": [
-        { "value": "accept", "label": "Yes, proceed with all recommended documents" },
-        { "value": "customize", "label": "I want to customize which documents to include" },
-        { "value": "questions", "label": "I have questions about these documents" }
+        { "value": "accept", "label": "Generate all recommended documents" },
+        { "value": "customize", "label": "Let me choose which to include" },
+        { "value": "questions", "label": "I have questions before deciding" }
       ],
-      "constraints": ["C7"]
+      "constraints": ["C7"],
+      "note": "MUST display document recommendations box (from intake-flow.md 2.1) BEFORE asking this question."
     },
 
     "trust_structure": {
@@ -658,13 +664,16 @@
       "phase": 2,
       "type": "select",
       "question_text": "Since you're married, how would you like to structure your trust?",
+      "preamble": "Joint trusts are simpler to manage. Separate trusts offer more control over individual assets.",
       "options": [
-        { "value": "joint", "label": "Joint trust (both as co-grantors - recommended for first marriages)" },
-        { "value": "separate", "label": "Separate trusts (each spouse has their own trust)" }
+        { "value": "joint", "label": "Joint trust (both spouses as co-grantors)" },
+        { "value": "separate", "label": "Separate trusts (each spouse has their own)" },
+        { "value": "help", "label": "Help me understand the difference" }
       ],
       "condition": "marital_status == married AND blended_family != true",
       "constraints": ["C7"],
-      "save_to": "trust.structure"
+      "save_to": "trust.structure",
+      "note": "Display preamble before asking."
     },
 
     "tn_real_estate_details": {
@@ -874,7 +883,7 @@
       "question_text": "At what ages should children receive their inheritance?",
       "options": [
         { "value": "all_at_once_25", "label": "All at once at age 25" },
-        { "value": "staggered_standard", "label": "Staggered: 1/3 at 25, 1/3 at 30, remainder at 35 (Recommended)" },
+        { "value": "staggered_standard", "label": "Staggered: 1/3 at 25, 1/3 at 30, remainder at 35" },
         { "value": "staggered_later", "label": "Staggered later: 1/3 at 30, 1/3 at 35, remainder at 40" },
         { "value": "staggered_earlier", "label": "Staggered earlier: 1/3 at 21, 1/3 at 25, remainder at 30" },
         { "value": "custom", "label": "Custom ages (I'll specify)" },
@@ -901,13 +910,15 @@
       "phase": 1,
       "type": "select",
       "question_text": "Should all children inherit equal shares?",
+      "preamble": "Equal shares reduce family conflict. Unequal may suit special circumstances (special needs, prior gifts, caregiver compensation).",
       "options": [
-        { "value": "equal", "label": "Yes, equal shares to all children (Recommended)" },
-        { "value": "unequal", "label": "No, I want different percentages for each child" }
+        { "value": "equal", "label": "Yes, equal shares to all children" },
+        { "value": "unequal", "label": "No, I want different percentages for each child" },
+        { "value": "discuss", "label": "I'm not sure - I'd like guidance" }
       ],
       "condition": "has_children == true AND children_count > 1",
       "save_to": "distribution.equality",
-      "note": "Only asked when there are multiple children."
+      "note": "Only asked when there are multiple children. Display preamble before asking."
     },
 
     "distribution_per_child_shares": {
@@ -927,7 +938,7 @@
       "type": "select",
       "question_text": "If a child passes away before receiving their inheritance, what happens to their share?",
       "options": [
-        { "value": "per_stirpes", "label": "To their children (your grandchildren) - Per Stirpes (Recommended)" },
+        { "value": "per_stirpes", "label": "To their children (your grandchildren) - Per Stirpes" },
         { "value": "per_capita", "label": "Split among surviving children - Per Capita" },
         { "value": "help", "label": "Help me understand the difference" }
       ],
@@ -941,12 +952,14 @@
       "phase": 1,
       "type": "select",
       "question_text": "Should your trust protect beneficiaries' inheritance from creditors and lawsuits?",
+      "preamble": "Spendthrift clauses protect inheritances from creditors and lawsuits. Most attorneys recommend including this protection.",
       "options": [
-        { "value": "yes", "label": "Yes (recommended) - include spendthrift protection" },
-        { "value": "no", "label": "No - beneficiaries have full control" }
+        { "value": "yes", "label": "Yes - include spendthrift protection" },
+        { "value": "no", "label": "No - beneficiaries have full control" },
+        { "value": "discuss", "label": "I'd like to discuss this with my attorney" }
       ],
       "sets_flags": ["include_spendthrift_clause"],
-      "note": "Most attorneys recommend spendthrift clauses. Sets flag for existing template provision."
+      "note": "Sets flag for existing template provision. Display preamble before asking."
     },
 
     "residence_disposition": {

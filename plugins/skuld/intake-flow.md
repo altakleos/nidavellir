@@ -129,9 +129,62 @@ Save to: `relationship_duration`
 
 **[STOP - Wait for response]**
 
+**[IF partner_healthcare_agent == help]**
+Display explanation:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║           WHAT DOES A HEALTHCARE AGENT DO?                         ║
+╠═══════════════════════════════════════════════════════════════════╣
+║                                                                    ║
+║  A healthcare agent (also called healthcare proxy) can:            ║
+║                                                                    ║
+║  • Make medical decisions when you cannot speak for yourself       ║
+║  • Access your medical records and speak with your doctors         ║
+║  • Ensure your treatment wishes are followed                       ║
+║  • Visit you in the hospital as an authorized decision-maker       ║
+║                                                                    ║
+║  For unmarried couples, this is especially important because       ║
+║  partners have NO automatic medical decision-making rights.        ║
+║  Without this document, your family could exclude your partner.    ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+Re-ask `partner_healthcare_agent` (without the help option).
+
+**[STOP - Wait for response]**
+
+**[/IF]**
+
 **Ask:** `partner_financial_agent` (from registry)
 
 **[STOP - Wait for response]**
+
+**[IF partner_financial_agent == help]**
+Display explanation:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║           WHAT DOES A FINANCIAL AGENT DO?                          ║
+╠═══════════════════════════════════════════════════════════════════╣
+║                                                                    ║
+║  A financial agent (Power of Attorney) can:                        ║
+║                                                                    ║
+║  • Pay your bills and manage bank accounts                         ║
+║  • Handle taxes and financial paperwork                            ║
+║  • Manage investments and retirement accounts                      ║
+║  • Deal with insurance and government benefits                     ║
+║  • Handle real estate transactions                                 ║
+║                                                                    ║
+║  This power only works while you're alive. It ends at death.       ║
+║  Without it, your partner would need court approval to help        ║
+║  manage your finances if you become incapacitated.                 ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+Re-ask `partner_financial_agent` (without the help option).
+
+**[STOP - Wait for response]**
+
+**[/IF]**
 
 **[/IF]**
 
@@ -759,9 +812,19 @@ Display CPT/TBE interaction:
 
 ### 1.14 Spendthrift Protection
 
+**[IF question.preamble exists]**
+Display preamble: "Spendthrift clauses protect inheritances from creditors and lawsuits. Most attorneys recommend including this protection."
+**[/IF]**
+
 **Ask:** `spendthrift_preference` (from registry)
 
 **[STOP - Wait for response]**
+
+**[IF spendthrift_preference == discuss]**
+Set flag: `spendthrift_deferred: true`
+Display: "I've noted this for attorney review. We'll mark your trust as needing attorney guidance on spendthrift provisions. Let's continue."
+Continue to next question.
+**[/IF]**
 
 ---
 
@@ -791,9 +854,39 @@ Display CPT/TBE interaction:
 
 **[IF children_count > 1]**
 
+**[IF question.preamble exists]**
+Display preamble: "Equal shares reduce family conflict. Unequal may suit special circumstances (special needs, prior gifts, caregiver compensation)."
+**[/IF]**
+
 **Ask:** `distribution_equality` (from registry)
 
 **[STOP - Wait for response]**
+
+**[IF distribution.equality == discuss]**
+Display guidance:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║           GUIDANCE: EQUAL VS. UNEQUAL SHARES                       ║
+╠═══════════════════════════════════════════════════════════════════╣
+║                                                                    ║
+║  EQUAL SHARES are most common and minimize family conflict.        ║
+║                                                                    ║
+║  UNEQUAL SHARES may be appropriate when:                           ║
+║  • One child has special needs requiring ongoing support           ║
+║  • You've already given significant gifts to one child             ║
+║  • One child serves as your primary caregiver                      ║
+║  • One child has much greater financial need                       ║
+║                                                                    ║
+║  Note: You can always explain your reasoning in a separate         ║
+║  letter to your children (not part of the legal documents).        ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+Re-ask `distribution_equality` (without the discuss option if already seen guidance).
+
+**[STOP - Wait for response]**
+
+**[/IF]**
 
 **[IF distribution.equality == unequal]**
 
@@ -884,10 +977,65 @@ Before presenting recommendations, the coordinator should be prepared to answer 
 
 ### 2.1 Present Recommendations
 
-Display recommendations table based on collected profile data.
-Include brief explanations of each document's purpose.
+**CRITICAL: Display document preview box BEFORE asking acceptance question.**
 
-**Educational boxes to display based on flags:**
+Based on collected profile data, display the following box:
+
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║           YOUR RECOMMENDED ESTATE PLAN DOCUMENTS                  ║
+╠═══════════════════════════════════════════════════════════════════╣
+║                                                                   ║
+║  Based on your situation, I recommend these documents:            ║
+║                                                                   ║
+║  CORE DOCUMENTS:                                                  ║
+║  ┌─────────────────────────────────────────────────────────────┐  ║
+║  │ 1. Revocable Living Trust                                   │  ║
+║  │    Avoids probate, provides incapacity protection           │  ║
+║  │                                                              │  ║
+║  │ 2. Pour-Over Will                                           │  ║
+║  │    Names guardian for minor children, catches assets        │  ║
+║  │    not in the trust                                         │  ║
+║  │                                                              │  ║
+║  │ 3. Financial Power of Attorney                              │  ║
+║  │    Allows trusted person to manage finances if you're       │  ║
+║  │    incapacitated                                            │  ║
+║  │                                                              │  ║
+║  │ 4. Healthcare Directive                                     │  ║
+║  │    States your medical wishes, names healthcare agent       │  ║
+║  └─────────────────────────────────────────────────────────────┘  ║
+║                                                                   ║
+║  [IF state == TN AND creating_trust == true]                      ║
+║  ┌─────────────────────────────────────────────────────────────┐  ║
+║  │ 5. Certificate of Trust                                     │  ║
+║  │    Summary document for banks/title companies               │  ║
+║  └─────────────────────────────────────────────────────────────┘  ║
+║  [/IF]                                                            ║
+║                                                                   ║
+║  [IF special_needs_beneficiary == true]                           ║
+║  SPECIALIZED DOCUMENTS:                                           ║
+║  ┌─────────────────────────────────────────────────────────────┐  ║
+║  │ Special Needs Trust for [child_name]                        │  ║
+║  │ Preserves government benefits while providing for           │  ║
+║  │ your loved one                                              │  ║
+║  └─────────────────────────────────────────────────────────────┘  ║
+║  [/IF]                                                            ║
+║                                                                   ║
+║  [IF state == TN AND has_tn_real_estate == true AND              ║
+║      tod_recommendation IN (recommended, optional)]               ║
+║  OPTIONAL:                                                        ║
+║  ┌─────────────────────────────────────────────────────────────┐  ║
+║  │ Transfer-on-Death Deed                                      │  ║
+║  │ Transfers property at death without probate                 │  ║
+║  └─────────────────────────────────────────────────────────────┘  ║
+║  [/IF]                                                            ║
+║                                                                   ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+**[PAUSE - Allow user to read the recommendations]**
+
+**Educational boxes to display based on flags (after document list):**
 - `[IF retirement_heavy_estate]` → Display beneficiary coordination warning
 - `[IF special_needs_beneficiary]` → Display SNT beneficiary warning
 - `[IF state == TN]` → Display Trust vs TOD Deed comparison
@@ -1002,9 +1150,44 @@ Re-ask `tod_proceed`
 
 **[IF marital_status == married AND blended_family != true]**
 
+**[IF question.preamble exists]**
+Display preamble: "Joint trusts are simpler to manage. Separate trusts offer more control over individual assets."
+**[/IF]**
+
 **Ask:** `trust_structure` (from registry)
 
 **[STOP - Wait for response]**
+
+**[IF trust_structure == help]**
+Display explanation:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║        JOINT TRUST vs. SEPARATE TRUSTS                             ║
+╠═══════════════════════════════════════════════════════════════════╣
+║                                                                    ║
+║  JOINT TRUST (both spouses as co-grantors):                        ║
+║  ✅ Simpler - one document, one set of accounts                    ║
+║  ✅ All assets pooled together                                     ║
+║  ✅ Either spouse can manage the trust                             ║
+║  ✅ Typical for first marriages with shared assets                 ║
+║                                                                    ║
+║  SEPARATE TRUSTS (each spouse has their own):                      ║
+║  ✅ Each spouse controls their own assets                          ║
+║  ✅ Clearer separation for estate tax planning                     ║
+║  ✅ Better for blended families or significant separate property   ║
+║  ✅ More control over where YOUR assets go                         ║
+║                                                                    ║
+║  RECOMMENDATION: Most first-marriage couples choose joint trusts   ║
+║  for simplicity. Separate trusts are better for blended families,  ║
+║  significant separate assets, or couples who want more autonomy.   ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+Re-ask `trust_structure` (without the help option).
+
+**[STOP - Wait for response]**
+
+**[/IF]**
 
 **[/IF]**
 
@@ -1087,9 +1270,19 @@ Display recommendation based on collected data:
 
 **[IF retirement_heavy_estate == true]**
 
+**[IF question.preamble exists]**
+Display preamble: "This checklist helps ensure your retirement accounts and life insurance coordinate with your estate plan."
+**[/IF]**
+
 **Ask:** `beneficiary_coordination_checklist` (from registry)
 
 **[STOP - Wait for response]**
+
+**[IF beneficiary_coordination_checklist == later]**
+Set flag: `beneficiary_checklist_deferred: true`
+Display: "I've noted this for later. You can generate the checklist anytime after we complete your documents."
+Continue to next section.
+**[/IF]**
 
 **[/IF]**
 
