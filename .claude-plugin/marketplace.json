@@ -47,28 +47,16 @@
       "keywords": ["trusts", "wills", "power-of-attorney", "healthcare-directive", "legal", "documents"]
     },
     {
-      "name": "youtube-transcriber",
-      "source": "./plugins/youtube-transcriber",
-      "description": "Extract transcripts from YouTube videos with intelligent 3-tier fallback (yt-dlp → Browser MCP → Whisper AI), batch processing, and automatic deduplication",
+      "name": "youtube-tools",
+      "source": "./plugins/youtube-tools",
+      "description": "YouTube toolkit: transcript extraction with 3-tier fallback and video downloading with quality presets, playlist/channel support, and batch processing",
       "version": "1.0.0",
       "author": {
         "name": "AltaKleos Platform Team",
         "email": "hello@altakleos.com"
       },
       "category": "productivity",
-      "keywords": ["youtube", "transcript", "subtitles", "captions", "whisper", "yt-dlp", "video-to-text"]
-    },
-    {
-      "name": "youtube-downloader",
-      "source": "./plugins/youtube-downloader",
-      "description": "Download videos from YouTube and 1000+ sites with quality presets, playlist/channel support, and batch processing",
-      "version": "1.0.0",
-      "author": {
-        "name": "AltaKleos Platform Team",
-        "email": "hello@altakleos.com"
-      },
-      "category": "productivity",
-      "keywords": ["youtube", "download", "video", "audio", "yt-dlp", "playlist", "channel", "batch"]
+      "keywords": ["youtube", "transcript", "download", "video", "audio", "subtitles", "yt-dlp", "whisper", "playlist", "batch"]
     }
   ]
 }

@@ -1,0 +1,64 @@
+{
+  "name": "youtube-tools",
+  "version": "1.0.0",
+  "description": "YouTube toolkit: transcript extraction with 3-tier fallback and video downloading with quality presets, playlist/channel support, and batch processing",
+  "author": {
+    "name": "AltaKleos Platform Team",
+    "email": "hello@altakleos.com"
+  },
+  "keywords": [
+    "youtube",
+    "transcript",
+    "download",
+    "video",
+    "audio",
+    "subtitles",
+    "yt-dlp",
+    "whisper",
+    "playlist",
+    "batch"
+  ],
+  "repository": "https://github.com/altakleos/nidavellir",
+  "license": "MIT",
+  "components": {
+    "skills": [
+      {
+        "name": "youtube-transcriber",
+        "path": "../skills/transcriber/SKILL.md",
+        "description": "Extract transcripts from YouTube videos with 3-tier fallback (yt-dlp → Browser MCP → Whisper AI)"
+      },
+      {
+        "name": "youtube-downloader",
+        "path": "../skills/downloader/SKILL.md",
+        "description": "Download videos/audio from YouTube and 1000+ sites with quality presets and batch support"
+      }
+    ]
+  },
+  "dependencies": {
+    "required": [],
+    "optional": [
+      {
+        "name": "yt-dlp",
+        "type": "cli",
+        "install": "brew install yt-dlp || apt install yt-dlp || pip install yt-dlp"
+      },
+      {
+        "name": "ffmpeg",
+        "type": "cli",
+        "install": "brew install ffmpeg || apt install ffmpeg"
+      },
+      {
+        "name": "openai-whisper",
+        "type": "python",
+        "install": "pip install openai-whisper",
+        "note": "Only needed for transcriber Tier 3 fallback"
+      },
+      {
+        "name": "chrome-devtools-mcp",
+        "type": "mcp",
+        "install": "See MCP marketplace",
+        "note": "Only needed for transcriber Tier 2 fallback"
+      }
+    ]
+  }
+}
