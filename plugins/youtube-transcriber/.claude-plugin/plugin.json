@@ -1,0 +1,49 @@
+{
+  "name": "youtube-transcriber",
+  "version": "1.0.0",
+  "description": "Extract transcripts from YouTube videos with intelligent 3-tier fallback (yt-dlp → Browser MCP → Whisper AI) and batch support",
+  "author": {
+    "name": "AltaKleos Platform Team",
+    "email": "hello@altakleos.com"
+  },
+  "keywords": [
+    "youtube",
+    "transcript",
+    "subtitles",
+    "captions",
+    "whisper",
+    "yt-dlp",
+    "video-to-text"
+  ],
+  "repository": "https://github.com/altakleos/nidavellir",
+  "license": "MIT",
+  "components": {
+    "skills": [
+      {
+        "name": "youtube-transcriber",
+        "path": "../SKILL.md",
+        "description": "Extract transcripts from YouTube videos with 3-tier fallback"
+      }
+    ]
+  },
+  "dependencies": {
+    "required": [],
+    "optional": [
+      {
+        "name": "yt-dlp",
+        "type": "cli",
+        "install": "brew install yt-dlp || apt install yt-dlp || pip install yt-dlp"
+      },
+      {
+        "name": "openai-whisper",
+        "type": "python",
+        "install": "pip install openai-whisper"
+      },
+      {
+        "name": "chrome-devtools-mcp",
+        "type": "mcp",
+        "install": "See MCP marketplace"
+      }
+    ]
+  }
+}

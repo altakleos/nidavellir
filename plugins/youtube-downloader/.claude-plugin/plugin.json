@@ -1,0 +1,45 @@
+{
+  "name": "youtube-downloader",
+  "version": "1.0.0",
+  "description": "Download videos from YouTube and 1000+ sites with quality presets, playlist/channel support, and batch processing",
+  "author": {
+    "name": "AltaKleos Platform Team",
+    "email": "hello@altakleos.com"
+  },
+  "keywords": [
+    "youtube",
+    "download",
+    "video",
+    "audio",
+    "yt-dlp",
+    "playlist",
+    "channel",
+    "batch"
+  ],
+  "repository": "https://github.com/altakleos/nidavellir",
+  "license": "MIT",
+  "components": {
+    "skills": [
+      {
+        "name": "youtube-downloader",
+        "path": "../SKILL.md",
+        "description": "Download videos and audio from YouTube and 1000+ sites"
+      }
+    ]
+  },
+  "dependencies": {
+    "required": [],
+    "optional": [
+      {
+        "name": "yt-dlp",
+        "type": "cli",
+        "install": "brew install yt-dlp || apt install yt-dlp || pip install yt-dlp"
+      },
+      {
+        "name": "ffmpeg",
+        "type": "cli",
+        "install": "brew install ffmpeg || apt install ffmpeg"
+      }
+    ]
+  }
+}
