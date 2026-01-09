@@ -47,9 +47,9 @@
       "keywords": ["trusts", "wills", "power-of-attorney", "healthcare-directive", "legal", "documents"]
     },
     {
-      "name": "youtube-tools",
-      "source": "./plugins/youtube-tools",
-      "description": "YouTube toolkit: transcript extraction with 3-tier fallback and video downloading with quality presets, playlist/channel support, and batch processing",
+      "name": "huginn",
+      "source": "./plugins/huginn",
+      "description": "Odin's raven gathers knowledge: YouTube transcript extraction with 3-tier fallback and video downloading with quality presets, playlist/channel support, and batch processing",
       "version": "1.0.0",
       "author": {
         "name": "AltaKleos Platform Team",

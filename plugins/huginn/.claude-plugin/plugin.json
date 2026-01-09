@@ -1,7 +1,7 @@
 {
-  "name": "youtube-tools",
+  "name": "huginn",
   "version": "1.0.0",
-  "description": "YouTube toolkit: transcript extraction with 3-tier fallback and video downloading with quality presets, playlist/channel support, and batch processing",
+  "description": "Odin's raven gathers knowledge: YouTube transcript extraction with 3-tier fallback and video downloading with quality presets, playlist/channel support, and batch processing",
   "author": {
     "name": "AltaKleos Platform Team",
     "email": "hello@altakleos.com"
