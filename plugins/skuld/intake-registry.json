@@ -519,6 +519,108 @@
       "save_to": "business.succession_preference"
     },
 
+    "estate_value_range": {
+      "id": "estate_value_range",
+      "phase": 1,
+      "type": "select",
+      "question_text": "What is the approximate total value of your estate (all assets minus debts)?",
+      "options": [
+        { "value": "under_1m", "label": "Under $1 million" },
+        { "value": "1m_5m", "label": "$1 million - $5 million" },
+        { "value": "5m_13m", "label": "$5 million - $13 million" },
+        { "value": "over_13m", "label": "Over $13 million (may be subject to federal estate tax)" }
+      ],
+      "save_to": "assets.estate_value_range",
+      "sets_flags": ["high_net_worth", "estate_tax_planning_needed"],
+      "note": "Federal estate tax exemption is $13.99M (2025). Estates over this threshold may owe estate tax."
+    },
+
+    "prior_taxable_gifts": {
+      "id": "prior_taxable_gifts",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Have you made any large gifts (over the annual exclusion, currently $19,000 per recipient) that required filing a gift tax return (Form 709)?",
+      "options": [
+        { "value": "none", "label": "No large gifts" },
+        { "value": "some", "label": "Yes, some gifts over the annual exclusion" },
+        { "value": "significant", "label": "Yes, significant gifts (over $1 million lifetime)" },
+        { "value": "unsure", "label": "Not sure" }
+      ],
+      "condition": "estate_value_range IN (5m_13m, over_13m)",
+      "save_to": "tax.prior_gifts",
+      "sets_flags": ["has_prior_gifts", "gift_tax_coordination_needed"],
+      "note": "Prior taxable gifts reduce remaining lifetime exemption. Important for estate tax planning."
+    },
+
+    "charitable_intent": {
+      "id": "charitable_intent",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Do you have charitable giving goals as part of your estate plan?",
+      "options": [
+        { "value": "none", "label": "No charitable giving planned" },
+        { "value": "bequest", "label": "Yes, I want to leave a bequest to charity at death" },
+        { "value": "structured", "label": "Yes, I'm interested in structured charitable giving (CRT, CLT, foundation)" },
+        { "value": "help", "label": "I'd like to understand my options" }
+      ],
+      "condition": "estate_value_range IN (1m_5m, 5m_13m, over_13m)",
+      "save_to": "charitable.intent",
+      "sets_flags": ["charitable_planning_interest"],
+      "note": "Structured charitable giving (CRT/CLT) requires professional guidance."
+    },
+
+    "business_tax_concerns": {
+      "id": "business_tax_concerns",
+      "phase": 1,
+      "type": "multi_select",
+      "question_text": "Which tax-related business succession concerns apply to you?",
+      "options": [
+        { "value": "valuation", "label": "Business valuation for estate tax purposes" },
+        { "value": "liquidity", "label": "Estate tax liquidity (cash to pay taxes without selling business)" },
+        { "value": "freeze", "label": "Freezing business value to reduce estate tax" },
+        { "value": "key_person", "label": "Key person insurance planning" },
+        { "value": "none", "label": "None of these apply", "exclusive": true }
+      ],
+      "condition": "has_business == true AND estate_value_range IN (5m_13m, over_13m)",
+      "save_to": "business.tax_concerns",
+      "sets_flags": ["business_tax_planning_needed"],
+      "note": "Business owners with significant estates need specialized tax planning. Refer to valuation-discounts.md and idgt.md."
+    },
+
+    "rental_property_ownership": {
+      "id": "rental_property_ownership",
+      "phase": 1,
+      "type": "select",
+      "question_text": "Do you own rental or investment real estate?",
+      "options": [
+        { "value": "none", "label": "No rental/investment property" },
+        { "value": "single", "label": "One rental property" },
+        { "value": "multiple", "label": "Multiple rental properties" },
+        { "value": "commercial", "label": "Commercial real estate" }
+      ],
+      "save_to": "real_estate.rental_properties",
+      "sets_flags": ["has_rental_property"],
+      "note": "Rental property has unique basis and depreciation considerations. See TN.md rental section."
+    },
+
+    "retirement_beneficiary_complexity": {
+      "id": "retirement_beneficiary_complexity",
+      "phase": 1,
+      "type": "multi_select",
+      "question_text": "Do any of these situations apply to your retirement accounts?",
+      "options": [
+        { "value": "trust_beneficiary", "label": "Want to name a trust as beneficiary" },
+        { "value": "snt_beneficiary", "label": "Beneficiary receives government benefits (SSI/Medicaid)" },
+        { "value": "non_spouse", "label": "Primary beneficiary is not spouse (child, sibling, etc.)" },
+        { "value": "stretch_planning", "label": "Want to maximize distribution planning" },
+        { "value": "none", "label": "None of these apply", "exclusive": true }
+      ],
+      "condition": "has_retirement_accounts == true AND retirement_value IN (500k_1m, over_1m)",
+      "save_to": "retirement.beneficiary_complexity",
+      "sets_flags": ["retirement_beneficiary_education_needed"],
+      "note": "SECURE Act 2.0 changed beneficiary rules. Non-spouse beneficiaries generally must withdraw within 10 years."
+    },
+
     "special_circumstances": {
       "id": "special_circumstances",
       "phase": 1,

@@ -297,3 +297,28 @@ This plugin can help with basic probate avoidance, but refer to specialists for:
 - Charitable planning vehicles
 - Advanced irrevocable trust strategies
 - Valuation discount planning
+
+---
+
+## Cross-References
+
+**Advanced Strategy Modules:**
+- **IDGT (Intentionally Defective Grantor Trust):** `intelligence/specialized/idgt.md` - Estate freeze technique for appreciating assets
+- **SLAT (Spousal Lifetime Access Trust):** `intelligence/specialized/slat.md` - Irrevocable trust with indirect spousal access
+- **Business Succession:** `intelligence/specialized/business-succession.md` - Planning for business owners
+
+**Tax Education Modules:**
+- **Valuation Discounts:** `intelligence/tax/valuation-discounts.md` - DLOM, minority interest discounts for FLP/LLC
+- **Tax Allocation:** `intelligence/tax/tax-allocation.md` - Who bears estate tax burden
+- **Basis and Step-Up:** `intelligence/tax/basis-and-step-up.md` - Capital gains elimination at death
+- **Federal Estate and Gift Tax:** `intelligence/tax/federal-estate-gift-tax.md` - Exemptions and rates
+- **State Death Taxes:** `intelligence/tax/state-death-taxes.md` - State-by-state coverage
+
+**State-Specific Planning:**
+- **Tennessee:** `intelligence/state-laws/TN.md` - Dynasty trusts, CPT, DAPT advantages
+
+**Forms and Guidance:**
+- **Form 706 Guidance:** `intelligence/forms/form-706-guidance.md` - Estate tax return requirements
+
+**Glossary:**
+- **Tax Terms:** `intelligence/glossary/tax-terms.md` - IDGT, SLAT, DLOM, AFR definitions

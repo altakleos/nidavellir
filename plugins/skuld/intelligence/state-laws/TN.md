@@ -628,3 +628,428 @@ Witnesses for advance care plan (if not notarized):
 - Not related by blood or marriage
 - Not beneficiary
 - Not responsible for healthcare costs
+
+---
+
+## Business Owner Estate Planning in Tennessee
+
+### Tennessee Advantages for Business Owners
+
+Tennessee offers significant advantages for business succession and estate planning:
+
+| Feature | Benefit | Key Details |
+|---------|---------|-------------|
+| **No Income Tax** | Lower operating costs | Hall Tax fully repealed 2021 |
+| **No Estate Tax** | Full value to heirs | Repealed 2016 |
+| **Dynasty Trust (360 years)** | Multi-generational planning | Business can stay in trust for generations |
+| **DAPT** | Asset protection | 18-month lookback (general creditors) |
+| **Strong LLC Laws** | Charging order protection | TN LLC Act favorable to owners |
+| **TBE for Personal Property** | Protect non-business assets | Keeps personal assets safe from business creditors |
+
+### Business Succession Considerations
+
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║               BUSINESS OWNER ESTATE PLANNING                      ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ Business succession planning is COMPLEX and requires:             ║
+║                                                                   ║
+║ [[ ESTATE TAX ATTORNEY REQUIRED - for estates over $13.99M ]]     ║
+║ [[ BUSINESS ATTORNEY REQUIRED - for buy-sell agreements ]]        ║
+║ [[ QUALIFIED APPRAISER REQUIRED - for business valuation ]]       ║
+║ [[ CPA REQUIRED - for tax planning and compliance ]]              ║
+║                                                                   ║
+║ This tool provides educational information only.                  ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+### Entity Selection for Tennessee Business Owners
+
+| Entity Type | Probate Avoidance | Creditor Protection | Tax Treatment | Succession Planning |
+|-------------|------------------|--------------------|--------------|--------------------|
+| Sole Proprietorship | ❌ | ❌ | Pass-through | ❌ Dies with owner |
+| LLC (Single-Member) | ⚠️ Via trust | ✅ Charging order only | Pass-through | ✅ Via operating agreement |
+| LLC (Multi-Member) | ⚠️ Via trust | ✅ Strong | Pass-through | ✅ Via operating agreement |
+| S Corporation | ⚠️ Via trust | ⚠️ Moderate | Pass-through | ✅ Via shareholder agreement |
+| Family Limited Partnership | ⚠️ Via trust | ✅ Strong | Pass-through | ✅ Built for succession |
+
+### Tennessee LLC Advantages
+
+**Charging Order Protection:**
+- TN courts limited to charging order remedy
+- Creditors cannot force LLC distribution or seize ownership
+- Applies to single-member LLCs (many states exclude)
+
+**Operating Agreement Flexibility:**
+- Can restrict transfers
+- Can specify succession provisions
+- Can include buy-sell terms
+
+### Buy-Sell Agreements
+
+Critical for multi-owner businesses in Tennessee:
+
+| Trigger Event | Planning Need |
+|--------------|---------------|
+| Death of owner | Mandatory buyout provision |
+| Disability | Disability buyout clause |
+| Divorce | Restrictions on transfer to spouse |
+| Retirement | Age-based buyout provisions |
+| Voluntary sale | Right of first refusal |
+
+**Funding Options:**
+- Life insurance (most common for death)
+- Disability insurance (for disability buyout)
+- Installment payments
+- Sinking fund
+
+### Business Interest in Estate
+
+**Valuation Considerations:**
+- Business interests require qualified appraisal for estate tax
+- Valuation discounts may apply (DLOM, minority interest)
+- Key person discount if owner is critical
+- See `intelligence/tax/valuation-discounts.md`
+
+**Step-Up in Basis:**
+- Business interest receives step-up at death
+- BUT: Inside basis of entity assets may not step up
+- S Corp: Stock steps up, assets don't (unless §338(h)(10) election)
+- Partnership/LLC: Outside basis steps up; inside may require §754 election
+
+### Common TN Business Owner Structures
+
+**FLP + Dynasty Trust:**
+```
+1. Transfer business/real estate to FLP
+2. Gift LP interests to Dynasty Trust
+3. Claim valuation discounts on LP interests
+4. Business grows outside estate for 360 years
+```
+
+**IDGT Sale:**
+```
+1. Sell business interest to IDGT
+2. Receive promissory note at AFR
+3. Future appreciation outside estate
+4. Grantor pays income tax (additional benefit)
+```
+
+See `intelligence/specialized/idgt.md` for details.
+
+### Professional Referral Triggers - Business
+
+```
+[[ ATTORNEY REQUIRED ]]
+- Business succession planning
+- Buy-sell agreement drafting
+- Entity restructuring for estate planning
+- Multi-owner businesses
+
+[[ APPRAISER REQUIRED ]]
+- Business valued over $1 million
+- Estate tax return filing
+- Gift of business interests
+- Buy-sell agreement valuation
+
+[[ CPA REQUIRED ]]
+- Entity tax elections
+- Estate tax projections
+- Installment sale structuring
+```
+
+---
+
+## Rental Property Planning in Tennessee
+
+### Step-Up in Basis for Rental Property
+
+Rental property receives a step-up in basis at death, which can eliminate substantial capital gains:
+
+**What Steps Up:**
+- Original purchase price → Fair market value at death
+- Depreciation recapture → Eliminated
+
+**Example: Rental Property Step-Up**
+```
+Purchase price (2005):           $200,000
+Depreciation taken (20 years):   -$130,000
+Adjusted basis:                   $70,000
+Fair market value at death:      $400,000
+
+Without Step-Up (if sold before death):
+  Sale price:                     $400,000
+  Adjusted basis:                 $70,000
+  Gain:                           $330,000
+  Depreciation recapture (25%):   $32,500
+  Capital gains (15-20%):         $30,000-$40,000
+  Total tax:                      $62,500-$72,500
+
+With Step-Up (inherited and sold):
+  Sale price:                     $400,000
+  New basis:                      $400,000
+  Gain:                           $0
+  Tax:                            $0
+  TAX SAVINGS:                    $62,500-$72,500
+```
+
+### Community Property Trust Double Step-Up
+
+For Tennessee married couples with jointly-owned rental property:
+
+| Titling | Step-Up at First Death |
+|---------|----------------------|
+| Joint Tenancy | 50% (only deceased's half) |
+| Tenancy by Entirety | 50% (only deceased's half) |
+| **Community Property Trust** | **100% (both halves)** |
+
+**Recommendation:** Appreciated rental properties with low basis are strong candidates for CPT to maximize step-up benefit.
+
+### Depreciation Recapture Considerations
+
+**During Life:**
+- Depreciation reduces taxable rental income
+- Creates "built-in" recapture on sale (25% rate)
+
+**At Death:**
+- Step-up eliminates depreciation recapture
+- Heirs can depreciate again from new basis
+- Significant tax advantage
+
+**Planning Note:** Rental property with substantial accumulated depreciation is especially valuable to hold until death rather than sell during life.
+
+### Tennessee Recording Requirements
+
+| Document | Recording Required | Fee | Transfer Tax |
+|----------|-------------------|-----|--------------|
+| Deed to Trust | Yes | $15-30 | None (exempt) |
+| TOD Deed | Yes (during life) | $15-30 | None (exempt) |
+| Lease | Not required | N/A | N/A |
+
+### Rental Property in Trust
+
+**Advantages of Trust-Held Rental Property:**
+- Probate avoidance
+- Successor trustee can manage during incapacity
+- Continuity of property management
+- Distribution control
+
+**Considerations:**
+- Some investors prefer LLC for liability
+- Can have LLC owned by trust (layered protection)
+- Insurance still essential
+
+### Tennessee Landlord Liability
+
+**Liability Exposure:**
+- Slip and fall claims
+- Lead paint claims (pre-1978 properties)
+- Fair housing violations
+- Tenant injuries
+
+**Protection Options:**
+- Adequate liability insurance (umbrella recommended)
+- LLC ownership (charging order protection)
+- Trust ownership (probate avoidance but limited liability protection)
+- LLC owned by trust (both benefits)
+
+### Multiple Property Planning
+
+| Number of Properties | Recommended Approach |
+|---------------------|---------------------|
+| 1 property | TOD deed or trust |
+| 2-3 properties | Trust (consolidates management) |
+| 4+ properties | LLC owned by trust |
+| Multi-state | Trust with ancillary planning |
+
+### Professional Referral Triggers - Rental Property
+
+```
+[[ ATTORNEY REQUIRED ]]
+- Multiple rental properties
+- LLC structuring questions
+- 1031 exchange planning
+- Out-of-state properties
+
+[[ CPA REQUIRED ]]
+- Depreciation questions
+- 1031 exchange execution
+- Cost segregation studies
+- Estate tax with rental portfolio
+
+[[ APPRAISER REQUIRED ]]
+- Estate tax return with rental property
+- Gift of rental property interest
+```
+
+---
+
+## Retirement Account Beneficiary Planning in Tennessee
+
+### SECURE Act 2.0 Impact Summary
+
+The SECURE Act (2019) and SECURE Act 2.0 (2022) dramatically changed retirement account beneficiary rules:
+
+| Beneficiary Type | Distribution Rule | Planning Impact |
+|-----------------|------------------|-----------------|
+| **Surviving Spouse** | Spousal rollover OR 10-year | Most flexible; can delay RMDs |
+| **Minor Child** | 10-year after majority | Distributions extend longer |
+| **Disabled/Chronically Ill** | Stretch over life | SNT beneficiary coordination critical |
+| **< 10 Years Younger** | Stretch over life | Siblings close in age |
+| **All Others (incl. adult children)** | **10-year rule** | Must empty by 10th year after death |
+| **Non-EDB Accumulation Trust** | **10-year rule** | Trust must distribute within 10 years |
+
+### 10-Year Rule Details
+
+For **most non-spouse beneficiaries** (adult children, friends, non-qualifying trusts):
+
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║               THE 10-YEAR DISTRIBUTION RULE                       ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ Account must be FULLY DISTRIBUTED by December 31 of the year      ║
+║ containing the 10th anniversary of the owner's death.             ║
+║                                                                   ║
+║ Example:                                                          ║
+║ • Owner dies July 15, 2025                                        ║
+║ • Beneficiary must empty account by December 31, 2035             ║
+║                                                                   ║
+║ Recent IRS guidance (2024): Annual RMDs may be required           ║
+║ during the 10-year period if owner died after RMD start date.     ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+### Trust as Retirement Account Beneficiary
+
+**When Trust Makes Sense:**
+- Special needs beneficiary (SNT required)
+- Spendthrift beneficiary (protection from creditors/poor judgment)
+- Minor beneficiaries (management until age)
+- Blended family (control over ultimate distribution)
+
+**Trust Requirements for "See-Through" Treatment:**
+- Trust must be valid under state law
+- Trust must be irrevocable at death (or become irrevocable)
+- Beneficiaries must be identifiable
+- Trust documentation provided to plan administrator
+
+**Tennessee-Specific:**
+- TN trusts qualify for see-through treatment if properly drafted
+- Dynasty trust can receive retirement accounts (but 10-year rule still applies for non-EDBs)
+- SNT must be properly structured to preserve benefits
+
+### Special Needs Beneficiary and Retirement Accounts
+
+**Critical Issue:** Direct retirement account distribution to person receiving SSI/TennCare can disqualify them from benefits.
+
+**Solution:** Name properly drafted SNT as beneficiary.
+
+| SNT Type | Retirement Account Treatment | TennCare Payback |
+|----------|----------------------------|------------------|
+| Third-Party SNT | See-through trust rules | No payback |
+| First-Party SNT | See-through trust rules | Payback at death |
+| Pooled Trust (65+) | May not qualify | Payback varies |
+
+**Disabled/Chronically Ill Exception:**
+- Qualifying disabled beneficiaries can still use stretch (life expectancy)
+- SNT for disabled beneficiary can preserve this exception
+- Must meet strict IRS disability definition
+
+### ABLE TN Integration with Retirement Accounts
+
+**ABLE Account Benefits:**
+- Can receive distributions from retirement accounts
+- First $100,000 doesn't count against SSI
+- Beneficiary controls account (vs. trustee control of SNT)
+
+**Coordination Strategy:**
+```
+Retirement Account
+       ↓
+Special Needs Trust (beneficiary)
+       ↓
+Annual distributions to ABLE account (up to $18,000/year)
+       ↓
+Beneficiary has direct access for qualified expenses
+```
+
+**Note:** ABLE has payback requirement for Medicaid; coordinate with SNT planning.
+
+### Beneficiary Designation Coordination
+
+| Account Type | Probate? | Trust Override? | Beneficiary Designation Controls? |
+|--------------|----------|-----------------|----------------------------------|
+| IRA/401(k) | No | No | ✅ Yes |
+| 403(b)/457 | No | No | ✅ Yes |
+| Roth IRA | No | No | ✅ Yes |
+| Life Insurance | No | No | ✅ Yes |
+| Pension | No | No | ✅ Yes |
+
+**Critical Planning Point:** Your trust does NOT control retirement accounts unless the trust is named as beneficiary. Will provisions are also irrelevant for retirement accounts.
+
+### Common Retirement Beneficiary Mistakes
+
+**1. Naming Estate as Beneficiary**
+- Forces retirement through probate
+- Loses stretch/10-year treatment
+- Must distribute within 5 years
+
+**2. Outdated Beneficiary Designations**
+- Ex-spouse still named (common after divorce)
+- Deceased beneficiary (no contingent named)
+- Pre-SECURE trust language
+
+**3. No Contingent Beneficiary**
+- If primary dies first, estate becomes beneficiary
+- Always name contingent
+
+**4. Wrong Trust Type for Special Needs**
+- Standard trust disqualifies SNT beneficiary
+- Must use properly drafted SNT
+
+### Tennessee Retirement Planning Advantages
+
+**No State Income Tax:**
+- Retirement distributions not subject to TN tax
+- Roth conversions not TN taxable
+- Attractive for retirees from high-tax states
+
+**ABLE TN:**
+- State-sponsored ABLE program
+- No TN tax on earnings
+- Coordinates with SSI and TennCare
+
+### Professional Referral Triggers - Retirement
+
+```
+[[ ATTORNEY REQUIRED ]]
+- Trust as retirement beneficiary
+- Special needs beneficiary
+- Blended family beneficiary planning
+- QDRO for divorce situations
+
+[[ CPA REQUIRED ]]
+- Roth conversion analysis
+- RMD calculations
+- Multi-account coordination
+- Estate tax with large retirement assets
+
+[[ FINANCIAL ADVISOR REQUIRED ]]
+- Beneficiary designation review
+- Distribution planning
+- Stretch vs. lump sum analysis
+```
+
+---
+
+## Cross-References
+
+**Related Intelligence Modules:**
+- High Net Worth Planning: `intelligence/specialized/high-net-worth.md`
+- IDGT Strategy: `intelligence/specialized/idgt.md`
+- SLAT Strategy: `intelligence/specialized/slat.md`
+- Valuation Discounts: `intelligence/tax/valuation-discounts.md`
+- Tax Allocation: `intelligence/tax/tax-allocation.md`
+- Basis and Step-Up: `intelligence/tax/basis-and-step-up.md`
+- Special Needs Trust: `intelligence/specialized/special-needs-trust.md`
+- Business Succession: `intelligence/specialized/business-succession.md`

@@ -487,6 +487,220 @@ Display ISM warning:
 
 ---
 
+### 1.8.1 Estate Value and Tax Planning Screening
+
+**Ask:** `estate_value_range` (from registry)
+
+**[STOP - Wait for response]**
+
+**[IF estate_value_range == over_13m]**
+
+Display estate tax alert:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║        ⚠️ ESTATE TAX PLANNING MAY BE NEEDED                       ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ Your estimated estate value exceeds the 2025 federal estate tax   ║
+║ exemption of $13.99 million.                                      ║
+║                                                                   ║
+║ Without proper planning, estates over this threshold may owe      ║
+║ estate tax at a 40% rate on amounts above the exemption.          ║
+║                                                                   ║
+║ This tool provides EDUCATIONAL information about estate tax       ║
+║ strategies. For estates of this size, you need:                   ║
+║                                                                   ║
+║ [[ ESTATE TAX ATTORNEY REQUIRED ]]                                ║
+║ [[ CPA OR TAX ADVISOR REQUIRED ]]                                 ║
+║                                                                   ║
+║ We'll ask a few additional questions to provide relevant          ║
+║ educational materials tailored to your situation.                 ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+Set flags: `high_net_worth: true`, `estate_tax_planning_needed: true`
+
+Load: `intelligence/specialized/high-net-worth.md`
+
+**[/IF]**
+
+**[IF estate_value_range == 5m_13m]**
+
+Display exemption awareness box:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║        ESTATE TAX EXEMPTION AWARENESS                             ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ Your estate is below the current $13.99 million exemption (2025). ║
+║                                                                   ║
+║ However, the exemption amount may change with future legislation. ║
+║ Some planning strategies are most effective when implemented      ║
+║ before estate values approach the exemption threshold.            ║
+║                                                                   ║
+║ We'll note your estate size for relevant educational materials.   ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+Set flags: `estate_tax_planning_needed: true`
+
+**[/IF]**
+
+---
+
+**[IF estate_value_range IN (5m_13m, over_13m)]**
+
+**Ask:** `prior_taxable_gifts` (from registry)
+
+**[STOP - Wait for response]**
+
+**[IF prior_taxable_gifts IN (some, significant)]**
+
+Display gift tax coordination box:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║        GIFT TAX AND ESTATE TAX COORDINATION                       ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ Prior taxable gifts reduce your available lifetime exemption.     ║
+║                                                                   ║
+║ The federal gift tax and estate tax share a unified exemption:    ║
+║ • 2025 exemption: $13.99 million per person                       ║
+║ • Gifts over $19,000/recipient/year count against this            ║
+║ • Any exemption used during life reduces what's available at      ║
+║   death                                                           ║
+║                                                                   ║
+║ If you have filed Form 709 (gift tax returns), your estate        ║
+║ attorney or CPA can calculate your remaining exemption.           ║
+║                                                                   ║
+║ [[ CPA REVIEW: Calculate remaining lifetime exemption ]]          ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+Set flags: `has_prior_gifts: true`, `gift_tax_coordination_needed: true`
+
+**[/IF]**
+
+**[IF prior_taxable_gifts == unsure]**
+
+Display gift tax explanation:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║        WHAT REQUIRES A GIFT TAX RETURN?                           ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ You may have filed Form 709 if you:                               ║
+║                                                                   ║
+║ • Gave more than $19,000 (2025) to any one person in a year       ║
+║ • Made a gift-split election with your spouse                     ║
+║ • Contributed to a 529 plan using 5-year averaging                ║
+║ • Made gifts to irrevocable trusts (ILIT, GRAT, etc.)             ║
+║ • Transferred property below fair market value                    ║
+║                                                                   ║
+║ If you're unsure, a CPA can review your tax records.              ║
+║                                                                   ║
+║ Note: Direct payments for tuition or medical expenses do NOT      ║
+║ count as taxable gifts (unlimited exclusion).                     ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+**[/IF]**
+
+**[/IF]**
+
+---
+
+**[IF estate_value_range IN (1m_5m, 5m_13m, over_13m)]**
+
+**Ask:** `charitable_intent` (from registry)
+
+**[STOP - Wait for response]**
+
+**[IF charitable_intent == structured]**
+
+Display charitable planning education:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║        STRUCTURED CHARITABLE GIVING                               ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ Advanced charitable vehicles include:                             ║
+║                                                                   ║
+║ CHARITABLE REMAINDER TRUST (CRT):                                 ║
+║ • Income stream to you for life, remainder to charity             ║
+║ • Avoids capital gains on appreciated asset sales                 ║
+║ • Provides immediate charitable deduction                         ║
+║                                                                   ║
+║ CHARITABLE LEAD TRUST (CLT):                                      ║
+║ • Income to charity for term, remainder to heirs                  ║
+║ • Can reduce gift/estate tax on transfers to family               ║
+║                                                                   ║
+║ PRIVATE FOUNDATION / DONOR-ADVISED FUND:                          ║
+║ • Ongoing family philanthropy                                     ║
+║ • Immediate tax deduction                                         ║
+║                                                                   ║
+║ These vehicles are BEYOND THIS TOOL'S SCOPE but may be valuable.  ║
+║                                                                   ║
+║ [[ ESTATE TAX ATTORNEY REQUIRED for CRT/CLT setup ]]              ║
+║ [[ CPA REQUIRED for charitable deduction planning ]]              ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+Set flags: `charitable_planning_interest: true`
+
+**[/IF]**
+
+**[IF charitable_intent == bequest]**
+
+Display simple bequest info:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║        CHARITABLE BEQUESTS                                        ║
+╠═══════════════════════════════════════════════════════════════════╣
+║ A charitable bequest is a gift to charity in your will or trust.  ║
+║                                                                   ║
+║ This tool CAN help with simple charitable bequests:               ║
+║ • Specific dollar amounts to named charities                      ║
+║ • Percentage of estate to charity                                 ║
+║ • Remainder to charity after other distributions                  ║
+║                                                                   ║
+║ We'll include charitable giving options when drafting your trust. ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+Set flags: `charitable_planning_interest: true`
+
+**[/IF]**
+
+**[IF charitable_intent == help]**
+
+Display charitable options overview:
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║        CHARITABLE GIVING OPTIONS                                  ║
+╠═══════════════════════════════════════════════════════════════════╣
+║                                                                   ║
+║ SIMPLE (This tool can help):                                      ║
+║ • Charitable bequest: Leave specific gift in will/trust           ║
+║                                                                   ║
+║ ADVANCED (Requires attorney/CPA):                                 ║
+║ • Charitable Remainder Trust (CRT): Income for you, remainder     ║
+║   to charity - avoids capital gains                               ║
+║ • Charitable Lead Trust (CLT): Income to charity, remainder       ║
+║   to heirs - reduces transfer taxes                               ║
+║ • Private Foundation: Family-controlled charitable vehicle        ║
+║ • Donor-Advised Fund: Simpler alternative to foundation           ║
+║                                                                   ║
+║ The right choice depends on your goals, tax situation, and        ║
+║ desired level of control over charitable giving.                  ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
+
+Re-ask `charitable_intent` (without the help option).
+
+**[STOP - Wait for response]**
+
+**[/IF]**
+
+**[/IF]**
+
+---
+
 ### 1.9 Business Interests
 
 **[IF has_business == true]**
