@@ -60,20 +60,40 @@ Integration:
 
 ### Phase 1: Setup & Validation
 
-1. **Check/Install yt-dlp**
+1. **Auto-install dependencies**
    ```bash
+   # Install yt-dlp if missing
    if ! command -v yt-dlp &> /dev/null; then
        echo "Installing yt-dlp..."
-       brew install yt-dlp 2>/dev/null || \
-       sudo apt install -y yt-dlp 2>/dev/null || \
-       pip install --user yt-dlp
+       if command -v brew &> /dev/null; then
+           brew install yt-dlp
+       elif command -v apt &> /dev/null; then
+           sudo apt update && sudo apt install -y yt-dlp
+       elif command -v pacman &> /dev/null; then
+           sudo pacman -S yt-dlp
+       else
+           pip install --user yt-dlp
+       fi
    fi
 
-   # Verify ffmpeg for format conversion
+   # Install ffmpeg if missing (required for format conversion)
    if ! command -v ffmpeg &> /dev/null; then
-       echo "Warning: ffmpeg not found. Some format conversions may fail."
-       echo "Install with: brew install ffmpeg OR apt install ffmpeg"
+       echo "Installing ffmpeg..."
+       if command -v brew &> /dev/null; then
+           brew install ffmpeg
+       elif command -v apt &> /dev/null; then
+           sudo apt update && sudo apt install -y ffmpeg
+       elif command -v pacman &> /dev/null; then
+           sudo pacman -S ffmpeg
+       else
+           echo "Please install ffmpeg manually: https://ffmpeg.org/download.html"
+       fi
    fi
+
+   # Verify installations
+   echo "Dependencies:"
+   yt-dlp --version && echo "  yt-dlp: ✓" || echo "  yt-dlp: ✗ MISSING"
+   ffmpeg -version 2>/dev/null | head -1 && echo "  ffmpeg: ✓" || echo "  ffmpeg: ✗ MISSING"
    ```
 
 2. **Parse input type**

@@ -56,9 +56,43 @@ Options:
    - If working directory is writable: use current directory
    - Otherwise: ASK user with AskUserQuestion tool
 
-4. **Check dependencies**
+4. **Auto-install dependencies**
    ```bash
-   which yt-dlp && echo "yt-dlp: OK" || echo "yt-dlp: MISSING"
+   # Install yt-dlp if missing (required for Tier 1 & 3)
+   if ! command -v yt-dlp &> /dev/null; then
+       echo "Installing yt-dlp..."
+       if command -v brew &> /dev/null; then
+           brew install yt-dlp
+       elif command -v apt &> /dev/null; then
+           sudo apt update && sudo apt install -y yt-dlp
+       elif command -v pacman &> /dev/null; then
+           sudo pacman -S yt-dlp
+       else
+           pip install --user yt-dlp
+       fi
+   fi
+
+   # Install ffmpeg if missing (required for Whisper audio extraction)
+   if ! command -v ffmpeg &> /dev/null; then
+       echo "Installing ffmpeg..."
+       if command -v brew &> /dev/null; then
+           brew install ffmpeg
+       elif command -v apt &> /dev/null; then
+           sudo apt update && sudo apt install -y ffmpeg
+       elif command -v pacman &> /dev/null; then
+           sudo pacman -S ffmpeg
+       else
+           echo "Please install ffmpeg manually: https://ffmpeg.org/download.html"
+       fi
+   fi
+
+   # Verify installations
+   echo "Dependencies:"
+   yt-dlp --version && echo "  yt-dlp: ✓" || echo "  yt-dlp: ✗ MISSING"
+   ffmpeg -version 2>/dev/null | head -1 && echo "  ffmpeg: ✓" || echo "  ffmpeg: ✗ MISSING (needed for Whisper)"
+
+   # Note: Whisper is installed on-demand in Tier 3 (with user consent)
+   # Note: Browser MCP availability is checked in Tier 2
    ```
 
 ### Phase 2: Extraction (3-Tier Fallback)
@@ -68,15 +102,6 @@ For each URL, attempt extraction in order:
 #### Tier 1: yt-dlp with Cookie Support (Fastest)
 
 ```bash
-# Check yt-dlp availability
-if ! command -v yt-dlp &> /dev/null; then
-    echo "Installing yt-dlp..."
-    # Try package managers in order
-    brew install yt-dlp 2>/dev/null || \
-    sudo apt install yt-dlp 2>/dev/null || \
-    pip install yt-dlp
-fi
-
 # List available subtitles first
 yt-dlp --list-subs "$VIDEO_URL" 2>&1
 
@@ -129,18 +154,23 @@ Only attempt if `chrome-devtools-mcp` or similar browser MCP is available.
     Proceed? [Yes/No]"
 
 2. If user consents:
+   ```bash
    # Download audio only
    yt-dlp -x --audio-format mp3 -o "%(title)s.%(ext)s" "$VIDEO_URL"
 
-   # Check/install Whisper
-   pip show openai-whisper || pip install openai-whisper
+   # Auto-install Whisper if missing
+   if ! command -v whisper &> /dev/null; then
+       echo "Installing OpenAI Whisper..."
+       pip install --user openai-whisper
+       # Whisper requires ffmpeg (already installed in Phase 1)
+   fi
 
-   # Transcribe
-   whisper "$AUDIO_FILE" --model base --output_format txt
+   # Transcribe with base model (good balance of speed/accuracy)
+   whisper "$AUDIO_FILE" --model base --output_format txt --output_dir .
 
    # Clean up audio file (ask first)
    "Delete temporary audio file? [Yes/No]"
-```
+   ```
 
 ### Phase 3: Post-Processing
 
