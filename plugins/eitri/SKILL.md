@@ -409,29 +409,16 @@ When generating `.claude-plugin/plugin.json`, use ONLY these fields:
 - `description` - brief description (10-500 chars)
 - `author` - object with `name` and `email`
 
-**Optional metadata:**
-- `homepage` - repository URL
-- `repository` - object with `type` and `url`
-- `license` - SPDX identifier (e.g., "MIT")
-- `keywords` - array of strings (1-20 items)
-- `dependencies` - object mapping plugin names to versions
+**NEVER include these fields (Claude Code will reject them with `additionalProperties: false`):**
+- `homepage`, `repository`, `license`, `keywords` - not in schema
+- `dependencies` - not in schema
+- `components` - not in schema (Claude Code auto-discovers from directories)
+- `commands`, `agents`, `skills`, `hooks`, `mcpServers`, `lspServers`, `outputStyles` - not in schema
+- `category` - belongs in marketplace.json only
+- `data_version` - not in schema
+- Any unlisted field will cause installation to fail
 
-**Component paths (optional, auto-discovered by default):**
-- `commands` - path(s) to command files (default: `commands/`)
-- `agents` - path(s) to agent files (default: `agents/`)
-- `skills` - path(s) to skill directories (default: `skills/`)
-- `hooks` - path or inline hooks config
-- `mcpServers` - path or inline MCP config
-- `lspServers` - path or inline LSP config
-- `outputStyles` - path(s) to output style files
-
-**NEVER include these fields (Claude Code will reject them):**
-- `category` - belongs in marketplace.json only, not plugin.json
-- `components` - use specific component path fields above instead
-- `data_version` - not a valid field
-- Any other unlisted fields (`additionalProperties: false`)
-
-**Example valid plugin.json:**
+**Example valid plugin.json (ONLY these 4 fields are supported):**
 ```json
 {
   "name": "my-plugin",
@@ -440,9 +427,7 @@ When generating `.claude-plugin/plugin.json`, use ONLY these fields:
   "author": {
     "name": "Your Name",
     "email": "you@example.com"
-  },
-  "license": "MIT",
-  "keywords": ["utility", "automation"]
+  }
 }
 ```
 
