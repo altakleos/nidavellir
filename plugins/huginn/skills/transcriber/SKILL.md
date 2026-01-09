@@ -31,7 +31,11 @@ Options:
   --timestamps    Include timestamps in output (default: plain text)
   --lang=XX       Language code priority (default: en)
   --output=PATH   Custom output location
-  --format=FORMAT Output format: txt, vtt, srt (default: txt)
+  --format=FORMAT Output format: txt, vtt, srt, json (default: txt)
+
+Metadata:
+  --meta          Include metadata header in transcript output
+  --json          Output as structured JSON with metadata + transcript
 ```
 
 ## Workflow
@@ -93,6 +97,32 @@ Options:
 
    # Note: Whisper is installed on-demand in Tier 3 (with user consent)
    # Note: Browser MCP availability is checked in Tier 2
+   ```
+
+5. **Extract metadata** (if `--meta` or `--json`)
+   ```bash
+   # Fetch video metadata
+   yt-dlp --dump-json --no-download "$VIDEO_URL" 2>/dev/null | \
+   python3 -c "
+   import sys, json
+   d = json.load(sys.stdin)
+   meta = {
+       'title': d.get('title'),
+       'channel': d.get('channel'),
+       'uploader': d.get('uploader'),
+       'upload_date': d.get('upload_date'),
+       'duration': d.get('duration'),
+       'duration_string': d.get('duration_string'),
+       'view_count': d.get('view_count'),
+       'like_count': d.get('like_count'),
+       'description': d.get('description', '')[:500],  # Truncate long descriptions
+       'url': d.get('webpage_url'),
+       'video_id': d.get('id'),
+       'thumbnail': d.get('thumbnail'),
+       'tags': d.get('tags', [])[:10]  # First 10 tags
+   }
+   print(json.dumps(meta, indent=2))
+   "
    ```
 
 ### Phase 2: Extraction (3-Tier Fallback)
@@ -228,6 +258,53 @@ Based on `--timestamps` flag and `--format`:
 - **Timestamped**: `[HH:MM:SS] Text content`
 - **VTT/SRT**: Keep original subtitle format
 
+#### Metadata Output Formats
+
+**With `--meta` flag** (prepends header to transcript):
+```
+═══════════════════════════════════════════════════
+Title:    Video Title Here
+Channel:  Channel Name
+Uploaded: 2024-01-15
+Duration: 10:30
+Views:    1,234,567
+URL:      https://youtube.com/watch?v=abc123
+═══════════════════════════════════════════════════
+
+[Transcript content follows...]
+```
+
+**With `--json` flag** (structured output):
+```json
+{
+  "metadata": {
+    "title": "Video Title Here",
+    "channel": "Channel Name",
+    "uploader": "Uploader Name",
+    "upload_date": "20240115",
+    "duration": 630,
+    "duration_string": "10:30",
+    "view_count": 1234567,
+    "like_count": 50000,
+    "description": "Video description text...",
+    "url": "https://youtube.com/watch?v=abc123",
+    "video_id": "abc123",
+    "thumbnail": "https://i.ytimg.com/vi/abc123/maxresdefault.jpg",
+    "tags": ["tag1", "tag2", "tag3"]
+  },
+  "transcript": {
+    "source": "yt-dlp",
+    "language": "en",
+    "lines": 342,
+    "content": "Full transcript text here...",
+    "segments": [
+      {"time": "00:00:00", "text": "First segment"},
+      {"time": "00:00:05", "text": "Second segment"}
+    ]
+  }
+}
+```
+
 ### Phase 4: Output & Reporting
 
 For each processed video, report:
@@ -280,6 +357,21 @@ youtube-transcriber https://youtube.com/watch?v=abc --lang=es --output=./transcr
 **From file list:**
 ```
 youtube-transcriber ./video-urls.txt --format=srt
+```
+
+**With metadata header:**
+```
+youtube-transcriber https://youtube.com/watch?v=abc123 --meta
+```
+
+**As structured JSON (for programmatic use):**
+```
+youtube-transcriber https://youtube.com/watch?v=abc123 --json --output=./data/
+```
+
+**Full metadata + timestamps:**
+```
+youtube-transcriber https://youtube.com/watch?v=abc123 --meta --timestamps
 ```
 
 ## See Also
