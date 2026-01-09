@@ -251,3 +251,7 @@ youtube-transcriber https://youtube.com/watch?v=abc --lang=es --output=./transcr
 ```
 youtube-transcriber ./video-urls.txt --format=srt
 ```
+
+## See Also
+
+- **youtube-downloader** - Download videos/audio from YouTube and 1000+ sites. Use `--transcript` flag to automatically extract transcripts after download.

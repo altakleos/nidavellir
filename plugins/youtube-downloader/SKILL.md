@@ -50,6 +50,10 @@ Options:
   --archive=FILE     Custom archive file path
   --proxy=URL        Use proxy for geo-restricted content
   --name=TEMPLATE    Custom filename template (yt-dlp syntax)
+
+Integration:
+  --transcript       Also extract transcript using youtube-transcriber skill
+  --transcript=ts    Extract transcript with timestamps
 ```
 
 ## Workflow
@@ -206,6 +210,29 @@ yt-dlp \
    Total size: 2.3 GB
    ```
 
+### Phase 5: Transcript Extraction (if --transcript)
+
+When `--transcript` flag is provided, invoke the `youtube-transcriber` skill after download:
+
+1. **For each downloaded video URL:**
+   ```
+   Invoke youtube-transcriber with:
+   - Same URL(s)
+   - Same --output directory
+   - --timestamps flag if --transcript=ts was used
+   ```
+
+2. **Transcript output:**
+   - Saved alongside video file: `VideoTitle.txt`
+   - Uses transcriber's 3-tier fallback (yt-dlp → Browser MCP → Whisper)
+
+3. **Combined report:**
+   ```
+   ✓ Downloaded: "Video Title Here"
+     Video: /path/to/Video Title Here.mp4 (245 MB)
+     Transcript: /path/to/Video Title Here.txt (42 KB, 1,247 lines)
+   ```
+
 ## Examples
 
 ### Simple Downloads
@@ -257,6 +284,22 @@ youtube-downloader ./urls.txt --output=./downloads/
 youtube-downloader ./urls.txt --subs=en --thumb --meta
 ```
 
+### Download + Transcript
+
+```bash
+# Download video and extract transcript
+youtube-downloader https://youtube.com/watch?v=abc123 --transcript
+
+# Download with timestamped transcript
+youtube-downloader https://youtube.com/watch?v=abc123 --transcript=ts
+
+# Playlist with transcripts
+youtube-downloader https://youtube.com/playlist?list=PLxyz --range=1-5 --transcript
+
+# Audio + transcript (podcast archival)
+youtube-downloader https://youtube.com/@PodcastChannel --audio --transcript --archive
+```
+
 ### Advanced Options
 
 ```bash
@@ -306,3 +349,7 @@ Run `yt-dlp --list-extractors` for full list.
 - **Storage**: 4K videos can be 1-2GB+ per hour
 - **Bandwidth**: Large downloads may take significant time
 - **Cookies**: For authenticated content, use browser cookies with `--cookies-from-browser chrome`
+
+## See Also
+
+- **youtube-transcriber** - Extract transcripts only (without downloading video). Uses 3-tier fallback: yt-dlp subtitles → Browser MCP → Whisper AI. Invoked automatically when using `--transcript` flag.
